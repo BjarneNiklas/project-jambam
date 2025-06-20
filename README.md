@@ -1,6 +1,8 @@
 # Project Jambam
 
-Your AI Co-Creator for the next Game Jam
+### (Jamba M — BAM: Building Autonomous Metaverse)
+
+*Your AI Co-Creator for Game Jams and the Metaverse*
 
 ## Vision
 
@@ -11,7 +13,7 @@ Project Jambam aims to democratize and accelerate the entire development process
 Project Jambam is built upon four core pillars:
 
 1.  **AI Innovation Assistant:** Generates complete "Jam Kits" (themes, quests, descriptions, asset suggestions) on demand, based on user input, scientific contexts, and market trends.
-2.  **Community & Gamification:** A vibrant ecosystem where users can propose, vote on, and collaboratively develop themes and ideas. Meaningful gamification will reward quality contributions.
+2.  **The JamFam (Community & Gamification):** A vibrant ecosystem where users can propose, vote on, and collaboratively develop themes and ideas. Meaningful gamification will reward quality contributions.
 3.  **Open Architecture:** A cross-platform application (Mobile, Web, Desktop) with an API-first design, enabling future integration with any game engine (Unity, Godot, etc.) via plugins.
 4.  **Long-term Roadmap:** Evolution from an ideation tool to an explorable 3D marketplace (based on OpenUSD) and a multi-engine development platform.
 
