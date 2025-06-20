@@ -10,12 +10,12 @@ Project Jambam aims to democratize and accelerate the entire development process
 
 ## Core Features
 
-Project Jambam is built upon four core pillars:
+Project Jambam is built upon four foundational pillars:
 
-1.  **AI Innovation Assistant:** Generates complete "Jam Kits" (themes, quests, descriptions, asset suggestions) on demand, based on user input, scientific contexts, and market trends.
+1.  **The Concept Forge (AI Innovation Assistant):** Generates complete "Jam Kits" (themes, quests, descriptions, asset suggestions) on demand, based on user input, scientific contexts, and market trends.
 2.  **The JamFam (Community & Gamification):** A vibrant ecosystem where users can propose, vote on, and collaboratively develop themes and ideas. Meaningful gamification will reward quality contributions.
 3.  **Open Architecture:** A cross-platform application (Mobile, Web, Desktop) with an API-first design, enabling future integration with any game engine (Unity, Godot, etc.) via plugins.
-4.  **Long-term Roadmap:** Evolution from an ideation tool to an explorable 3D marketplace (based on OpenUSD) and a multi-engine development platform.
+4.  **Long-Term Roadmap:** The evolution from an ideation tool towards an explorable 3D marketplace (built on OpenUSD) and a multi-engine development platform.
 
 ## Tech Stack
 

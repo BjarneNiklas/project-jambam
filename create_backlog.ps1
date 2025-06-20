@@ -57,5 +57,29 @@ gh issue create --title "Entwurf eines UI/UX-Styleguides" --body "Als Designer m
 # For Epic 4 (Vision)
 gh issue create --title "Recherche: Flutter-Bibliotheken für 3D-Rendering (OpenUSD)" --body "Als Entwickler muss ich existierende Flutter-Bibliotheken für das Rendern von 3D-Modellen evaluieren, mit einem besonderen Fokus auf die Unterstützung des OpenUSD-Formats." --label "Task,Architecture" --repository $repo
 
+# ----------------------------------------------------
+# 4. DETAILING FEATURES WITH TASKS
+# ----------------------------------------------------
+Write-Host "Creating detailed technical Task issues..."
+
+# Tasks for Feature: "Themen-Generator auf Basis von Keywords"
+gh issue create --title "[TASK] UI für Keyword-Eingabe erstellen" --body "Erstellung eines `TextField`-Widgets, um User-Input für die Keywords zu ermöglichen. (Teil von [FEAT] Themen-Generator)" --label "Task,UI/UX" --repository $repo
+gh issue create --title "[TASK] Lade- & Fehler-Zustände visualisieren" --body "Implementierung von `CircularProgressIndicator` während der Generierung und einer `SnackBar` zur Anzeige von Fehlern. (Teil von [FEAT] Themen-Generator)" --label "Task,UI/UX" --repository $repo
+gh issue create --title "[TASK] `ConceptGenerationService` Abstraktion definieren" --body "Erstellung einer abstrakten Klasse, um die KI-Generierungslogik zu entkoppeln und zukünftige Erweiterungen (z.B. RAG) zu ermöglichen. (Teil von [FEAT] Themen-Generator)" --label "Task,Architecture" --repository $repo
+gh issue create --title "[TASK] Sichere API-Key-Verwaltung einrichten" --body "Integration von `flutter_dotenv` zur sicheren Verwaltung des Gemini API-Keys, inklusive `.gitignore`-Eintrag. (Teil von [FEAT] Themen-Generator)" --label "Task,Architecture" --repository $repo
+gh issue create --title "[TASK] `LlmConceptGenerationService` implementieren" --body "Implementierung der Service-Klasse, die einen Prompt für die Gemini API erstellt, die API aufruft und die JSON-Antwort parst. (Teil von [FEAT] Themen-Generator)" --label "Task,AI-Model" --repository $repo
+gh issue create --title "[TASK] `ApiJamKitRepository` erstellen" --body "Erstellung des 'echten' Repositories, das den `ConceptGenerationService` zur Datenabfrage nutzt. (Teil von [FEAT] Themen-Generator)" --label "Task,Architecture" --repository $repo
+
+# Tasks for Feature: "Quest-System für Jam-Themen"
+gh issue create --title "[TASK] UI zur Anzeige der generierten Ergebnisse" --body "Erstellung des `JamKitResultsScreen` zur strukturierten Anzeige von Titel, Theme, Quests und Asset-Vorschlägen. (Teil von [FEAT] Quest-System)" --label "Task,UI/UX" --repository $repo
+
+# Tasks for Feature: "Community-Voting für Themen"
+gh issue create --title "[TASK] UI für Login/Registrierung erstellen" --body "Erstellung des `LoginScreen` mit Feldern für E-Mail/Passwort und Buttons für die Aktionen. (Teil von [FEAT] Community-Voting)" --label "Task,UI/UX" --repository $repo
+gh issue create --title "[TASK] `AuthRepository` und Mock implementieren" --body "Definition der Abstraktion für die Authentifizierung und Erstellung einer Mock-Implementierung für die lokale Entwicklung. (Teil von [FEAT] Community-Voting)" --label "Task,Architecture" --repository $repo
+gh issue create --title "[TASK] `AuthWrapper` für Login-Status implementieren" --body "Erstellung eines Widgets, das basierend auf dem Login-Status des Nutzers entweder die App oder den Login-Screen anzeigt. (Teil von [FEAT] Community-Voting)" --label "Task,Architecture" --repository $repo
+gh issue create --title "[TASK] UI für Themen-Voting-Liste erstellen" --body "Erstellung des `CommunityThemeScreen`, um eine Liste von Themen mit Titel, Beschreibung und Stimmenanzahl anzuzeigen. (Teil von [FEAT] Community-Voting)" --label "Task,UI/UX" --repository $repo
+gh issue create --title "[TASK] `CommunityThemeRepository` und Mock implementieren" --body "Definition der Abstraktion für das Abrufen und Voten von Themen und Erstellung einer Mock-Implementierung. (Te.il von [FEAT] Community-Voting)" --label "Task,Architecture" --repository $repo
+gh issue create --title "[TASK] Dialog zur Einreichung neuer Themen erstellen" --body "Implementierung eines `AlertDialog`s mit einem Formular, damit Nutzer neue Themenvorschläge einreichen können. (Teil von [FEAT] Community-Voting)" --label "Task,UI/UX" --repository $repo
+
 Write-Host "Backlog creation complete!"
 Write-Host "Please visit https://github.com/$repo/issues to see your new backlog." 

@@ -1,0 +1,51 @@
+# Name des Workflows, der in der GitHub UI angezeigt wird
+name: Dart & Flutter CI
+
+# Definiert die Auslöser (Trigger) für diesen Workflow
+on:
+  # Wird ausgeführt bei jedem Push auf den 'main'-Branch
+  push:
+    branches: [ main ]
+  # Wird ausgeführt bei jedem Pull Request, der auf 'main' abzielt
+  pull_request:
+    branches: [ main ]
+
+# Definiert die Aufträge (Jobs), die im Workflow ausgeführt werden
+jobs:
+  # Ein einziger Job namens 'build'
+  build:
+    # Der Typ der virtuellen Maschine, auf der der Job laufen soll
+    runs-on: ubuntu-latest
+
+    # Eine Sequenz von Aufgaben, die im Job ausgeführt werden
+    steps:
+      # Schritt 1: Code auschecken
+      # Diese Action holt den Code deines Repositories auf den Runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Schritt 2: Flutter-Umgebung aufsetzen
+      # Diese community-gepflegte Action installiert eine bestimmte Flutter-Version
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable' # Wir verwenden den stabilen Flutter-Kanal
+
+      # Schritt 3: Flutter-Version zur Überprüfung ausgeben
+      - name: Print Flutter version
+        run: flutter --version
+
+      # Schritt 4: Projektabhängigkeiten installieren
+      # Führt 'flutter pub get' aus, um alle Pakete aus der pubspec.yaml zu laden
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Schritt 5: Statische Code-Analyse
+      # Überprüft den Code auf Stilfehler, potenzielle Bugs und Formatierung
+      - name: Run static analysis
+        run: flutter analyze
+
+      # Schritt 6: Tests ausführen
+      # Führt alle Unit- und Widget-Tests im Projekt aus und generiert einen Coverage-Report
+      - name: Run tests
+        run: flutter test --coverage 

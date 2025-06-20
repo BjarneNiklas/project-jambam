@@ -1,0 +1,89 @@
+openapi: 3.1.0
+info:
+  title: Project Jambam API
+  description: The official API for the Project Jambam platform, connecting the AI Innovation Assistant, the Jamfam community, and the frontend application.
+  version: 0.1.0
+
+paths:
+  /api/v1/jam-kits/generate:
+    post:
+      summary: Generate a new Jam Kit
+      description: Takes a set of user-defined keywords and generates a complete "Jam Kit" using the AI Innovation Assistant.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateJamKitRequest'
+      responses:
+        '200':
+          description: Successfully generated Jam Kit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JamKit'
+        '400':
+          description: Bad Request - Invalid input parameters.
+
+components:
+  schemas:
+    GenerateJamKitRequest:
+      type: object
+      properties:
+        keywords:
+          type: array
+          items:
+            type: string
+          description: A list of keywords or themes to guide the generation.
+          example: ["sci-fi", "puzzle", "cat protagonist"]
+        inspiration_mode:
+          type: string
+          enum: [trending, surprising, specific]
+          description: The mode the AI should use for generation.
+      required:
+        - keywords
+
+    JamKit:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: "Cosmic Cat-astrophe"
+        theme:
+          type: string
+          example: "A puzzle game where a cat with psychic powers must save its home planet from a yarn ball meteor."
+        quests:
+          type: array
+          items:
+            $ref: '#/components/schemas/Quest'
+        asset_suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetSuggestion'
+
+    Quest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "The First Push"
+        description:
+          type: string
+          example: "Master the psychic push ability to clear the path of space dust bunnies."
+
+    AssetSuggestion:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [character, environment, obstacle, sfx]
+          example: "character"
+        description:
+          type: string
+          example: "A fluffy orange cat with large, glowing purple eyes."
+        style_prompt:
+          type: string
+          example: "Pixar-style, vibrant colors, soft lighting" 

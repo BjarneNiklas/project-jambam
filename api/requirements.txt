@@ -1,0 +1,25 @@
+fastapi
+uvicorn[standard]
+python-multipart
+aiofiles
+sqlalchemy
+alembic
+python-dotenv
+# 3D and AI dependencies
+torch
+torchvision
+numpy
+opencv-python
+# Gaussian Splatting
+gaussian-splatting
+# For 3D model processing
+trimesh
+pyglet
+# Stable Diffusion 3D
+diffusers
+transformers
+accelerate
+safetensors
+# Note: xformers removed due to Windows compatibility issues
+# For PostgreSQL in production later
+# psycopg2-binary 
