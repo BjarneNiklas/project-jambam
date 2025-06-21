@@ -1,0 +1,262 @@
+{
+  "quadrants": [
+    {
+      "name": "Techniques",
+      "description": "Agile methodologies, architectural patterns, development practices."
+    },
+    {
+      "name": "Tools",
+      "description": "Software, libraries, and services that aid development."
+    },
+    {
+      "name": "Platforms",
+      "description": "Databases, cloud platforms, operating systems, and infrastructure."
+    },
+    {
+      "name": "Languages & Frameworks",
+      "description": "Programming languages and frameworks used to build software."
+    }
+  ],
+  "rings": [
+    {
+      "name": "ADOPT",
+      "description": "Technologies we are actively using and recommend broadly."
+    },
+    {
+      "name": "TRIAL",
+      "description": "Technologies we are actively experimenting with and believe have high potential."
+    },
+    {
+      "name": "ASSESS",
+      "description": "Technologies we are currently exploring and evaluating for future use."
+    },
+    {
+      "name": "HOLD",
+      "description": "Technologies we are phasing out or do not recommend for new projects."
+    }
+  ],
+  "items": [
+    {
+      "name": "Dart (Flutter)",
+      "quadrant": "Languages & Frameworks",
+      "ring": "ADOPT",
+      "description": "Primary framework for the UI."
+    },
+    {
+      "name": "Rust",
+      "quadrant": "Languages & Frameworks",
+      "ring": "ADOPT",
+      "description": "Used for middleware, engine adapters, and potentially backend services."
+    },
+    {
+      "name": "Python",
+      "quadrant": "Languages & Frameworks",
+      "ring": "TRIAL",
+      "description": "For AI model integration and engine adapters via IPC."
+    },
+    {
+      "name": "GDScript (Godot)",
+      "quadrant": "Languages & Frameworks",
+      "ring": "ADOPT",
+      "description": "Supported via engine adapter for Godot Engine projects."
+    },
+    {
+      "name": "C# (Unity)",
+      "quadrant": "Languages & Frameworks",
+      "ring": "ADOPT",
+      "description": "Supported via engine adapter for Unity Engine projects."
+    },
+    {
+      "name": "C/C++",
+      "quadrant": "Languages & Frameworks",
+      "ring": "ASSESS",
+      "description": "Considered for engine adapters via FFI for performance critical integrations."
+    },
+    {
+      "name": "Supabase/PostgreSQL",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Primary cloud data store."
+    },
+    {
+      "name": "SQLite",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "For offline data storage."
+    },
+    {
+      "name": "Bevy Engine",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Supported via engine adapter."
+    },
+    {
+      "name": "Godot Engine",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Supported via engine adapter."
+    },
+    {
+      "name": "Unity Engine",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Supported via engine adapter."
+    },
+    {
+      "name": "Broxel Engine (Voxel)",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Custom Voxel engine integrated into the platform."
+    },
+    {
+      "name": "O3DE Engine",
+      "quadrant": "Platforms",
+      "ring": "ASSESS",
+      "description": "Being assessed for future engine adapter support."
+    },
+    {
+      "name": "Web (Flutter Web)",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Target platform for UI deployment."
+    },
+    {
+      "name": "Mobile (iOS, Android)",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Target platform for UI deployment via Flutter."
+    },
+    {
+      "name": "Desktop (Windows, macOS, Linux)",
+      "quadrant": "Platforms",
+      "ring": "ADOPT",
+      "description": "Target platform for UI deployment via Flutter."
+    },
+    {
+      "name": "flutter_rust_bridge",
+      "quadrant": "Tools",
+      "ring": "ADOPT",
+      "description": "Used for FFI between Flutter (Dart) and Rust middleware."
+    },
+    {
+      "name": "OpenAPI",
+      "quadrant": "Tools",
+      "ring": "ADOPT",
+      "description": "Standard for API design and specification."
+    },
+    {
+      "name": "gRPC",
+      "quadrant": "Tools",
+      "ring": "TRIAL",
+      "description": "Being trialed for Inter-Process Communication (IPC) with engine adapters."
+    },
+    {
+      "name": "Docker",
+      "quadrant": "Tools",
+      "ring": "ASSESS",
+      "description": "Assumed standard practice for deployment and development environments."
+    },
+    {
+      "name": "Git / GitHub Actions",
+      "quadrant": "Tools",
+      "ring": "ADOPT",
+      "description": "For version control and CI/CD pipelines."
+    },
+    {
+      "name": "Ollama",
+      "quadrant": "Tools",
+      "ring": "TRIAL",
+      "description": "For running local AI models."
+    },
+    {
+      "name": "Stable Diffusion",
+      "quadrant": "Tools",
+      "ring": "TRIAL",
+      "description": "For AI image generation capabilities."
+    },
+    {
+      "name": "HuggingFace Models",
+      "quadrant": "Tools",
+      "ring": "TRIAL",
+      "description": "For integrating various pre-trained AI models."
+    },
+    {
+      "name": "OpenAI API",
+      "quadrant": "Tools",
+      "ring": "TRIAL",
+      "description": "For integrating OpenAI's AI models."
+    },
+    {
+      "name": "Material 3",
+      "quadrant": "Tools",
+      "ring": "ADOPT",
+      "description": "UI Design System for the Flutter application."
+    },
+    {
+      "name": "API-First",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Core principle for designing system components."
+    },
+    {
+      "name": "Offline-First",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Ensuring core functionality is available without an internet connection."
+    },
+    {
+      "name": "Mobile-First",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Prioritizing mobile user experience in UI design."
+    },
+    {
+      "name": "Test-First (TDD)",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Test-Driven Development practice."
+    },
+    {
+      "name": "Clean Architecture",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Architectural pattern for separation of concerns."
+    },
+    {
+      "name": "Modular Design",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Building the system from independent, interchangeable modules."
+    },
+    {
+      "name": "Plug-in Architecture",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Allowing extensibility through plugins."
+    },
+    {
+      "name": "FFI (Foreign Function Interface)",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Used for communication between different programming languages (Dart-Rust)."
+    },
+    {
+      "name": "Procedural Generation (ProcGen)",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Core technique for content creation."
+    },
+    {
+      "name": "Community-Driven Development",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Involving the community in the development process."
+    },
+    {
+      "name": "CI/CD",
+      "quadrant": "Techniques",
+      "ring": "ADOPT",
+      "description": "Continuous Integration and Continuous Deployment practices."
+    }
+  ]
+}
