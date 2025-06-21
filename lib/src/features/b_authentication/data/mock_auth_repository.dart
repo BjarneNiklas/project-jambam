@@ -20,6 +20,10 @@ class MockAuthRepository implements AuthRepository {
   @override
   Stream<User?> get authStateChanges {
     _authStateController ??= StreamController<User?>.broadcast();
+    // If no user is logged in, sign in anonymously.
+    if (_currentUser == null) {
+      signInAnonymously();
+    }
     return _authStateController!.stream;
   }
 

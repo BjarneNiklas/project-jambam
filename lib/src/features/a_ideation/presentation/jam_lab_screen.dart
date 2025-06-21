@@ -81,10 +81,12 @@ class _JamLabScreenState extends ConsumerState<JamLabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('🧪 Jam Lab'),
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('🧪 Jam Lab'),
+          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
         bottom: TabBar(
           onTap: (index) => setState(() => _selectedTabIndex = index),
           tabs: const [
@@ -93,16 +95,17 @@ class _JamLabScreenState extends ConsumerState<JamLabScreen> {
             Tab(text: '🎯 Insights'),
             Tab(text: '👨‍🔬 Researchers'),
           ],
+          ),
         ),
-      ),
-      body: IndexedStack(
+        body: IndexedStack(
         index: _selectedTabIndex,
         children: [
           _buildExperimentsTab(),
           _buildResearchTab(),
           _buildInsightsTab(),
           _buildResearchersTab(),
-        ],
+          ],
+        ),
       ),
     );
   }
