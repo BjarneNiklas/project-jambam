@@ -5,6 +5,7 @@ import '../features/a_ideation/application/concept_agent.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'chip_demo_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -224,6 +225,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               onPressed: _reset,
               label: const Text('Zurücksetzen'),
             ),
+            const Divider(height: 32),
+            Text('Entwicklung & Tests', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 12),
+            ListTile(
+              leading: const Icon(Icons.label),
+              title: const Text('Enhanced Chips Demo'),
+              subtitle: const Text('Teste die neuen farbigen Chip-Komponenten'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChipDemoScreen()),
+                );
+              },
+            ),
+            const Divider(height: 32),
           ],
         ),
       ),

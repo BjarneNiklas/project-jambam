@@ -1,0 +1,62 @@
+/* FeedPage.css */
+
+.feed-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.feed-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.feed-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #f0f0f0;
+}
+
+.feed-header p {
+  font-size: 1.1rem;
+  color: #a1a1aa;
+}
+
+.feed-filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+/* 
+  Styles for .filter-chip are defined globally in App.css.
+  We just need to ensure our button has the right class.
+  The structure for a styled chip is a bit different, so we'll adjust the JSX in FeedPage.tsx next.
+*/
+.filter-chip {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-chip:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.filter-chip.active {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-color-glow);
+}
+
+.feed-content-stream {
+  /* Styles for the content stream will go here */
+} 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_jambam/src/shared/enhanced_chip.dart';
 
 class JamSeedScreen extends ConsumerStatefulWidget {
   const JamSeedScreen({super.key});
@@ -204,11 +205,12 @@ class _JamSeedScreenState extends ConsumerState<JamSeedScreen> {
   }
 
   Widget _buildCategoryChip(String label, String description) {
-    return ActionChip(
-      label: Text(label),
+    return EnhancedActionChip(
+      label: label,
       onPressed: () => _showCategorySeeds(label),
+      icon: Icons.category,
+      color: Colors.green,
       backgroundColor: Colors.green.shade50,
-      side: BorderSide(color: Colors.green.shade200),
     );
   }
 

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    
+    <!-- Security and Privacy Meta Tags -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    
+    <!-- Prevent AI Training -->
+    <meta name="GPTBot" content="noindex, nofollow" />
+    <meta name="ChatGPT-User" content="noindex, nofollow" />
+    <meta name="CCBot" content="noindex, nofollow" />
+    <meta name="anthropic-ai" content="noindex, nofollow" />
+    
+    <!-- Social Media Protection -->
+    <meta property="og:robots" content="noindex, nofollow" />
+    <meta name="twitter:robots" content="noindex, nofollow" />
+    
+    <!-- Cache Control -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="no-referrer" />
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';" />
+    
+    <!-- Page Description (Generic for Security) -->
+    <meta name="description" content="Protected area - Access restricted" />
+    <meta name="keywords" content="protected, restricted, access" />
+    <meta name="author" content="JamBam Team" />
+    
+    <!-- Favicon and Icons -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="%PUBLIC_URL%/static/js/bundle.js" as="script" />
+    <link rel="preload" href="%PUBLIC_URL%/static/css/main.css" as="style" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jambam.tech/" />
+    <meta property="og:title" content="JamBam Tech Radar" />
+    <meta property="og:description" content="Interactive technology radar for strategic decision-making and technology evaluation." />
+    <meta property="og:image" content="%PUBLIC_URL%/logo192.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://jambam.tech/" />
+    <meta property="twitter:title" content="JamBam Tech Radar" />
+    <meta property="twitter:description" content="Interactive technology radar for strategic decision-making and technology evaluation." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/logo192.png" />
+
+    <title>JamBam Tech Radar - Protected Area</title>
+  </head>
+  <body>
+    <noscript>
+      <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Inter', sans-serif;
+        text-align: center;
+        padding: 20px;
+        z-index: 9999;
+      ">
+        <div>
+          <h1 style="color: #00bcd4; margin-bottom: 20px;">JavaScript Required</h1>
+          <p>This application requires JavaScript to function properly.</p>
+          <p>Please enable JavaScript in your browser to access the protected content.</p>
+        </div>
+      </div>
+    </noscript>
+    <div id="root"></div>
+    
+    <!-- Security Script -->
+    <script>
+      // Prevent right-click context menu
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // Prevent text selection
+      document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // Prevent drag and drop
+      document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // Prevent keyboard shortcuts for developer tools
+      document.addEventListener('keydown', function(e) {
+        // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+          return false;
+        }
+      });
+      
+      // Clear sensitive data on page unload
+      window.addEventListener('beforeunload', function() {
+        localStorage.removeItem('jambam_tech_radar_auth');
+        sessionStorage.clear();
+      });
+    </script>
+  </body>
+</html>

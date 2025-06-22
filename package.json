@@ -1,0 +1,40 @@
+{
+  "name": "project-jambam",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run start --workspace=tech-radar",
+    "build": "npm run build --workspace=tech-radar",
+    "test": "npm run test --workspace=tech-radar"
+  },
+  "workspaces": [
+    "web-portal/tech-radar"
+  ],
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.2",
+    "@mui/material": "^7.1.2",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/d3": "^7.4.3",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^20.19.1",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "ajv": "^8.17.1",
+    "d3": "^7.9.0",
+    "i18next": "^25.2.1",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15.5.3",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.23.1",
+    "react-scripts": "5.0.1",
+    "typescript": "~4.9.5",
+    "web-vitals": "^2.1.4"
+  }
+}

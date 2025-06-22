@@ -1,0 +1,423 @@
+{
+  "app": {
+    "title": "JambaM Tech Radar",
+    "subtitle": "Technology Assessment & Strategy",
+    "mainTitle": "Technology Radar",
+    "description": "Our most advanced technology assessment and strategic planning tool. This interactive radar visualizes our current technology stack, evaluation criteria, and strategic direction for the JambaM ecosystem."
+  },
+  "filters": {
+    "title": "Filter Technologies",
+    "subtitle": "Explore and discover our technology landscape",
+    "quadrants": "Quadrants",
+    "rings": "Rings (Phase)",
+    "categories": "Categories",
+    "search": "Search technologies...",
+    "searchPlaceholder": "Search by name, description, quadrant, or ring...",
+    "allQuadrants": "🌐 All Quadrants",
+    "allRings": "🎯 All Rings",
+    "clearFilters": "Clear all filters",
+    "activeFilters": "Active Filters:",
+    "showing": "Showing {{count}} of {{total}} technologies",
+    "interactiveVisualization": "Interactive visualization of our technology landscape",
+    "selectAll": "Select All",
+    "clearAll": "Clear All"
+  },
+  "radar": {
+    "title": "🎯 Technology Radar",
+    "subtitle": "Interactive visualization of our technology landscape",
+    "howToRead": "🎯 How to Read This Radar",
+    "rings": {
+      "title": "Rings (Phases, from center outward):",
+      "description": "The rings represent the lifecycle phase of a technology, indicating our strategic recommendation.",
+      "adopt": "ADOPT: Technologies we actively use and recommend",
+      "trial": "TRIAL: Technologies we're experimenting with",
+      "assess": "ASSESS: Technologies we're evaluating",
+      "hold": "HOLD: Technologies we're phasing out"
+    },
+    "quadrants": {
+      "title": "Quadrants:",
+      "languages": "Languages & Frameworks: Programming languages and frameworks",
+      "platforms": "Platforms: Databases, cloud platforms, infrastructure",
+      "tools": "Tools: Software, libraries, and services",
+      "techniques": "Techniques: Methodologies and practices"
+    }
+  },
+  "matrix": {
+    "title": "Matrix View",
+    "subtitle": "Structured overview by rings and quadrants",
+    "sortBy_name": "Sort by name",
+    "sortBy_ring": "Sort by phase",
+    "items": "items",
+    "noItems": "No items in this area",
+    "legend": {
+      "title": "Legend",
+      "rings": "Rings (Phases)",
+      "quadrants": "Quadrants"
+    }
+  },
+  "language": {
+    "en": "English",
+    "de": "Deutsch",
+    "switch": "Switch Language"
+  },
+  "title": "JamBam Tech Radar",
+  "subtitle": "Technology Assessment & Strategy",
+  "viewToggle": {
+    "radar": "Radar",
+    "matrix": "Matrix",
+    "products": "Products",
+    "competitors": "Competitors"
+  },
+  "categories": {
+    "Core Development": "Core Development",
+    "AI/ML Stack": "AI/ML Stack",
+    "Game Engines": "Game Engines",
+    "Backend Infrastructure": "Backend Infrastructure",
+    "Deployment Platforms": "Deployment Platforms",
+    "Development Tools": "Development Tools",
+    "UI/UX": "UI/UX",
+    "3D/XR": "3D/XR",
+    "Architecture": "Architecture",
+    "Development Practices": "Development Practices",
+    "Game Development": "Game Development"
+  },
+  "quadrants": {
+    "languages-and-frameworks": "Languages & Frameworks",
+    "platforms": "Platforms",
+    "tools": "Tools",
+    "techniques": "Techniques"
+  },
+  "rings": {
+    "adopt": "ADOPT",
+    "trial": "TRIAL",
+    "assess": "ASSESS",
+    "hold": "HOLD"
+  },
+  "legend": {
+    "title": "Legend",
+    "rings": "Rings (Phases)",
+    "quadrants": "Quadrants"
+  },
+  "competitors": {
+    "title": "Competitors & Partnerships",
+    "subtitle": "Market analysis and integration opportunities for strategic partnerships",
+    "tab": "Competitors",
+    "filterByCategory": "Filter by Category",
+    "allCategories": "All Categories",
+    "strengths": "Strengths",
+    "weaknesses": "Weaknesses",
+    "integrationAreas": "Integration Areas"
+  },
+  "partnerships": {
+    "tab": "Partnerships",
+    "overview": "Partnerships Overview",
+    "total": "Total",
+    "active": "Active",
+    "inTalks": "In Talks",
+    "benefits": "Benefits",
+    "requirements": "Requirements"
+  },
+  "products": {
+    "title": "Products & Platforms",
+    "subtitle": "Own and Partner Products",
+    "broxelEngine": {
+      "title": "Broxel Engine",
+      "description": "Next-Generation Hybrid Voxel Engine for procedural worlds"
+    },
+    "aiStudio": {
+      "title": "AI Studio",
+      "description": "AI-powered content creation and asset generation"
+    },
+    "auraxPlatform": {
+      "title": "AURAX Platform",
+      "description": "Community platform for creatives and developers"
+    },
+    "luvyEngine": {
+      "title": "LUVY Engine",
+      "description": "Modular game engine with plugin system"
+    },
+    "communityHub": {
+      "title": "Community Hub",
+      "description": "Central platform for community management and collaboration"
+    },
+    "educationalTools": {
+      "title": "Educational Tools",
+      "description": "Learning platform and tutorial system"
+    }
+  },
+  "password": {
+    "title": "Protected Area",
+    "subtitle": "This Tech Radar is password protected",
+    "label": "Password",
+    "placeholder": "Enter the password",
+    "submit": "Grant Access",
+    "incorrect": "Incorrect password. Please try again.",
+    "locked": "Too many attempts. Please wait 15 minutes.",
+    "tooManyAttempts": "Too many failed attempts. Access locked for 15 minutes.",
+    "logout": "Logout",
+    "attempts": "{{count}} of {{max}} attempts",
+    "security": {
+      "encrypted": "End-to-end encrypted",
+      "protected": "Protected from search engines",
+      "noIndex": "Not indexed by bots"
+    }
+  },
+  "noAccount": "No account yet? Register",
+  "forgotPassword": "Forgot password?",
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Welcome to JamBam! Create your account to get started.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Your email address",
+    "passwordLabel": "Password (min. 8 characters)",
+    "passwordPlaceholder": "Choose a secure password",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Enter your password again",
+    "submit": "Create Account",
+    "passwordMismatch": "The passwords do not match.",
+    "alreadyHaveAccount": "Already have an account? Login"
+  },
+  "feed": {
+    "title": "Updates & Insights",
+    "subtitle": "Latest updates, in-depth insights, and stories from the JamBam community."
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Meet the team behind JamBam",
+    "mission": {
+      "title": "Our Mission",
+      "description": "We develop the leading European ecosystem for community-driven media development. Our focus is on plugin systems, multi-engine integration, asset marketplaces, and co-creation features."
+    },
+    "team": {
+      "title": "Our Team",
+      "description": "A passionate team of developers, designers, and visionaries who shape the JamBam ecosystem.",
+      "roles": {
+        "founder_visionary": "Founder & Visionary"
+      }
+    },
+    "values": {
+      "title": "Our Values",
+      "innovation": {
+        "title": "Innovation",
+        "description": "We strive for groundbreaking solutions and new technologies in game development and media platforms."
+      },
+      "community": {
+        "title": "Community",
+        "description": "We build strong, supportive communities for developers and creatives with open APIs and extensibility."
+      },
+      "quality": {
+        "title": "Quality",
+        "description": "We maintain the highest quality standards in everything we do, from code quality to user experience."
+      },
+      "collaboration": {
+        "title": "Collaboration",
+        "description": "We believe in the power of teamwork and knowledge sharing in our modular ecosystem."
+      }
+    }
+  },
+  "team": {
+    "bjarne": {
+      "name": "Bjarne Luttermann"
+    }
+  },
+  "techradar": {
+    "title": "JamBam Tech Radar",
+    "subtitle": "Technology Assessment & Strategy",
+    "viewToggle": {
+      "radar": "Radar",
+      "matrix": "Matrix"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "techRadar": "Tech Radar",
+    "feed": "Updates",
+    "about": "About",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "settings": "Settings"
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to the JamBam Ecosystem",
+      "subtitle": "The Next Generation of Interactive Media for Europe",
+      "description": "A community-driven ecosystem for co-creation, game development, and innovative media platforms. Connect with developers, create content together, and discover new possibilities for digital collaboration.",
+      "cta": "Discover Now",
+      "appButton": "Download App",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Our Ecosystem",
+      "subtitle": "Everything you need for your creative journey",
+      "creativity": {
+        "title": "Plugin System",
+        "description": "Modular architecture with open APIs. Extend the ecosystem with your own plugins, mods, and tools."
+      },
+      "community": {
+        "title": "Community-First",
+        "description": "Strong, open community with active and passive participation. From game jams to co-creation - everyone can participate."
+      },
+      "innovation": {
+        "title": "Multi-Engine",
+        "description": "Integration of various game engines (Unity, Godot, Bevy) for maximum flexibility and performance."
+      }
+    }
+  },
+  "techRadar": {
+    "title": "Tech Radar",
+    "subtitle": "Discover the latest technologies and trends",
+    "description": "Our Tech Radar shows you the most current technologies, frameworks, and tools shaping the development landscape.",
+    "categories": {
+      "all": "All",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Mobile",
+      "ai": "AI & ML",
+      "devops": "DevOps",
+      "database": "Databases",
+      "cloud": "Cloud",
+      "security": "Security",
+      "tools": "Tools"
+    },
+    "rings": {
+      "adopt": "Adopt",
+      "trial": "Trial",
+      "assess": "Assess",
+      "hold": "Hold"
+    }
+  },
+  "feed": {
+    "title": "Feed",
+    "subtitle": "News & Insights from the Tech World",
+    "description": "Stay up to date with the latest developments, articles, and insights from the technology industry.",
+    "filters": {
+      "all": "All",
+      "news": "News",
+      "articles": "Articles",
+      "tutorials": "Tutorials",
+      "reviews": "Reviews",
+      "interviews": "Interviews",
+      "events": "Events"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome back!",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Login",
+      "noAccount": "Don't have an account?",
+      "register": "Register",
+      "invalidCredentials": "Incorrect email or password",
+      "networkError": "Network error. Please try again."
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Create your account",
+      "username": "Username",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Your username",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Register",
+      "hasAccount": "Already have an account?",
+      "login": "Login",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 8 characters long",
+      "registrationFailed": "Registration failed. User may already exist.",
+      "networkError": "Network error. Please try again."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your JamBam experience",
+    "public": {
+      "title": "Public Settings",
+      "description": "These settings are available for all visitors."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the look and behavior of the website to your preferences."
+    },
+    "language": "Language",
+    "darkMode": "Dark Mode",
+    "loginRequired": {
+      "title": "Login Required",
+      "description": "You need to be logged in for advanced settings."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Manage your notification settings."
+    },
+    "emailNotifications": "Email Notifications",
+    "pushNotifications": "Push Notifications",
+    "privacy": {
+      "title": "Privacy",
+      "description": "Control your privacy settings."
+    },
+    "dataCollection": "Data Collection",
+    "analytics": "Analytics",
+    "appDownload": "Download App",
+    "downloadApp": "Download App"
+  },
+  "themeDemo": {
+    "title": "Theme Demo",
+    "subtitle": "Discover and test all available background themes",
+    "currentTheme": "Current Theme",
+    "features": "Features",
+    "interactive": "Interactive elements",
+    "clickable": "Clickable particles",
+    "animated": "Smooth animations",
+    "responsive": "Responsive design",
+    "instructions": "Instructions",
+    "clickToInteract": "Click on particles to interact with them",
+    "scrollToTest": "Scroll to test the behavior",
+    "sampleContent": "Sample Content",
+    "contentDescription": "Here you can see how the themes look with various UI elements.",
+    "primaryButton": "Primary Button",
+    "secondaryButton": "Secondary Button",
+    "accentButton": "Accent Button",
+    "sampleForm": "Sample Form",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "messagePlaceholder": "Your message...",
+    "allThemes": "All Available Themes"
+  },
+  "footer": {
+    "description": "The leading European ecosystem for community-driven media development with plugin systems and multi-engine integration.",
+    "quickLinks": "Quick Links",
+    "social": "Follow Us",
+    "copyright": "© 2024 JamBam. All rights reserved."
+  },
+  "themes": {
+    "title": "Background Themes",
+    "subtitle": "Choose your favorite theme for the website",
+    "none": {
+      "title": "No Theme",
+      "description": "Disables all background animations for maximum performance."
+    },
+    "bubbles": {
+      "title": "Bubbles",
+      "description": "Colorful, interactive bubbles gently rising"
+    },
+    "balloons": {
+      "title": "Balloons",
+      "description": "Colorful balloons floating cheerfully through the air"
+    },
+    "butterflies": {
+      "title": "Butterflies",
+      "description": "Elegant butterflies gracefully fluttering"
+    },
+    "stars": {
+      "title": "Stars",
+      "description": "Twinkling stars magically glowing"
+    },
+    "fireflies": {
+      "title": "Fireflies",
+      "description": "Magical fireflies gently pulsing"
+    }
+  }
+} 

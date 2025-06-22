@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/ideation_methods.dart';
+import 'package:project_jambam/src/shared/enhanced_chip.dart';
 
 class IdeationMethodsScreen extends ConsumerStatefulWidget {
   const IdeationMethodsScreen({super.key});
@@ -162,16 +163,16 @@ class _IdeationMethodsScreenState extends ConsumerState<IdeationMethodsScreen> w
                     runSpacing: 8,
                     children: IdeationCategory.values.map((category) {
                       final isSelected = _selectedCategory == category;
-                      return FilterChip(
-                        label: Text(_getCategoryName(category)),
+                      return EnhancedFilterChip(
+                        label: _getCategoryName(category),
                         selected: isSelected,
                         onSelected: (selected) {
                           setState(() {
                             _selectedCategory = category;
                           });
                         },
+                        selectedColor: _getCategoryColor(category),
                         backgroundColor: colorScheme.surfaceContainerHighest,
-                        selectedColor: colorScheme.primaryContainer,
                       );
                     }).toList(),
                   ),
@@ -200,16 +201,16 @@ class _IdeationMethodsScreenState extends ConsumerState<IdeationMethodsScreen> w
                     runSpacing: 8,
                     children: Complexity.values.map((complexity) {
                       final isSelected = _selectedComplexity == complexity;
-                      return FilterChip(
-                        label: Text(_getComplexityName(complexity)),
+                      return EnhancedFilterChip(
+                        label: _getComplexityName(complexity),
                         selected: isSelected,
                         onSelected: (selected) {
                           setState(() {
                             _selectedComplexity = complexity;
                           });
                         },
+                        selectedColor: _getComplexityColor(complexity),
                         backgroundColor: colorScheme.surfaceContainerHighest,
-                        selectedColor: colorScheme.primaryContainer,
                       );
                     }).toList(),
                   ),
@@ -276,28 +277,34 @@ class _IdeationMethodsScreenState extends ConsumerState<IdeationMethodsScreen> w
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      ActionChip(
-                        label: const Text('AI Supported'),
+                      EnhancedActionChip(
+                        label: 'AI Supported',
                         onPressed: () {
                           // Filter for AI supported methods
                         },
+                        icon: Icons.psychology,
+                        color: colorScheme.secondary,
                         backgroundColor: colorScheme.secondaryContainer,
                       ),
-                      ActionChip(
-                        label: const Text('Quick (< 10 min)'),
+                      EnhancedActionChip(
+                        label: 'Quick (< 10 min)',
                         onPressed: () {
                           setState(() {
                             _maxDuration = const Duration(minutes: 10);
                           });
                         },
-                        backgroundColor: colorScheme.secondaryContainer,
+                        icon: Icons.speed,
+                        color: colorScheme.tertiary,
+                        backgroundColor: colorScheme.tertiaryContainer,
                       ),
-                      ActionChip(
-                        label: const Text('Team Methods'),
+                      EnhancedActionChip(
+                        label: 'Team Methods',
                         onPressed: () {
                           // Filter for team methods
                         },
-                        backgroundColor: colorScheme.secondaryContainer,
+                        icon: Icons.group,
+                        color: colorScheme.primary,
+                        backgroundColor: colorScheme.primaryContainer,
                       ),
                     ],
                   ),
@@ -759,6 +766,15 @@ class _IdeationMethodsScreenState extends ConsumerState<IdeationMethodsScreen> w
       case IdeationCategory.research: return Colors.indigo;
       case IdeationCategory.experimental: return Colors.red;
       case IdeationCategory.gamification: return Colors.teal;
+    }
+  }
+
+  Color _getComplexityColor(Complexity complexity) {
+    switch (complexity) {
+      case Complexity.simple: return Colors.green;
+      case Complexity.moderate: return Colors.orange;
+      case Complexity.advanced: return Colors.red;
+      case Complexity.expert: return Colors.purple;
     }
   }
 

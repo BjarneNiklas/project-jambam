@@ -5,6 +5,12 @@ aiofiles
 sqlalchemy
 alembic
 python-dotenv
+# Authentication dependencies
+PyJWT
+bcrypt
+# Supabase integration
+supabase
+psycopg2-binary
 # 3D and AI dependencies
 torch
 torchvision

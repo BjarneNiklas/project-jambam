@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:logging/logging.dart';
 import 'asset_generation_controller.dart';
 import '../asset_preview/gaussian_splat_viewer.dart';
+import 'package:project_jambam/src/shared/enhanced_chip.dart';
 
 class AssetGenerationScreen extends ConsumerStatefulWidget {
   const AssetGenerationScreen({super.key});
@@ -300,8 +301,8 @@ class _AssetGenerationScreenState extends ConsumerState<AssetGenerationScreen> {
             'dance',
           ].map((animation) {
             final isSelected = _selectedAnimations.contains(animation);
-            return FilterChip(
-              label: Text(animation),
+            return EnhancedFilterChip(
+              label: animation,
               selected: isSelected,
               onSelected: (selected) {
                 setState(() {
@@ -312,10 +313,9 @@ class _AssetGenerationScreenState extends ConsumerState<AssetGenerationScreen> {
                   }
                 });
               },
-              avatar: Icon(
-                isSelected ? Icons.check : Icons.add,
-                size: 16,
-              ),
+              icon: Icons.add,
+              selectedIcon: Icons.check,
+              selectedColor: Theme.of(context).colorScheme.primary,
             );
           }).toList(),
         ),

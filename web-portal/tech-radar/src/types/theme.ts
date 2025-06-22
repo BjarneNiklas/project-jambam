@@ -1,0 +1,1 @@
+export type Theme = 'bubbles' | 'balloons' | 'butterflies' | 'stars' | 'fireflies'; 

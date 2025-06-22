@@ -1,17 +1,82 @@
 from fastapi import FastAPI, BackgroundTasks, HTTPException, File, UploadFile, Form, Depends
 from fastapi.staticfiles import StaticFiles
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session, joinedload
 from uuid import uuid4
 import shutil
 import os
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
+import jwt
+import bcrypt
+from pydantic import BaseModel
 
 from .models import assets as asset_models, database as db_models
-from .core.database import engine, get_db
+from .core.database import engine, get_db, SessionLocal
 from .core.jobs import create_job, get_job_status
 from .core.pipeline import asset_pipeline
 from .generators import stable_diffusion_3d
+
+# --- Security Configuration ---
+SECRET_KEY = "your-secret-key-here"  # In production, use environment variable
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+security = HTTPBearer()
+
+# --- Pydantic Models for Auth ---
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+class UserRegister(BaseModel):
+    username: str
+    email: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
+# --- Authentication Functions ---
+def hash_password(password: str) -> str:
+    """Hash a password using bcrypt."""
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify a password against its hash."""
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    """Create a JWT access token."""
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
+    """Get the current authenticated user from JWT token."""
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        token_data = TokenData(email=email)
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    user = db.query(db_models.User).filter(db_models.User.email == token_data.email).first()
+    if user is None:
+        raise HTTPException(status_code=401, detail="User not found")
+    return user
 
 # --- Database Setup ---
 db_models.Base.metadata.create_all(bind=engine)
@@ -81,6 +146,75 @@ app = FastAPI(
     description="API for generating, uploading, and processing 3D assets with community features.",
     version="0.2.0"
 )
+
+# --- Authentication Endpoints ---
+@app.post("/api/v1/auth/register", response_model=Token)
+async def register(user_data: UserRegister, db: Session = Depends(get_db)):
+    """Register a new user."""
+    # Check if user already exists
+    existing_user = db.query(db_models.User).filter(
+        (db_models.User.email == user_data.email) | 
+        (db_models.User.username == user_data.username)
+    ).first()
+    
+    if existing_user:
+        raise HTTPException(status_code=400, detail="User already exists")
+    
+    # Hash password and create user
+    hashed_password = hash_password(user_data.password)
+    db_user = db_models.User(
+        username=user_data.username,
+        email=user_data.email,
+        password_hash=hashed_password
+    )
+    
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    # Create access token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": db_user.email}, expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@app.post("/api/v1/auth/login", response_model=Token)
+async def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
+    """Login user and return JWT token."""
+    # Find user by email
+    user = db.query(db_models.User).filter(db_models.User.email == user_credentials.email).first()
+    
+    if not user or not verify_password(user_credentials.password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
+    
+    if not user.is_active:
+        raise HTTPException(status_code=401, detail="User account is disabled")
+    
+    # Update last login
+    user.last_login = datetime.utcnow()
+    db.commit()
+    
+    # Create access token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@app.get("/api/v1/auth/me")
+async def get_current_user_info(current_user: db_models.User = Depends(get_current_user)):
+    """Get current user information."""
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "role": current_user.role,
+        "is_verified": current_user.is_verified,
+        "created_at": current_user.created_at
+    }
 
 # --- Static File Serving ---
 os.makedirs("static/generated", exist_ok=True)

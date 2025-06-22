@@ -1,0 +1,60 @@
+.theme-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: auto;
+  z-index: 0;
+  opacity: 1;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Theme-specific animations */
+.theme-background[data-theme="bubbles"] {
+  animation: bubbleFloat 20s ease-in-out infinite;
+}
+
+.theme-background[data-theme="balloons"] {
+  animation: balloonFloat 15s ease-in-out infinite;
+}
+
+.theme-background[data-theme="butterflies"] {
+  animation: butterflyFloat 12s ease-in-out infinite;
+}
+
+.theme-background[data-theme="stars"] {
+  animation: starTwinkle 8s ease-in-out infinite;
+}
+
+.theme-background[data-theme="leaves"] {
+  animation: leafFall 18s ease-in-out infinite;
+}
+
+@keyframes bubbleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+@keyframes balloonFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-15px) scale(1.05); }
+}
+
+@keyframes butterflyFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(5deg); }
+  50% { transform: translateY(-12px) rotate(0deg); }
+  75% { transform: translateY(-8px) rotate(-5deg); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 0.8; }
+}
+
+@keyframes leafFall {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(90deg); }
+} 

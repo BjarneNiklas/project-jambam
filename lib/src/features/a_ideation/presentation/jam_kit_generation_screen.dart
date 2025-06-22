@@ -5,6 +5,7 @@ import 'package:project_jambam/src/features/a_ideation/presentation/jam_kit_resu
 import '../application/concept_generation_service.dart';
 import 'package:project_jambam/src/features/asset_generation/asset_generation_screen.dart';
 import 'package:project_jambam/src/features/a_ideation/domain/jam_kit.dart';
+import 'package:project_jambam/src/shared/enhanced_chip.dart';
 
 // Create a provider for the agent configuration
 final agentConfigProvider = StateNotifierProvider<AgentConfigNotifier, AgentConfig>((ref) {
@@ -216,32 +217,41 @@ class _JamKitGenerationScreenState extends ConsumerState<JamKitGenerationScreen>
             Wrap(
               spacing: 8,
               children: [
-                ChoiceChip(
-                  label: const Text('Creative'),
+                EnhancedChoiceChip(
+                  label: 'Creative',
                   selected: _selectedInspirationMode == 'creative',
                   onSelected: (selected) {
                     if (selected) {
                       setState(() => _selectedInspirationMode = 'creative');
                     }
                   },
+                  icon: Icons.brush,
+                  selectedIcon: Icons.auto_awesome,
+                  selectedColor: Colors.purple,
                 ),
-                ChoiceChip(
-                  label: const Text('Analytical'),
+                EnhancedChoiceChip(
+                  label: 'Analytical',
                   selected: _selectedInspirationMode == 'analytical',
                   onSelected: (selected) {
                     if (selected) {
                       setState(() => _selectedInspirationMode = 'analytical');
                     }
                   },
+                  icon: Icons.analytics,
+                  selectedIcon: Icons.trending_up,
+                  selectedColor: Colors.blue,
                 ),
-                ChoiceChip(
-                  label: const Text('Experimental'),
+                EnhancedChoiceChip(
+                  label: 'Experimental',
                   selected: _selectedInspirationMode == 'experimental',
                   onSelected: (selected) {
                     if (selected) {
                       setState(() => _selectedInspirationMode = 'experimental');
                     }
                   },
+                  icon: Icons.science,
+                  selectedIcon: Icons.explore,
+                  selectedColor: Colors.orange,
                 ),
               ],
             ),
