@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import { FaYoutube, FaInstagram, FaGithub, FaTiktok, FaDiscord } from 'react-icons/fa';
+import { FaYoutube, FaInstagram, FaGithub, FaTiktok, FaDiscord, FaReddit } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 const Footer: React.FC = () => {
@@ -18,6 +18,7 @@ const Footer: React.FC = () => {
             <ul>
               <li><a href="/about">About Us</a></li>
               <li><a href="/feed">Feed</a></li>
+              <li><a href="/roadmap">Roadmap</a></li> {/* Add Roadmap link */}
               <li><a href="/careers">Careers</a></li>
               <li><a href="/contact">Contact</a></li>
               <li>
@@ -41,6 +42,7 @@ const Footer: React.FC = () => {
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="X"><FaXTwitter /></a>
               <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><FaTiktok /></a>
               <a href="https://discord.com" target="_blank" rel="noopener noreferrer" aria-label="Discord"><FaDiscord /></a>
+              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit"><FaReddit /></a>
             </div>
           </div>
           <div className="footer-section">
