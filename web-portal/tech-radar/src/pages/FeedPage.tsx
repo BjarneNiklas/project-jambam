@@ -121,15 +121,3 @@ const FeedPage: React.FC = () => {
 };
 
 export default FeedPage;
-            title={update.title}
-            date={update.date}
-            content={update.content}
-            category={update.category}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default FeedPage; 

@@ -103,11 +103,13 @@
 .status-planned-badge { background-color: #6c757d; } /* Grey */
 .status-in-progress-badge { background-color: #007bff; } /* Blue */
 .status-completed-badge { background-color: #28a745; } /* Green */
+.status-thesis-focus-badge { background-color: #17a2b8; } /* Teal/Info Blue */
 
 /* Match item indicator color to status */
 .roadmap-item.status-planned::before { background-color: #6c757d; }
 .roadmap-item.status-in-progress::before { background-color: #007bff; }
 .roadmap-item.status-completed::before { background-color: #28a745; }
+.roadmap-item.status-thesis-focus::before { background-color: #17a2b8; }
 
 
 .roadmap-item-title {
