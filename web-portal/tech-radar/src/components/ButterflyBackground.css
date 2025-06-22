@@ -1,0 +1,21 @@
+.butterfly-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0; /* Ensure it's behind content */
+  pointer-events: none; /* Allow clicks to pass through */
+}
+
+.butterfly {
+  /* Base styles are applied via inline styles in the component for dynamic properties */
+  will-change: transform, left, top; /* Optimize for animations */
+  transition: transform 0.3s ease-out; /* Smooth rotation */
+}
+
+/*
+  Removed direct wing animation from CSS as it's handled by JS/SVG transform.
+  Keeping the file for potential future shared styles or container-specific styles.
+*/

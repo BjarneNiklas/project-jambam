@@ -123,11 +123,12 @@
   }
   
   .theme-label {
-    font-size: 0.95rem;
+    font-size: 1rem; /* Ensure label is clearly readable */
   }
   
   .theme-description {
-    font-size: 0.8rem;
+    font-size: 0.85rem; /* Slightly larger for better readability */
+    line-height: 1.4; /* Improve line spacing for description */
   }
 }
 
