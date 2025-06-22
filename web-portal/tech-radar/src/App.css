@@ -11,6 +11,18 @@
   --card-bg: rgba(255, 255, 255, 0.95);
   --border-color: #e5e7eb;
   --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Tech Radar Specific Colors */
+  --radar-adopt-color: #10b981;
+  --radar-trial-color: #3b82f6;
+  --radar-assess-color: #f59e0b;
+  --radar-hold-color: #ef4444;
+
+  --radar-languages-color: #ec4899;
+  --radar-platforms-color: #8b5cf6;
+  --radar-tools-color: #06b6d4;
+  --radar-techniques-color: #84cc16;
+  --radar-default-color: #6b7280;
 }
 
 .dark-mode {
@@ -22,6 +34,18 @@
   --card-bg: rgba(31, 41, 55, 0.95);
   --border-color: #374151;
   --shadow-color: rgba(0, 0, 0, 0.3);
+
+  /* Tech Radar Specific Colors - Dark Mode (can be same or adjusted) */
+  --radar-adopt-color: #10b981; /* Green usually works well in dark */
+  --radar-trial-color: #60a5fa; /* Lighter blue */
+  --radar-assess-color: #fbbf24; /* Lighter yellow/orange */
+  --radar-hold-color: #f87171; /* Lighter red */
+
+  --radar-languages-color: #f472b6; /* Lighter pink */
+  --radar-platforms-color: #c084fc; /* Lighter purple */
+  --radar-tools-color: #22d3ee; /* Lighter cyan */
+  --radar-techniques-color: #a3e635; /* Lighter green/lime */
+  --radar-default-color: #9ca3af; /* Lighter grey */
 }
 
 * {
@@ -257,23 +281,50 @@ body {
   height: 100%;
 }
 
+/* Styling for the SVG grid lines and circles */
+.radar-grid circle,
+.radar-grid line {
+  stroke: var(--border-color); /* Use theme border color */
+  opacity: 0.6; /* Slightly more subtle */
+}
+
+.dark-mode .radar-grid circle,
+.dark-mode .radar-grid line {
+  stroke: var(--border-color);
+  opacity: 0.4; /* More subtle in dark mode */
+}
+
+
 .radar-ring-label text {
-  fill: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  font-weight: 600;
+  fill: var(--text-color);
+  opacity: 0.7;
+  font-size: 11px; /* Slightly smaller */
+  font-weight: 500; /* Less bold */
   text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, fill 0.3s ease;
+}
+
+.dark-mode .radar-ring-label text {
+  fill: var(--text-color);
+  opacity: 0.6;
 }
 
 .radar-ring-label:hover text {
-  fill: rgba(255, 255, 255, 1);
+  opacity: 1;
+  fill: var(--primary-color); /* Highlight with primary color on hover */
 }
 
 .radar-quadrant-label {
-  fill: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  font-weight: 700;
+  fill: var(--text-color);
+  opacity: 0.85;
+  font-size: 15px; /* Slightly smaller */
+  font-weight: 600; /* Less bold */
   text-transform: uppercase;
+}
+
+.dark-mode .radar-quadrant-label {
+  fill: var(--text-color);
+  opacity: 0.75;
 }
 
 .radar-items {
@@ -297,66 +348,76 @@ body {
 }
 
 .radar-point {
-  width: 14px;
-  height: 14px;
+  width: 12px; /* Slightly smaller */
+  height: 12px; /* Slightly smaller */
   border-radius: 50%;
-  border-width: 2px;
+  border-width: 2.5px; /* Slightly thicker border for definition */
   border-style: solid;
   position: absolute;
   transform: translate(-50%, -50%);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 0 8px rgba(0,0,0,0.5);
-  animation: pulse 2s infinite ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Softer shadow */
+  /* animation: pulse 2s infinite ease-in-out; */ /* Removed default pulse */
 }
 
 .radar-point-wrapper:hover .radar-point {
-  transform: translate(-50%, -50%) scale(1.6);
-  animation-play-state: paused;
-  box-shadow: 0 0 20px var(--ring-color);
+  transform: translate(-50%, -50%) scale(1.8); /* Increased hover scale */
+  box-shadow: 0 0 15px var(--ring-color), 0 0 5px var(--ring-color); /* More pronounced glow */
+  animation: subtle-pulse 1.5s infinite ease-in-out; /* Subtle pulse on hover only */
   z-index: 10;
 }
 
+@keyframes subtle-pulse {
+  0% { transform: translate(-50%, -50%) scale(1.8); }
+  50% { transform: translate(-50%, -50%) scale(1.9); }
+  100% { transform: translate(-50%, -50%) scale(1.8); }
+}
+
 .radar-point-wrapper.dimmed .radar-point {
-  animation: none;
+  /* animation: none; */ /* Already removed default pulse */
 }
 
 .radar-point-wrapper.dimmed:hover .radar-point {
-  transform: translate(-50%, -50%) scale(1);
-  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  transform: translate(-50%, -50%) scale(1); /* Reset scale on dimmed item hover if needed */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  animation: none; /* No pulse on dimmed items */
 }
 
 .radar-tooltip {
   position: absolute;
-  transform: translate(-50%, -100%);
-  margin-top: -20px;
+  transform: translate(-50%, calc(-100% - 15px)); /* Adjusted for spacing from point */
+  /* margin-top: -20px; */ /* Replaced by transform calc */
   width: 280px;
-  padding: 1rem;
-  border-radius: 12px;
+  max-width: 320px; /* Added max-width */
+  padding: 1rem; /* 16px */
+  border-radius: 10px; /* Slightly softer radius */
   z-index: 20;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  border-top: 3px solid var(--quadrant-color);
-  border-bottom: 3px solid var(--ring-color);
-  animation: tooltip-fade-in 0.3s ease-out forwards;
+  transition: opacity 0.25s ease, transform 0.25s ease; /* Faster transition */
+  border-top: 4px solid var(--quadrant-color); /* Thicker border */
+  border-bottom: 4px solid var(--ring-color); /* Thicker border */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25), 0 4px 10px rgba(0,0,0,0.15); /* Enhanced shadow */
+  animation: tooltip-slide-in 0.3s ease-out forwards;
 }
 
 .radar-tooltip.sticky {
   opacity: 1;
-  transform: translate(-50%, -100%) scale(1);
+  transform: translate(-50%, calc(-100% - 15px)) scale(1);
   animation: none;
-  transition: none;
+  transition: opacity 0.1s ease, transform 0.1s ease; /* Quicker for sticky state changes */
 }
 
-@keyframes tooltip-fade-in {
+/* Updated animation for tooltip entry */
+@keyframes tooltip-slide-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -100%) scale(0.9);
+    transform: translate(-50%, calc(-100% - 5px)) scale(0.95); /* Start a bit closer */
   }
   to {
     opacity: 1;
-    transform: translate(-50%, -100%) scale(1);
+    transform: translate(-50%, calc(-100% - 15px)) scale(1);
   }
 }
 
@@ -364,101 +425,151 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.875rem; /* 14px */
+  padding-bottom: 0.75rem; /* 12px */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
 }
 
 .tooltip-header h4 {
   margin: 0;
-  font-size: 16px;
+  font-size: 1.05rem; /* 16.8px */
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.3;
+  color: var(--text-color); /* Use theme text color */
+}
+
+.dark-mode .tooltip-header h4 {
+  color: #f0f0f0; /* Brighter for dark mode */
 }
 
 .tooltip-ring {
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 5px 10px; /* Increased padding */
+  border-radius: 8px; /* Softer radius */
+  font-size: 0.7rem; /* 11.2px */
+  font-weight: 700; /* Bolder */
   color: #fff;
   text-transform: uppercase;
+  letter-spacing: 0.5px; /* Added letter spacing */
 }
 
 .tooltip-description {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0 0 0.75rem 0;
-  line-height: 1.5;
+  font-size: 0.875rem; /* 14px */
+  color: var(--text-color);
+  opacity: 0.9;
+  margin: 0 0 0.875rem 0; /* 14px */
+  line-height: 1.6;
+}
+.dark-mode .tooltip-description {
+  color: rgba(240, 240, 240, 0.85);
 }
 
 .tooltip-category {
-  font-size: 12px;
-  font-weight: 500;
+  display: inline-block; /* To allow padding and margin */
+  font-size: 0.75rem; /* 12px */
+  font-weight: 600; /* Slightly bolder */
   color: var(--quadrant-color);
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 3px 8px;
-  border-radius: 6px;
+  background-color: var(--quadrant-color-bg, rgba(255, 255, 255, 0.1)); /* Use variable or default */
+  padding: 4px 10px; /* Adjusted padding */
+  border-radius: 16px; /* Pill shape */
+  border: 1px solid var(--quadrant-color);
+}
+
+.dark-mode .tooltip-category {
+   background-color: var(--quadrant-color-bg, rgba(0, 0, 0, 0.2));
 }
 
 .ring-descriptions {
-  padding: 2rem;
+  padding: 2.5rem; /* Increased padding */
   width: 100%;
   max-width: 900px;
+  /* background: var(--card-bg); Already has glass effect, let's ensure it uses theme variable if needed */
+  /* box-shadow: 0 8px 32px 0 var(--shadow-color); */ /* Ensure shadow uses theme variable */
 }
 
 .ring-descriptions h3 {
-  margin: 0 0 2rem 0;
+  margin: 0 0 2.5rem 0; /* Increased bottom margin */
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* Slightly larger */
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-color); /* Use theme text color */
+  opacity: 0.9;
 }
 
 .rings-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+  gap: 2rem; /* Increased gap */
 }
 
 .ring-description-card {
-  background: rgba(30, 41, 59, 0.5);
-  padding: 1.25rem 1.5rem;
-  padding-left: 2.5rem;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  background: rgba(var(--card-bg-rgb, 30, 41, 59), 0.7); /* Use RGB version of card-bg for opacity */
+  padding: 1.75rem 2rem; /* Increased padding */
+  padding-left: 2.75rem; /* Adjusted for border */
+  border-radius: 12px; /* Consistent radius */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  border: 1px solid transparent; /* Prepare for hover border */
 }
+
+/* Define --card-bg-rgb for light and dark modes if not already available */
+:root {
+  /* ... other vars ... */
+  --card-bg-rgb: 255, 255, 255; /* Default for light mode if --card-bg is like #fff */
+}
+.dark-mode {
+  /* ... other vars ... */
+  --card-bg-rgb: 31, 41, 55;   /* Default for dark mode if --card-bg is like #1f2937 */
+}
+
 
 .ring-description-card::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  background-color: var(--ring-color);
-  border-radius: 0 5px 5px 0; /* Soft curve on the inside */
+  top: 10%; /* Start border a bit down */
+  bottom: 10%; /* End border a bit up */
+  width: 6px; /* Slightly thicker */
+  background-color: var(--ring-color); /* This CSS var is set inline on the element */
+  border-radius: 0 8px 8px 0; /* More pronounced curve */
+  transition: top 0.3s ease, bottom 0.3s ease, background-color 0.3s ease;
 }
 
 .ring-description-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-6px) scale(1.02); /* Enhanced hover effect */
+  box-shadow: 0 12px 25px rgba(var(--shadow-color-rgb, 0,0,0), 0.25); /* Use shadow color var */
+  border-color: var(--ring-color);
+}
+
+.ring-description-card:hover::before {
+  top: 0; /* Extend border to full height on hover */
+  bottom: 0;
 }
 
 .ring-description-card h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.2;
+  margin: 0 0 0.75rem 0; /* Adjusted margin */
+  font-size: 1.3rem; /* Slightly larger */
+  font-weight: 700; /* Bolder */
+  line-height: 1.3;
+  /* Color is set inline by style={{ color: var(--ring-color) }} in JSX */
 }
 
 .ring-description-card p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  color: var(--text-color);
+  opacity: 0.8; /* Slightly more readable */
+  font-size: 0.95rem; /* Slightly larger */
+  line-height: 1.65;
+}
+
+/* Ensure --shadow-color-rgb is defined */
+:root {
+  --shadow-color-rgb: 0,0,0; /* Default if --shadow-color is #000 */
+}
+.dark-mode {
+  --shadow-color-rgb: 0,0,0; /* Default if --shadow-color is #000 */
 }
 
 .radar-legend {

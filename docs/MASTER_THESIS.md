@@ -490,6 +490,50 @@ class MediaQualityMetrics:
 
 ---
 
+## 🚀 Detaillierter Arbeitsplan und Fokus (Sub-Thema 1)
+
+Dieser Abschnitt konkretisiert den Arbeitsplan, insbesondere für die Entwicklung des Prototyps und die damit verbundene Forschung im Rahmen von Sub-Thema 1 des Ökosystems.
+
+### **I. Kern-Nutzer-Workflow (Prototyp)**
+
+Um den praktischen Nutzen der Anwendung zu verdeutlichen, hier der zentrale Nutzer-Workflow: Die App ermöglicht es, KI-gestützt Ideen und Themen für Game Jams zu generieren. Diese initialen "Jam Seeds" können anschließend in einem kollaborativen Prozess manuell verfeinert und durch Community-Feedback sowie weitere KI-Vorschläge iterativ optimiert werden (Multi-Agenten-System für Game Jam Organisation und langfristig 3D-Games). Basierend auf diesen verfeinerten Konzepten generiert die Plattform dann Spielideen als Inspiration und leitet daraus erste Beschreibungen für benötigte 3D-Assets ab. Dieser durchgehende Prozess von der abstrakten Idee bis zum konkreten, visuellen Baustein bildet den Kern der zu implementierenden Prototyp-Anwendung.
+
+### **II. Literaturrecherche und Analyse (Vertiefung)**
+
+Die initialen Literaturrecherchen (siehe Zeitplan Monat 1) werden durch folgende spezifische Analysen für den Prototyp ergänzt und vertieft:
+
+*   Analyse bestehender Ideation-Methoden und deren Potenzial für KI-Automatisierung im Kontext von Game Jams.
+*   Recherche aktueller Forschungstrends im Game Design und KI-gestützter Kreativität, mit Fokus auf Tools und Techniken, die den oben genannten Workflow unterstützen können.
+*   Identifikation und Analyse von Metadaten und Tags (z.B. aus Quellen wie Steam, itch.io; Prüfung auf Zugänglichkeit und API-Verfügbarkeit) zur Differenzierung, Klassifizierung und Inspiration von Spielkonzepten und Jam Seeds.
+
+### **III. Geplante Implementierungs-Meilensteine (Beispielhaft für Prototyp)**
+
+Basierend auf dem Kern-Nutzer-Workflow und der vertiefenden Analyse sind folgende beispielhafte Meilensteine für die praktische Implementierung des Prototyps vorgesehen. Diese dienen als Grundlage für die detailliertere Planung in den ersten Wochen der Thesis:
+
+*   **M1: Konzeption und Design der "Jam Seed" Generierungs-KI:**
+    *   Definition der Schnittstellen zu den relevanten KI-Agenten (z.B. `MediaThemeAgent`, `ResearchAgent`).
+    *   Entwurf des Datenmodells für "Jam Seeds" (siehe Struktur `MediaJamSeed`).
+    *   Erstellung erster Prompt-Strategien für die KI-gestützte Ideengenerierung.
+*   **M2: Entwicklung der kollaborativen Verfeinerungs-Plattform (UI/UX-Grundgerüst):**
+    *   Implementierung einer einfachen Web- oder App-Oberfläche (Flutter) zur Anzeige und Bearbeitung von Jam Seeds.
+    *   Grundlegende Funktionen zur manuellen Anpassung der generierten Ideen.
+*   **M3: Implementierung des Community-Feedback-Systems (Basisversion):**
+    *   Einfaches System zur Kommentierung und Bewertung von Jam Seeds.
+    *   Speicherung des Feedbacks und Verknüpfung mit den jeweiligen Jam Seeds.
+*   **M4: Integration weiterer KI-Vorschläge (Multi-Agenten-Anbindung):**
+    *   Anbindung an das Multi-Agenten-System zur iterativen Optimierung von Jam Seeds basierend auf manuellem und Community-Feedback.
+    *   Integration von Vorschlägen des `PromptOptimizer` und ggf. `CriticAgent`.
+*   **M5: Entwicklung des Moduls zur Ableitung von Spielideen und Asset-Beschreibungen:**
+    *   Logik zur Generierung von konkreteren Spielideen basierend auf verfeinerten Jam Seeds.
+    *   Entwicklung eines Systems zur Ableitung initialer Beschreibungen für benötigte 3D-Assets (Anbindung an `AssetAgent`-Logik).
+*   **M6: Prototypische Implementierung des End-to-End Workflows:**
+    *   Verbindung aller Module zu einem durchgängigen, testbaren Prototyp, der den oben beschriebenen Kern-Nutzer-Workflow abbildet.
+    *   Durchführung erster interner Tests und Iterationen.
+
+**Hinweis:** Diese Meilensteine sind initiale Vorschläge und werden im Laufe der ersten Phase (Literaturrecherche & Konzeptentwicklung) im Detail ausgearbeitet, priorisiert und mit einem genaueren Zeitplan versehen. Die genaue Ausgestaltung der KI-Agenten und deren Zusammenspiel wird ebenfalls in dieser initialen Phase verfeinert.
+
+---
+
 ## 🎯 **Schlussfolgerungen & Ausblick**
 
 ### **7.1 Hauptbeiträge**
