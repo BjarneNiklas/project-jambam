@@ -1,0 +1,152 @@
+.roadmap-page {
+  padding: 2rem;
+  color: var(--text-color); /* Use theme variable */
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.roadmap-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.roadmap-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary-accent-color); /* Use theme variable */
+}
+
+.roadmap-header p {
+  font-size: 1.3rem;
+  color: var(--text-secondary-color); /* Use theme variable */
+}
+
+.roadmap-content {
+  position: relative;
+}
+
+.roadmap-timeline {
+  position: relative;
+  padding: 1rem 0;
+}
+
+/* The main timeline line */
+.roadmap-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px; /* Adjust to align with item indicators */
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--border-color-strong); /* Use theme variable */
+  border-radius: 2px;
+}
+
+.roadmap-item {
+  margin-bottom: 2rem;
+  padding-left: 50px; /* Space for the timeline indicator */
+  position: relative;
+  background-color: var(--background-alt-color); /* Use theme variable */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.roadmap-item:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Timeline indicator for each item */
+.roadmap-item::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 20px; /* Adjust vertical alignment */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--primary-accent-color); /* Use theme variable */
+  border: 3px solid var(--background-color); /* Use theme variable */
+  z-index: 1;
+}
+
+.roadmap-item-header {
+  padding: 1.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color); /* Use theme variable */
+}
+
+.roadmap-item-date-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.roadmap-item-date {
+  font-size: 0.9rem;
+  color: var(--text-tertiary-color); /* Use theme variable */
+  font-weight: bold;
+}
+
+.roadmap-item-status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* Status-specific colors */
+.status-planned-badge { background-color: #6c757d; } /* Grey */
+.status-in-progress-badge { background-color: #007bff; } /* Blue */
+.status-completed-badge { background-color: #28a745; } /* Green */
+
+/* Match item indicator color to status */
+.roadmap-item.status-planned::before { background-color: #6c757d; }
+.roadmap-item.status-in-progress::before { background-color: #007bff; }
+.roadmap-item.status-completed::before { background-color: #28a745; }
+
+
+.roadmap-item-title {
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--primary-accent-color); /* Use theme variable */
+}
+
+.roadmap-item-description {
+  padding: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary-color); /* Use theme variable */
+  border-top: 1px solid var(--border-color); /* Use theme variable if header has no border-bottom */
+  background-color: var(--background-color); /* Slightly different background for description */
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .roadmap-timeline::before {
+    left: 10px; /* Adjust line position for smaller screens */
+  }
+  .roadmap-item {
+    padding-left: 40px; /* Adjust item padding */
+  }
+  .roadmap-item::before {
+    left: 0px; /* Adjust indicator position */
+    width: 18px;
+    height: 18px;
+  }
+  .roadmap-header h1 {
+    font-size: 2.2rem;
+  }
+  .roadmap-header p {
+    font-size: 1.1rem;
+  }
+  .roadmap-item-title {
+    font-size: 1.2rem;
+  }
+}

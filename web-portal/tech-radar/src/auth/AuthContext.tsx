@@ -16,6 +16,12 @@ interface AuthContextType {
   logout: () => Promise<void>;
   loading: boolean;
   refreshProfile: () => Promise<void>;
+  // New additions for confidential gate
+  currentUserHasValidatedInvite: boolean;
+  hasSessionPassedGate: boolean;
+  validateSharedPassword: (password: string) => Promise<boolean>;
+  validateInviteCodeForGate: (inviteCode: string) => Promise<boolean>;
+  clearSessionGatePass: () => void; // To reset session pass on logout or timeout
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,12 +32,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [isProfileComplete, setIsProfileComplete] = useState(false);
+  // New states for confidential gate
+  const [currentUserHasValidatedInvite, setCurrentUserHasValidatedInvite] = useState(false);
+  const [hasSessionPassedGate, setHasSessionPassedGate] = useState(false);
+
 
   const fetchProfile = useCallback(async (user: User) => {
     console.log('[AuthContext] fetchProfile: Starting for user ID:', user.id);
     if (!user) {
       console.warn('[AuthContext] fetchProfile: Called with no user.');
       setIsProfileComplete(false);
+      setCurrentUserHasValidatedInvite(false); // Reset on no user
       return;
     };
     
@@ -39,42 +50,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       console.log('[AuthContext] fetchProfile: Attempting to select profile for user ID:', user.id);
       const { data, error } = await supabase
         .from('profiles')
-        .select('*')
+        .select('*, has_validated_invite_code') // Ensure new field is selected
         .eq('id', user.id)
         .single();
 
       if (data) {
         setProfile(data);
         setIsProfileComplete(!!data.username);
-        console.log('[AuthContext] fetchProfile: Profile found and set. Username:', data.username, 'isProfileComplete:', !!data.username);
+        // Set invite status from profile
+        setCurrentUserHasValidatedInvite(data.has_validated_invite_code || false);
+        console.log('Profile fetched:', data);
       } else if (error && error.code === 'PGRST116') { // Profile not found, create it
         console.log('[AuthContext] fetchProfile: Profile not found (PGRST116), creating one for user ID:', user.id);
         const { data: newProfile, error: insertError } = await supabase
           .from('profiles')
-          .insert({ id: user.id, email: user.email! })
-          .select()
+          .insert({
+            id: user.id,
+            email: user.email!,
+            has_validated_invite_code: false // Default for new profile
+          })
+          .select('*, has_validated_invite_code')
           .single();
 
         if (insertError) {
           console.error('[AuthContext] fetchProfile: Error creating profile:', insertError);
           setIsProfileComplete(false);
+          setCurrentUserHasValidatedInvite(false);
         } else {
           setProfile(newProfile);
-          setIsProfileComplete(!!newProfile?.username); // Added optional chaining for safety
-          console.log('[AuthContext] fetchProfile: New profile created. Username:', newProfile?.username, 'isProfileComplete:', !!newProfile?.username);
+          setIsProfileComplete(!!newProfile.username);
+          setCurrentUserHasValidatedInvite(newProfile.has_validated_invite_code || false);
+          console.log('New profile created:', newProfile);
         }
       } else if (error) {
         console.error('[AuthContext] fetchProfile: Error fetching profile (other than PGRST116):', error);
         setIsProfileComplete(false);
-      } else {
-        // This case means no data and no error, which might imply profile doesn't exist but no PGRST116.
-        // Or, it could be a non-standard error object.
-        console.warn('[AuthContext] fetchProfile: No profile data and no specific error code. Assuming profile needs creation or investigation.');
-        setIsProfileComplete(false); // Default to incomplete.
+        setCurrentUserHasValidatedInvite(false);
       }
     } catch (error) {
       console.error('[AuthContext] fetchProfile: Exception during profile fetch/creation:', error);
       setIsProfileComplete(false);
+      setCurrentUserHasValidatedInvite(false);
     }
     console.log('[AuthContext] fetchProfile: Finished for user ID:', user.id);
   }, []);
@@ -111,10 +127,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // console.log(`[AuthContext] onAuthStateChange: Current state before this event: isAuthenticated: ${isAuthenticated}, loading: ${loading}`); // This shows state from previous render
 
       if (session?.user) {
-        setLoading(true); // Indicate loading state before async profile fetch
-        console.log('[AuthContext] onAuthStateChange: Session and user found. setLoading(true). Calling fetchProfile.');
-        await fetchProfile(session.user);
-        console.log('[AuthContext] onAuthStateChange: fetchProfile completed.');
+        await fetchProfile(session.user); // This will now also update currentUserHasValidatedInvite
         setUser(session.user);
         setIsAuthenticated(true);
         console.log(`[AuthContext] onAuthStateChange: State updated: isAuthenticated: true, user set for ID: ${session.user.id}`);
@@ -123,7 +136,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setUser(null);
         setProfile(null);
         setIsAuthenticated(false);
-        console.log('[AuthContext] onAuthStateChange: State updated: isAuthenticated: false, user/profile null.');
+        setCurrentUserHasValidatedInvite(false); // Reset on logout
+        setHasSessionPassedGate(false); // Reset session gate pass on logout
       }
       setLoading(false);
       const finalAuthStatus = session?.user ? true : false;
@@ -230,7 +244,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = async () => {
     try {
       await supabase.auth.signOut();
-      // onAuthStateChange will handle setting state
+      // onAuthStateChange will handle setting state (including resetting gate statuses)
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -239,7 +253,99 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const refreshProfile = async () => {
     if (user) {
         console.log("Refreshing profile for user:", user.id);
-        await fetchProfile(user);
+        await fetchProfile(user); // This will update invite status too
+    }
+  };
+
+  const clearSessionGatePass = () => {
+    setHasSessionPassedGate(false);
+  };
+
+  const validateSharedPassword = async (password: string): Promise<boolean> => {
+    if (!profile) { // Should not happen if user is logged in
+      console.error("validateSharedPassword: No profile found for logged-in user.");
+      return false;
+    }
+    try {
+      // In a real scenario, the key 'shared_content_password' should be configurable
+      // And ideally, this check happens in an Edge Function for better security
+      const { data, error } = await supabase
+        .from('app_config')
+        .select('value')
+        .eq('key', 'shared_content_password')
+        .single();
+
+      if (error) {
+        console.error('Error fetching shared password:', error);
+        return false;
+      }
+
+      if (data && data.value === password) {
+        setHasSessionPassedGate(true);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.error('Exception validating shared password:', e);
+      return false;
+    }
+  };
+
+  const validateInviteCodeForGate = async (inviteCode: string): Promise<boolean> => {
+    if (!user || !profile) {
+      console.error("validateInviteCodeForGate: User or profile not available.");
+      return false;
+    }
+
+    try {
+      // 1. Check if the code is valid and unused
+      const { data: codeData, error: codeError } = await supabase
+        .from('invite_codes')
+        .select('*')
+        .eq('code', inviteCode)
+        .eq('is_used', false)
+        .single();
+
+      if (codeError || !codeData) {
+        console.error('Error fetching invite code or code is invalid/used:', codeError);
+        return false;
+      }
+
+      // 2. Mark invite code as used
+      const { error: updateCodeError } = await supabase
+        .from('invite_codes')
+        .update({
+          is_used: true,
+          used_by: user.id,
+          used_at: new Date().toISOString()
+        })
+        .eq('code', inviteCode);
+
+      if (updateCodeError) {
+        console.error('Error marking invite code as used:', updateCodeError);
+        // Potentially roll back or handle this error more gracefully
+        return false;
+      }
+
+      // 3. Update user's profile
+      const { error: updateProfileError } = await supabase
+        .from('profiles')
+        .update({ has_validated_invite_code: true })
+        .eq('id', user.id);
+
+      if (updateProfileError) {
+        console.error('Error updating profile for invite code:', updateProfileError);
+        // Potentially roll back invite code usage or handle error
+        return false;
+      }
+
+      // 4. Refresh profile to update context state
+      await refreshProfile();
+      return true;
+
+    } catch (e) {
+      console.error('Exception validating invite code for gate:', e);
+      return false;
     }
   };
 
@@ -256,7 +362,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       register, 
       logout, 
       loading,
-      refreshProfile
+      refreshProfile,
+      // New additions
+      currentUserHasValidatedInvite,
+      hasSessionPassedGate,
+      validateSharedPassword,
+      validateInviteCodeForGate,
+      clearSessionGatePass
     }}>
       {children}
     </AuthContext.Provider>
