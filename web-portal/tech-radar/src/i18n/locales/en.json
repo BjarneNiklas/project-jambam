@@ -179,7 +179,14 @@
   },
   "feed": {
     "title": "Updates & Insights",
-    "subtitle": "Latest updates, in-depth insights, and stories from the JamBam community."
+    "subtitle": "Latest updates, in-depth insights, and stories from the JamBam community.",
+    "categories": {
+      "all": "All",
+      "news": "News",
+      "insights": "Insights",
+      "community": "Community"
+    },
+    "noUpdatesFound": "No updates found for the selected filters."
   },
   "about": {
     "title": "About Us",
