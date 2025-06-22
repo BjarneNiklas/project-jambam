@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthContext';
 import ProtectedRoute from './auth/ProtectedRoute';
 import AdminRoute from './auth/AdminRoute';
@@ -19,10 +19,22 @@ import AuthCallback from './auth/AuthCallback';
 import ProfileSetupPage from './pages/ProfileSetupPage';
 import AuthWrapper from './auth/AuthWrapper';
 import HomePage from './pages/HomePage';
-import RoadmapPage from './pages/RoadmapPage'; // Import RoadmapPage
-import ContactPage from './pages/ContactPage'; // Import ContactPage
+import RoadmapPage from './pages/RoadmapPage';
+import TeamPage from './pages/TeamPage'; // Import TeamPage
+import VisionMissionPage from './pages/VisionMissionPage'; // Import VisionMissionPage
+import FundingWorthinessPage from './pages/FundingWorthinessPage'; // Import FundingWorthinessPage
 import ThemeBackground from './components/ThemeBackground';
 import './App.css';
+
+// Placeholder pages for links that don't have content yet
+const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
+  <div style={{ padding: '2rem', textAlign: 'center' }}>
+    <h1>{title}</h1>
+    <p>This page is under construction. Check back soon!</p>
+    <Link to="/">Go to Homepage</Link>
+  </div>
+);
+
 
 function App() {
   return (
@@ -43,8 +55,17 @@ function App() {
                     <Route path="/feed" element={<FeedPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/auth/callback" element={<AuthCallback />} />
-                    <Route path="/roadmap" element={<RoadmapPage />} /> {/* Add RoadmapPage route */}
-                    <Route path="/contact" element={<ContactPage />} /> {/* Add ContactPage route */}
+                    <Route path="/roadmap" element={<RoadmapPage />} />
+                    <Route path="/team" element={<TeamPage />} /> {/* Add TeamPage route */}
+                    <Route path="/vision-mission" element={<VisionMissionPage />} /> {/* Add VisionMissionPage route */}
+                    <Route path="/funding-worthiness" element={<FundingWorthinessPage />} /> {/* Add FundingWorthinessPage route */}
+
+                    {/* Placeholder routes for footer links */}
+                    <Route path="/careers" element={<PlaceholderPage title="Careers" />} />
+                    <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
+                    <Route path="/imprint" element={<PlaceholderPage title="Imprint" />} />
+                    <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
+                    <Route path="/terms" element={<PlaceholderPage title="Terms of Service" />} />
                     <Route element={<ProtectedRoute />}>
                       <Route path="/tech-radar" element={<TechRadarPage />} />
                       <Route path="/profile" element={<ProfilePage />} />

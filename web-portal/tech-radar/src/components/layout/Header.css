@@ -1,55 +1,66 @@
+/* General Header Styling */
 .site-header {
-  background: rgba(17, 24, 39, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 1rem 2rem;
+  background: rgba(17, 24, 39, 0.85); /* Slightly more opaque */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.75rem 1.5rem; /* Adjusted padding */
   position: sticky;
   top: 0;
-  z-index: 50;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000; /* Ensure header is above other content */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .header-container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1400px; /* Slightly wider max-width */
   margin: 0 auto;
+  padding: 0 1rem; /* Add some padding for smaller screens */
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1600px;
-  margin: 0 auto;
 }
 
+/* Logo and Site Title */
 .logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: 1rem;
+  gap: 0.75rem; /* Reduced gap */
 }
 
-/* Remove blue focus outline for logo link and its children */
-.logo-link:focus,
-.logo-link:focus-visible,
-.logo-link *:focus,
-.logo-link *:focus-visible {
-  outline: none !important;
-  outline-offset: 0 !important;
+.logo-link svg { /* Assuming LogoHexSpark renders an SVG */
+  width: 40px; /* Explicit size */
+  height: 40px; /* Explicit size */
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover svg {
+  transform: scale(1.1) rotate(-5deg); /* Subtle hover effect */
 }
 
 .site-title {
-  color: #f0f0f0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 1px;
+  color: #e0e0e0; /* Lighter gray */
+  font-size: 1.75rem; /* Slightly larger */
+  font-weight: 700; /* Bolder */
+  letter-spacing: 0.5px;
   transition: color 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Subtle text shadow */
 }
 
 .logo-link:hover .site-title {
-  color: #ffffff;
+  color: var(--accent-color-secondary, #ffffff); /* Use secondary accent or white */
+}
+
+/* Navigation */
+.main-nav {
+  flex-grow: 1; /* Allow nav to take available space */
+  display: flex;
+  justify-content: center; /* Center navigation links */
 }
 
 .main-nav ul {
@@ -57,192 +68,271 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 2rem;
+  gap: 1.8rem; /* Adjusted gap */
 }
 
 .main-nav a {
-  color: #d0d0d0;
+  color: #c0c0c0; /* Slightly lighter nav link color */
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
+  padding: 0.5rem 0.25rem; /* Add some padding for better click area */
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .main-nav a:hover {
   color: #ffffff;
+  transform: translateY(-2px); /* Slight lift on hover */
 }
 
 .main-nav a::after {
   content: '';
   position: absolute;
   width: 0;
-  height: 2px;
-  bottom: -5px;
+  height: 2.5px; /* Slightly thicker underline */
+  bottom: -6px; /* Adjusted position */
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--accent-color);
+  background-color: var(--accent-color, #6366f1); /* Default accent */
+  border-radius: 1px;
   transition: width 0.3s ease;
 }
 
 .main-nav a:hover::after,
-.main-nav a.active::after {
+.main-nav a.active-link::after { /* Use .active-link for NavLink active state */
   width: 100%;
 }
 
-.app-link {
-  background: linear-gradient(135deg, var(--accent-color), #4f46e5);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  color: #ffffff !important;
+.main-nav a.active-link {
+  color: #ffffff; /* Ensure active link is white */
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(79, 70, 229, 0.3);
 }
 
-.app-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
-  color: #ffffff !important;
-}
 
-.app-link::after {
-  display: none;
-}
-
+/* Header Actions (Buttons) */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem; /* Reduced gap */
 }
 
-.header-app-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
-}
-
-.header-app-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-  background: linear-gradient(135deg, #059669, #047857);
-  color: #ffffff;
-}
-
-.settings-button {
+.header-app-button, .login-button-header, .logout-button-header, .settings-button, .profile-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #d0d0d0;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.settings-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  transform: rotate(90deg);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-}
-
-.login-button,
-.logout-button {
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px; /* Slightly more rounded */
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
   font-size: 0.9rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* Subtle shadow */
 }
 
-.login-button {
-  background: linear-gradient(135deg, #10b981, #059669);
+.header-app-button {
+  background: linear-gradient(135deg, var(--accent-color, #6366f1), var(--accent-color-dark, #4f46e5));
   color: #ffffff;
-  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+.header-app-button:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 99, 102, 241), 0.4);
+  background: linear-gradient(135deg, var(--accent-color-dark, #4f46e5), var(--accent-color-darker, #4338ca));
 }
 
-.login-button:hover {
+.login-button-header {
+  background-color: var(--success-color, #10b981);
+  color: white;
+}
+.login-button-header:hover {
+  background-color: var(--success-color-dark, #059669);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+}
+
+.logout-button-header, .settings-button, .profile-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #d0d0d0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.6rem; /* Make icon buttons a bit more squarish */
+  font-size: 1.1rem; /* Slightly larger icons */
+}
+
+.logout-button-header:hover, .settings-button:hover, .profile-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
+  transform: translateY(-1px) scale(1.05);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.settings-button:hover {
+   transform: translateY(-1px) rotate(45deg) scale(1.05); /* Rotate settings icon */
 }
 
-.logout-button {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: #ffffff;
-  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
-}
 
-.logout-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-}
-
-/* Admin Link Styling */
+/* Admin Link Specific Styling */
 .admin-link {
-  background: linear-gradient(135deg, #00bcd4 0%, #009688 100%);
-  color: white !important;
-  padding: 6px 12px !important;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 0.4rem 0.8rem !important; /* Ensure padding is applied */
+  border-radius: 6px;
+  font-weight: 500;
   transition: all 0.3s ease;
   text-decoration: none;
+  display: inline-block; /* Important for padding and background */
 }
 
-.admin-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 188, 212, 0.3);
+.admin-link.admin {
+  background: linear-gradient(135deg, #00bcd4, #00838f);
   color: white !important;
 }
+.admin-link.admin:hover {
+  background: linear-gradient(135deg, #00acc1, #00796b);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 188, 212, 0.3);
+}
 
-/* Superadmin Link Styling */
+.admin-link.moderator {
+  background: linear-gradient(135deg, #ff9800, #e65100);
+  color: white !important;
+}
+.admin-link.moderator:hover {
+  background: linear-gradient(135deg, #fb8c00, #d84315);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(255, 152, 0, 0.3);
+}
+
 .admin-link.superadmin {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
-}
-
-.admin-link.superadmin:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(135deg, #f44336, #b71c1c);
   color: white !important;
 }
+.admin-link.superadmin:hover {
+  background: linear-gradient(135deg, #e53935, #a71616);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(244, 67, 54, 0.3);
+}
 
-/* Responsive design */
+.admin-link.active-link { /* Ensure active admin link stands out if needed */
+  box-shadow: 0 0 0 2px var(--accent-color-secondary, #fff); /* Example active style */
+}
+
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none; /* Hidden by default */
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 1.8rem; /* Larger icon */
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1100; /* Above nav */
+}
+.mobile-menu-toggle:hover {
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { /* Adjust breakpoint for tablet and below */
+  .main-nav {
+    position: fixed; /* Changed to fixed for full screen overlay */
+    top: 0;
+    left: -100%; /* Start off-screen */
+    width: 100%;
+    height: 100vh;
+    background: rgba(17, 24, 39, 0.98); /* Darker, more opaque for overlay */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.3s ease-in-out;
+    z-index: 1050; /* Below toggle, above content */
+    padding-top: 60px; /* Space for header/close button if it were inside */
+  }
+
+  .main-nav.open {
+    left: 0; /* Slide in */
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 1.5rem; /* Space out links more in mobile */
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-nav a {
+    font-size: 1.3rem; /* Larger text for mobile menu */
+    padding: 1rem;
+    display: block; /* Make links full width for easier tapping */
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  .main-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transform: translateY(0); /* Disable lift on mobile nav items */
+  }
+  .main-nav a::after { /* Underline might be too much for mobile, optional */
+    bottom: -2px;
+  }
+
+  .admin-menu-item .admin-link {
+    display: block;
+    margin: 0.5rem auto;
+    width: fit-content;
+  }
+
+  .mobile-menu-toggle {
+    display: block; /* Show toggle on smaller screens */
+  }
+
+  .header-actions {
+    /* Adjust if some actions should also be in mobile menu */
+    /* For now, keep them, but they might wrap or need hiding */
+  }
+}
+
 @media (max-width: 768px) {
   .site-header {
-    padding: 1rem;
+    padding: 0.75rem 1rem; /* Less padding on mobile */
   }
-  
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
+  .header-container {
+    padding: 0 0.5rem;
   }
-  
-  .main-nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+  .site-title {
+    font-size: 1.5rem; /* Smaller title on mobile */
   }
-  
+  .logo-link svg {
+    width: 32px;
+    height: 32px;
+  }
   .header-actions {
-    width: 100%;
-    justify-content: center;
+    gap: 0.5rem; /* Tighter gap for action buttons */
   }
-} 
+  .header-app-button, .login-button-header {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+   .logout-button-header, .settings-button, .profile-button {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  /* Hide some less critical actions if space is very limited */
+  /* Example: .profile-button { display: none; } */
+}
+
+@media (max-width: 480px) {
+  .site-title {
+    font-size: 1.3rem;
+  }
+  .header-app-button span { /* If "Get App" text is too long */
+     /* display: none; */ /* Or use a shorter text via i18n for mobile */
+  }
+  .header-app-button {
+    padding: 0.4rem 0.6rem; /* Even smaller padding */
+  }
+  .login-button-header {
+    padding: 0.4rem 0.6rem;
+  }
+}

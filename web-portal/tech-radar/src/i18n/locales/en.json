@@ -604,13 +604,191 @@
   "nav": {
     "home": "Home",
     "techRadar": "Tech Radar",
-    "feed": "Updates",
-    "about": "About",
+    "feed": "Feed",
+    "about": "About Us",
+    "roadmap": "Roadmap",
+    "team": "Team",
+    "visionMission": "Vision",
+    "funding": "Funding",
     "login": "Login",
+    "profile": "Profile",
     "register": "Register",
     "logout": "Logout",
     "settings": "Settings",
     "contact": "Contact"
+  },
+  "header": {
+    "downloadApp": "Download the JamBam App",
+    "getApp": "Get App"
+  },
+  "teamPage": {
+    "title": "Our Team",
+    "subtitle": "Meet the passionate minds behind JamBam.",
+    "empty": "Team member information will be updated soon.",
+    "culture": {
+      "title": "Our Culture & Values",
+      "description": "At JamBam, we foster a culture of innovation, collaboration, and continuous learning. We believe in empowering creators and building an open, inclusive ecosystem."
+    },
+    "joinUs": {
+      "title": "Join Our Mission",
+      "description": "Interested in contributing to the future of interactive media? We are always looking for talented individuals to join our community and team.",
+      "cta": "Get in Touch"
+    },
+    "bjarne": {
+      "name": "Bjarne Niklas Luttermann",
+      "role": "Founder, CEO & Lead Visionary",
+      "bio": "Bjarne is the driving force behind JamBam, combining his passion for AI, game development, and community building. His vision is to create a platform that empowers creators worldwide and revolutionizes how interactive experiences are made."
+    }
+    // Add other team members here, e.g.:
+    // "jane_doe": {
+    //   "name": "Jane Doe",
+    //   "role": "Lead Platform Architect",
+    //   "bio": "Jane leads the technical development..."
+    // }
+  },
+  "visionMissionPage": {
+    "mainTitle": "Our Vision & Mission",
+    "mainSubtitle": "Shaping the future of interactive co-creation and democratizing game development.",
+    "vision": {
+      "title": "Our Vision: A Universe of Creators",
+      "p1": "We envision a vibrant, interconnected global ecosystem where creators of all backgrounds and skill levels can effortlessly bring their digital visions to life. Project JamBam aims to dismantle barriers to entry, fostering a world where imagination is the only limit.",
+      "p2": "Our platform will be the nexus for the next generation of interactive content – from indie games and immersive XR experiences to educational simulations and collaborative art projects. We see a future powered by collective creativity, where AI and human ingenuity merge to unlock unprecedented possibilities."
+    },
+    "mission": {
+      "title": "Our Mission: Democratizing & Accelerating Creation",
+      "p1": "Project JamBam is dedicated to democratizing and accelerating the development of interactive 3D applications and games. We are building an AI-powered co-creation platform, akin to a \"GitHub Copilot for the 3D world,\" with a profound emphasis on community, open standards, and collaborative development – especially for dynamic events like game jams.",
+      "p2": "Our core objectives include:",
+      "obj1": "Empowering individual creators and small teams with powerful, intuitive AI tools.",
+      "obj2": "Fostering a collaborative environment through open APIs, shared resources, and community-driven projects.",
+      "obj3": "Streamlining the development pipeline from ideation to multi-engine deployment.",
+      "obj4": "Championing interoperability and open standards to ensure freedom and flexibility for creators.",
+      "obj5": "Cultivating a learning ecosystem where users can grow their skills and share knowledge."
+    },
+    "usp": {
+      "title": "Our Unique Selling Proposition (USP)",
+      "intro": "JamBam distinguishes itself through a unique combination of features and philosophical approach:",
+      "item1": {
+        "title": "AI-Powered Co-Creation Core:",
+        "desc": "Deeply integrated AI not just as a feature, but as a fundamental part of the creative workflow, from ideation and asset generation (3D models, textures, audio, narratives) to world-building and even code assistance."
+      },
+      "item2": {
+        "title": "Community-Centric Development & Governance:",
+        "desc": "A platform that is not only for the community but actively shaped by it through transparent feedback mechanisms, contribution pathways, and potential for decentralized governance models."
+      },
+      "item3": {
+        "title": "Radical Interoperability & Multi-Engine Support:",
+        "desc": "Our Engine Adapter Framework is designed to break down walled gardens, allowing creators to seamlessly work with and transition between various popular game engines (Unity, Unreal, Godot, Bevy, etc.) while leveraging JamBam’s core services."
+      },
+      "item4": {
+        "title": "Focus on Rapid Prototyping & Jam Culture:",
+        "desc": "Tools and workflows optimized for speed and iteration, making it ideal for game jams, hackathons, and agile development cycles. Our \"Jam Kits\" concept embodies this."
+      },
+      "item5": {
+        "title": "Ethical AI & Creator Empowerment:",
+        "desc": "Commitment to responsible AI development, ensuring creators maintain ownership and control, and exploring fair compensation models for AI training data and co-created assets."
+      }
+    },
+    "cta": {
+      "title": "Ready to Build the Future With Us?",
+      "subtitle": "Explore our project further, join our community, or see how we are putting these ideas into practice.",
+      "roadmap": "View Our Roadmap",
+      "team": "Meet the Team",
+      "community": "Join Community"
+    }
+  },
+  "fundingPage": {
+    "mainTitle": "Why JamBam Deserves Funding",
+    "mainSubtitle": "Our commitment to innovation, community, and a sustainable digital future makes JamBam a prime candidate for support.",
+    "innovation": {
+      "title": "Technological Innovation & Novelty",
+      "p1": "JamBam is not just another game development tool; it’s a paradigm shift. Our core innovation lies in the deep integration of AI as a co-creative partner throughout the entire development lifecycle – from AI-driven ideation and \"Jam Kit\" generation to intelligent asset creation (3D models, textures, audio, narratives) and automated workflow assistance.",
+      "p2": "The Engine Adapter Framework represents a significant technical advancement, promoting radical interoperability between major game engines. This addresses a critical pain point for developers, reducing vendor lock-in and fostering a more open ecosystem.",
+      "p3": "Our approach to hybrid voxel technology (Broxel Engine) and the forward-looking LUVY Engine concept for XR also showcase our commitment to pushing the boundaries of real-time interactive experiences."
+    },
+    "marketPotential": {
+      "title": "Significant Market Potential & Scalability",
+      "p1": "The global game development market, along with the creator economy and the emerging metaverse, represents a multi-billion dollar industry. JamBam is strategically positioned to capture a significant share by targeting a broad spectrum of users: from indie developers and hobbyists to educational institutions and professional studios seeking to accelerate prototyping and innovation.",
+      "p2": "Our platform’s scalability is inherent in its community-driven model and its focus on user-generated content and AI tools. As the community grows, so does the value and capability of the platform. Monetization strategies include premium AI features, a marketplace for assets and \"Jam Kits,\" enterprise solutions, and educational partnerships."
+    },
+    "societalImpact": {
+      "title": "Societal & Economic Impact",
+      "p1": "JamBam aims to democratize access to game development and interactive content creation, empowering a new generation of creators, particularly from underrepresented groups. This fosters digital literacy, STEM skills, and entrepreneurial opportunities.",
+      "p2": "By promoting open standards and collaboration, we contribute to a healthier, more competitive digital ecosystem in Europe and beyond. Our focus on game jams and rapid prototyping can stimulate local innovation hubs and creative industries.",
+      "p3": "The platform also has applications in education (Studi.OS, AI Quiz & E-Learning), cultural heritage (AURAX photogrammetry), and community building (Home Café Connect), demonstrating a broad positive impact."
+    },
+    "teamExcellence": {
+      "title": "Strong Founding Team & Vision",
+      "p1": "Led by Bjarne Luttermann, Project JamBam benefits from a visionary founder with a deep understanding of AI, game development, and community dynamics. The (growing) team combines technical expertise with a passion for innovation and a clear, ambitious roadmap.",
+      "p2": "Our commitment to an agile, iterative development process, coupled with a strong emphasis on user feedback, ensures that JamBam will evolve to meet the real-world needs of its community.",
+      "teamLink": "Meet the Team"
+    },
+    "sustainability": {
+      "title": "Sustainability & Long-Term Viability",
+      "p1": "JamBam’s business model is designed for long-term sustainability. A multi-faceted approach including freemium access, a marketplace, premium features for power users/teams, and B2B services (e.g., custom engine adapters, educational licenses) creates diverse revenue streams.",
+      "p2": "The open and community-driven aspects also contribute to sustainability by fostering a loyal user base, encouraging third-party development on the platform, and reducing reliance on purely internal content generation."
+    },
+    "fundingAsk": {
+      "title": "Our Funding Goals",
+      "p1": "Support for Project JamBam will directly accelerate the development of our core platform, expand our AI capabilities, grow our community outreach programs, and help us establish key industry partnerships.",
+      "p2": "We are seeking funding to achieve key milestones, including [mention 1-2 key milestones, e.g., \"launching the full Engine Adapter Framework\" or \"releasing the JamBam AI Studio public beta\"]. This will position JamBam as a leader in the next generation of co-creative technologies.",
+      "contact": "Discuss Funding Opportunities",
+      "roadmap": "View Detailed Roadmap"
+    }
+  },
+   "about": {
+    "title": "About Us",
+    "subtitle": "Driving the Future of Interactive Co-Creation",
+    "summary": {
+      "title": "Our Essence",
+      "p1": "Project JamBam is at the forefront of revolutionizing how interactive 3D applications and games are made. We're building an AI-powered co-creation platform designed to democratize development, foster community, and accelerate innovation.",
+      "p2": "Our vision is a global ecosystem where creativity flourishes, unhindered by technical barriers. We're committed to open standards, interoperability, and empowering creators of all levels.",
+      "readMoreVision": "Read Full Vision & Mission",
+      "meetTeam": "Meet Our Team"
+    },
+    "problemSolution": {
+      "title": "The Challenge & Our Approach",
+      "problemTitle": "The Challenge: Barriers in Game Development",
+      "problemDesc": "Traditional game development is often complex, time-consuming, and resource-intensive, creating high barriers to entry, especially for indie developers, small teams, and those participating in time-constrained events like game jams. Siloed engine ecosystems can also limit flexibility and collaboration.",
+      "solutionTitle": "Our Solution: AI-Powered Co-Creation & Interoperability",
+      "solutionDesc": "JamBam tackles these challenges by providing AI tools that streamline ideation, asset generation, and workflow automation. Our unique Engine Adapter Framework promotes interoperability, allowing creators to leverage JamBam's strengths across various game engines. This approach significantly lowers barriers, speeds up development, and fosters a more open, collaborative environment."
+    },
+    "values": {
+      "title": "Our Core Values",
+      "innovation": {
+        "title": "Pioneering Innovation",
+        "description": "We relentlessly pursue cutting-edge solutions, leveraging AI and novel technologies to redefine the boundaries of 3D content creation and game development."
+      },
+      "community": {
+        "title": "Empowering Community",
+        "description": "We cultivate a strong, inclusive, and supportive global community, fostering collaboration, knowledge sharing, and co-creation through open APIs and accessible tools."
+      },
+      "quality": {
+        "title": "Uncompromising Quality",
+        "description": "We are committed to the highest standards of excellence in every aspect of our platform, from robust code and intuitive design to exceptional user experiences."
+      },
+      "collaboration": {
+        "title": "Radical Collaboration",
+        "description": "We champion the power of teamwork, open communication, and shared knowledge within our team and the broader ecosystem, building a truly modular and extensible platform."
+      },
+      "openness": {
+        "title": "Principled Openness",
+        "description": "We believe in transparency and accessibility, striving for an open architecture and fostering an environment where ideas can be freely exchanged and built upon."
+      },
+      "sustainability": {
+        "title": "Sustainable Growth",
+        "description": "We are committed to building a long-term, sustainable ecosystem that supports creators, developers, and partners, ensuring the continued evolution and impact of Project JamBam."
+      }
+    },
+    "cta": {
+      "title": "Join the Revolution",
+      "subtitle": "Whether you're a developer, artist, student, or enthusiast, there's a place for you in the JamBam ecosystem. Explore our technology, contribute to our community, or consider supporting our mission.",
+      "roadmap": "View Our Roadmap",
+      "supportUs": "Why Support JamBam?",
+      "community": "Join Our Community"
+    }
+    // Note: Original mission, vision, and team details are now primarily on VisionMissionPage and TeamPage
+    // For brevity, only high-level summaries or links are on the main About Us page.
+    // Specific role keys like 'about.team.roles.founder_visionary' are now primarily used on TeamPage.tsx
   },
   "home": {
     "hero": {
@@ -778,10 +956,27 @@
     "allThemes": "All Available Themes"
   },
   "footer": {
-    "description": "The leading European ecosystem for community-driven media development with plugin systems and multi-engine integration.",
-    "quickLinks": "Quick Links",
-    "social": "Follow Us",
-    "copyright": "© 2024 JamBam. All rights reserved."
+    "tagline": "A Next-Generation Interactive Media Ecosystem.",
+    "rights": "All Rights Reserved.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "about": "About Us",
+      "feed": "Feed",
+      "roadmap": "Roadmap",
+      "careers": "Careers",
+      "contact": "Contact"
+    },
+    "legal": {
+      "title": "Legal",
+      "imprint": "Imprint",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "followUs": {
+      "title": "Follow Us"
+    },
+    "jambamApp": "JamBam App",
+    "bottomText": "JamBam is a project by Bjarne Niklas Luttermann, striving to innovate the digital media landscape."
   },
   "themes": {
     "title": "Background Themes",
