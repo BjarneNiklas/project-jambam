@@ -75,20 +75,7 @@ const Header: React.FC = () => {
             >
               📱 {t('header.getApp', 'Get App')}
             </a>
-            {isAuthenticated ? (
-              <>
-                <Link to="/profile" className="profile-button" title={t('nav.profile') || ''} onClick={() => setIsMobileMenuOpen(false)}>
-                  👤
-                </Link>
-                <button onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="logout-button-header" title={t('nav.logout') || ''}>
-                  🚪
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="login-button-header" title={t('nav.login') || ''} onClick={() => setIsMobileMenuOpen(false)}>
-                🔑 {t('nav.login', 'Login')}
-              </Link>
-            )}
+            {/* Login, Profile, and Logout buttons removed as per request */}
             <Link to="/settings" className="settings-button" title={t('nav.settings') || ''} onClick={() => setIsMobileMenuOpen(false)}>
               ⚙️
             </Link>
