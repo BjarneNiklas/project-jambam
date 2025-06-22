@@ -66,7 +66,6 @@ function App() {
                     <Route path="/imprint" element={<PlaceholderPage title="Imprint" />} />
                     <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
                     <Route path="/terms" element={<PlaceholderPage title="Terms of Service" />} />
-
                     <Route element={<ProtectedRoute />}>
                       <Route path="/tech-radar" element={<TechRadarPage />} />
                       <Route path="/profile" element={<ProfilePage />} />

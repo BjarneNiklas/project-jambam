@@ -642,7 +642,8 @@
     "profile": "Profil",
     "register": "Registrieren",
     "logout": "Abmelden",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "contact": "Kontakt"
   },
   "header": {
     "downloadApp": "Lade die JamBam App herunter",
@@ -1007,5 +1008,18 @@
       "title": "Glühwürmchen",
       "description": "Magische Glühwürmchen die sanft pulsieren"
     }
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Wir sind hier, um zu helfen und Ihre Fragen zu beantworten.",
+    "infoTitle": "Nehmen Sie Kontakt auf",
+    "intro": "Für Anfragen, Support-Anfragen oder Feedback können Sie sich gerne an uns wenden. Der beste Weg, uns zu kontaktieren, ist per E-Mail.",
+    "emailLabel": "E-Mail an uns:",
+    "emailSubject": "Kontaktanfrage über JamBam Plattform",
+    "responseTime": "Wir bemühen uns, alle Anfragen innerhalb von 24-48 Geschäftsstunden zu beantworten.",
+    "additionalInfoTitle": "Zusätzliche Informationen",
+    "faqInfo": "Antworten auf häufig gestellte Fragen finden Sie möglicherweise auch in unserem FAQ-Bereich (Link wird noch hinzugefügt) oder in unseren Community-Foren.",
+    "visitFaq": "FAQ besuchen",
+    "visitCommunity": "Community Hub besuchen"
   }
 } 

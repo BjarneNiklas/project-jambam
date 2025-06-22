@@ -1,0 +1,10 @@
+.fireflies-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Ensure it's behind content */
+  pointer-events: none; /* Allow clicks to pass through */
+  background-color: #001000; /* Very dark green, like a forest at night */
+}

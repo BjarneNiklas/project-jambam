@@ -180,21 +180,21 @@ const TechRadar: React.FC<TechRadarProps> = ({ data }) => {
 
   const getRingColor = (ring: string) => {
     switch (ring) {
-      case 'adopt': return '#10b981';
-      case 'trial': return '#3b82f6';
-      case 'assess': return '#f59e0b';
-      case 'hold': return '#ef4444';
-      default: return '#6b7280';
+      case 'adopt': return 'var(--radar-adopt-color)';
+      case 'trial': return 'var(--radar-trial-color)';
+      case 'assess': return 'var(--radar-assess-color)';
+      case 'hold': return 'var(--radar-hold-color)';
+      default: return 'var(--radar-default-color)';
     }
   };
 
   const getQuadrantColor = (quadrant: string) => {
     switch (quadrant) {
-      case 'languages-and-frameworks': return '#ec4899';
-      case 'platforms': return '#8b5cf6';
-      case 'tools': return '#06b6d4';
-      case 'techniques': return '#84cc16';
-      default: return '#6b7280';
+      case 'languages-and-frameworks': return 'var(--radar-languages-color)';
+      case 'platforms': return 'var(--radar-platforms-color)';
+      case 'tools': return 'var(--radar-tools-color)';
+      case 'techniques': return 'var(--radar-techniques-color)';
+      default: return 'var(--radar-default-color)';
     }
   };
 

@@ -1,49 +1,24 @@
 /* BubbleBackground.css */
 
 .bubble-background {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  pointer-events: auto;
-  z-index: -1;
-  opacity: 1;
-  filter: none;
-  cursor: pointer;
-  transform: none !important;
-}
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: auto; /* Allows click-to-pop bubbles within the canvas */
+  z-index: 0; /* Positioned behind main content but above solid page background */
+  opacity: 1; /* Default visibility, controlled by ThemeProvider */
+  cursor: pointer; /* Indicates bubbles can be interacted with */
 
-/* Performance optimizations */
-.bubble-background {
-  will-change: transform;
+  /* Hardware acceleration hints */
+  will-change: opacity; /* Opacity might change if we fade it in/out */
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-/* Reduce motion for users who prefer it */
-@media (prefers-reduced-motion: reduce) {
-  .bubble-background {
-    display: none;
-  }
-}
-
-/* Mobile optimizations */
-@media (max-width: 768px) {
-  .bubble-background {
-    /*
-     * Mobile-First Optimization:
-     * Disable the expensive canvas animation on smaller screens (tablets and below)
-     * to ensure a smooth user experience and save battery life.
-     * The focus on mobile is performance and content, not heavy aesthetics.
-     */
-    opacity: 0.9;
-  }
-}
-
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .bubble-background {
-    filter: none;
-  }
-} 
+/*
+  The prefers-reduced-motion is handled by ThemeContext (animationsEnabled flag).
+  Mobile-specific density/behavior is handled within the component.
+  High DPI display filters are not strictly necessary for this canvas animation.
+*/
