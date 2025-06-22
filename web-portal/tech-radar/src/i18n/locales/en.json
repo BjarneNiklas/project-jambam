@@ -240,28 +240,45 @@
   },
   "home": {
     "hero": {
-      "title": "Welcome to the JamBam Ecosystem",
-      "subtitle": "The Next Generation of Interactive Media for Europe",
-      "description": "A community-driven ecosystem for co-creation, game development, and innovative media platforms. Connect with developers, create content together, and discover new possibilities for digital collaboration.",
-      "cta": "Discover Now",
-      "appButton": "Download App",
+      "titleNew": "Unleash Your Game Ideas with AI-Powered Jam Kits",
+      "subtitleNew": "Jambam is your open, AI-driven platform for seamless game creation, from concept to collaborative development and export to your favorite engine.",
+      "primaryCta": "Explore the Tech Radar",
       "learnMore": "Learn More"
     },
     "features": {
-      "title": "Our Ecosystem",
-      "subtitle": "Everything you need for your creative journey",
-      "creativity": {
-        "title": "Plugin System",
-        "description": "Modular architecture with open APIs. Extend the ecosystem with your own plugins, mods, and tools."
+      "titleNew": "Why Choose Jambam?",
+      "aiPowered": {
+        "title": "AI-Powered Jam Kits: Concept to Creation",
+        "description": "Leverage our AI to generate unique game ideas, themes, and initial 3D assets. Go from brainstorm to playable prototype faster than ever."
       },
-      "community": {
-        "title": "Community-First",
-        "description": "Strong, open community with active and passive participation. From game jams to co-creation - everyone can participate."
+      "communityDriven": {
+        "title": "Join the Jamfam: Collaborate & Innovate",
+        "description": "Be part of a vibrant community. Contribute ideas, vote on concepts, and co-create the next generation of games. Your input shapes the platform."
       },
-      "innovation": {
-        "title": "Multi-Engine",
-        "description": "Integration of various game engines (Unity, Godot, Bevy) for maximum flexibility and performance."
+      "openInteroperable": {
+        "title": "Build Your Way: Export to Any Engine",
+        "description": "Don't get locked in. Jambam is built on open standards, allowing you to export your creations and assets to popular game engines like Unity, Godot, and Unreal."
       }
+    },
+    "workflow": {
+      "title": "How Jambam Works",
+      "step1": {
+        "title": "1. Spark Your Idea",
+        "description": "Use our AI tools and tap into community creativity to brainstorm unique game concepts and themes for your Jam Kit."
+      },
+      "step2": {
+        "title": "2. Generate & Refine Assets",
+        "description": "Bring your vision to life as our AI helps generate initial 3D models and resources. Refine them with community feedback."
+      },
+      "step3": {
+        "title": "3. Develop & Export",
+        "description": "Further develop your game within Jambam or easily export your assets and Jam Kits to your preferred game engine like Unity, Godot, or Unreal."
+      }
+    },
+    "cta": {
+      "title": "Ready to Revolutionize Your Game Development?",
+      "subtitle": "Join the Jambam community today and start bringing your innovative game ideas to life with the power of AI and collaboration.",
+      "button": "Get Started Now"
     }
   },
   "techRadar": {
