@@ -1,230 +1,133 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface Competitor {
-  name: string;
-  category: string;
-  strengths: string[];
-  weaknesses: string[];
+// data/competitorsData.ts (oder ähnlich) - Dies sollte in eine eigene Datei ausgelagert werden
+export interface Competitor {
+  id: string;
+  nameKey: string;
+  categoryKey: string;
+  strengthKeys: string[];
+  weaknessKeys: string[];
   partnershipPotential: 'high' | 'medium' | 'low';
-  integrationAreas: string[];
-  logo?: string;
+  integrationAreaKeys: string[];
+  logo?: string; // Emoji oder SVG-Pfad
+  website?: string; // URL zur Webseite des Wettbewerbers
 }
 
-interface Partnership {
-  name: string;
-  type: 'technology' | 'content' | 'distribution' | 'infrastructure';
-  description: string;
-  benefits: string[];
-  requirements: string[];
-  status: 'exploring' | 'in-talks' | 'active' | 'completed';
+export interface Partnership {
+  id: string;
+  nameKey: string;
+  typeKey: string; // 'technology', 'content', 'distribution', 'infrastructure'
+  descriptionKey: string;
+  benefitKeys: string[];
+  requirementKeys: string[];
+  status: 'exploring' | 'in-progress' | 'active' | 'completed' | 'on-hold'; // Erweiterte Statusoptionen
+  partnerLogo?: string; // Emoji oder SVG-Pfad
+  relatedCompetitorId?: string; // Um Partnerschaft mit Wettbewerber zu verknüpfen
 }
+
+// Beispielhafte Daten (sollten in einer separaten Datei oder CMS sein)
+const competitorsData: Competitor[] = [
+  {
+    id: 'unity',
+    nameKey: 'competitors.list.unity.name',
+    categoryKey: 'competitors.categories.gameEngines',
+    strengthKeys: ['competitors.list.unity.strengths.marketLeader', 'competitors.list.unity.strengths.largeCommunity', 'competitors.list.unity.strengths.comprehensiveTools'],
+    weaknessKeys: ['competitors.list.unity.weaknesses.performanceIssues', 'competitors.list.unity.weaknesses.cost', 'competitors.list.unity.weaknesses.complexity'],
+    partnershipPotential: 'high',
+    integrationAreaKeys: ['competitors.list.unity.integration.assetStore', 'competitors.list.unity.integration.pluginDev'],
+    logo: '🎮',
+    website: 'https://unity.com/'
+  },
+  {
+    id: 'unreal',
+    nameKey: 'competitors.list.unreal.name',
+    categoryKey: 'competitors.categories.gameEngines',
+    strengthKeys: ['competitors.list.unreal.strengths.graphics', 'competitors.list.unreal.strengths.openSource', 'competitors.list.unreal.strengths.ecosystem'],
+    weaknessKeys: ['competitors.list.unreal.weaknesses.learningCurve', 'competitors.list.unreal.weaknesses.complexity', 'competitors.list.unreal.weaknesses.overhead'],
+    partnershipPotential: 'medium',
+    integrationAreaKeys: ['competitors.list.unreal.integration.metahuman', 'competitors.list.unreal.integration.marketplace'],
+    logo: '🚀',
+    website: 'https://www.unrealengine.com/'
+  },
+  // ... Weitere Wettbewerber hier einfügen (Roblox, Minecraft, Blender, Autodesk, GitHub, Discord, Twitch, Steam)
+  // Beispiel für Blender
+  {
+    id: 'blender',
+    nameKey: 'competitors.list.blender.name',
+    categoryKey: 'competitors.categories.tdTools',
+    strengthKeys: ['competitors.list.blender.strengths.openSource', 'competitors.list.blender.strengths.free', 'competitors.list.blender.strengths.activeCommunity'],
+    weaknessKeys: ['competitors.list.blender.weaknesses.learningCurve', 'competitors.list.blender.weaknesses.limitedSupport'],
+    partnershipPotential: 'high',
+    integrationAreaKeys: ['competitors.list.blender.integration.pluginDev', 'competitors.list.blender.integration.assetPipeline'],
+    logo: '🎨',
+    website: 'https://www.blender.org/'
+  },
+];
+
+const partnershipsData: Partnership[] = [
+  {
+    id: 'unityAssetStore',
+    nameKey: 'partnerships.list.unityAssetStore.name',
+    typeKey: 'partnerships.types.technology',
+    descriptionKey: 'partnerships.list.unityAssetStore.description',
+    benefitKeys: ['partnerships.list.unityAssetStore.benefits.accessToDevelopers', 'partnerships.list.unityAssetStore.benefits.monetization', 'partnerships.list.unityAssetStore.benefits.brandAwareness'],
+    requirementKeys: ['partnerships.list.unityAssetStore.requirements.qualityStandards', 'partnerships.list.unityAssetStore.requirements.pluginDevelopment', 'partnerships.list.unityAssetStore.requirements.supportInfrastructure'],
+    status: 'exploring',
+    relatedCompetitorId: 'unity'
+  },
+  {
+    id: 'blenderPlugin',
+    nameKey: 'partnerships.list.blenderPlugin.name',
+    typeKey: 'partnerships.types.technology',
+    descriptionKey: 'partnerships.list.blenderPlugin.description',
+    benefitKeys: ['partnerships.list.blenderPlugin.benefits.openSourceCommunity', 'partnerships.list.blenderPlugin.benefits.freeDistribution', 'partnerships.list.blenderPlugin.benefits.technicalExpertise'],
+    requirementKeys: ['partnerships.list.blenderPlugin.requirements.blenderApi', 'partnerships.list.blenderPlugin.requirements.pluginDevelopment', 'partnerships.list.blenderPlugin.requirements.communitySupport'],
+    status: 'in-progress',
+    relatedCompetitorId: 'blender'
+  },
+  // ... Weitere Partnerschaften
+];
+// Ende von data/competitorsData.ts
+
 
 const CompetitorsIntegration: React.FC = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'competitors' | 'partnerships'>('competitors');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>('all');
 
-  const competitors: Competitor[] = [
-    {
-      name: 'Unity Technologies',
-      category: 'Game Engines',
-      strengths: ['Marktführer', 'Große Community', 'Umfassende Tools', 'Cross-Platform'],
-      weaknesses: ['Performance-Probleme', 'Hohe Kosten', 'Komplexität', 'Proprietär'],
-      partnershipPotential: 'high',
-      integrationAreas: ['Asset Store Integration', 'Plugin-Entwicklung', 'Educational Content'],
-      logo: '🎮'
-    },
-    {
-      name: 'Unreal Engine (Epic)',
-      category: 'Game Engines',
-      strengths: ['Hochwertige Grafik', 'Open Source', 'Fortnite Ecosystem', 'MetaHuman'],
-      weaknesses: ['Steile Lernkurve', 'Überkomplexität', 'Performance-Overhead'],
-      partnershipPotential: 'medium',
-      integrationAreas: ['MetaHuman Integration', 'Marketplace Partnership', 'Educational Programs'],
-      logo: '🚀'
-    },
-    {
-      name: 'Roblox',
-      category: 'Platforms',
-      strengths: ['Massive User Base', 'Monetization', 'Creator Economy', 'Social Features'],
-      weaknesses: ['Qualitätsprobleme', 'Sicherheitsbedenken', 'Begrenzte Kreativität'],
-      partnershipPotential: 'high',
-      integrationAreas: ['Creator Tools', 'Educational Platform', 'Asset Marketplace'],
-      logo: '🎪'
-    },
-    {
-      name: 'Minecraft (Microsoft)',
-      category: 'Platforms',
-      strengths: ['Kultstatus', 'Educational Value', 'Modding Community', 'Cross-Platform'],
-      weaknesses: ['Begrenzte Grafik', 'Performance Issues', 'Microsoft-Abhängigkeit'],
-      partnershipPotential: 'medium',
-      integrationAreas: ['Educational Content', 'Modding Tools', 'Server Integration'],
-      logo: '⛏️'
-    },
-    {
-      name: 'Blender Foundation',
-      category: '3D Tools',
-      strengths: ['Open Source', 'Kostenlos', 'Aktive Community', 'Umfassend'],
-      weaknesses: ['Steile Lernkurve', 'Begrenzte Support', 'Performance'],
-      partnershipPotential: 'high',
-      integrationAreas: ['Plugin Development', 'Asset Pipeline', 'Educational Content'],
-      logo: '🎨'
-    },
-    {
-      name: 'Autodesk',
-      category: '3D Tools',
-      strengths: ['Industriestandard', 'Professionelle Tools', 'Umfassender Support'],
-      weaknesses: ['Sehr teuer', 'Komplex', 'Proprietär', 'Cloud-Abhängigkeit'],
-      partnershipPotential: 'low',
-      integrationAreas: ['Educational Licensing', 'Student Programs', 'Plugin Development'],
-      logo: '🏗️'
-    },
-    {
-      name: 'GitHub (Microsoft)',
-      category: 'Development',
-      strengths: ['Marktführer', 'Git Integration', 'CI/CD', 'Community'],
-      weaknesses: ['Microsoft-Abhängigkeit', 'Kosten', 'Begrenzte Privatsphäre'],
-      partnershipPotential: 'medium',
-      integrationAreas: ['Open Source Projects', 'Educational Programs', 'CI/CD Integration'],
-      logo: '🐙'
-    },
-    {
-      name: 'Discord',
-      category: 'Community',
-      strengths: ['Massive User Base', 'Voice/Video', 'Bot Ecosystem', 'Gaming Focus'],
-      weaknesses: ['Begrenzte Monetization', 'Sicherheitsprobleme', 'Proprietär'],
-      partnershipPotential: 'high',
-      integrationAreas: ['Bot Development', 'Community Integration', 'Educational Servers'],
-      logo: '💬'
-    },
-    {
-      name: 'Twitch (Amazon)',
-      category: 'Content',
-      strengths: ['Live Streaming Leader', 'Monetization', 'Gaming Community'],
-      weaknesses: ['Amazon-Abhängigkeit', 'Begrenzte Interaktivität', 'Content Moderation'],
-      partnershipPotential: 'medium',
-      integrationAreas: ['Streaming Integration', 'Educational Content', 'Community Features'],
-      logo: '📺'
-    },
-    {
-      name: 'Steam (Valve)',
-      category: 'Distribution',
-      strengths: ['Marktführer', 'Umfassende Features', 'Community Tools'],
-      weaknesses: ['Valve-Abhängigkeit', 'Begrenzte Kontrolle', 'Proprietär'],
-      partnershipPotential: 'medium',
-      integrationAreas: ['Game Distribution', 'Community Features', 'Educational Games'],
-      logo: '🎮'
-    }
-  ];
+  // Holen der einzigartigen Kategorien aus den Wettbewerberdaten
+  const competitorCategories = ['all', ...Array.from(new Set(competitorsData.map(c => c.categoryKey)))];
 
-  const partnerships: Partnership[] = [
-    {
-      name: 'Unity Asset Store Integration',
-      type: 'technology',
-      description: 'Integration unserer AI-generierten Assets in den Unity Asset Store',
-      benefits: ['Direkter Zugang zu Unity-Entwicklern', 'Monetization-Möglichkeiten', 'Markenbekanntheit'],
-      requirements: ['Asset-Qualitätsstandards', 'Unity-Plugin-Entwicklung', 'Support-Infrastruktur'],
-      status: 'exploring'
-    },
-    {
-      name: 'Blender Plugin Ecosystem',
-      type: 'technology',
-      description: 'Entwicklung von Plugins für Blender zur AI-gestützten 3D-Modellierung',
-      benefits: ['Open Source Community', 'Kostenlose Distribution', 'Technische Expertise'],
-      requirements: ['Blender Python API', 'Plugin-Entwicklung', 'Community Support'],
-      status: 'in-talks'
-    },
-    {
-      name: 'Educational Institution Partnerships',
-      type: 'content',
-      description: 'Partnerschaften mit Universitäten und Schulen für Game Development Kurse',
-      benefits: ['Talent-Pipeline', 'Markenbekanntheit', 'Forschungsmöglichkeiten'],
-      requirements: ['Curriculum-Entwicklung', 'Lizenzierung', 'Support-Team'],
-      status: 'exploring'
-    },
-    {
-      name: 'Discord Bot Integration',
-      type: 'technology',
-      description: 'Entwicklung von Discord Bots für Community-Management und Gamification',
-      benefits: ['Direkter Community-Zugang', 'User Engagement', 'Monetization'],
-      requirements: ['Discord API', 'Bot-Entwicklung', 'Community Management'],
-      status: 'active'
-    },
-    {
-      name: 'Open Source Game Engine Collaboration',
-      type: 'technology',
-      description: 'Kollaboration mit Open Source Game Engines wie Godot oder Bevy',
-      benefits: ['Community Building', 'Technische Expertise', 'Innovation'],
-      requirements: ['Engine-Entwicklung', 'Documentation', 'Community Support'],
-      status: 'exploring'
-    },
-    {
-      name: 'Content Creator Network',
-      type: 'content',
-      description: 'Partnerschaft mit Content Creators für Tutorials und Showcases',
-      benefits: ['Marketing', 'User Acquisition', 'Community Building'],
-      requirements: ['Creator Agreements', 'Content Guidelines', 'Monetization Model'],
-      status: 'in-talks'
-    },
-    {
-      name: 'Cloud Infrastructure Partnerships',
-      type: 'infrastructure',
-      description: 'Partnerschaften mit Cloud-Providern für skalierbare Infrastruktur',
-      benefits: ['Kosteneinsparungen', 'Skalierbarkeit', 'Technische Expertise'],
-      requirements: ['Infrastructure Planning', 'Cost Analysis', 'Technical Integration'],
-      status: 'exploring'
-    },
-    {
-      name: 'Indie Game Developer Support',
-      type: 'distribution',
-      description: 'Support-Programm für Indie-Entwickler mit unserem Tech Stack',
-      benefits: ['Ecosystem Building', 'Innovation', 'Community Growth'],
-      requirements: ['Support-Programm', 'Documentation', 'Community Management'],
-      status: 'active'
-    }
-  ];
-
-  const categories = ['all', ...Array.from(new Set(competitors.map(c => c.category)))];
-
-  const getPartnershipStatusColor = (status: string) => {
+  const getPartnershipStatusColor = (status: Partnership['status']) => {
     switch (status) {
       case 'exploring': return '#f59e0b';
-      case 'in-talks': return '#3b82f6';
+      case 'in-progress': return '#3b82f6'; // Same as in-talks for now
       case 'active': return '#10b981';
       case 'completed': return '#6b7280';
+      case 'on-hold': return '#facc15'; // Yellow for on-hold
       default: return '#6b7280';
     }
   };
 
-  const getPartnershipStatusText = (status: string) => {
-    switch (status) {
-      case 'exploring': return 'Erkundung';
-      case 'in-talks': return 'In Gesprächen';
-      case 'active': return 'Aktiv';
-      case 'completed': return 'Abgeschlossen';
-      default: return 'Unbekannt';
-    }
-  };
-
-  const getPotentialColor = (potential: string) => {
+  const getPartnershipPotentialColor = (potential: Competitor['partnershipPotential']) => {
     switch (potential) {
-      case 'high': return '#10b981';
-      case 'medium': return '#f59e0b';
-      case 'low': return '#ef4444';
-      default: return '#6b7280';
+      case 'high': return '#10b981'; // Green
+      case 'medium': return '#f59e0b'; // Orange
+      case 'low': return '#ef4444'; // Red
+      default: return '#6b7280'; // Grey
     }
   };
 
-  const filteredCompetitors = selectedCategory === 'all' 
-    ? competitors 
-    : competitors.filter(c => c.category === selectedCategory);
+  const filteredCompetitors = selectedCategoryKey === 'all'
+    ? competitorsData
+    : competitorsData.filter(c => c.categoryKey === selectedCategoryKey);
 
   return (
     <div className="competitors-integration">
       <div className="page-header glass">
-        <h1>{t('competitors.title')}</h1>
-        <p>{t('competitors.subtitle')}</p>
+        <h1>{t('competitors.mainTitle')}</h1>
+        <p>{t('competitors.mainSubtitle')}</p>
       </div>
 
       <div className="tab-navigation">
@@ -232,74 +135,80 @@ const CompetitorsIntegration: React.FC = () => {
           className={`tab-btn ${activeTab === 'competitors' ? 'active' : ''}`}
           onClick={() => setActiveTab('competitors')}
         >
-          {t('competitors.tab')}
+          {t('competitors.tabs.competitors')}
         </button>
         <button
           className={`tab-btn ${activeTab === 'partnerships' ? 'active' : ''}`}
           onClick={() => setActiveTab('partnerships')}
         >
-          {t('partnerships.tab')}
+          {t('competitors.tabs.partnerships')}
         </button>
       </div>
 
       {activeTab === 'competitors' && (
         <div className="competitors-section">
           <div className="filter-section glass">
-            <h3>{t('competitors.filterByCategory')}</h3>
+            <h3>{t('competitors.filters.title')}</h3>
             <div className="category-filters">
-              {categories.map(category => (
+              {competitorCategories.map(categoryKey => (
                 <button
-                  key={category}
-                  className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(category)}
+                  key={categoryKey}
+                  className={`category-btn ${selectedCategoryKey === categoryKey ? 'active' : ''}`}
+                  onClick={() => setSelectedCategoryKey(categoryKey)}
                 >
-                  {category === 'all' ? t('competitors.allCategories') : category}
+                  {categoryKey === 'all' ? t('competitors.filters.allCategories') : t(categoryKey)}
                 </button>
               ))}
             </div>
           </div>
 
           <div className="competitors-grid">
-            {filteredCompetitors.map((competitor, index) => (
-              <div key={index} className="competitor-card glass">
+            {filteredCompetitors.map((competitor) => (
+              <div key={competitor.id} className="competitor-card glass">
                 <div className="competitor-header">
-                  <div className="competitor-logo">{competitor.logo}</div>
+                  <div className="competitor-logo">{competitor.logo || '🏢'}</div>
                   <div className="competitor-info">
-                    <h3>{competitor.name}</h3>
-                    <span className="competitor-category">{competitor.category}</span>
+                    <h3>
+                        {t(competitor.nameKey)}
+                        {competitor.website && (
+                           <a href={competitor.website} target="_blank" rel="noopener noreferrer" style={{marginLeft: '8px', fontSize: '0.8em'}}>🔗</a>
+                        )}
+                    </h3>
+                    <span className="competitor-category">{t(competitor.categoryKey)}</span>
                   </div>
-                  <div 
+                  <div
                     className="partnership-potential"
-                    style={{ backgroundColor: getPotentialColor(competitor.partnershipPotential) }}
+                    style={{ backgroundColor: getPartnershipPotentialColor(competitor.partnershipPotential) }}
+                    title={t(`competitors.potential.${competitor.partnershipPotential}`)}
                   >
-                    {competitor.partnershipPotential.toUpperCase()}
+                    {t(`competitors.potentialAbbreviation.${competitor.partnershipPotential}`)}
                   </div>
                 </div>
 
                 <div className="competitor-analysis">
                   <div className="analysis-section">
-                    <h4>{t('competitors.strengths')}</h4>
+                    <h4>{t('competitors.analysis.strengths')}</h4>
                     <ul>
-                      {competitor.strengths.map((strength, idx) => (
-                        <li key={idx} className="strength-item">✅ {strength}</li>
+                      {competitor.strengthKeys.map((key, idx) => (
+                        <li key={idx} className="strength-item">✅ {t(key)}</li>
                       ))}
                     </ul>
                   </div>
 
                   <div className="analysis-section">
-                    <h4>{t('competitors.weaknesses')}</h4>
+                    <h4>{t('competitors.analysis.weaknesses')}</h4>
                     <ul>
-                      {competitor.weaknesses.map((weakness, idx) => (
-                        <li key={idx} className="weakness-item">❌ {weakness}</li>
+                      {competitor.weaknessKeys.map((key, idx) => (
+                        <li key={idx} className="weakness-item">❌ {t(key)}</li>
                       ))}
                     </ul>
                   </div>
 
                   <div className="analysis-section">
-                    <h4>{t('competitors.integrationAreas')}</h4>
+                    <h4>{t('competitors.analysis.integrationAreas')}</h4>
                     <div className="integration-tags">
-                      {competitor.integrationAreas.map((area, idx) => (
-                        <span key={idx} className="integration-tag">{area}</span>
+                      {competitor.integrationAreaKeys.map((key, idx) => (
+                        <span key={idx} className="integration-tag">{t(key)}</span>
                       ))}
                     </div>
                   </div>
@@ -313,56 +222,60 @@ const CompetitorsIntegration: React.FC = () => {
       {activeTab === 'partnerships' && (
         <div className="partnerships-section">
           <div className="partnerships-overview glass">
-            <h3>{t('partnerships.overview')}</h3>
+            <h3>{t('partnerships.overview.title')}</h3>
             <div className="partnership-stats">
               <div className="stat-card">
-                <span className="stat-number">{partnerships.length}</span>
-                <span className="stat-label">{t('partnerships.total')}</span>
+                <span className="stat-number">{partnershipsData.length}</span>
+                <span className="stat-label">{t('partnerships.overview.total')}</span>
               </div>
               <div className="stat-card">
-                <span className="stat-number">{partnerships.filter(p => p.status === 'active').length}</span>
-                <span className="stat-label">{t('partnerships.active')}</span>
+                <span className="stat-number">{partnershipsData.filter(p => p.status === 'active').length}</span>
+                <span className="stat-label">{t('partnerships.overview.active')}</span>
               </div>
               <div className="stat-card">
-                <span className="stat-number">{partnerships.filter(p => p.status === 'in-talks').length}</span>
-                <span className="stat-label">{t('partnerships.inTalks')}</span>
+                <span className="stat-number">{partnershipsData.filter(p => p.status === 'in-progress').length}</span>
+                <span className="stat-label">{t('partnerships.overview.inProgress')}</span>
+              </div>
+               <div className="stat-card">
+                <span className="stat-number">{partnershipsData.filter(p => p.status === 'exploring').length}</span>
+                <span className="stat-label">{t('partnerships.overview.exploring')}</span>
               </div>
             </div>
           </div>
 
           <div className="partnerships-grid">
-            {partnerships.map((partnership, index) => (
-              <div key={index} className="partnership-card glass">
+            {partnershipsData.map((partnership) => (
+              <div key={partnership.id} className="partnership-card glass">
                 <div className="partnership-header">
-                  <h3>{partnership.name}</h3>
+                  <h3>{t(partnership.nameKey)}</h3>
                   <div className="partnership-meta">
-                    <span className="partnership-type">{partnership.type}</span>
-                    <span 
+                    <span className="partnership-type">{t(partnership.typeKey)}</span>
+                    <span
                       className="partnership-status"
                       style={{ backgroundColor: getPartnershipStatusColor(partnership.status) }}
                     >
-                      {getPartnershipStatusText(partnership.status)}
+                      {t(`partnerships.status.${partnership.status}`)}
                     </span>
                   </div>
                 </div>
 
-                <p className="partnership-description">{partnership.description}</p>
+                <p className="partnership-description">{t(partnership.descriptionKey)}</p>
 
                 <div className="partnership-details">
                   <div className="detail-section">
-                    <h4>{t('partnerships.benefits')}</h4>
+                    <h4>{t('partnerships.details.benefits')}</h4>
                     <ul>
-                      {partnership.benefits.map((benefit, idx) => (
-                        <li key={idx}>🎯 {benefit}</li>
+                      {partnership.benefitKeys.map((key, idx) => (
+                        <li key={idx}>🎯 {t(key)}</li>
                       ))}
                     </ul>
                   </div>
 
                   <div className="detail-section">
-                    <h4>{t('partnerships.requirements')}</h4>
+                    <h4>{t('partnerships.details.requirements')}</h4>
                     <ul>
-                      {partnership.requirements.map((requirement, idx) => (
-                        <li key={idx}>📋 {requirement}</li>
+                      {partnership.requirementKeys.map((key, idx) => (
+                        <li key={idx}>📋 {t(key)}</li>
                       ))}
                     </ul>
                   </div>

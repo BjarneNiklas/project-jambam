@@ -99,50 +99,382 @@
     "quadrants": "Quadranten"
   },
   "competitors": {
-    "title": "Wettbewerber & Partnerschaften",
-    "subtitle": "Marktanalyse und Integrationsmöglichkeiten für strategische Partnerschaften",
-    "tab": "Wettbewerber",
-    "filterByCategory": "Nach Kategorie filtern",
-    "allCategories": "Alle Kategorien",
-    "strengths": "Stärken",
-    "weaknesses": "Schwächen",
-    "integrationAreas": "Integrationsbereiche"
+    "mainTitle": "Marktlandschaft & Synergien",
+    "mainSubtitle": "Analyse von Wettbewerbern und Identifizierung strategischer Partnerschaftsmöglichkeiten zur Stärkung unseres Ökosystems.",
+    "tabs": {
+      "competitors": "Wettbewerbsanalyse",
+      "partnerships": "Strategische Partnerschaften"
+    },
+    "filters": {
+      "title": "Wettbewerber filtern",
+      "allCategories": "Alle Kategorien"
+    },
+    "categories": {
+      "gameEngines": "Game Engines",
+      "platforms": "Metaverse-Plattformen",
+      "tdTools": "3D-Erstellungstools",
+      "development": "Entwicklungsplattformen",
+      "community": "Community-Plattformen",
+      "content": "Inhalt & Streaming",
+      "distribution": "Vertriebskanäle"
+    },
+    "potential": {
+      "high": "Hohes Potenzial",
+      "medium": "Mittleres Potenzial",
+      "low": "Geringes Potenzial"
+    },
+    "potentialAbbreviation": {
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Gering"
+    },
+    "analysis": {
+      "strengths": "Hauptstärken",
+      "weaknesses": "Hauptschwächen",
+      "integrationAreas": "Mögliche Integrationsbereiche"
+    },
+    "list": {
+      "unity": {
+        "name": "Unity Technologies",
+        "strengths": {
+          "marketLeader": "Marktführer mit umfangreicher Nutzerbasis",
+          "largeCommunity": "Große und aktive Entwickler-Community",
+          "comprehensiveTools": "Umfassende Suite von Entwicklungswerkzeugen",
+          "crossPlatform": "Starke Cross-Plattform-Fähigkeiten"
+        },
+        "weaknesses": {
+          "performanceIssues": "Gelegentliche Performance-Engpässe in komplexen Szenen",
+          "cost": "Lizenzkosten können für einige unerschwinglich sein",
+          "complexity": "Steile Lernkurve für fortgeschrittene Funktionen",
+          "proprietary": "Hauptsächlich proprietär, weniger offen als Alternativen"
+        },
+        "integration": {
+          "assetStore": "Integration von Jambam-Assets in den Asset Store",
+          "pluginDev": "Entwicklung von Jambam SDK/Plugins für Unity",
+          "educational": "Kollaborative Bildungsinhalte und Workshops"
+        }
+      },
+      "unreal": {
+        "name": "Unreal Engine (Epic Games)",
+        "strengths": {
+          "graphics": "Branchenführende High-Fidelity-Grafik",
+          "openSource": "Source-available mit einem lizenzbasierten Modell",
+          "ecosystem": "Starkes Ökosystem (MetaHuman, Quixel, Fortnite)",
+          "toolset": "Leistungsstarkes und umfangreiches Toolset für AAA-Entwicklung"
+        },
+        "weaknesses": {
+          "learningCurve": "Sehr steile Lernkurve, besonders für Anfänger",
+          "complexity": "Kann für kleinere Projekte übermäßig komplex sein",
+          "overhead": "Höherer Performance-Overhead für einfache Anwendungen",
+          "blueprint": "Blueprint-System kann bei großer Logik unhandlich werden"
+        },
+        "integration": {
+          "metahuman": "Integration mit MetaHuman zur Charaktererstellung",
+          "marketplace": "Jambam-Präsenz auf dem Unreal Marketplace",
+          "educational": "Gemeinsame Bildungsprogramme und Game Jams"
+        }
+      },
+      "blender": {
+        "name": "Blender Foundation",
+        "strengths": {
+          "openSource": "Vollständig kostenlos und Open-Source",
+          "free": "Keine Lizenzgebühren, für jeden zugänglich",
+          "activeCommunity": "Große, leidenschaftliche und aktive globale Community",
+          "versatile": "Vielseitiges Toolset für Modellierung, Animation, VFX, Rendering"
+        },
+        "weaknesses": {
+          "learningCurve": "Steile Lernkurve aufgrund umfangreicher Funktionen",
+          "limitedSupport": "Community-basierter Support, kein dedizierter Enterprise-Support",
+          "performance": "Performance in sehr komplexen Szenen kann variieren"
+        },
+        "integration": {
+          "pluginDev": "Jambam KI-Plugins für Blender (z.B. Asset-Generierung)",
+          "assetPipeline": "Direkte Asset-Pipeline-Integration mit Jambam",
+          "educational": "Gemeinsame Erstellung von Blender-fokussierten Bildungsinhalten"
+        }
+      }
+      // ... Fügen Sie hier weitere Wettbewerber wie Roblox, Minecraft, Autodesk, GitHub, Discord, Twitch, Steam mit ähnlicher Struktur hinzu
+    }
   },
   "partnerships": {
-    "tab": "Partnerschaften",
-    "overview": "Partnerschaften Übersicht",
-    "total": "Gesamt",
-    "active": "Aktiv",
-    "inTalks": "In Gesprächen",
-    "benefits": "Vorteile",
-    "requirements": "Anforderungen"
+    "overview": {
+      "title": "Unsere strategischen Partnerschaftsinitiativen",
+      "total": "Partnerschaften Gesamt",
+      "active": "Aktiv",
+      "inProgress": "In Arbeit",
+      "exploring": "In Prüfung"
+    },
+    "status": {
+      "exploring": "In Prüfung",
+      "in-progress": "In Arbeit",
+      "active": "Aktiv",
+      "completed": "Abgeschlossen",
+      "on-hold": "Pausiert"
+    },
+    "types": {
+      "technology": "Technologieallianz",
+      "content": "Inhaltskooperation",
+      "distribution": "Vertriebsnetzwerk",
+      "infrastructure": "Infrastrukturpartner",
+      "community": "Community-Engagement",
+      "research": "Forschung & Entwicklung"
+    },
+    "details": {
+      "benefits": "Gegenseitige Vorteile",
+      "requirements": "Wichtige Anforderungen & Verpflichtungen"
+    },
+    "list": {
+      "unityAssetStore": {
+        "name": "Unity Asset Store Integration",
+        "description": "Integration von KI-generierten Assets aus dem Jambam Studio direkt in den Unity Asset Store, um Unity-Entwicklern einen neuen Strom hochwertiger, anpassbarer Inhalte zu bieten.",
+        "benefits": {
+          "accessToDevelopers": "Direkter Zugang zu Millionen von Unity-Entwicklern",
+          "monetization": "Neue Monetarisierungsmöglichkeiten für Jambam und Kreative",
+          "brandAwareness": "Gesteigerte Markenbekanntheit für Jambam im Unity-Ökosystem"
+        },
+        "requirements": {
+          "qualityStandards": "Einhaltung der Qualitätsstandards des Unity Asset Store",
+          "pluginDevelopment": "Robustes Plugin für nahtlosen Asset-Import und Anpassung",
+          "supportInfrastructure": "Dedizierte Support-Infrastruktur für integrierte Assets"
+        }
+      },
+      "blenderPlugin": {
+        "name": "Blender KI Co-Pilot Plugin",
+        "description": "Entwicklung eines fortschrittlichen Plugins für Blender, das die KI-Fähigkeiten von Jambam für unterstützte 3D-Modellierung, Texturierung und Szenengenerierung direkt in der Blender-Oberfläche integriert.",
+        "benefits": {
+          "openSourceCommunity": "Nutzung der riesigen Blender Open-Source-Community",
+          "freeDistribution": "Potenziell kostenloses oder Freemium-Vertriebsmodell",
+          "technicalExpertise": "Zusammenarbeit mit Blender-Fachexperten und Künstlern"
+        },
+        "requirements": {
+          "blenderApi": "Tiefe Integration mit Blenders Python-API und Architektur",
+          "pluginDevelopment": "Laufende Plugin-Entwicklung und -Wartung",
+          "communitySupport": "Aktive Community-Unterstützung und Dokumentation"
+        }
+      }
+      // ... Fügen Sie hier weitere Partnerschaften hinzu
+    }
   },
   "products": {
-    "title": "Produkte & Plattformen",
-    "subtitle": "Eigene und Partner-Produkte",
+    "mainTitle": "Unser innovatives Produkt-Ökosystem",
+    "mainSubtitle": "Die nächste Generation von Co-Creation und interaktiven Erlebnissen gestalten.",
+    "keyFeatures": "Schlüsselfunktionen",
+    "technologies": "Kerntechnologien",
+    "targetAudience": "Zielgruppe",
+    "moreFeatures": "weitere Funktionen",
+    "status": {
+      "active": "Aktiv",
+      "development": "In Entwicklung",
+      "planned": "Geplant",
+      "deprecated": "Eingestellt"
+    },
+    "categories": {
+      "enginesCore": {
+        "name": "Engines & Kerntechnologie",
+        "description": "Unsere proprietären Spiel-Engines und grundlegenden Technologieplattformen, die Innovationen vorantreiben."
+      },
+      "aiContent": {
+        "name": "KI & Content-Generierung",
+        "description": "Hochmoderne KI-gestützte Werkzeuge und Dienste, die die Erstellung von Inhalten und Assets revolutionieren."
+      },
+      "communityCollab": {
+        "name": "Community & Kollaboration",
+        "description": "Plattformen und Werkzeuge zur Förderung lebendiger Community-Interaktion und nahtloser Zusammenarbeit."
+      },
+      "devTools": {
+        "name": "Entwicklungswerkzeuge",
+        "description": "Eine Suite robuster Werkzeuge und Dienstprogramme zur Optimierung und Verbesserung von Entwicklungsworkflows."
+      },
+      "educationalTraining": {
+        "name": "Bildungs- & Trainingsplattformen",
+        "description": "Innovative Bildungswerkzeuge und umfassende Plattformen zum Erlernen von Spieleentwicklung und kreativen Technologien."
+      },
+      "entertainmentGaming": {
+        "name": "Unterhaltungs- & Spielerlebnisse",
+        "description": "Fesselnde Spiel- und Unterhaltungsplattformen für einzigartige interaktive Erlebnisse."
+      }
+    },
     "broxelEngine": {
-      "title": "Broxel Engine",
-      "description": "Next-Generation Hybrid Voxel Engine für prozedurale Welten"
-    },
-    "aiStudio": {
-      "title": "AI Studio",
-      "description": "KI-gestützte Content-Erstellung und Asset-Generierung"
-    },
-    "auraxPlatform": {
-      "title": "AURAX Platform",
-      "description": "Community-Plattform für Kreative und Entwickler"
+      "name": "Broxel Engine",
+      "category": "Voxel Engine Technologie",
+      "description": "Eine maßgeschneiderte, hochleistungsfähige Voxel-Spiel-Engine für die Erstellung riesiger, prozedural generierter Welten und dynamischer Umgebungen.",
+      "features": {
+        "infiniteWorlds": "Unendliche Voxel-Welt-Generierung",
+        "realtimeProcedural": "Echtzeit-Prozedurale Content-Erstellung",
+        "multiThreaded": "Multi-Threaded Rendering & Physik",
+        "modularArchitecture": "Modulare & erweiterbare Architektur",
+        "crossPlatform": "Cross-Plattform-Unterstützung (Desktop, Mobil)"
+      },
+      "targetAudience": "Indie-Spieleentwickler, Welt-Erbauer, Bildungseinrichtungen, Simulationsentwickler."
     },
     "luvyEngine": {
-      "title": "LUVY Engine",
-      "description": "Modularer Game Engine mit Plugin-System"
+      "name": "LUVY Engine (Konzept)",
+      "category": "Next-Gen 3D/XR Engine",
+      "description": "Eine zukunftsorientierte 3D- und XR (VR/AR)-Engine mit Fokus auf immersive Erlebnisse, KI-gesteuerte Content-Pipelines und Community-basierte Entwicklung.",
+      "features": {
+        "realtime3D": "Hochauflösendes Echtzeit-3D-Rendering",
+        "xrSupport": "Native XR-Unterstützung (VR/AR/MR)",
+        "aiContent": "KI-gestützte Asset- & Szenen-Generierung",
+        "crossPlatform": "Multi-Plattform-Deployment (Desktop, Web, Mobil)",
+        "communityDriven": "Offenes, Community-getriebenes Entwicklungsmodell"
+      },
+      "targetAudience": "XR-Entwickler, 3D-Künstler, Spieldesigner, interaktive Geschichtenerzähler, Forscher."
     },
-    "communityHub": {
-      "title": "Community Hub",
-      "description": "Zentrale Plattform für Community-Management und Kollaboration"
+    "jambamAiStudio": {
+      "name": "JamBam AI Studio",
+      "category": "KI Content Creation Suite",
+      "description": "Eine integrierte KI-Plattform, die Kreativen ermöglicht, vielfältige Spiel-Assets, komplexe Welten und interaktive narrative Inhalte mühelos zu generieren.",
+      "features": {
+        "multimodalAi": "Multimodale KI-Generierung (Text, Bild, 3D, Audio)",
+        "assetPipeline": "Nahtlose Asset-Pipeline-Integration",
+        "communityTraining": "Community-getriebenes KI-Modelltraining & Feinabstimmung",
+        "realtimeCollab": "Echtzeit-kollaborative KI-Bearbeitung",
+        "qualityAssurance": "KI-gestützte Qualitätssicherungswerkzeuge"
+      },
+      "targetAudience": "Spieleentwickler, Digitalkünstler, Content Creator, Pädagogen, Marketingfachleute."
     },
-    "educationalTools": {
-      "title": "Educational Tools",
-      "description": "Lernplattform und Tutorial-System"
+    "auraxPlatform": {
+      "name": "AURAX Co-Creation Plattform",
+      "category": "KI-erweiterte 3D-Kollaboration",
+      "description": "Eine fortschrittliche KI-Co-Creation-Umgebung für kollaboratives 3D-Worldbuilding, Asset-Generierung und fotogrammetriebasierte Inhaltserstellung.",
+      "features": {
+        "aiCoCreation": "KI-gestützte kollaborative Designwerkzeuge",
+        "generative3D": "Generative 3D-Modellerstellung & Texturierung",
+        "photogrammetry": "Integrierte Photogrammetrie & Gaussian Splatting Pipeline",
+        "realtimeCollab": "Echtzeit-Multi-User-Kollaboration",
+        "communityAiTraining": "Community-beigetragene KI-Trainingsdatensätze"
+      },
+      "targetAudience": "3D-Künstler, Spiellevel-Designer, Architekten, Pädagogen, Forscher im Bereich digitales Erbe."
+    },
+    "jambamCommunityHub": {
+      "name": "JamBam Community Hub",
+      "category": "Zentrale Sozial- & Entwicklungsplattform",
+      "description": "Der zentrale Knotenpunkt für unsere Community, der Zusammenarbeit, Content-Austausch, Projektbeteiligung und direkte Einbindung in die Plattformentwicklung ermöglicht.",
+      "features": {
+        "userContent": "Nutzergenerierte Inhalte & Asset-Marktplatz",
+        "collabProjects": "Kollaborative Projektbereiche & Versionskontrolle",
+        "votingFeedback": "Community-Abstimmungs- & Feedback-Systeme",
+        "devToolsIntegration": "Nahtlose Integration mit Entwicklungswerkzeugen",
+        "gamification": "Motivierende Gamification- & Belohnungselemente"
+      },
+      "targetAudience": "Alle Community-Mitglieder, Entwickler, Künstler, Content Creator, Studenten."
+    },
+    "gameJamPlatform": {
+      "name": "Game Jam Plattform",
+      "category": "Kreativ-Event & Wettbewerbshub",
+      "description": "Eine umfassende Plattform für die Organisation, Durchführung und Teilnahme an Game Jams, Hackathons und anderen kreativen Wettbewerben.",
+      "features": {
+        "jamManagement": "Vollständige Jam-Erstellungs- & Management-Tools",
+        "realtimeCollab": "Integrierte Echtzeit-Kollaborationsfunktionen",
+        "assetSharing": "Sichere Asset-Freigabe & Versionierung",
+        "judgingVoting": "Transparentes Bewertungs- & Community-Abstimmungssystem",
+        "communityFeedback": "Konstruktive Community-Feedback-Mechanismen"
+      },
+      "targetAudience": "Spieleentwickler aller Niveaus, Studenten, Pädagogen, Event-Organisatoren, Hobbyisten."
+    },
+    "engineAdapterFramework": {
+      "name": "Engine Adapter Framework",
+      "category": "Universelle Integrationsschicht",
+      "description": "Ein vielseitiges Framework, das die nahtlose Integration verschiedener Drittanbieter-Spiel-Engines (Unity, Unreal, Godot etc.) in das JamBam-Ökosystem ermöglicht.",
+      "features": {
+        "multiEngine": "Breite Multi-Engine-Unterstützung (Unity, Unreal, Godot, etc.)",
+        "standardApi": "Standardisierte APIs für Kern-Plattformdienste",
+        "pluginArchitecture": "Flexible Plugin-Architektur für Erweiterbarkeit",
+        "performanceOpt": "Leistungsoptimierung für jede Engine",
+        "crossPlatform": "Cross-Plattform-Kompatibilitätssicherung"
+      },
+      "targetAudience": "Spieleentwickler mit diversen Engines, Tool-Entwickler, Unternehmensinformatiker."
+    },
+    "jambamIde": {
+      "name": "JamBam IDE (Konzept)",
+      "category": "KI-erweiterte Entwicklungsumgebung",
+      "description": "Eine integrierte Entwicklungsumgebung (IDE) oder Erweiterung, optimiert für den JamBam-Technologie-Stack, mit KI-gestützter Codierung und Workflow-Automatisierung.",
+      "features": {
+        "multiLanguage": "Mehrsprachige Unterstützung (Rust, Python, Dart, etc.)",
+        "aiCoding": "KI-gestützte Code-Generierung & Fehlerbehebung",
+        "integratedTesting": "Integrierte Unit- & Integrationstest-Frameworks",
+        "deploymentTools": "Integrierte Deployment- & CI/CD-Tools",
+        "communityIntegration": "Direkte Integration mit Community Hub & Ressourcen"
+      },
+      "targetAudience": "Entwickler auf der JamBam-Plattform, Studenten, Coding-Hobbyisten."
+    },
+    "assetPipeline": {
+      "name": "Universelle Asset Pipeline",
+      "category": "Content Management & Optimierung",
+      "description": "Eine umfassende Asset-Management- und Verarbeitungspipeline für 2D/3D-Inhalte, Spiel-Assets und KI-generierte Medien.",
+      "features": {
+        "automatedProcessing": "Automatisierte Asset-Aufnahme & -Verarbeitung",
+        "formatConversion": "Breite Palette an Formatkonvertierung & -optimierung",
+        "qualityOptimization": "KI-gestützte Qualitätsverbesserung & -optimierung",
+        "versionControl": "Robuste Versionskontrolle & Asset-Historie",
+        "collabEditing": "Kollaborative Asset-Bearbeitung & Review-Workflows"
+      },
+      "targetAudience": "3D-Künstler, Spieleentwickler, Content Manager, KI-Forscher."
+    },
+    "jambamLearningPlatform": {
+      "name": "JamBam Lernplattform",
+      "category": "Interaktive Bildungssuite",
+      "description": "Eine ganzheitliche Lernplattform mit Kursen, Tutorials und Ressourcen für Spieleentwicklung, KI-Kompetenz und kreative Technologiefähigkeiten.",
+      "features": {
+        "interactiveTutorials": "Praxisnahe interaktive Tutorials & Simulatoren",
+        "projectBasedLearning": "Projektbasierte Lernpfade & Showcases",
+        "aiFeedback": "KI-gestütztes personalisiertes Feedback & Anleitung",
+        "communityMentoring": "Community-Mentoring & Peer-Support",
+        "certification": "Fähigkeitsbasierte Zertifizierungsprogramme"
+      },
+      "targetAudience": "Studenten, Pädagogen, angehende Spieleentwickler, Quereinsteiger, lebenslang Lernende."
+    },
+    "studios": {
+      "name": "Studi.OS (Kollaboratives Lern-OS)",
+      "category": "Bildungsbetriebssystem",
+      "description": "Ein innovatives Betriebssystemkonzept für den Bildungsbereich, das auf kollaborative Projektentwicklung, Ressourcenaustausch und institutionsübergreifendes Lernen ausgerichtet ist.",
+      "features": {
+        "collabWorkspaces": "Sichere kollaborative digitale Arbeitsbereiche",
+        "integratedLearning": "Integrierte Suite von Lern- & Erstellungswerkzeugen",
+        "projectManagement": "Fortschrittliches Projektmanagement & Tracking",
+        "crossOrgCollab": "Organisationsübergreifende & globale Kollaborationsfunktionen",
+        "aiAssistance": "KI-gestützte Bildungsassistenz & Tutoring"
+      },
+      "targetAudience": "Bildungseinrichtungen, K-12 Schulen, Universitäten, Berufsbildungszentren."
+    },
+    "quizELearning": {
+      "name": "KI Quiz & E-Learning System",
+      "category": "Adaptive Lernwerkzeuge",
+      "description": "Ein fortschrittliches Quiz- und E-Learning-System mit KI-generierten Bildungsinhalten, adaptiven Lernpfaden und interaktiven 3D-Elementen.",
+      "features": {
+        "aiQuizzes": "KI-generierte & anpassbare Quizze",
+        "adaptiveLearning": "Personalisierte adaptive Lernpfade",
+        "progressTracking": "Detaillierte Fortschrittsverfolgung & Analysen",
+        "multiSubject": "Fächerübergreifende & interdisziplinäre Unterstützung",
+        "interactive3d": "Integration von interaktiven 3D-Inhalten & Simulationen"
+      },
+      "targetAudience": "Studenten jeden Alters, Pädagogen, Unternehmenstrainer, Selbstlerner."
+    },
+    "bubblezMinigame": {
+      "name": "BubbleZ Interessen-Entdeckung",
+      "category": "Soziales Interaktions-Minispiel",
+      "description": "Ein fesselndes, interaktives Minispiel im Blasen-Design zur Entdeckung gemeinsamer Interessen und zur Förderung von Verbindungen zwischen Nutzern.",
+      "features": {
+        "interestMatching": "Dynamischer interessenbasierter Matching-Algorithmus",
+        "interactiveBubbles": "Spielerische & interaktive Blasenphysik",
+        "socialConnections": "Erleichtert neue soziale Verbindungen & Gruppenbildung",
+        "exportFunctionality": "Exportierbare Interessenprofile & Verbindungen",
+        "customThemes": "Anpassbare visuelle Themen & Blasenstile"
+      },
+      "targetAudience": "Social-Plattform-Nutzer, Community-Mitglieder, Event-Teilnehmer, Pädagogen."
+    },
+    "homeCafeModule": {
+      "name": "Home Café Connect (Lokale Community)",
+      "category": "Hyperlokales Community-Modul",
+      "description": "Ein Modul zum Aufbau hyperlokaler Gemeinschaften, das es Nutzern ermöglicht, lokale Veranstaltungen zu organisieren, Fähigkeiten oder Rezepte zu teilen und reale Verbindungen zu fördern.",
+      "features": {
+        "eventOrganization": "Einfache lokale Event-Erstellung & -Verwaltung",
+        "recipeSharing": "Fähigkeiten-, Rezept- & Ressourcenaustausch",
+        "localNetworking": "Hyperlokales Networking & Gruppenentdeckung",
+        "communityBuilding": "Werkzeuge für lokalen Community-Aufbau & Moderation",
+        "gamification": "Gamifizierte lokale Herausforderungen & Belohnungen"
+      },
+      "targetAudience": "Lokale Gemeinschaften, Nachbarschaftsgruppen, Hobbyisten, Food-Enthusiasten, Event-Organisatoren."
     }
   },
   "password": {
@@ -211,41 +543,75 @@
   },
   "about": {
     "title": "Über uns",
-    "subtitle": "Lerne das Team hinter JamBam kennen",
+    "subtitle": "Die Zukunft der interaktiven Co-Creation gestalten",
     "mission": {
-      "title": "Unsere Mission",
-      "description": "Wir entwickeln das führende europäische Ökosystem für Community-getriebene Medienentwicklung. Unser Fokus liegt auf Plugin-Systemen, Multi-Engine-Integration, Asset Marketplaces und Co-Creation-Features."
+      "title": "Unsere Mission: Demokratisierung der Schöpfung",
+      "description": "Project Jambam hat sich zum Ziel gesetzt, die Entwicklung interaktiver 3D-Anwendungen zu demokratisieren und zu beschleunigen. Wir bieten eine KI-gestützte Co-Creation-Plattform und stellen uns einen 'GitHub Copilot für die 3D-Welt' vor, mit starkem Fokus auf Community und kollaborative Spieleentwicklung, insbesondere für Events wie Game Jams."
     },
-    "values": {
-      "title": "Unsere Werte",
-      "innovation": {
-        "title": "Innovation",
-        "description": "Wir streben nach bahnbrechenden Lösungen und neuen Technologien im Bereich Game Development und Medienplattformen."
-      },
-      "community": {
-        "title": "Community",
-        "description": "Wir bauen starke, unterstützende Communities für Entwickler und Kreative mit offenen APIs und Erweiterbarkeit."
-      },
-      "quality": {
-        "title": "Qualität",
-        "description": "Wir setzen auf höchste Qualitätsstandards in allem was wir tun, von Code-Qualität bis Benutzererfahrung."
-      },
-      "collaboration": {
-        "title": "Zusammenarbeit",
-        "description": "Wir glauben an die Kraft der Teamarbeit und des Wissensaustauschs in unserem modularen Ökosystem."
-      }
+    "vision": {
+      "title": "Unsere Vision: Ein Universum von Schöpfern",
+      "description": "Wir stellen uns ein lebendiges, vernetztes Ökosystem vor, in dem Kreative aller Erfahrungsstufen ihre 3D-Visionen einfach zum Leben erwecken können. Von KI-unterstützter Ideenfindung über Multi-Engine-Deployment bis hin zu einem florierenden Marktplatz – Jambam soll die zentrale Anlaufstelle für die nächste Generation interaktiver Inhalte werden."
     },
     "team": {
-      "title": "Unser Team",
-      "description": "Ein leidenschaftliches Team aus Entwicklern, Designern und Visionären, die das JamBam-Ökosystem gestalten.",
+      "title": "Lernen Sie unsere Kernmitwirkenden kennen",
+      "intro": "Wir sind eine dynamische Gruppe von Innovatoren, Entwicklern und Strategen, die mit Leidenschaft die Zukunft der Co-Creation gestalten. Lernen Sie die Menschen kennen, die Project Jambam zu seinen ehrgeizigen Zielen führen.",
       "roles": {
-        "founder_visionary": "Gründer & Visionär"
+        "founder_visionary": "Gründer & Chief Visionary Officer",
+        "lead_developer": "Leitender Plattformarchitekt",
+        "community_manager": "Leiter Community & Ökosystem",
+        "ai_research_lead": "Leiter KI-Forschung",
+        "ux_design_lead": "Leiter UX/UI-Design"
+      },
+      "bjarne": {
+        "name": "Bjarne Luttermann",
+        "bio": "Bjarne ist die treibende Kraft hinter Project Jambam, mit einer tiefen Leidenschaft für KI, Spieleentwicklung und Community Building. Seine Vision ist es, eine Plattform zu schaffen, die Kreative weltweit befähigt."
+      },
+      "jane_doe": {
+        "name": "Jane Doe",
+        "bio": "Jane leitet die technische Entwicklung der Jambam-Plattform und konzentriert sich auf robuste Architektur, Skalierbarkeit und nahtlose Integration von KI-Technologien. Sie ist eine Befürworterin von Open-Source und kollaborativem Coding."
+      },
+      "john_smith": {
+        "name": "John Smith",
+        "bio": "John widmet sich der Förderung einer lebendigen und integrativen Community rund um Project Jambam. Er leitet Initiativen für Engagement, Zusammenarbeit und stellt sicher, dass die Plattform die Bedürfnisse ihrer Nutzer erfüllt."
+      }
+    },
+    "values": {
+      "title": "Unsere Kernwerte",
+      "innovation": {
+        "title": "Wegweisende Innovation",
+        "description": "Wir verfolgen unermüdlich wegweisende Lösungen und nutzen KI sowie neuartige Technologien, um die Grenzen der 3D-Content-Erstellung und Spieleentwicklung neu zu definieren."
+      },
+      "community": {
+        "title": "Stärkende Community",
+        "description": "Wir pflegen eine starke, integrative und unterstützende globale Gemeinschaft und fördern Zusammenarbeit, Wissensaustausch und Co-Creation durch offene APIs und zugängliche Werkzeuge."
+      },
+      "quality": {
+        "title": "Kompromisslose Qualität",
+        "description": "Wir verpflichten uns zu höchsten Qualitätsstandards in jedem Aspekt unserer Plattform, von robustem Code und intuitivem Design bis hin zu außergewöhnlichen Benutzererfahrungen."
+      },
+      "collaboration": {
+        "title": "Radikale Zusammenarbeit",
+        "description": "Wir setzen auf die Kraft von Teamarbeit, offener Kommunikation und geteiltem Wissen innerhalb unseres Teams und des breiteren Ökosystems und bauen so eine wirklich modulare und erweiterbare Plattform."
+      },
+      "openness": {
+        "title": "Prinzipielle Offenheit",
+        "description": "Wir glauben an Transparenz und Zugänglichkeit, streben eine offene Architektur an und fördern ein Umfeld, in dem Ideen frei ausgetauscht und weiterentwickelt werden können."
+      },
+      "sustainability": {
+        "title": "Nachhaltiges Wachstum",
+        "description": "Wir engagieren uns für den Aufbau eines langfristigen, nachhaltigen Ökosystems, das Kreative, Entwickler und Partner unterstützt und so die kontinuierliche Entwicklung und Wirkung von Project Jambam sicherstellt."
       }
     }
   },
   "team": {
     "bjarne": {
       "name": "Bjarne Luttermann"
+    },
+    "jane_doe": {
+      "name": "Jane Doe"
+    },
+    "john_smith": {
+      "name": "John Smith"
     }
   },
   "techradar": {
