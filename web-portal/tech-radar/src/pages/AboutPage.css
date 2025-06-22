@@ -1,59 +1,229 @@
-/* AboutPage.css */
-
-.about-page {
-  max-width: 1400px;
-  margin: 0 auto;
+/* General About Page Styling */
+.about-page-container {
+  max-width: 1100px;
+  margin: 2rem auto;
   padding: 2rem;
-  color: #d1d5db; /* A soft, light gray for body text */
+  background-color: var(--background-color-secondary, #1a202c);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: var(--text-color-primary, #e2e8f0);
 }
 
 .about-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color-soft, #2d3748);
 }
 
 .about-header h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--accent-color, #6366f1);
   margin-bottom: 0.5rem;
 }
 
 .about-header .subtitle {
-  font-size: 1.25rem;
-  color: #a1a1aa;
+  font-size: 1.2rem;
+  color: var(--text-color-secondary, #a0aec0);
+  max-width: 700px;
+  margin: 0 auto;
 }
 
+/* General Section Styling */
 .about-section {
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: var(--background-color-tertiary, #2d3748);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .about-section h2 {
   font-size: 2rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 600;
+  color: var(--accent-color-secondary, #81e6d9);
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--accent-color);
-  display: inline-block;
+  text-align: center;
 }
 
 .about-section p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.7;
+  color: var(--text-color-secondary, #a0aec0);
   margin-bottom: 1rem;
 }
 
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+/* Mission & Vision Summary Section */
+.mission-vision-summary .summary-card {
+  padding: 1rem; /* Less padding if it's just text */
+}
+.summary-links {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.cta-button-outline {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--accent-color-translucent, rgba(99, 102, 241, 0.5));
+  color: var(--accent-color-light, #a5b4fc);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+.cta-button-outline:hover {
+  background-color: var(--accent-color-translucent, rgba(99, 102, 241, 0.15));
+  border-color: var(--accent-color, #6366f1);
+  color: white;
+  transform: translateY(-2px);
 }
 
-.team-grid {
+
+/* Problem & Solution Section */
+.problem-solution {
+  background-color: transparent; /* Remove card background for this section wrapper */
+  box-shadow: none;
+  padding: 0;
+}
+.problem-solution h2 {
+  margin-bottom: 2rem; /* More space for section title */
+}
+.problem-card, .solution-card {
+  padding: 1.5rem;
+  background-color: var(--background-color-tertiary, #2d3748);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+.problem-card h3, .solution-card h3 {
+  font-size: 1.4rem;
+  color: var(--text-color-primary, #e2e8f0);
+  margin-bottom: 0.75rem;
+}
+.problem-card {
+  border-left: 4px solid var(--danger-color, #ef4444); /* Reddish for problem */
+}
+.solution-card {
+  border-left: 4px solid var(--success-color, #10b981); /* Greenish for solution */
+}
+
+
+/* Values Section */
+.values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.value-card {
+  background-color: var(--background-color-card, #323b4e); /* Slightly different card bg */
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+.value-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--accent-color, #6366f1);
+}
+.value-card h3 {
+  font-size: 1.3rem;
+  color: var(--text-color-primary, #e2e8f0);
+  margin-bottom: 0.5rem;
+}
+
+
+/* CTA Section */
+.cta-section-about { /* Renamed to avoid conflict if generic .cta-section exists */
+  text-align: center;
+  padding: 2.5rem;
+  background-color: var(--background-color-tertiary-transparent, rgba(45, 55, 72, 0.7));
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+.cta-section-about h2 {
+    color: var(--accent-color, #6366f1); /* Consistent CTA title color */
+}
+.cta-buttons-about { /* Renamed */
+  display: flex;
   justify-content: center;
-  margin-top: 2.5rem;
-} 
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Re-using button styles from other new pages for consistency */
+.cta-button.primary {
+  background: linear-gradient(135deg, var(--accent-color, #6366f1), var(--accent-color-dark, #4f46e5));
+  color: white;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(var(--accent-color-rgb, 99, 102, 241), 0.2);
+}
+.cta-button.primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(var(--accent-color-rgb, 99, 102, 241), 0.3);
+}
+
+.cta-button.secondary {
+  background-color: transparent;
+  color: var(--accent-color-light, #a5b4fc);
+  border: 2px solid var(--accent-color, #6366f1);
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.cta-button.secondary:hover {
+  background-color: var(--accent-color-translucent, rgba(99, 102, 241, 0.1));
+  color: white;
+  border-color: var(--accent-color-light, #a5b4fc);
+  transform: translateY(-2px);
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .about-page-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  .about-header h1 {
+    font-size: 2.2rem;
+  }
+  .about-header .subtitle {
+    font-size: 1rem;
+  }
+  .about-section {
+    padding: 1.5rem;
+  }
+  .about-section h2 {
+    font-size: 1.8rem;
+  }
+  .problem-solution {
+    padding: 0; /* Reset padding for the container of problem/solution cards */
+  }
+  .values-grid {
+    grid-template-columns: 1fr; /* Stack value cards */
+  }
+  .cta-buttons-about {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  .cta-button { /* General class for buttons if needed */
+    width: 100%;
+    max-width: 300px;
+  }
+}

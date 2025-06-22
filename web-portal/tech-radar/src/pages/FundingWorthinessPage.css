@@ -1,0 +1,219 @@
+/* General Funding Worthiness Page Styling */
+.funding-worthiness-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--background-color-secondary, #1a202c);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: var(--text-color-primary, #e2e8f0);
+}
+
+.funding-worthiness-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color-soft, #2d3748);
+}
+
+.funding-worthiness-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--success-color, #10b981); /* Success/Positive accent */
+  margin-bottom: 0.5rem;
+}
+
+.funding-worthiness-header .subtitle {
+  font-size: 1.2rem;
+  color: var(--text-color-secondary, #a0aec0);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Argument Card Styling */
+.argument-card {
+  background-color: var(--background-color-tertiary, #2d3748);
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-left: 5px solid var(--accent-color, #6366f1); /* Accent border */
+}
+
+.argument-card:nth-child(odd) { /* Alternate accent color for visual rhythm */
+    border-left-color: var(--accent-color-secondary, #81e6d9);
+}
+.argument-card:nth-child(odd) .argument-icon {
+    color: var(--accent-color-secondary, #81e6d9);
+}
+
+
+.argument-icon {
+  font-size: 2.5rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem; /* Icon on the right */
+  opacity: 0.2;
+  color: var(--accent-color, #6366f1);
+}
+
+.argument-card h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color-primary, #e2e8f0); /* Emphasize heading */
+  margin-bottom: 1.5rem;
+  padding-right: 3.5rem; /* Space for icon if it were on the left, or just balance */
+}
+
+.argument-card p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-color-secondary, #a0aec0);
+  margin-bottom: 1rem;
+}
+.argument-card p:last-child {
+    margin-bottom: 0;
+}
+
+.argument-card a {
+    color: var(--accent-color-light, #a5b4fc);
+    text-decoration: underline;
+    font-weight: 500;
+}
+.argument-card a:hover {
+    color: var(--accent-color, #6366f1);
+}
+
+
+/* Funding Ask Section - Similar to CTA on Vision Page */
+.funding-ask-section {
+  text-align: center;
+  padding: 2.5rem;
+  background-color: var(--background-color-tertiary-transparent, rgba(45, 55, 72, 0.8));
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  margin-top: 1rem; /* Add some space before this distinct section */
+}
+
+.funding-ask-section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--success-color-dark, #059669); /* Match header accent */
+  margin-bottom: 0.75rem;
+}
+
+.funding-ask-section p {
+  font-size: 1.1rem;
+  color: var(--text-color-secondary, #a0aec0);
+  margin-bottom: 1.5rem; /* More space after paragraphs */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.funding-ask-section p:last-of-type {
+    margin-bottom: 2rem; /* More space before buttons */
+}
+
+.cta-buttons { /* Re-using from VisionMissionPage.css for consistency */
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.cta-button.primary {
+  background: linear-gradient(135deg, var(--success-color, #10b981), var(--success-color-dark, #059669));
+  color: white;
+}
+.cta-button.primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(var(--success-color-rgb, 16, 185, 129), 0.3); /* Assuming you have --success-color-rgb */
+}
+
+.cta-button.secondary {
+  background-color: transparent;
+  color: var(--success-color-light, #34d399); /* Lighter success for secondary */
+  border: 2px solid var(--success-color, #10b981);
+}
+.cta-button.secondary:hover {
+  background-color: rgba(var(--success-color-rgb, 16, 185, 129), 0.1);
+  color: white;
+  border-color: var(--success-color-light, #34d399);
+  transform: translateY(-2px);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .funding-worthiness-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  .funding-worthiness-header h1 {
+    font-size: 2.2rem;
+  }
+  .funding-worthiness-header .subtitle {
+    font-size: 1rem;
+  }
+  .argument-card {
+    padding: 2rem 1.5rem;
+    border-left-width: 4px;
+  }
+  .argument-card h2 {
+    font-size: 1.6rem;
+  }
+  .argument-icon {
+    font-size: 2rem;
+    right: 1rem;
+    top: 1rem;
+  }
+  .argument-card p {
+    font-size: 1rem;
+  }
+  .funding-ask-section h2 {
+    font-size: 1.8rem;
+  }
+  .funding-ask-section p {
+    font-size: 1rem;
+  }
+  .cta-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  .cta-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+    .funding-worthiness-header h1 {
+        font-size: 1.8rem;
+    }
+    .funding-worthiness-header .subtitle {
+        font-size: 0.9rem;
+    }
+    .argument-card h2 {
+        font-size: 1.4rem;
+        padding-right: 0; /* Remove padding if icon is hidden */
+    }
+    .argument-icon {
+        display: none; /* Optionally hide icon */
+    }
+    .argument-card p {
+        font-size: 0.95rem;
+    }
+}
