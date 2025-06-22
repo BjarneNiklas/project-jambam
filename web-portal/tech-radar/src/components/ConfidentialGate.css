@@ -29,6 +29,49 @@
   animation: modalSlideIn 0.6s ease-out;
 }
 
+/* Gate Mode Selector (Tabs) */
+.gate-mode-selector {
+    display: flex;
+    margin-bottom: 25px;
+    border-radius: 10px; /* Match input field rounding */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Match input field border */
+}
+
+.gate-mode-selector button {
+    flex-grow: 1;
+    padding: 12px 10px;
+    background-color: transparent; /* Default transparent */
+    border: none;
+    color: #a1a1aa; /* Dimmed color for inactive tabs */
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-left: 1px solid rgba(255, 255, 255, 0.1); /* Separator */
+}
+
+.gate-mode-selector button:first-child {
+    border-left: none;
+}
+
+.gate-mode-selector button.active {
+    background-color: rgba(0, 188, 212, 0.2); /* Active tab highlight, matches focus color */
+    color: #e0e0e0; /* Brighter text for active tab */
+    font-weight: 600;
+}
+
+.gate-mode-selector button:hover:not(.active):not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle hover for inactive tabs */
+}
+
+.gate-mode-selector button:disabled {
+    color: #777;
+    cursor: not-allowed;
+    background-color: transparent; /* Ensure disabled is also transparent */
+}
+
+
 @keyframes modalSlideIn {
   from {
     opacity: 0;
