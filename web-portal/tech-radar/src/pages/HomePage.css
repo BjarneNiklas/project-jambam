@@ -1,16 +1,16 @@
 /* HomePage.css */
 
 .home-page {
-  min-height: 100vh;
+  /* min-height: 100vh; Ensuring content dictates height */
 }
 
 .hero-section {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  padding: 6rem 2rem;
+  padding: 5rem 2rem; /* Adjusted padding */
   text-align: center;
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 85vh; /* Adjusted min-height */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,6 +146,107 @@
   line-height: 1.6;
 }
 
+/* Workflow Section Styles */
+.workflow-section {
+  padding: 5rem 2rem;
+  background: #111827; /* Slightly different dark shade for variety */
+  text-align: center;
+}
+
+.workflow-title { /* Renamed from features-section h2 for specificity if needed, but can share styles */
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3rem;
+}
+
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem; /* Slightly larger gap */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.workflow-step {
+  background: #1e293b; /* Same as feature-card for consistency */
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #374151;
+  transition: all 0.3s ease;
+  text-align: left; /* Align text to left within step */
+  position: relative; /* For step number positioning */
+}
+
+.workflow-step:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.workflow-step-number {
+  position: absolute;
+  top: -1.5rem; /* Position above the card */
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-color);
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #111827; /* Match section background */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.workflow-step h3 {
+  font-size: 1.4rem; /* Slightly smaller than feature card h3 */
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 2rem; /* Space for the number */
+  margin-bottom: 0.75rem;
+}
+
+.workflow-step p {
+  color: #d1d5db;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Closing CTA Section Styles */
+.closing-cta-section {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* Reversed hero gradient */
+  text-align: center;
+}
+
+.closing-cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.closing-cta-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.closing-cta-section p {
+  font-size: 1.1rem;
+  color: #d1d5db;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Re-using .hero-app-button for the CTA button in this section */
+
+
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
@@ -162,4 +263,23 @@
     max-width: 300px;
     justify-content: center;
   }
-} 
+
+  .workflow-step-number {
+    font-size: 1.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    top: -1.25rem;
+  }
+
+  .workflow-step h3 {
+    margin-top: 1.5rem; /* Adjust for smaller number */
+  }
+
+  .closing-cta-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .closing-cta-section p {
+    font-size: 1rem;
+  }
+}
