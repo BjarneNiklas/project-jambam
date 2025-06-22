@@ -193,7 +193,6 @@
           "educational": "Gemeinsame Erstellung von Blender-fokussierten Bildungsinhalten"
         }
       }
-      // ... Fügen Sie hier weitere Wettbewerber wie Roblox, Minecraft, Autodesk, GitHub, Discord, Twitch, Steam mit ähnlicher Struktur hinzu
     }
   },
   "partnerships": {
@@ -252,7 +251,6 @@
           "communitySupport": "Aktive Community-Unterstützung und Dokumentation"
         }
       }
-      // ... Fügen Sie hier weitere Partnerschaften hinzu
     }
   },
   "products": {
@@ -667,7 +665,6 @@
       "role": "Gründer, CEO & Hauptvisionär",
       "bio": "Bjarne ist die treibende Kraft hinter JamBam und vereint seine Leidenschaft für KI, Spieleentwicklung und Community-Aufbau. Seine Vision ist es, eine Plattform zu schaffen, die Entwickler weltweit befähigt und die Art und Weise, wie interaktive Erlebnisse gestaltet werden, revolutioniert."
     }
-    // Weitere Teammitglieder hier hinzufügen
   },
   "visionMissionPage": {
     "mainTitle": "Unsere Vision & Mission",
@@ -679,7 +676,7 @@
     },
     "mission": {
       "title": "Unsere Mission: Demokratisierung & Beschleunigung der Kreation",
-      "p1": "Project JamBam widmet sich der Demokratisierung und Beschleunigung der Entwicklung interaktiver 3D-Anwendungen und Spiele. Wir bauen eine KI-gestützte Co-Creation-Plattform, ähnlich einem „GitHub Copilot für die 3D-Welt“, mit tiefgreifendem Schwerpunkt auf Community, offenen Standards und kollaborativer Entwicklung – insbesondere für dynamische Events wie Game Jams.",
+      "p1": "Project JamBam widmet sich der Demokratisierung und Beschleunigung der Entwicklung interaktiver 3D-Anwendungen und Spiele. Wir bauen eine KI-gestützte Co-Creation-Plattform, ähnlich einem \"GitHub Copilot für die 3D-Welt\", mit tiefgreifendem Schwerpunkt auf Community, offenen Standards und kollaborativer Entwicklung – insbesondere für dynamische Events wie Game Jams.",
       "p2": "Unsere Kernziele umfassen:",
       "obj1": "Stärkung einzelner Entwickler und kleiner Teams mit leistungsstarken, intuitiven KI-Werkzeugen.",
       "obj2": "Förderung einer kollaborativen Umgebung durch offene APIs, gemeinsame Ressourcen und Community-getriebene Projekte.",
@@ -704,7 +701,7 @@
       },
       "item4": {
         "title": "Fokus auf Rapid Prototyping & Jam-Kultur:",
-        "desc": "Werkzeuge und Workflows, die auf Geschwindigkeit und Iteration optimiert sind und sich ideal für Game Jams, Hackathons und agile Entwicklungszyklen eignen. Unser „Jam Kits“-Konzept verkörpert dies."
+        "desc": "Werkzeuge und Workflows, die auf Geschwindigkeit und Iteration optimiert sind und sich ideal für Game Jams, Hackathons und agile Entwicklungszyklen eignen. Unser \"Jam Kits\"-Konzept verkörpert dies."
       },
       "item5": {
         "title": "Ethische KI & Stärkung der Entwickler:",
@@ -724,14 +721,14 @@
     "mainSubtitle": "Unser Engagement für Innovation, Community und eine nachhaltige digitale Zukunft macht JamBam zu einem erstklassigen Kandidaten für Unterstützung.",
     "innovation": {
       "title": "Technologische Innovation & Neuheit",
-      "p1": "JamBam ist nicht nur ein weiteres Spieleentwicklungswerkzeug; es ist ein Paradigmenwechsel. Unsere Kerninnovation liegt in der tiefen Integration von KI als ko-kreativem Partner während des gesamten Entwicklungszyklus – von KI-gesteuerter Ideenfindung und „Jam Kit“-Generierung bis hin zur intelligenten Asset-Erstellung (3D-Modelle, Texturen, Audio, Narrative) und automatisierter Workflow-Unterstützung.",
+      "p1": "JamBam ist nicht nur ein weiteres Spieleentwicklungswerkzeug; es ist ein Paradigmenwechsel. Unsere Kerninnovation liegt in der tiefen Integration von KI als ko-kreativem Partner während des gesamten Entwicklungszyklus – von KI-gesteuerter Ideenfindung und \"Jam Kit\"-Generierung bis hin zur intelligenten Asset-Erstellung (3D-Modelle, Texturen, Audio, Narrative) und automatisierter Workflow-Unterstützung.",
       "p2": "Das Engine Adapter Framework stellt einen bedeutenden technischen Fortschritt dar und fördert die radikale Interoperabilität zwischen wichtigen Game Engines. Dies adressiert einen kritischen Schwachpunkt für Entwickler, reduziert die Anbieterbindung und fördert ein offeneres Ökosystem.",
       "p3": "Unser Ansatz zur hybriden Voxel-Technologie (Broxel Engine) und das zukunftsorientierte LUVY Engine-Konzept für XR zeigen ebenfalls unser Engagement, die Grenzen interaktiver Echtzeiterlebnisse zu erweitern."
     },
     "marketPotential": {
       "title": "Signifikantes Marktpotenzial & Skalierbarkeit",
       "p1": "Der globale Spieleentwicklungsmarkt, zusammen mit der Creator Economy und dem aufstrebenden Metaversum, repräsentiert eine Multi-Milliarden-Dollar-Industrie. JamBam ist strategisch positioniert, um einen signifikanten Anteil zu gewinnen, indem es ein breites Spektrum von Nutzern anspricht: von Indie-Entwicklern und Hobbyisten bis hin zu Bildungseinrichtungen und professionellen Studios, die Prototyping und Innovation beschleunigen möchten.",
-      "p2": "Die Skalierbarkeit unserer Plattform ist inhärent in ihrem Community-getriebenen Modell und ihrem Fokus auf nutzergenerierte Inhalte und KI-Werkzeuge. Mit dem Wachstum der Community wächst auch der Wert und die Leistungsfähigkeit der Plattform. Monetarisierungsstrategien umfassen Premium-KI-Funktionen, einen Marktplatz für Assets und „Jam Kits“, Unternehmenslösungen und Bildungspartnerschaften."
+      "p2": "Die Skalierbarkeit unserer Plattform ist inhärent in ihrem Community-getriebenen Modell und ihrem Fokus auf nutzergenerierte Inhalte und KI-Werkzeuge. Mit dem Wachstum der Community wächst auch der Wert und die Leistungsfähigkeit der Plattform. Monetarisierungsstrategien umfassen Premium-KI-Funktionen, einen Marktplatz für Assets und \"Jam Kits\", Unternehmenslösungen und Bildungspartnerschaften."
     },
     "societalImpact": {
       "title": "Gesellschaftliche & wirtschaftliche Auswirkungen",
@@ -753,7 +750,7 @@
     "fundingAsk": {
       "title": "Unsere Finanzierungsziele",
       "p1": "Die Unterstützung von Project JamBam wird die Entwicklung unserer Kernplattform direkt beschleunigen, unsere KI-Fähigkeiten erweitern, unsere Community-Outreach-Programme ausbauen und uns helfen, wichtige Branchenpartnerschaften aufzubauen.",
-      "p2": "Wir suchen eine Finanzierung, um wichtige Meilensteine zu erreichen, darunter [Nennen Sie 1-2 wichtige Meilensteine, z.B. „die Einführung des vollständigen Engine Adapter Frameworks“ oder „die Veröffentlichung der öffentlichen Beta von JamBam AI Studio“]. Dies wird JamBam als führend in der nächsten Generation ko-kreativer Technologien positionieren.",
+      "p2": "Wir suchen eine Finanzierung, um wichtige Meilensteine zu erreichen, darunter [Nennen Sie 1-2 wichtige Meilensteine, z.B. \"die Einführung des vollständigen Engine Adapter Frameworks\" oder \"die Veröffentlichung der öffentlichen Beta von JamBam AI Studio\"]. Dies wird JamBam als führend in der nächsten Generation ko-kreativer Technologien positionieren.",
       "contact": "Finanzierungsmöglichkeiten besprechen",
       "roadmap": "Detaillierte Roadmap ansehen"
     }

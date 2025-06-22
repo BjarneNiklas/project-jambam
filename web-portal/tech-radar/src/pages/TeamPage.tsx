@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import './TeamPage.css'; // We'll create this CSS file next
 
 interface TeamMember {
@@ -50,10 +51,10 @@ const TeamPage: React.FC = () => {
       <main className="team-members-grid">
         {teamMembers.map((member) => (
           <div key={member.id} className="team-member-card">
-            <img src={member.image} alt={t(member.nameKey)} className="team-member-image" />
-            <h2 className="team-member-name">{t(member.nameKey)}</h2>
-            <h3 className="team-member-role">{t(member.roleKey)}</h3>
-            <p className="team-member-bio">{t(member.bioKey)}</p>
+            <img src={member.image} alt={t(member.nameKey) || ''} className="team-member-image" />
+            <h2 className="team-member-name">{t(member.nameKey) || ''}</h2>
+            <h3 className="team-member-role">{t(member.roleKey) || ''}</h3>
+            <p className="team-member-bio">{t(member.bioKey) || ''}</p>
             <div className="team-member-social-links">
               {member.linkedin && <a href={member.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
               {member.github && <a href={member.github} target="_blank" rel="noopener noreferrer">GitHub</a>}

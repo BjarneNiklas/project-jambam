@@ -121,7 +121,7 @@ const FirefliesBackground: React.FC = () => {
     generateFireflies();
     window.addEventListener('resize', handleResize);
 
-    const animate = () => { // Removed timestamp as it's not used
+    const animate = () => {
       if(!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -174,7 +174,7 @@ const FirefliesBackground: React.FC = () => {
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    animate(0);
+    animate();
 
     return () => {
       window.removeEventListener('resize', handleResize);

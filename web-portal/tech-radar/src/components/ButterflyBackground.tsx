@@ -47,7 +47,7 @@ const ButterflyBackground: React.FC = () => {
       const contentRenderWidth = Math.min(width, MAX_CONTENT_WIDTH_BF);
       const peripheralZoneWidth = (width - contentRenderWidth) / 2;
 
-      constbutterfliesToSet: Butterfly[] = [];
+      const butterfliesToSet: Butterfly[] = [];
       // Adjust density: fewer butterflies for peripheral display
       const numButterflies = isDesktop ? Math.floor(width / 250) : Math.floor(width / 150);
 

@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
         <div className="footer-main">
           <div className="footer-section footer-branding">
             <Link to="/" className="footer-logo-link">
-              <LogoHexSpark width={50} height={50} />
+              <LogoHexSpark />
               <h4 className="footer-site-title">JamBam</h4>
             </Link>
             <p className="footer-tagline">{t('footer.tagline', 'A Next-Generation Interactive Media Ecosystem.')}</p>

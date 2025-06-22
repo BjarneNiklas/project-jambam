@@ -19,8 +19,8 @@ import {
   Schedule as PlannedIcon,
   Block as DeprecatedIcon,
   Star as FeatureIcon,
-  Code as TechIcon,
-  Group as AudienceIcon,
+  Code,
+  Group,
   Category as CategoryIcon,
   NewReleases as NewReleasesIcon,
   TrendingUp as TrendingUpIcon,
@@ -30,6 +30,7 @@ import {
 } from '@mui/icons-material';
 import { productsData, ProductCategory } from '../data/productsData';
 import { useTranslation } from 'react-i18next';
+import { Theme, Palette, PaletteColor } from '@mui/material/styles';
 
 const getStatusIcon = (status: string) => {
   switch (status) {
@@ -142,7 +143,15 @@ const ProductsShowcase: React.FC = () => {
                             label={t(`products.status.${product.status}`)}
                             color={getStatusColor(product.status) as any}
                             size="small"
-                            sx={{ fontWeight: 600, color: 'common.white', background: (theme) => theme.palette[getStatusColor(product.status) as any].dark }}
+                            sx={{ fontWeight: 600, color: 'common.white', background: (theme: Theme) => {
+                              const palette = theme.palette as Palette;
+                              const colorKey = getStatusColor(product.status) as keyof Palette;
+                              const colorObj = palette[colorKey];
+                              if (colorObj && typeof colorObj === 'object' && 'dark' in colorObj) {
+                                return (colorObj as PaletteColor).dark;
+                              }
+                              return palette.primary.dark;
+                            } }}
                           />
                         </Box>
 
@@ -200,7 +209,7 @@ const ProductsShowcase: React.FC = () => {
                         {/* Technologies */}
                         <Box sx={{ mb: 2.5 }}>
                           <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1, display: 'flex', alignItems: 'center', color: 'grey.100' }}>
-                            <TechIcon sx={{ mr: 1, fontSize: '1rem', color: 'secondary.light' }} />
+                            <Code sx={{ mr: 1, fontSize: '1rem', color: 'secondary.light' }} />
                             {t('products.technologies')}
                           </Typography>
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
@@ -237,7 +246,7 @@ const ProductsShowcase: React.FC = () => {
                         {/* Target Audience */}
                         <Box>
                           <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5, display: 'flex', alignItems: 'center', color: 'grey.100' }}>
-                            <AudienceIcon sx={{ mr: 1, fontSize: '1rem', color: 'success.light' }} />
+                            <Group sx={{ mr: 1, fontSize: '1rem', color: 'success.light' }} />
                             {t('products.targetAudience')}
                           </Typography>
                           <Typography variant="body2" sx={{ opacity: 0.85, color: 'grey.300', fontSize: '0.8rem' }}>

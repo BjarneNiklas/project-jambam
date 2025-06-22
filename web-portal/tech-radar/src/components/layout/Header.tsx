@@ -36,7 +36,7 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-content">
           <Link to="/" className="logo-link">
-            <LogoHexSpark width={40} height={40} /> {/* Increased logo size */}
+            <LogoHexSpark />
             <span className="site-title">JamBam</span>
           </Link>
 
@@ -71,25 +71,25 @@ const Header: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="header-app-button cta-button"
-              title={t('header.downloadApp', 'App herunterladen')}
+              title={t('header.downloadApp') || ''}
             >
               📱 {t('header.getApp', 'Get App')}
             </a>
             {isAuthenticated ? (
               <>
-                <Link to="/profile" className="profile-button" title={t('nav.profile', 'Profile')} onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to="/profile" className="profile-button" title={t('nav.profile') || ''} onClick={() => setIsMobileMenuOpen(false)}>
                   👤
                 </Link>
-                <button onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="logout-button-header" title={t('nav.logout', 'Logout')}>
+                <button onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="logout-button-header" title={t('nav.logout') || ''}>
                   🚪
                 </button>
               </>
             ) : (
-              <Link to="/login" className="login-button-header" title={t('nav.login', 'Login')} onClick={() => setIsMobileMenuOpen(false)}>
+              <Link to="/login" className="login-button-header" title={t('nav.login') || ''} onClick={() => setIsMobileMenuOpen(false)}>
                 🔑 {t('nav.login', 'Login')}
               </Link>
             )}
-            <Link to="/settings" className="settings-button" title={t('nav.settings', 'Settings')} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to="/settings" className="settings-button" title={t('nav.settings') || ''} onClick={() => setIsMobileMenuOpen(false)}>
               ⚙️
             </Link>
             <button className="mobile-menu-toggle" onClick={toggleMobileMenu} aria-label="Toggle menu">

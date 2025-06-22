@@ -179,9 +179,9 @@ const CompetitorsIntegration: React.FC = () => {
                   <div
                     className="partnership-potential"
                     style={{ backgroundColor: getPartnershipPotentialColor(competitor.partnershipPotential) }}
-                    title={t(`competitors.potential.${competitor.partnershipPotential}`)}
+                    title={t(`competitors.potential.${competitor.partnershipPotential}`) || ''}
                   >
-                    {t(`competitors.potentialAbbreviation.${competitor.partnershipPotential}`)}
+                    {t(`competitors.potentialAbbreviation.${competitor.partnershipPotential}`) || ''}
                   </div>
                 </div>
 
