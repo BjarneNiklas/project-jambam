@@ -1,0 +1,109 @@
+.contact-page-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--background-color-card, #fff);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--text-color-primary, #333);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color-soft, #eee);
+}
+
+.contact-page-header h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color, #6750A4);
+  margin-bottom: 0.5rem;
+}
+
+.contact-page-header p {
+  font-size: 1.1rem;
+  color: var(--text-color-secondary, #555);
+}
+
+.contact-info-section,
+.additional-info-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--background-color, #f9f9f9);
+  border-radius: 6px;
+}
+
+.contact-info-section h2,
+.additional-info-section h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color-dark, #4A387F);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color-light, #ddd);
+}
+
+.contact-info-section p,
+.additional-info-section p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--background-color-card, #fff);
+  border: 1px solid var(--border-color-soft, #eee);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.contact-method .icon {
+  font-size: 1.5rem;
+  color: var(--accent-color, #FFD700);
+}
+
+.email-link {
+  color: var(--link-color, #007bff);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+  color: var(--link-color-hover, #0056b3);
+}
+
+.contact-response-time {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-color-muted, #777);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contact-page-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .contact-page-header h1 {
+    font-size: 2rem;
+  }
+
+  .contact-info-section h2,
+  .additional-info-section h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark mode specific styles if needed, assuming variables handle most cases */
+/*
+body.dark-mode .contact-page-container {
+  background-color: var(--dm-background-color-card, #2c2c2c);
+  color: var(--dm-text-color-primary, #f1f1f1);
+}
+*/

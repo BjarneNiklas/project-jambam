@@ -609,7 +609,8 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
-    "settings": "Settings"
+    "settings": "Settings",
+    "contact": "Contact"
   },
   "home": {
     "hero": {
@@ -809,5 +810,18 @@
       "title": "Fireflies",
       "description": "Magical fireflies gently pulsing"
     }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We are here to help and answer any questions you might have.",
+    "infoTitle": "Get in Touch",
+    "intro": "For any inquiries, support requests, or feedback, please feel free to reach out to us. The best way to contact us is by email.",
+    "emailLabel": "Email Us:",
+    "emailSubject": "Contact Request via JamBam Platform",
+    "responseTime": "We aim to respond to all inquiries within 24-48 business hours.",
+    "additionalInfoTitle": "Additional Information",
+    "faqInfo": "You might also find answers to common questions in our FAQ section (link to be added) or through our community forums.",
+    "visitFaq": "Visit FAQ",
+    "visitCommunity": "Visit Community Hub"
   }
 } 
