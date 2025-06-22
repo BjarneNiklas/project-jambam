@@ -30,6 +30,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # Wir verwenden den stabilen Flutter-Kanal
+          cache: true # Aktiviert das Caching für Flutter-Abhängigkeiten
 
       # Schritt 3: Flutter-Version zur Überprüfung ausgeben
       - name: Print Flutter version
@@ -37,6 +38,7 @@ jobs:
 
       # Schritt 4: Projektabhängigkeiten installieren
       # Führt 'flutter pub get' aus, um alle Pakete aus der pubspec.yaml zu laden
+      # Durch 'cache: true' im Setup Flutter Schritt werden Abhängigkeiten gecacht
       - name: Install dependencies
         run: flutter pub get
 
@@ -45,7 +47,54 @@ jobs:
       - name: Run static analysis
         run: flutter analyze
 
+      # NEUER Schritt: Code-Formatierung prüfen
+      - name: Check formatting
+        run: flutter format --output=none --set-exit-if-changed .
+
       # Schritt 6: Tests ausführen
       # Führt alle Unit- und Widget-Tests im Projekt aus und generiert einen Coverage-Report
       - name: Run tests
-        run: flutter test --coverage 
+        run: flutter test --coverage --machine > test-results.json # Speichert Testergebnisse im JSON-Format
+
+      # Schritt 7: Test-Reports und Coverage-Artefakte hochladen
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always() # Stellt sicher, dass Artefakte auch bei Testfehlschlägen hochgeladen werden
+        with:
+          name: test-results
+          path: test-results.json
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/lcov.info # Standardpfad für den lcov-Report von flutter test --coverage
+
+      # Schritt 8: Android APK bauen (Beispiel für Build-Artefakt)
+      # Nur ausführen bei Push auf den main-Branch, um nicht bei jedem PR zu bauen
+      - name: Build Android APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: flutter build apk --release
+
+      # Schritt 9: Android APK als Artefakt hochladen
+      - name: Upload Android APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      # Schritt 10: Web Build erstellen (Beispiel für Build-Artefakt)
+      # Nur ausführen bei Push auf den main-Branch
+      - name: Build Web App
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: flutter build web --release
+
+      # Schritt 11: Web Build als Artefakt hochladen
+      - name: Upload Web Build
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-release-build
+          path: build/web
