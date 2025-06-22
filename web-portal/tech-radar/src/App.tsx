@@ -23,6 +23,9 @@ import RoadmapPage from './pages/RoadmapPage';
 import TeamPage from './pages/TeamPage'; // Import TeamPage
 import VisionMissionPage from './pages/VisionMissionPage'; // Import VisionMissionPage
 import FundingWorthinessPage from './pages/FundingWorthinessPage'; // Import FundingWorthinessPage
+import PrivacyPolicy from './pages/legal/PrivacyPolicy';
+import TermsOfService from './pages/legal/TermsOfService';
+import Impressum from './pages/legal/Impressum';
 import ThemeBackground from './components/ThemeBackground';
 import './App.css';
 
@@ -63,9 +66,9 @@ function App() {
                     {/* Placeholder routes for footer links */}
                     <Route path="/careers" element={<PlaceholderPage title="Careers" />} />
                     <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
-                    <Route path="/imprint" element={<PlaceholderPage title="Imprint" />} />
-                    <Route path="/privacy" element={<PlaceholderPage title="Privacy Policy" />} />
-                    <Route path="/terms" element={<PlaceholderPage title="Terms of Service" />} />
+                    <Route path="/impressum" element={<Impressum />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route element={<ProtectedRoute />}>
                       <Route path="/tech-radar" element={<TechRadarPage />} />
                       <Route path="/profile" element={<ProfilePage />} />
