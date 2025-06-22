@@ -24,6 +24,7 @@ export interface Profile {
   created_at: string
   updated_at: string
   last_login?: string
+  has_validated_invite_code?: boolean // Added for invite gate logic
 }
 
 export interface Asset {
