@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_jambam/src/features/b_authentication/presentation/auth_wrapper.dart';
 import 'package:project_jambam/src/core/logger.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as sb; // Added Supabase import
+import 'package:project_jambam/src/core/environment.dart'; // For environment variables
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,6 +11,14 @@ void main() async {
   final logger = Logger('JambaM.main');
   
   try {
+    logger.info('Initializing Supabase...');
+    await sb.Supabase.initialize(
+      url: Environment.supabaseUrl, // Replace with your Supabase URL
+      anonKey: Environment.supabaseAnonKey, // Replace with your Supabase anon key
+      // Optional: custom auth store, debug settings, etc.
+    );
+    logger.info('Supabase initialized successfully.');
+
     logger.info('Starting JambaM application');
     
     runApp(
