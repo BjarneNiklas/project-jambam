@@ -1,263 +1,285 @@
 export interface Product {
-  name: string;
-  category: string;
+  nameKey: string; // Key for translation
+  categoryKey: string; // Key for translation
   status: 'active' | 'development' | 'planned' | 'deprecated';
-  description: string;
-  features: string[];
+  descriptionKey: string; // Key for translation
+  featureKeys: string[]; // Keys for translation
   technologies: string[];
-  targetAudience: string;
+  targetAudienceKey: string; // Key for translation
+  icon?: string; // Optional: For a specific product icon
 }
 
 export interface ProductCategory {
-  name: string;
-  description: string;
+  nameKey: string; // Key for translation
+  descriptionKey: string; // Key for translation
   products: Product[];
+  icon?: string; // Optional: For a category icon (e.g., MUI icon name)
 }
 
 export const productsData: ProductCategory[] = [
   {
-    name: "Engines & Core Technology",
-    description: "Our proprietary game engines and core technology platforms.",
+    nameKey: "products.categories.enginesCore.name",
+    descriptionKey: "products.categories.enginesCore.description",
+    icon: "BuildCircle",
     products: [
       {
-        name: "Broxel Engine",
-        category: "Voxel Engine",
+        nameKey: "products.broxelEngine.name",
+        categoryKey: "products.broxelEngine.category",
         status: "development",
-        description: "Our custom voxel-based game engine designed for infinite worlds and procedural generation.",
-        features: [
-          "Infinite voxel world generation",
-          "Real-time procedural content creation",
-          "Multi-threaded rendering",
-          "Modular architecture",
-          "Cross-platform support"
+        descriptionKey: "products.broxelEngine.description",
+        featureKeys: [
+          "products.broxelEngine.features.infiniteWorlds",
+          "products.broxelEngine.features.realtimeProcedural",
+          "products.broxelEngine.features.multiThreaded",
+          "products.broxelEngine.features.modularArchitecture",
+          "products.broxelEngine.features.crossPlatform"
         ],
-        technologies: ["Rust", "C++", "Vulkan", "Procedural Generation"],
-        targetAudience: "Game developers, content creators, educational institutions"
+        technologies: ["Rust", "C++", "Vulkan", "ECS", "Procedural Generation"],
+        targetAudienceKey: "products.broxelEngine.targetAudience",
+        icon: "Extension"
       },
       {
-        name: "LUVY Engine",
-        category: "3D/XR Engine",
+        nameKey: "products.luvyEngine.name",
+        categoryKey: "products.luvyEngine.category",
         status: "planned",
-        description: "Next-generation 3D and XR engine for immersive experiences and content creation.",
-        features: [
-          "Real-time 3D rendering",
-          "XR support (VR/AR)",
-          "AI-powered content generation",
-          "Cross-platform deployment",
-          "Community-driven development"
+        descriptionKey: "products.luvyEngine.description",
+        featureKeys: [
+          "products.luvyEngine.features.realtime3D",
+          "products.luvyEngine.features.xrSupport",
+          "products.luvyEngine.features.aiContent",
+          "products.luvyEngine.features.crossPlatform",
+          "products.luvyEngine.features.communityDriven"
         ],
-        technologies: ["Rust", "Vulkan", "OpenXR", "AI/ML", "WebXR"],
-        targetAudience: "3D artists, XR developers, content creators"
+        technologies: ["Rust", "WGPU", "OpenXR", "AI/ML", "WebAssembly"],
+        targetAudienceKey: "products.luvyEngine.targetAudience",
+        icon: "ThreeDRotation"
       }
     ]
   },
   {
-    name: "AI & Content Generation",
-    description: "AI-powered tools and services for content creation.",
+    nameKey: "products.categories.aiContent.name",
+    descriptionKey: "products.categories.aiContent.description",
+    icon: "AutoAwesome",
     products: [
       {
-        name: "JamBam AI Studio",
-        category: "AI Content Platform",
-        status: "planned",
-        description: "Integrated AI platform for generating game assets, worlds, and interactive content.",
-        features: [
-          "Multi-modal AI generation",
-          "Asset pipeline integration",
-          "Community-driven training",
-          "Real-time collaboration",
-          "Quality assurance tools"
-        ],
-        technologies: ["Python", "TensorFlow", "Stable Diffusion", "OpenAI API", "Gemini API"],
-        targetAudience: "Game developers, content creators, educators"
-      },
-      {
-        name: "AURAX Platform",
-        category: "AI Co-Creation Platform",
-        status: "development",
-        description: "Advanced AI co-creation platform for collaborative content generation and 3D world building.",
-        features: [
-          "AI-powered co-creation",
-          "3D model generation",
-          "Photogrammetry integration",
-          "Real-time collaboration",
-          "Community-driven AI training"
-        ],
-        technologies: ["Python", "AI/ML", "3D Graphics", "Photogrammetrie", "Meshroom"],
-        targetAudience: "3D artists, game developers, educators, researchers"
-      }
-    ]
-  },
-  {
-    name: "Community & Collaboration",
-    description: "Platforms and tools for community engagement and collaboration.",
-    products: [
-      {
-        name: "JamBam Community Hub",
-        category: "Social Platform",
+        nameKey: "products.jambamAiStudio.name",
+        categoryKey: "products.jambamAiStudio.category",
         status: "active",
-        description: "Central hub for our community to collaborate, share content, and participate in development.",
-        features: [
-          "User-generated content",
-          "Collaborative projects",
-          "Voting and feedback systems",
-          "Integration with development tools",
-          "Gamification elements"
+        descriptionKey: "products.jambamAiStudio.description",
+        featureKeys: [
+          "products.jambamAiStudio.features.multimodalAi",
+          "products.jambamAiStudio.features.assetPipeline",
+          "products.jambamAiStudio.features.communityTraining",
+          "products.jambamAiStudio.features.realtimeCollab",
+          "products.jambamAiStudio.features.qualityAssurance"
         ],
-        technologies: ["Flutter", "Supabase", "Rust", "Material 3"],
-        targetAudience: "Community members, developers, content creators"
+        technologies: ["Python", "PyTorch", "FastAPI", "Docker", "Kubernetes", "Stable Diffusion XL"],
+        targetAudienceKey: "products.jambamAiStudio.targetAudience",
+        icon: "Adb"
       },
       {
-        name: "Game Jam Platform",
-        category: "Event Platform",
-        status: "planned",
-        description: "Comprehensive platform for hosting and participating in game jams and creative competitions.",
-        features: [
-          "Jam creation and management",
-          "Real-time collaboration",
-          "Asset sharing",
-          "Judging and voting",
-          "Community feedback"
+        nameKey: "products.auraxPlatform.name",
+        categoryKey: "products.auraxPlatform.category",
+        status: "development",
+        descriptionKey: "products.auraxPlatform.description",
+        featureKeys: [
+          "products.auraxPlatform.features.aiCoCreation",
+          "products.auraxPlatform.features.generative3D",
+          "products.auraxPlatform.features.photogrammetry",
+          "products.auraxPlatform.features.realtimeCollab",
+          "products.auraxPlatform.features.communityAiTraining"
         ],
-        technologies: ["Flutter", "Real-time", "WebRTC", "WebSockets"],
-        targetAudience: "Game developers, students, educators, hobbyists"
+        technologies: ["Python", "AI/ML", "ThreeJS", "Blender API", "Gaussian Splatting"],
+        targetAudienceKey: "products.auraxPlatform.targetAudience",
+        icon: "Camera"
       }
     ]
   },
   {
-    name: "Development Tools",
-    description: "Tools and utilities to support development workflows.",
+    nameKey: "products.categories.communityCollab.name",
+    descriptionKey: "products.categories.communityCollab.description",
+    icon: "Groups",
     products: [
       {
-        name: "Engine Adapter Framework",
-        category: "Integration Tool",
-        status: "development",
-        description: "Universal framework for integrating various game engines with our platform.",
-        features: [
-          "Multi-engine support",
-          "Standardized APIs",
-          "Plugin architecture",
-          "Performance optimization",
-          "Cross-platform compatibility"
+        nameKey: "products.jambamCommunityHub.name",
+        categoryKey: "products.jambamCommunityHub.category",
+        status: "active",
+        descriptionKey: "products.jambamCommunityHub.description",
+        featureKeys: [
+          "products.jambamCommunityHub.features.userContent",
+          "products.jambamCommunityHub.features.collabProjects",
+          "products.jambamCommunityHub.features.votingFeedback",
+          "products.jambamCommunityHub.features.devToolsIntegration",
+          "products.jambamCommunityHub.features.gamification"
         ],
-        technologies: ["Rust", "FFI", "gRPC", "Unity", "Godot", "Unreal"],
-        targetAudience: "Game developers, engine developers"
+        technologies: ["Flutter", "Supabase", "PostgreSQL", "Dart Frog", "Material You"],
+        targetAudienceKey: "products.jambamCommunityHub.targetAudience",
+        icon: "Hub"
       },
       {
-        name: "JamBam IDE",
-        category: "Development Environment",
+        nameKey: "products.gameJamPlatform.name",
+        categoryKey: "products.gameJamPlatform.category",
         status: "planned",
-        description: "Integrated development environment optimized for our technology stack and workflows.",
-        features: [
-          "Multi-language support",
-          "AI-assisted coding",
-          "Integrated testing",
-          "Deployment tools",
-          "Community integration"
+        descriptionKey: "products.gameJamPlatform.description",
+        featureKeys: [
+          "products.gameJamPlatform.features.jamManagement",
+          "products.gameJamPlatform.features.realtimeCollab",
+          "products.gameJamPlatform.features.assetSharing",
+          "products.gameJamPlatform.features.judgingVoting",
+          "products.gameJamPlatform.features.communityFeedback"
         ],
-        technologies: ["Electron", "TypeScript", "Rust", "Python"],
-        targetAudience: "Developers, students, hobbyists"
-      },
-      {
-        name: "Asset Pipeline",
-        category: "Content Management",
-        status: "development",
-        description: "Comprehensive asset management and processing pipeline for 3D content and game assets.",
-        features: [
-          "Automated processing",
-          "Format conversion",
-          "Quality optimization",
-          "Version control",
-          "Collaborative editing"
-        ],
-        technologies: ["Python", "Blender", "OpenUSD", "glTF", "OpenImageIO"],
-        targetAudience: "3D artists, game developers, content creators"
+        technologies: ["Next.js", "Supabase Realtime", "WebRTC", "GraphQL"],
+        targetAudienceKey: "products.gameJamPlatform.targetAudience",
+        icon: "EmojiEvents"
       }
     ]
   },
   {
-    name: "Educational & Training",
-    description: "Educational tools and platforms for learning game development.",
+    nameKey: "products.categories.devTools.name",
+    descriptionKey: "products.categories.devTools.description",
+    icon: "Construction",
     products: [
       {
-        name: "JamBam Learning Platform",
-        category: "Educational Platform",
-        status: "planned",
-        description: "Comprehensive learning platform for game development, AI, and creative technologies.",
-        features: [
-          "Interactive tutorials",
-          "Project-based learning",
-          "AI-powered feedback",
-          "Community mentoring",
-          "Certification programs"
-        ],
-        technologies: ["Flutter", "Python", "AI/ML", "Video streaming"],
-        targetAudience: "Students, educators, career changers"
-      },
-      {
-        name: "Studi.OS",
-        category: "Educational OS",
-        status: "planned",
-        description: "Operating system for education focused on collaborative project development and learning.",
-        features: [
-          "Collaborative workspaces",
-          "Integrated learning tools",
-          "Project management",
-          "Cross-organizational collaboration",
-          "AI-powered assistance"
-        ],
-        technologies: ["Flutter", "Rust", "AI/ML", "Real-time", "Cloud"],
-        targetAudience: "Students, educators, educational institutions"
-      },
-      {
-        name: "Quiz & E-Learning System",
-        category: "Learning Tools",
+        nameKey: "products.engineAdapterFramework.name",
+        categoryKey: "products.engineAdapterFramework.category",
         status: "development",
-        description: "Advanced quiz and e-learning system with AI-generated content and adaptive learning.",
-        features: [
-          "AI-generated quizzes",
-          "Adaptive learning paths",
-          "Progress tracking",
-          "Multi-subject support",
-          "Interactive 3D content"
+        descriptionKey: "products.engineAdapterFramework.description",
+        featureKeys: [
+          "products.engineAdapterFramework.features.multiEngine",
+          "products.engineAdapterFramework.features.standardApi",
+          "products.engineAdapterFramework.features.pluginArchitecture",
+          "products.engineAdapterFramework.features.performanceOpt",
+          "products.engineAdapterFramework.features.crossPlatform"
         ],
-        technologies: ["Flutter", "AI/ML", "3D Graphics", "Analytics"],
-        targetAudience: "Students, educators, self-learners"
+        technologies: ["Rust", "FFI", "gRPC", "WebAssembly", "Unity", "Godot", "Unreal Engine"],
+        targetAudienceKey: "products.engineAdapterFramework.targetAudience",
+        icon: "SettingsInputComponent"
+      },
+      {
+        nameKey: "products.jambamIde.name",
+        categoryKey: "products.jambamIde.category",
+        status: "planned",
+        descriptionKey: "products.jambamIde.description",
+        featureKeys: [
+          "products.jambamIde.features.multiLanguage",
+          "products.jambamIde.features.aiCoding",
+          "products.jambamIde.features.integratedTesting",
+          "products.jambamIde.features.deploymentTools",
+          "products.jambamIde.features.communityIntegration"
+        ],
+        technologies: ["VS Code Extension API", "TypeScript", "Rust Language Server", "WASM"],
+        targetAudienceKey: "products.jambamIde.targetAudience",
+        icon: "Terminal"
+      },
+      {
+        nameKey: "products.assetPipeline.name",
+        categoryKey: "products.assetPipeline.category",
+        status: "development",
+        descriptionKey: "products.assetPipeline.description",
+        featureKeys: [
+          "products.assetPipeline.features.automatedProcessing",
+          "products.assetPipeline.features.formatConversion",
+          "products.assetPipeline.features.qualityOptimization",
+          "products.assetPipeline.features.versionControl",
+          "products.assetPipeline.features.collabEditing"
+        ],
+        technologies: ["Python", "Celery", "RabbitMQ", "OpenUSD", "glTF", "Blender Scripting"],
+        targetAudienceKey: "products.assetPipeline.targetAudience",
+        icon: "DynamicFeed"
       }
     ]
   },
   {
-    name: "Entertainment & Gaming",
-    description: "Gaming and entertainment platforms for interactive experiences.",
+    nameKey: "products.categories.educationalTraining.name",
+    descriptionKey: "products.categories.educationalTraining.description",
+    icon: "School",
     products: [
       {
-        name: "BubbleZ Interest Minigame",
-        category: "Social Game",
-        status: "development",
-        description: "Interactive bubble-based minigame for matching interests and connecting users.",
-        features: [
-          "Interest matching",
-          "Interactive bubbles",
-          "Social connections",
-          "Export functionality",
-          "Customizable themes"
+        nameKey: "products.jambamLearningPlatform.name",
+        categoryKey: "products.jambamLearningPlatform.category",
+        status: "planned",
+        descriptionKey: "products.jambamLearningPlatform.description",
+        featureKeys: [
+          "products.jambamLearningPlatform.features.interactiveTutorials",
+          "products.jambamLearningPlatform.features.projectBasedLearning",
+          "products.jambamLearningPlatform.features.aiFeedback",
+          "products.jambamLearningPlatform.features.communityMentoring",
+          "products.jambamLearningPlatform.features.certification"
         ],
-        technologies: ["Flutter", "Game Engine", "Social APIs", "Analytics"],
-        targetAudience: "Social users, community members, educators"
+        technologies: ["Flutter Web", "Firebase", "AI/ML (NLP)", "H5P"],
+        targetAudienceKey: "products.jambamLearningPlatform.targetAudience",
+        icon: "MenuBook"
       },
       {
-        name: "Home Café Module",
-        category: "Local Community",
-        status: "planned",
-        description: "Local community module for organizing events, sharing recipes, and building local connections.",
-        features: [
-          "Event organization",
-          "Recipe sharing",
-          "Local networking",
-          "Community building",
-          "Gamification elements"
+        nameKey: "products.studios.name",
+        categoryKey: "products.studios.category",
+        status: "development",
+        descriptionKey: "products.studios.description",
+        featureKeys: [
+          "products.studios.features.collabWorkspaces",
+          "products.studios.features.integratedLearning",
+          "products.studios.features.projectManagement",
+          "products.studios.features.crossOrgCollab",
+          "products.studios.features.aiAssistance"
         ],
-        technologies: ["Flutter", "Location Services", "Social Features", "Real-time"],
-        targetAudience: "Local communities, food enthusiasts, event organizers"
+        technologies: ["Flutter", "Rust", "WebSockets", "CRDTs", "AI/ML"],
+        targetAudienceKey: "products.studios.targetAudience",
+        icon: "CastForEducation"
+      },
+      {
+        nameKey: "products.quizELearning.name",
+        categoryKey: "products.quizELearning.category",
+        status: "development",
+        descriptionKey: "products.quizELearning.description",
+        featureKeys: [
+          "products.quizELearning.features.aiQuizzes",
+          "products.quizELearning.features.adaptiveLearning",
+          "products.quizELearning.features.progressTracking",
+          "products.quizELearning.features.multiSubject",
+          "products.quizELearning.features.interactive3d"
+        ],
+        technologies: ["Flutter", "OpenAI API", "ThreeJS", "Analytics Engine"],
+        targetAudienceKey: "products.quizELearning.targetAudience",
+        icon: "Quiz"
+      }
+    ]
+  },
+  {
+    nameKey: "products.categories.entertainmentGaming.name",
+    descriptionKey: "products.categories.entertainmentGaming.description",
+    icon: "SportsEsports",
+    products: [
+      {
+        nameKey: "products.bubblezMinigame.name",
+        categoryKey: "products.bubblezMinigame.category",
+        status: "active",
+        descriptionKey: "products.bubblezMinigame.description",
+        featureKeys: [
+          "products.bubblezMinigame.features.interestMatching",
+          "products.bubblezMinigame.features.interactiveBubbles",
+          "products.bubblezMinigame.features.socialConnections",
+          "products.bubblezMinigame.features.exportFunctionality",
+          "products.bubblezMinigame.features.customThemes"
+        ],
+        technologies: ["Flutter", "Flame Engine", "Supabase Auth", "Firebase Analytics"],
+        targetAudienceKey: "products.bubblezMinigame.targetAudience",
+        icon: "BubbleChart"
+      },
+      {
+        nameKey: "products.homeCafeModule.name",
+        categoryKey: "products.homeCafeModule.category",
+        status: "planned",
+        descriptionKey: "products.homeCafeModule.description",
+        featureKeys: [
+          "products.homeCafeModule.features.eventOrganization",
+          "products.homeCafeModule.features.recipeSharing",
+          "products.homeCafeModule.features.localNetworking",
+          "products.homeCafeModule.features.communityBuilding",
+          "products.homeCafeModule.features.gamification"
+        ],
+        technologies: ["Flutter", "Firebase Firestore", "Geolocation API", "Algolia Search"],
+        targetAudienceKey: "products.homeCafeModule.targetAudience",
+        icon: "Coffee"
       }
     ]
   }
