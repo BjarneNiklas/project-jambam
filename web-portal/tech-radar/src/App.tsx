@@ -20,6 +20,7 @@ import ProfileSetupPage from './pages/ProfileSetupPage';
 import AuthWrapper from './auth/AuthWrapper';
 import HomePage from './pages/HomePage';
 import RoadmapPage from './pages/RoadmapPage'; // Import RoadmapPage
+import ContactPage from './pages/ContactPage'; // Import ContactPage
 import ThemeBackground from './components/ThemeBackground';
 import './App.css';
 
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/auth/callback" element={<AuthCallback />} />
                     <Route path="/roadmap" element={<RoadmapPage />} /> {/* Add RoadmapPage route */}
+                    <Route path="/contact" element={<ContactPage />} /> {/* Add ContactPage route */}
                     <Route element={<ProtectedRoute />}>
                       <Route path="/tech-radar" element={<TechRadarPage />} />
                       <Route path="/profile" element={<ProfilePage />} />

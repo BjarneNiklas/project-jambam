@@ -25,6 +25,7 @@ const Header: React.FC = () => {
               <li><Link to="/feed">{t('nav.feed') || 'Feed'}</Link></li>
               <li><Link to="/tech-radar">{t('nav.techRadar') || 'Tech Radar'}</Link></li>
               <li><Link to="/about">{t('nav.about') || 'About'}</Link></li>
+              <li><Link to="/contact">{t('nav.contact') || 'Kontakt'}</Link></li>
               {isAuthenticated && isAdmin && (
                 <li>
                   <Link to="/admin" className={`admin-link ${profile?.role === 'superadmin' ? 'superadmin' : ''}`}>
