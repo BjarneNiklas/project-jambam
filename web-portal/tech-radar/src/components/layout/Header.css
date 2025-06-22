@@ -3,7 +3,7 @@
   background: rgba(17, 24, 39, 0.85); /* Slightly more opaque */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 0.75rem 1.5rem; /* Adjusted padding */
+  padding: 1.5rem 2rem; /* Increased padding for a taller header */
   position: sticky;
   top: 0;
   z-index: 1000; /* Ensure header is above other content */
@@ -30,12 +30,12 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: 0.75rem; /* Reduced gap */
+  gap: 1rem; /* Increased gap for larger logo and title */
 }
 
 .logo-link svg { /* Assuming LogoHexSpark renders an SVG */
-  width: 40px; /* Explicit size */
-  height: 40px; /* Explicit size */
+  width: 60px; /* Increased logo size */
+  height: 60px; /* Increased logo size */
   transition: transform 0.3s ease;
 }
 
@@ -45,7 +45,7 @@
 
 .site-title {
   color: #e0e0e0; /* Lighter gray */
-  font-size: 1.75rem; /* Slightly larger */
+  font-size: 2.25rem; /* Increased site title font size */
   font-weight: 700; /* Bolder */
   letter-spacing: 0.5px;
   transition: color 0.3s ease;
@@ -295,44 +295,49 @@
 
 @media (max-width: 768px) {
   .site-header {
-    padding: 0.75rem 1rem; /* Less padding on mobile */
+    padding: 1rem 1.5rem; /* Adjusted padding for mobile */
   }
   .header-container {
     padding: 0 0.5rem;
   }
   .site-title {
-    font-size: 1.5rem; /* Smaller title on mobile */
+    font-size: 1.75rem; /* Adjusted title size for mobile */
   }
   .logo-link svg {
-    width: 32px;
-    height: 32px;
+    width: 45px; /* Adjusted logo size for mobile */
+    height: 45px; /* Adjusted logo size for mobile */
   }
   .header-actions {
     gap: 0.5rem; /* Tighter gap for action buttons */
   }
-  .header-app-button, .login-button-header {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
+  .header-app-button { /* Removed .login-button-header */
+    padding: 0.5rem 1rem; /* Adjusted padding */
+    font-size: 0.9rem; /* Adjusted font size */
   }
-   .logout-button-header, .settings-button, .profile-button {
-    padding: 0.5rem;
-    font-size: 1rem;
+   .settings-button { /* Removed .logout-button-header, .profile-button */
+    padding: 0.6rem; /* Adjusted padding */
+    font-size: 1.1rem; /* Adjusted font size */
   }
   /* Hide some less critical actions if space is very limited */
   /* Example: .profile-button { display: none; } */
 }
 
 @media (max-width: 480px) {
+  .site-header {
+    padding: 0.75rem 1rem; /* Further reduced padding for very small screens */
+  }
   .site-title {
-    font-size: 1.3rem;
+    font-size: 1.5rem; /* Further reduced title size */
+  }
+  .logo-link svg {
+    width: 40px; /* Further reduced logo size */
+    height: 40px; /* Further reduced logo size */
   }
   .header-app-button span { /* If "Get App" text is too long */
      /* display: none; */ /* Or use a shorter text via i18n for mobile */
   }
   .header-app-button {
-    padding: 0.4rem 0.6rem; /* Even smaller padding */
+    padding: 0.4rem 0.8rem; /* Adjusted padding */
   }
-  .login-button-header {
-    padding: 0.4rem 0.6rem;
-  }
+  /* Removed .login-button-header styling as it's no longer present */
 }
