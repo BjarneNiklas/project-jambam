@@ -204,6 +204,21 @@
   
   .setting-item label {
     font-size: 0.9rem;
+    margin-bottom: 4px; /* Add a bit of space between label and control when stacked */
+  }
+
+  .setting-item .language-switcher {
+    width: 100%; /* Make language switcher take full width */
+  }
+
+  .setting-item .language-button {
+    flex-grow: 1; /* Allow buttons to grow and share space */
+    padding: 10px 12px; /* Slightly increase padding for better tap area */
+    font-size: 0.9rem;
+  }
+
+  .invite-form input[type="text"] {
+    font-size: 1rem; /* Ensure readability on mobile */
   }
 }
 

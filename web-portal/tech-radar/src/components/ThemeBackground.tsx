@@ -2,6 +2,9 @@ import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import BubbleBackground from './BubbleBackground';
 import BalloonBackground from './BalloonBackground';
+import ButterflyBackground from './ButterflyBackground';
+import StarsBackground from './StarsBackground';
+import FirefliesBackground from './FirefliesBackground';
 
 const ThemeBackground: React.FC = () => {
   const { currentTheme, animationsEnabled } = useTheme();
@@ -16,10 +19,15 @@ const ThemeBackground: React.FC = () => {
     case 'bubbles':
       return <BubbleBackground />;
     case 'balloons':
-       return <BalloonBackground />;
-    // Add other themes here in the future
+      return <BalloonBackground />;
+    case 'butterflies':
+      return <ButterflyBackground />;
+    case 'stars':
+      return <StarsBackground />;
+    case 'fireflies':
+      return <FirefliesBackground />;
     default:
-      // Fallback to bubbles or render nothing
+      // Fallback to bubbles or render nothing if theme is unrecognized
       return <BubbleBackground />;
   }
 };
