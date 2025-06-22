@@ -28,12 +28,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isProfileComplete, setIsProfileComplete] = useState(false);
 
   const fetchProfile = useCallback(async (user: User) => {
+    console.log('[AuthContext] fetchProfile: Starting for user ID:', user.id);
     if (!user) {
+      console.warn('[AuthContext] fetchProfile: Called with no user.');
       setIsProfileComplete(false);
       return;
     };
     
     try {
+      console.log('[AuthContext] fetchProfile: Attempting to select profile for user ID:', user.id);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -43,9 +46,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (data) {
         setProfile(data);
         setIsProfileComplete(!!data.username);
-        console.log('Profile fetched:', data);
+        console.log('[AuthContext] fetchProfile: Profile found and set. Username:', data.username, 'isProfileComplete:', !!data.username);
       } else if (error && error.code === 'PGRST116') { // Profile not found, create it
-        console.log('Profile not found for user, creating one...');
+        console.log('[AuthContext] fetchProfile: Profile not found (PGRST116), creating one for user ID:', user.id);
         const { data: newProfile, error: insertError } = await supabase
           .from('profiles')
           .insert({ id: user.id, email: user.email! })
@@ -53,39 +56,82 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           .single();
 
         if (insertError) {
-          console.error('Error creating profile:', insertError);
+          console.error('[AuthContext] fetchProfile: Error creating profile:', insertError);
           setIsProfileComplete(false);
         } else {
           setProfile(newProfile);
-          setIsProfileComplete(!!newProfile.username);
-          console.log('New profile created:', newProfile);
+          setIsProfileComplete(!!newProfile?.username); // Added optional chaining for safety
+          console.log('[AuthContext] fetchProfile: New profile created. Username:', newProfile?.username, 'isProfileComplete:', !!newProfile?.username);
         }
       } else if (error) {
-        console.error('Error fetching profile:', error);
+        console.error('[AuthContext] fetchProfile: Error fetching profile (other than PGRST116):', error);
         setIsProfileComplete(false);
+      } else {
+        // This case means no data and no error, which might imply profile doesn't exist but no PGRST116.
+        // Or, it could be a non-standard error object.
+        console.warn('[AuthContext] fetchProfile: No profile data and no specific error code. Assuming profile needs creation or investigation.');
+        setIsProfileComplete(false); // Default to incomplete.
       }
     } catch (error) {
-      console.error('Exception while fetching profile:', error);
+      console.error('[AuthContext] fetchProfile: Exception during profile fetch/creation:', error);
       setIsProfileComplete(false);
     }
+    console.log('[AuthContext] fetchProfile: Finished for user ID:', user.id);
   }, []);
 
   useEffect(() => {
-    setLoading(true);
+    console.log('[AuthContext] useEffect: Setting up onAuthStateChange listener.');
+
+    // Initial check for session to set initial loading state correctly.
+    (async () => {
+      console.log('[AuthContext] useEffect: Performing initial getSession check.');
+      const { data: { session: initialSession } } = await supabase.auth.getSession();
+      console.log('[AuthContext] useEffect: Initial session present:', !!initialSession);
+      if (!initialSession?.user) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setProfile(null);
+        setLoading(false);
+        console.log('[AuthContext] useEffect: Initial getSession check - no active session. loading: false, isAuthenticated: false.');
+      } else {
+        // If there IS an initial session, onAuthStateChange will likely fire with INITIAL_SESSION
+        // and handle it, including fetchProfile and setting loading states.
+        // Set loading true here, anticipating that event or direct processing if onAuthStateChange is quick.
+        setLoading(true);
+        console.log('[AuthContext] useEffect: Initial getSession check - active session found. Expecting onAuthStateChange. loading: true.');
+        // Optionally, you could even call the main logic here for the initial session,
+        // but onAuthStateChange with INITIAL_SESSION should also cover it.
+        // Forcing it here might lead to double processing if not careful.
+        // Let's rely on onAuthStateChange to be the single source of truth for session processing.
+      }
+    })();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      console.log(`[AuthContext] onAuthStateChange: Event received: ${_event}. Session present: ${!!session}. User ID: ${session?.user?.id || 'N/A'}`);
+      // console.log(`[AuthContext] onAuthStateChange: Current state before this event: isAuthenticated: ${isAuthenticated}, loading: ${loading}`); // This shows state from previous render
+
       if (session?.user) {
+        setLoading(true); // Indicate loading state before async profile fetch
+        console.log('[AuthContext] onAuthStateChange: Session and user found. setLoading(true). Calling fetchProfile.');
         await fetchProfile(session.user);
+        console.log('[AuthContext] onAuthStateChange: fetchProfile completed.');
         setUser(session.user);
         setIsAuthenticated(true);
+        console.log(`[AuthContext] onAuthStateChange: State updated: isAuthenticated: true, user set for ID: ${session.user.id}`);
       } else {
+        console.log('[AuthContext] onAuthStateChange: No session or user. Resetting auth state.');
         setUser(null);
         setProfile(null);
         setIsAuthenticated(false);
+        console.log('[AuthContext] onAuthStateChange: State updated: isAuthenticated: false, user/profile null.');
       }
       setLoading(false);
+      const finalAuthStatus = session?.user ? true : false;
+      console.log(`[AuthContext] onAuthStateChange: Processing finished for event ${_event}. setLoading(false). Effective isAuthenticated for this event: ${finalAuthStatus}`);
     });
 
     return () => {
+      console.log('[AuthContext] useEffect: Cleaning up onAuthStateChange listener.');
       subscription.unsubscribe();
     };
   }, [fetchProfile]);
