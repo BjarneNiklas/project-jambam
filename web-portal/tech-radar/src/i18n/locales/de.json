@@ -538,8 +538,15 @@
     "networkError": "Netzwerkfehler. Bitte versuche es erneut."
   },
   "feed": {
-    "title": "Updates & Insights",
-    "subtitle": "Die neuesten Updates, tiefgründige Einblicke und Geschichten aus der JamBam Community."
+    "title": "Updates & Einblicke",
+    "subtitle": "Die neuesten Updates, tiefgründige Einblicke und Geschichten aus der JamBam Community.",
+    "categories": {
+      "all": "Alle",
+      "news": "Neuigkeiten",
+      "insights": "Einblicke",
+      "community": "Community"
+    },
+    "noUpdatesFound": "Keine Updates für die gewählten Filter gefunden."
   },
   "about": {
     "title": "Über uns",
