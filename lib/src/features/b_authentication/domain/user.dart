@@ -19,6 +19,7 @@ class User {
     this.followers = const [],
     this.following = const [],
     this.isEmailVerified = false,
+    this.isAnonymous = false, // Added isAnonymous field
     this.createdAt,
     this.lastActive,
     this.preferences = const UserPreferences(),
@@ -40,6 +41,7 @@ class User {
   final List<String> followers; // User IDs
   final List<String> following; // User IDs
   final bool isEmailVerified;
+  final bool isAnonymous; // Added field
   final DateTime? createdAt;
   final DateTime? lastActive;
   final UserPreferences preferences;
@@ -62,6 +64,7 @@ class User {
     List<String>? followers,
     List<String>? following,
     bool? isEmailVerified,
+    bool? isAnonymous, // Added isAnonymous
     DateTime? createdAt,
     DateTime? lastActive,
     UserPreferences? preferences,
@@ -83,6 +86,7 @@ class User {
       followers: followers ?? this.followers,
       following: following ?? this.following,
       isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+      isAnonymous: isAnonymous ?? this.isAnonymous, // Added isAnonymous
       createdAt: createdAt ?? this.createdAt,
       lastActive: lastActive ?? this.lastActive,
       preferences: preferences ?? this.preferences,
@@ -90,8 +94,8 @@ class User {
     );
   }
 
-  /// Check if user is anonymous
-  bool get isAnonymous => email.isEmpty || email == 'anonymous@jambam.com';
+  // /// Check if user is anonymous
+  // bool get isAnonymous => email.isEmpty || email == 'anonymous@jambam.com'; // Removed getter
 
   /// Check if user is verified
   bool get isVerified => isEmailVerified;

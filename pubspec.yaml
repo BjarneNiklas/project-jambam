@@ -41,6 +41,7 @@ dependencies:
   google_generative_ai: ^0.4.7
   shared_preferences: ^2.2.2
   http: ^1.2.1
+  supabase_flutter: ^2.5.0 # Added Supabase
   
   # Offline Support & Enhanced HTTP
   connectivity_plus: ^5.0.2

@@ -1,16 +1,22 @@
-import 'package:project_jambam/src/features/b_authentication/data/mock_auth_repository.dart';
+import 'package:project_jambam/src/features/b_authentication/data/supabase_auth_repository.dart'; // Changed to SupabaseAuthRepository
 import 'package:project_jambam/src/features/b_authentication/domain/auth_repository.dart';
 import 'package:project_jambam/src/features/b_authentication/domain/user.dart';
 import 'package:project_jambam/src/features/a_ideation/domain/accessibility_system.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as sb; // Added Supabase import
 
 part 'auth_repository_provider.g.dart';
 
 /// Provider for the authentication repository
 @riverpod
 AuthRepository authRepository(Ref ref) {
-  return MockAuthRepository();
+  // Ensure Supabase is initialized before accessing Supabase.instance.client
+  // This typically happens in main.dart
+  // If Supabase is not initialized, this will throw an error.
+  // Consider adding a check or relying on main.dart initialization.
+  final supabaseClient = sb.Supabase.instance.client;
+  return SupabaseAuthRepository(supabaseClient);
 }
 
 /// Provider for the current user stream

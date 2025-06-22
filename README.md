@@ -37,10 +37,26 @@ To get started with Project Jambam, you'll need to have Flutter installed on you
     ```bash
     flutter pub get
     ```
-4.  **Run the app:**
+4.  **Configure Environment (Flutter & API):**
+    *   **Flutter App:** You need to provide your Supabase project URL and Anon Key. These are typically set in `lib/src/core/environment.dart` or directly in `lib/main.dart` where Supabase is initialized. Look for `Environment.supabaseUrl` and `Environment.supabaseAnonKey`.
+    *   **FastAPI Backend:** The backend also requires Supabase configuration (URL and Service Key) via environment variables (see `api/core/config.py` and `api/env.example`).
+
+5.  **Run the app:**
     ```bash
     flutter run
     ```
+
+## Authentication System
+
+Project Jambam now uses **Supabase** for its authentication and user management. This replaces the previous custom JWT-based system in the backend.
+
+*   **Backend (FastAPI):**
+    *   User registration and login are handled via Supabase.
+    *   User profile data is stored in the `profiles` table in Supabase.
+    *   API endpoints related to users now expect Supabase User IDs (UUID strings).
+*   **Frontend (Flutter):**
+    *   The Flutter app uses the `supabase_flutter` package to interact with Supabase for auth.
+    *   Ensure you have configured the Supabase URL and Anon Key as mentioned in the "Configure Environment" step.
 
 ## Contributing
 
