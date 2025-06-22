@@ -33,9 +33,9 @@ const Footer: React.FC = () => {
 
   // Define legal links (ensure these routes exist or create placeholder pages)
   const legalLinks = [
-    { to: '/imprint', text: t('footer.legal.imprint', 'Imprint') },
-    { to: '/privacy', text: t('footer.legal.privacy', 'Privacy Policy') },
-    { to: '/terms', text: t('footer.legal.terms', 'Terms of Service') },
+    { to: '/impressum', text: t('footer.legal.imprint', 'Imprint') },
+    { to: '/privacy-policy', text: t('footer.legal.privacy', 'Privacy Policy') },
+    { to: '/terms-of-service', text: t('footer.legal.terms', 'Terms of Service') },
   ];
 
   return (
