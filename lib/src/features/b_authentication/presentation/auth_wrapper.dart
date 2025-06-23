@@ -47,7 +47,7 @@ class AuthWrapper extends ConsumerWidget {
             children: [
               CircularProgressIndicator(),
               SizedBox(height: 16),
-              Text('Loading...'),
+              const Text('Loading...'), // Made const
             ],
           ),
         ),
@@ -75,20 +75,20 @@ class AuthWrapper extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                Icon( // Cannot be const due to Theme.of(context).colorScheme.error
                   Icons.error_outline,
                   size: 64,
                   color: Theme.of(context).colorScheme.error,
                 ),
                 const SizedBox(height: 16),
-                Text(
+                Text( // Cannot be const due to Theme.of(context)
                   'Authentication Error',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
+                Text( // Cannot be const due to Theme.of(context)
                   'There was an error loading your authentication state.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
@@ -96,12 +96,17 @@ class AuthWrapper extends ConsumerWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    // Refresh the auth state
-                    // This will trigger a rebuild
+                Consumer( // Wrap ElevatedButton with Consumer to get ref
+                  builder: (context, ref, child) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        // Refresh the auth state by invalidating the currentUserProvider
+                        ref.invalidate(currentUserProvider);
+                      },
+                      child: child,
+                    );
                   },
-                  child: const Text('Try Again'),
+                  child: const Text('Try Again'), // child can be const and is passed to builder
                 ),
               ],
             ),

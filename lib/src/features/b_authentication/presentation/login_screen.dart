@@ -34,23 +34,23 @@ class LoginScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Logo and Title
-                    _buildHeader(context),
+                    _buildHeader(context), // Cannot be const due to Theme
                     const SizedBox(height: 48),
 
                     // Login/Signup Form
-                    _buildForm(context, controller, state),
+                    _buildForm(context, controller, state), // Cannot be const
                     const SizedBox(height: 24),
 
                     // Action Buttons
-                    _buildActionButtons(context, controller, state),
+                    _buildActionButtons(context, controller, state), // Cannot be const
                     const SizedBox(height: 24),
 
                     // Anonymous Sign In
-                    _buildAnonymousSignIn(context, controller, state),
+                    _buildAnonymousSignIn(context, controller, state), // Cannot be const
                     const SizedBox(height: 32),
 
                     // Mode Toggle
-                    _buildModeToggle(context, controller, state),
+                    _buildModeToggle(context, controller, state), // Cannot be const
                     const SizedBox(height: 24),
 
                     // Error Messages
@@ -87,10 +87,10 @@ class LoginScreen extends ConsumerWidget {
               ),
             ],
           ),
-          child: Icon(
-            Icons.games,
+          child: Icon( // Icon can be const if Icons.games is const (which it is)
+            Icons.games, // This is a const value
             size: 40,
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).colorScheme.onPrimary, // Theme color prevents const Container
           ),
         ),
         const SizedBox(height: 16),
@@ -120,10 +120,10 @@ class LoginScreen extends ConsumerWidget {
   Widget _buildForm(BuildContext context, LoginScreenController controller, LoginScreenState state) {
     return Card(
       elevation: 8,
-      shadowColor: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.1),
+      shadowColor: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.1), // Theme color prevents const Card
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24.0), // EdgeInsets can be const
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -270,13 +270,13 @@ class LoginScreen extends ConsumerWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Theme.of(context).colorScheme.onPrimary,
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16), // const
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             elevation: 4,
           ),
-          child: Text(
+          child: Text( // Text can be const if style is const
             state.isSignUp ? 'Create Account' : 'Sign In',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600), // const
           ),
         ),
         const SizedBox(height: 12),
@@ -287,7 +287,7 @@ class LoginScreen extends ConsumerWidget {
             onPressed: state.email.isNotEmpty && !state.isLoading
                 ? controller.resetPassword
                 : null,
-            child: Text(
+            child: Text( // Cannot be const due to Theme
               'Forgot Password?',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
@@ -301,19 +301,19 @@ class LoginScreen extends ConsumerWidget {
   Widget _buildAnonymousSignIn(BuildContext context, LoginScreenController controller, LoginScreenState state) {
     return Column(
       children: [
-        const Divider(),
+        const Divider(), // Can be const
         const SizedBox(height: 16),
         OutlinedButton.icon(
           onPressed: !state.isLoading ? controller.signInAnonymously : null,
-          icon: const Icon(Icons.person_outline),
-          label: const Text('Continue as Guest'),
+          icon: const Icon(Icons.person_outline), // Can be const
+          label: const Text('Continue as Guest'), // Can be const
           style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16), // Can be const
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        Text( // Cannot be const due to Theme
           'Explore the platform without creating an account',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
@@ -356,12 +356,12 @@ class LoginScreen extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: Colors.red.shade600),
+          const Icon(Icons.error_outline, color: Color(0xFFD32F2F)), // Use const Color for error
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               error,
-              style: TextStyle(color: Colors.red.shade700),
+              style: const TextStyle(color: Color(0xFFC62828)), // Use const Color for error text
             ),
           ),
         ],
@@ -379,12 +379,12 @@ class LoginScreen extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.check_circle_outline, color: Colors.green.shade600),
+          const Icon(Icons.check_circle_outline, color: Color(0xFF388E3C)), // Use const Color for success
           const SizedBox(width: 12),
-          Expanded(
+          const Expanded( // Text and TextStyle can be const
             child: Text(
               'Password reset email sent! Check your inbox.',
-              style: TextStyle(color: Colors.green.shade700),
+              style: TextStyle(color: Color(0xFF2E7D32)), // Use const Color for success text
             ),
           ),
         ],
@@ -393,8 +393,25 @@ class LoginScreen extends ConsumerWidget {
   }
 
   Widget _buildLoadingIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
+    // Similar style to AuthLoadingWidget for consistency, but simpler for inline use
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 24), // Add some spacing if it's within other content
+          CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Processing...', // Generic loading text
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
     );
   }
-} 
+}

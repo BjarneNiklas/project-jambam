@@ -3,9 +3,12 @@ import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 import 'package:project_jambam/src/features/b_authentication/domain/auth_repository.dart';
 import 'package:project_jambam/src/features/b_authentication/domain/user.dart' as domain_user;
 import 'package:project_jambam/src/features/a_ideation/domain/accessibility_system.dart'; // For UserPreferences, SkillLevel etc.
+import 'package:project_jambam/src/core/logger.dart'; // Import Logger
 
 class SupabaseAuthRepository implements AuthRepository {
   final sb.SupabaseClient _supabaseClient;
+  // Add a logger instance
+  final Logger _logger = Logger('SupabaseAuthRepository');
 
   SupabaseAuthRepository(this._supabaseClient);
 
@@ -77,10 +80,10 @@ class SupabaseAuthRepository implements AuthRepository {
       final response = await _supabaseClient.from('profiles').select().eq('id', userId).single();
       return response;
     } catch (e) {
-      print('Error fetching profile for $userId: $e');
+      _logger.error('Error fetching profile for $userId: $e');
       if (e is sb.PostgrestException && e.code == 'PGRST116') { // Profile not found
         if (authUser != null) { // Only attempt creation if we have auth user context
-          print('Profile not found for $userId (PGRST116), attempting to create...');
+          _logger.info('Profile not found for $userId (PGRST116), attempting to create...');
           try {
             final newProfileData = {
               'id': authUser.id,
@@ -89,10 +92,10 @@ class SupabaseAuthRepository implements AuthRepository {
               // Add other default fields for profile here
             };
             final profileCreationResponse = await _supabaseClient.from('profiles').insert(newProfileData).select().single();
-            print('Profile created for $userId.');
+            _logger.info('Profile created for $userId.');
             return profileCreationResponse;
           } catch (creationError) {
-            print('Error creating profile for $userId after PGRST116: $creationError');
+            _logger.error('Error creating profile for $userId after PGRST116: $creationError');
             return null;
           }
         }
@@ -129,7 +132,7 @@ class SupabaseAuthRepository implements AuthRepository {
       }
       return AuthResult(success: false, error: 'Unknown authentication error');
     } catch (e) {
-      print('Auth Exception: $e');
+      _logger.error('Auth Exception: $e');
       String errorMessage = 'An unexpected error occurred.';
       String errorCode = 'unknown';
       if (e is sb.AuthException) {
@@ -206,7 +209,7 @@ class SupabaseAuthRepository implements AuthRepository {
                 };
                 profileData = await _supabaseClient.from('profiles').insert(anonProfile).select().single();
             } catch(e) {
-                print("Error creating profile for anon user: $e");
+                _logger.error("Error creating profile for anon user: $e");
             }
         }
         return AuthResult(success: true, user: _mapSupabaseUser(authResponse.user, profileData));
@@ -273,7 +276,7 @@ class SupabaseAuthRepository implements AuthRepository {
     // final userId = _supabaseClient.auth.currentUser?.id;
     // if (userId == null) return AuthResult(success: false, error: "User not logged in");
     // await _supabaseClient.rpc('delete_user_account', params: {'user_id_to_delete': userId});
-    print("deleteAccount: This operation should ideally be handled by a trusted server environment using a service role key.");
+    _logger.warn("deleteAccount: This operation should ideally be handled by a trusted server environment using a service role key.");
     return const AuthResult(success: false, error: 'Account deletion from client-side is not directly supported for security reasons. Please implement a server-side function.');
   }
 
@@ -396,7 +399,7 @@ class SupabaseAuthRepository implements AuthRepository {
               ))
           .toList();
     } catch (e) {
-      print('Error searching users: $e');
+      _logger.error('Error searching users: $e');
       return [];
     }
   }
@@ -484,7 +487,7 @@ class SupabaseAuthRepository implements AuthRepository {
             );
           }).toList();
     } catch (e) {
-      print("Error getting user following: $e");
+      _logger.error("Error getting user following: $e"); // Corrected log message
       return [];
     }
   }
@@ -517,7 +520,7 @@ class SupabaseAuthRepository implements AuthRepository {
     // Example: Fetch from an 'user_activities' table
     // final response = await _supabaseClient.from('user_activities').select().eq('user_id', userId).order('timestamp', ascending: false);
     // return response.map((data) => domain_user.UserActivity(...)).toList();
-    print("getUserActivity: Not implemented. Requires 'user_activities' table and schema.");
+    _logger.info("getUserActivity: Not implemented. Requires 'user_activities' table and schema.");
     return [];
   }
 

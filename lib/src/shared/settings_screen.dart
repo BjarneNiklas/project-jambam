@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../features/a_ideation/application/prompt_config_provider.dart';
@@ -249,7 +250,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 }
 
 class _AvatarGeneratorDialog extends StatefulWidget {
-  const _AvatarGeneratorDialog();
+  const _AvatarGeneratorDialog({super.key}); // Added super.key
 
   @override
   State<_AvatarGeneratorDialog> createState() => _AvatarGeneratorDialogState();
@@ -424,7 +425,17 @@ class _AvatarGeneratorDialogState extends State<_AvatarGeneratorDialog> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.network(url, width: 96, height: 96),
+            CachedNetworkImage(
+              imageUrl: url,
+              width: 96,
+              height: 96,
+              placeholder: (context, url) => const SizedBox(
+                width: 96,
+                height: 96,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error, size: 48),
+            ),
             const SizedBox(height: 12),
             if (isPremium) ...[
               RadioListTile<bool>(
@@ -557,20 +568,42 @@ class _AvatarGeneratorDialogState extends State<_AvatarGeneratorDialog> {
                             border: Border.all(color: Colors.blueAccent, width: 2),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Image.network(url, width: 96, height: 96, fit: BoxFit.cover),
+                          child: CachedNetworkImage(
+                            imageUrl: url,
+                            width: 96,
+                            height: 96,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => const SizedBox(
+                              width: 96,
+                              height: 96,
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                            errorWidget: (context, url, error) => const Icon(Icons.error, size: 48),
+                          ),
                         ),
                       ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text('Tippe auf ein Bild, um es zu speichern.'),
+                const Text('Tippe auf ein Bild, um es zu speichern.'), // const
               ] else ...[
-                const Text('Vorschau:'),
+                const Text('Vorschau:'), // const
                 const SizedBox(height: 8),
-                Image.network(generatedUrls.first, width: 128, height: 128, fit: BoxFit.cover),
+                CachedNetworkImage(
+                  imageUrl: generatedUrls.first,
+                  width: 128,
+                  height: 128,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const SizedBox(
+                    width: 128,
+                    height: 128,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error, size: 64),
+                ),
                 const SizedBox(height: 8),
                 ElevatedButton.icon(
-                  icon: const Icon(Icons.save),
+                  icon: const Icon(Icons.save), // const
                   label: const Text('Speichern'),
                   onPressed: () => _showSaveDialog(generatedUrls.first),
                 ),
