@@ -29,7 +29,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable' # Wir verwenden den stabilen Flutter-Kanal
+          channel: 'main' # Temporarily using main channel due to pubspec.yaml requiring a very new Dart SDK.
+                          # integration_test/auth_flow_test.dart may have analyzer issues that could not be fixed due to tool limitations.
 
       # Schritt 3: Flutter-Version zur Überprüfung ausgeben
       - name: Print Flutter version

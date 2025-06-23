@@ -9,11 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:project_jambam/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   testWidgets('JambaM app smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const JambaMApp());
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: JambaMApp(),
+      ),
+    );
 
     // Verify that the app loads without errors
     expect(find.byType(MaterialApp), findsOneWidget);

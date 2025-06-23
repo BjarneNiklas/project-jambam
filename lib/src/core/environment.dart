@@ -16,6 +16,8 @@ class Environment {
         'OPENAI_API_KEY': '',
         'GEMINI_API_KEY': '',
         'ENVIRONMENT': 'development',
+        'SUPABASE_URL': 'YOUR_SUPABASE_URL_HERE', // Default/placeholder
+        'SUPABASE_ANON_KEY': 'YOUR_SUPABASE_ANON_KEY_HERE', // Default/placeholder
       };
     } else {
       // Mobile: Try to load from .env file
@@ -34,17 +36,26 @@ class Environment {
               }
             }
           }
+        } else {
+          // If .env doesn't exist, still load defaults
+          _loadDefaults();
         }
       } catch (e) {
-        // Use defaults if .env file cannot be read
-        _envVars = {
-          'API_BASE_URL': 'http://localhost:8000',
-          'OPENAI_API_KEY': '',
-          'GEMINI_API_KEY': '',
-          'ENVIRONMENT': 'development',
-        };
+        // Use defaults if .env file cannot be read or on any error
+        _loadDefaults();
       }
     }
+  }
+
+  void _loadDefaults() {
+    _envVars = {
+      'API_BASE_URL': 'http://localhost:8000',
+      'OPENAI_API_KEY': '',
+      'GEMINI_API_KEY': '',
+      'ENVIRONMENT': 'development',
+      'SUPABASE_URL': 'YOUR_SUPABASE_URL_HERE', // Default/placeholder
+      'SUPABASE_ANON_KEY': 'YOUR_SUPABASE_ANON_KEY_HERE', // Default/placeholder
+    };
   }
 
   String? get(String key) {
