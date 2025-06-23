@@ -1,12 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCheckDouble } from "react-icons/fa6";
+import SkeletonLoader from '../components/layout/SkeletonLoader'; // Import SkeletonLoader
 import { FaTrash } from "react-icons/fa";
 
-import TechRadar from '../components/TechRadar';
-import MatrixView from '../components/MatrixView';
+// import TechRadar from '../components/TechRadar';
+// import MatrixView from '../components/MatrixView';
 import { techRadarData } from '../data/techRadarData';
 import { TechItem } from '../data/techRadarData';
+
+const TechRadar = lazy(() => import('../components/TechRadar'));
+const MatrixView = lazy(() => import('../components/MatrixView'));
 
 type ViewType = 'radar' | 'matrix';
 
@@ -158,8 +162,10 @@ const TechRadarPage: React.FC = () => {
       </div>
 
       <div className="content-section">
-        {currentView === 'radar' && <TechRadar data={filteredData} />}
-        {currentView === 'matrix' && <MatrixView data={filteredData} />}
+        <Suspense fallback={<SkeletonLoader type="card" height="400px" />}>
+          {currentView === 'radar' && <TechRadar data={filteredData} />}
+          {currentView === 'matrix' && <MatrixView data={filteredData} />}
+        </Suspense>
       </div>
     </>
   );

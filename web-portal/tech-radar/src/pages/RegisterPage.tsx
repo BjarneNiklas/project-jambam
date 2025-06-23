@@ -318,6 +318,8 @@ const RegisterPage: React.FC = () => {
                 className="password-toggle-btn"
                 disabled={isLoading}
                 title={showPassword ? 'Passwort verstecken' : 'Passwort anzeigen'}
+                aria-label={showPassword ? 'Passwort verstecken' : 'Passwort anzeigen'}
+                aria-pressed={showPassword}
               >
                 {showPassword ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -335,7 +337,7 @@ const RegisterPage: React.FC = () => {
             
             {/* Password Strength Indicator */}
             {password && (
-              <div className="password-strength">
+              <div className="password-strength" aria-live="polite">
                 <div className="strength-bar">
                   <div 
                     className="strength-fill"
@@ -349,6 +351,8 @@ const RegisterPage: React.FC = () => {
                   <span className="strength-label" style={{ color: passwordStrength.color }}>
                     {passwordStrength.label}
                   </span>
+                   {/* Visually hidden but accessible to screen readers */}
+                  <span className="sr-only">Passwortstärke: {passwordStrength.label}</span>
                   {passwordStrength.feedback.length > 0 && (
                     <div className="strength-feedback">
                       {passwordStrength.feedback.map((item, index) => (

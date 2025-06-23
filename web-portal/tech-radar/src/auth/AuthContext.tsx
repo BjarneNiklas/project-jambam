@@ -37,9 +37,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [hasSessionPassedGate, setHasSessionPassedGate] = useState(false);
 
 
-  const fetchProfile = useCallback(async (user: User) => {
-    console.log('[AuthContext] fetchProfile: Starting for user ID:', user.id);
-    if (!user) {
+  const fetchProfile = useCallback(async (currentUser: User) => {
+    console.log('[AuthContext] fetchProfile: Starting for user ID:', currentUser.id);
+    if (!currentUser) {
       console.warn('[AuthContext] fetchProfile: Called with no user.');
       setIsProfileComplete(false);
       setCurrentUserHasValidatedInvite(false); // Reset on no user
@@ -57,17 +57,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (data) {
         setProfile(data);
         setIsProfileComplete(!!data.username);
-        // Set invite status from profile
         setCurrentUserHasValidatedInvite(data.has_validated_invite_code || false);
         console.log('Profile fetched:', data);
-      } else if (error && error.code === 'PGRST116') { // Profile not found, create it
+      } else if (error && error.code === 'PGRST116') {
         console.log('[AuthContext] fetchProfile: Profile not found (PGRST116), creating one for user ID:', user.id);
         const { data: newProfile, error: insertError } = await supabase
           .from('profiles')
           .insert({
             id: user.id,
             email: user.email!,
-            has_validated_invite_code: false // Default for new profile
+            has_validated_invite_code: false
           })
           .select('*, has_validated_invite_code')
           .single();
@@ -93,7 +92,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setCurrentUserHasValidatedInvite(false);
     }
     console.log('[AuthContext] fetchProfile: Finished for user ID:', user.id);
-  }, []);
+  }, []); // fetchProfile depends on supabase, but supabase client instance is stable.
 
   useEffect(() => {
     console.log('[AuthContext] useEffect: Setting up onAuthStateChange listener.');
@@ -150,7 +149,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
   }, [fetchProfile]);
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -161,15 +160,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         console.error('Login error:', error.message);
         return { success: false, error: error.message };
       }
-
-      return { success: true }; // onAuthStateChange will handle the rest
+      return { success: true };
     } catch (error) {
       console.error('Login error:', error);
       return { success: false, error: error instanceof Error ? error.message : 'An error occurred' };
     }
-  };
+  }, []);
 
-  const loginWithProvider = async (provider: 'google' | 'discord' | 'github'): Promise<boolean> => {
+  const loginWithProvider = useCallback(async (provider: 'google' | 'discord' | 'github'): Promise<boolean> => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
@@ -182,23 +180,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         console.error(`${provider} login error:`, error.message);
         return false;
       }
-
       return true;
     } catch (error) {
       console.error(`${provider} login error:`, error);
       return false;
     }
-  };
+  }, []);
 
-  const loginWithGoogle = () => loginWithProvider('google');
-  const loginWithDiscord = () => loginWithProvider('discord');
-  const loginWithGitHub = () => loginWithProvider('github');
+  const loginWithGoogle = useCallback(() => loginWithProvider('google'), [loginWithProvider]);
+  const loginWithDiscord = useCallback(() => loginWithProvider('discord'), [loginWithProvider]);
+  const loginWithGitHub = useCallback(() => loginWithProvider('github'), [loginWithProvider]);
 
-  const register = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const register = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
       console.log('=== REGISTRATION START (v3 - Email/Pass Only) ===');
-      console.log('Attempting registration for:', { email, passwordLength: password.length });
-      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -222,53 +217,45 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         console.error('No user object returned from signUp.');
         return { success: false, error: 'Benutzer konnte nicht erstellt werden.' };
       }
-
-      console.log('User created in auth successfully:', data.user.id);
       
       if (data.session) {
-        console.log('User is immediately signed in');
         return { success: true };
       } else {
-        console.log('Email confirmation required');
         return { success: true, error: 'Fast geschafft! Bitte bestätigen Sie Ihre E-Mail-Adresse.' };
       }
-
     } catch (error) {
       console.error('Registration exception:', error);
       return { success: false, error: 'Ein unerwarteter Fehler ist aufgetreten.' };
     } finally {
       console.log('=== REGISTRATION END (v3) ===');
     }
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       await supabase.auth.signOut();
-      // onAuthStateChange will handle setting state (including resetting gate statuses)
     } catch (error) {
       console.error('Logout error:', error);
     }
-  };
+  }, []);
 
-  const refreshProfile = async () => {
+  const refreshProfileCb = useCallback(async () => {
     if (user) {
         console.log("Refreshing profile for user:", user.id);
-        await fetchProfile(user); // This will update invite status too
+        await fetchProfile(user);
     }
-  };
+  }, [user, fetchProfile]);
 
-  const clearSessionGatePass = () => {
+  const clearSessionGatePass = useCallback(() => {
     setHasSessionPassedGate(false);
-  };
+  }, []);
 
-  const validateSharedPassword = async (password: string): Promise<boolean> => {
-    if (!profile) { // Should not happen if user is logged in
+  const validateSharedPassword = useCallback(async (password: string): Promise<boolean> => {
+    if (!profile) {
       console.error("validateSharedPassword: No profile found for logged-in user.");
       return false;
     }
     try {
-      // In a real scenario, the key 'shared_content_password' should be configurable
-      // And ideally, this check happens in an Edge Function for better security
       const { data, error } = await supabase
         .from('app_config')
         .select('value')
@@ -289,16 +276,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       console.error('Exception validating shared password:', e);
       return false;
     }
-  };
+  }, [profile]);
 
-  const validateInviteCodeForGate = async (inviteCode: string): Promise<boolean> => {
+  const validateInviteCodeForGate = useCallback(async (inviteCode: string): Promise<boolean> => {
     if (!user || !profile) {
       console.error("validateInviteCodeForGate: User or profile not available.");
       return false;
     }
-
     try {
-      // 1. Check if the code is valid and unused
       const { data: codeData, error: codeError } = await supabase
         .from('invite_codes')
         .select('*')
@@ -311,7 +296,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return false;
       }
 
-      // 2. Mark invite code as used
       const { error: updateCodeError } = await supabase
         .from('invite_codes')
         .update({
@@ -323,11 +307,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       if (updateCodeError) {
         console.error('Error marking invite code as used:', updateCodeError);
-        // Potentially roll back or handle this error more gracefully
         return false;
       }
 
-      // 3. Update user's profile
       const { error: updateProfileError } = await supabase
         .from('profiles')
         .update({ has_validated_invite_code: true })
@@ -335,41 +317,42 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       if (updateProfileError) {
         console.error('Error updating profile for invite code:', updateProfileError);
-        // Potentially roll back invite code usage or handle error
         return false;
       }
-
-      // 4. Refresh profile to update context state
-      await refreshProfile();
+      await refreshProfileCb(); // Use the callback version
       return true;
-
     } catch (e) {
       console.error('Exception validating invite code for gate:', e);
       return false;
     }
-  };
+  }, [user, profile, refreshProfileCb]);
+
+  const contextValue = React.useMemo(() => ({
+    isAuthenticated,
+    isProfileComplete,
+    user,
+    profile,
+    login,
+    loginWithGoogle,
+    loginWithDiscord,
+    loginWithGitHub,
+    register,
+    logout,
+    loading,
+    refreshProfile: refreshProfileCb,
+    currentUserHasValidatedInvite,
+    hasSessionPassedGate,
+    validateSharedPassword,
+    validateInviteCodeForGate,
+    clearSessionGatePass
+  }), [
+    isAuthenticated, isProfileComplete, user, profile, login, loginWithGoogle, loginWithDiscord, loginWithGitHub,
+    register, logout, loading, refreshProfileCb, currentUserHasValidatedInvite, hasSessionPassedGate,
+    validateSharedPassword, validateInviteCodeForGate, clearSessionGatePass
+  ]);
 
   return (
-    <AuthContext.Provider value={{ 
-      isAuthenticated, 
-      isProfileComplete,
-      user, 
-      profile,
-      login, 
-      loginWithGoogle,
-      loginWithDiscord,
-      loginWithGitHub,
-      register, 
-      logout, 
-      loading,
-      refreshProfile,
-      // New additions
-      currentUserHasValidatedInvite,
-      hasSessionPassedGate,
-      validateSharedPassword,
-      validateInviteCodeForGate,
-      clearSessionGatePass
-    }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

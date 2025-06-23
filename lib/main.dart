@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_jambam/src/features/b_authentication/presentation/auth_wrapper.dart';
-import 'package:project_jambam/src/core/logger.dart';
+import 'package:project_jambam/src/core/logger.dart'; // Updated Logger import
 import 'package:supabase_flutter/supabase_flutter.dart' as sb; // Added Supabase import
 import 'package:project_jambam/src/core/environment.dart'; // For environment variables
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  final logger = Logger('JambaM.main');
-  final environment = Environment(); // Create an instance
+  // Initialize the new logging system
+  Logger.initialize();
+
+  final logger = Logger('JambaM.main'); // Logger instance can now be created after initialization
   
   try {
     logger.info('Loading environment variables...');
@@ -64,29 +66,29 @@ class JambaMApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        fontFamily: 'Inter',
+        fontFamily: 'Roboto', // Changed to Roboto as per STYLE_GUIDE.md
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 0,
         ),
-        cardTheme: CardThemeData(
+        cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+            shape: const RoundedRectangleBorder( // shape kann const sein
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
           ),
           filled: true,
         ),
@@ -97,29 +99,29 @@ class JambaMApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
-        fontFamily: 'Inter',
+        fontFamily: 'Roboto', // Changed to Roboto as per STYLE_GUIDE.md
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 0,
         ),
-        cardTheme: CardThemeData(
+        cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+            shape: const RoundedRectangleBorder( // shape kann const sein
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
           ),
           filled: true,
         ),

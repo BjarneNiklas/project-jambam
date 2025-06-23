@@ -44,7 +44,12 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     });
   }, []);
 
-  const value = { currentTheme, changeTheme, animationsEnabled, toggleAnimations };
+  const value = React.useMemo(() => ({
+    currentTheme,
+    changeTheme,
+    animationsEnabled,
+    toggleAnimations
+  }), [currentTheme, changeTheme, animationsEnabled, toggleAnimations]);
 
   return (
     <ThemeContext.Provider value={value}>

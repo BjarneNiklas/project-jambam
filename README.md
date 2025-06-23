@@ -40,11 +40,20 @@ To get started with Project Jambam, you'll need to have Flutter installed on you
 4.  **Configure Environment (Flutter & API):**
     *   **Flutter App:** You need to provide your Supabase project URL and Anon Key. These are typically set in `lib/src/core/environment.dart` or directly in `lib/main.dart` where Supabase is initialized. Look for `Environment.supabaseUrl` and `Environment.supabaseAnonKey`.
     *   **FastAPI Backend:** The backend also requires Supabase configuration (URL and Service Key) via environment variables (see `api/core/config.py` and `api/env.example`).
+    *   **App Initialization:** Ensure that core services like Logging (`Logger.initialize()`) and API services (`EnhancedApiService().initialize()`) are called early in `main.dart` as they are crucial for application functionality including caching and offline support.
 
 5.  **Run the app:**
     ```bash
     flutter run
     ```
+
+## Key Features & Optimizations
+
+*   **Robust Logging:** Uses the `logging` package for structured and configurable logging.
+*   **State Management:** Leverages Riverpod for efficient and scalable state management.
+*   **Performance:** Includes widget rendering optimizations, image caching (`CachedNetworkImage`), and API response caching (`DioCacheInterceptor` with Hive/Memory stores).
+*   **Offline Support:** Basic infrastructure for offline data handling and request synchronization.
+*   **Style Adherence:** Follows a defined style guide for UI/UX consistency (see `docs/STYLE_GUIDE.md`).
 
 ## Authentication System
 

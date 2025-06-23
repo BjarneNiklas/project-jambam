@@ -21,6 +21,7 @@ class EnhancedApiService {
   late final OfflineDatabase _database;
   late final ConnectivityService _connectivity;
   late final SyncService _syncService;
+  late final CacheStore _globalCacheStore; // Added for shared cache store
 
   // Cache options
   static const Duration _cacheDuration = Duration(hours: 24);
@@ -45,25 +46,29 @@ class EnhancedApiService {
       },
     ));
 
-    // Add cache interceptor only on mobile platforms
-    if (!kIsWeb) {
-      final cacheStore = HiveCacheStore(
-        await _getCacheDirectory(),
+    // Initialize Cache Store:
+    // - For web, use an in-memory cache (`MemCacheStore`) as Hive is not suitable.
+    // - For mobile, use a persistent Hive-based cache (`HiveCacheStore`).
+    if (kIsWeb) {
+      _globalCacheStore = MemCacheStore();
+    } else {
+      _globalCacheStore = HiveCacheStore(
+        await _getCacheDirectory(), // Platform-specific cache directory
         hiveBoxName: 'jambam_cache',
       );
-
-      final cacheOptions = CacheOptions(
-        store: cacheStore,
-        policy: CachePolicy.request,
-        hitCacheOnErrorExcept: [401, 403],
-        maxStale: const Duration(days: 7),
-        priority: CachePriority.normal,
-        keyBuilder: CacheOptions.defaultCacheKeyBuilder,
-        allowPostMethod: false,
-      );
-
-      _dio.interceptors.add(DioCacheInterceptor(options: cacheOptions));
     }
+
+    // Add cache interceptor using the global store
+    final globalCacheOptions = CacheOptions(
+      store: _globalCacheStore,
+      policy: CachePolicy.request, // Default policy
+      hitCacheOnErrorExcept: [401, 403], // Try cache on error, except for auth errors
+      maxStale: const Duration(days: 7), // Use cached data for up to 7 days on error
+      priority: CachePriority.normal,
+      keyBuilder: CacheOptions.defaultCacheKeyBuilder,
+      allowPostMethod: false, // Do not cache POST requests by default
+    );
+    _dio.interceptors.add(DioCacheInterceptor(options: globalCacheOptions));
 
     // Add connectivity interceptor
     _dio.interceptors.add(InterceptorsWrapper(
@@ -225,10 +230,7 @@ class EnhancedApiService {
     int limit = 20,
   }) async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _shortCacheDuration,
     );
@@ -257,10 +259,7 @@ class EnhancedApiService {
 
   Future<Map<String, dynamic>> getAssetDetails(int assetId) async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _cacheDuration,
     );
@@ -347,10 +346,7 @@ class EnhancedApiService {
     int limit = 20,
   }) async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _shortCacheDuration,
     );
@@ -419,10 +415,7 @@ class EnhancedApiService {
 
   Future<List<Map<String, dynamic>>> getOrganizations() async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _cacheDuration,
     );
@@ -460,10 +453,7 @@ class EnhancedApiService {
 
   Future<List<Map<String, dynamic>>> getLicenseTypes() async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _cacheDuration,
     );
@@ -506,10 +496,7 @@ class EnhancedApiService {
 
   Future<Map<String, dynamic>> getAvailableStyles() async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _cacheDuration,
     );
@@ -531,10 +518,7 @@ class EnhancedApiService {
 
   Future<Map<String, dynamic>> getStyleInfo(String style) async {
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(
-        await _getCacheDirectory(),
-        hiveBoxName: 'jambam_cache',
-      ),
+      store: _globalCacheStore, // Use shared store
       policy: CachePolicy.forceCache,
       maxStale: _cacheDuration,
     );
