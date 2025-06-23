@@ -1,0 +1,78 @@
+.skeleton-loader {
+  background-color: var(--skeleton-bg-color, #2d3748); /* Default dark mode skeleton color */
+  border-radius: var(--border-radius-medium, 4px);
+  position: relative;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.skeleton-loader::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%; /* Start off-screen to the left */
+  height: 100%;
+  width: 150%; /* Make it wide enough to sweep across */
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--skeleton-shine-color, rgba(255, 255, 255, 0.1)) 50%, /* Adjusted for subtle dark mode shine */
+    transparent 100%
+  );
+  animation: skeleton-shine 1.5s infinite linear;
+}
+
+/* Specific types */
+.skeleton-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.skeleton-title {
+  height: 1.5em; /* Default title height */
+  margin-bottom: 0.75em;
+}
+
+.skeleton-text {
+  height: 1em; /* Default text line height */
+}
+
+.skeleton-text:not(:first-of-type) {
+  margin-top: 0.5em;
+}
+
+.skeleton-card {
+  padding: 1rem;
+  border: 1px solid var(--border-color-soft, #384252);
+  background-color: var(--background-color-secondary, #1a202c);
+}
+
+/* Shine animation */
+@keyframes skeleton-shine {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%); /* Move to the right end */
+  }
+}
+
+/* Light mode specific overrides if needed via a parent class or CSS variables */
+.light-mode .skeleton-loader {
+  background-color: var(--skeleton-bg-color-light, #e2e8f0);
+}
+
+.light-mode .skeleton-loader::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--skeleton-shine-color-light, rgba(0, 0, 0, 0.08)) 50%,
+    transparent 100%
+  );
+}
+
+.light-mode .skeleton-card {
+  border: 1px solid var(--border-color-soft-light, #cbd5e0);
+  background-color: var(--background-color-secondary-light, #f7fafc);
+}

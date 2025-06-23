@@ -17,6 +17,8 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const navMenuId = "main-menu"; // ID for ARIA control
+
   const adminRoleDisplay = () => {
     if (!profile) return null;
     switch (profile.role) {
@@ -40,7 +42,7 @@ const Header: React.FC = () => {
             <span className="site-title">JamBam</span>
           </Link>
 
-          <nav className={`main-nav ${isMobileMenuOpen ? 'open' : ''}`}>
+          <nav id={navMenuId} className={`main-nav ${isMobileMenuOpen ? 'open' : ''}`}>
             <ul>
               <li><NavLink to="/" end className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.home', 'Home')}</NavLink></li>
               <li><NavLink to="/feed" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.feed', 'Feed')}</NavLink></li>
@@ -76,10 +78,10 @@ const Header: React.FC = () => {
               📱 {t('header.getApp', 'Get App')}
             </a>
             {/* Login, Profile, and Logout buttons removed as per request */}
-            <Link to="/settings" className="settings-button" title={t('nav.settings') || ''} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to="/settings" className="settings-button" title={t('nav.settings') || ''} aria-label={t('nav.settings') || 'Einstellungen'} onClick={() => setIsMobileMenuOpen(false)}>
               ⚙️
             </Link>
-            <button className="mobile-menu-toggle" onClick={toggleMobileMenu} aria-label="Toggle menu">
+            <button className="mobile-menu-toggle" onClick={toggleMobileMenu} aria-label="Toggle menu" aria-expanded={isMobileMenuOpen} aria-controls={navMenuId}>
               {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
             </button>
           </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback, useMemo } from 'react';
 
 interface DarkModeContextType {
   isDarkMode: boolean;
@@ -20,19 +20,17 @@ interface DarkModeProviderProps {
 }
 
 export const DarkModeProvider: React.FC<DarkModeProviderProps> = ({ children }) => {
-  // Load dark mode preference from localStorage or default to false
-  const getInitialDarkMode = (): boolean => {
+  const getInitialDarkMode = useCallback((): boolean => {
     const saved = localStorage.getItem('darkMode');
     return saved ? JSON.parse(saved) : false;
-  };
+  }, []);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(getInitialDarkMode);
 
-  const toggleDarkMode = () => {
+  const toggleDarkMode = useCallback(() => {
     setIsDarkMode(prev => !prev);
-  };
+  }, []);
 
-  // Apply dark mode to document body
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
     
@@ -43,8 +41,13 @@ export const DarkModeProvider: React.FC<DarkModeProviderProps> = ({ children }) 
     }
   }, [isDarkMode]);
 
+  const contextValue = useMemo(() => ({
+    isDarkMode,
+    toggleDarkMode
+  }), [isDarkMode, toggleDarkMode]);
+
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <DarkModeContext.Provider value={contextValue}>
       {children}
     </DarkModeContext.Provider>
   );
