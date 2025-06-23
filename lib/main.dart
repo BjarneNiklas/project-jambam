@@ -14,10 +14,21 @@ void main() async {
   final logger = Logger('JambaM.main'); // Logger instance can now be created after initialization
   
   try {
+    logger.info('Loading environment variables...');
+    await environment.load(); // Load variables
+    logger.info('Environment variables loaded.');
+
+    final supabaseUrl = environment.get('SUPABASE_URL');
+    final supabaseAnonKey = environment.get('SUPABASE_ANON_KEY');
+
+    if (supabaseUrl == null || supabaseAnonKey == null) {
+      throw Exception('Supabase URL or Anon Key is not configured in environment.');
+    }
+
     logger.info('Initializing Supabase...');
     await sb.Supabase.initialize(
-      url: Environment.supabaseUrl, // Replace with your Supabase URL
-      anonKey: Environment.supabaseAnonKey, // Replace with your Supabase anon key
+      url: supabaseUrl,
+      anonKey: supabaseAnonKey,
       // Optional: custom auth store, debug settings, etc.
     );
     logger.info('Supabase initialized successfully.');
@@ -31,7 +42,8 @@ void main() async {
     );
   } catch (e) {
     logger.error('Failed to initialize app: $e');
-    // Run app with minimal setup if initialization fails
+    // Run app with minimal setup if initialization fails (e.g. show error screen)
+    // For now, we'll still try to run the app, but it might not function correctly.
     runApp(
       const ProviderScope(
         child: JambaMApp(),
