@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TechItem } from '../data/techRadarData';
 
@@ -162,21 +162,34 @@ const TechRadar: React.FC<TechRadarProps> = ({ data }) => {
     return allPlacedItems;
   }, [data]);
 
-  const handlePointClick = (item: PositionedItem, e: React.MouseEvent) => {
+  const isItemSelected = !!selectedItem;
+
+  const handlePointClick = useCallback((item: PositionedItem, e: React.MouseEvent) => {
     e.stopPropagation();
     if (selectedItem && selectedItem.name === item.name) {
       setSelectedItem(null);
     } else {
       setSelectedItem(item);
     }
-  };
+  }, [selectedItem]);
 
-  const handleBackgroundClick = () => {
+  const handleBackgroundClick = useCallback(() => {
     setSelectedItem(null);
-  };
+  }, []);
+
+  const handleMouseEnter = useCallback((item: PositionedItem) => {
+    if (!isItemSelected) {
+      setHoveredItem(item);
+    }
+  }, [isItemSelected]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!isItemSelected) {
+      setHoveredItem(null);
+    }
+  }, [isItemSelected]);
 
   const activeItem = selectedItem || hoveredItem;
-  const isItemSelected = !!selectedItem;
 
   const getRingColor = (ring: string) => {
     switch (ring) {
@@ -247,8 +260,8 @@ const TechRadar: React.FC<TechRadarProps> = ({ data }) => {
                 left: `${item.x}px`,
                 top: `${item.y}px`,
               }}
-              onMouseEnter={() => !isItemSelected && setHoveredItem(item)}
-              onMouseLeave={() => !isItemSelected && setHoveredItem(null)}
+              onMouseEnter={() => handleMouseEnter(item)}
+              onMouseLeave={handleMouseLeave}
               onClick={(e) => handlePointClick(item, e)}
             >
               <div

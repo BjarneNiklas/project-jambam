@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { useTranslation } from 'react-i18next';
 import './AdminPanel.css';
@@ -30,12 +30,7 @@ const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'invites' | 'users' | 'system'>('invites');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    fetchData();
-    fetchCurrentUser();
-  }, []);
-
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       const { data } = await supabase
@@ -45,12 +40,11 @@ const AdminPanel: React.FC = () => {
         .single();
       setCurrentUser(data);
     }
-  };
+  }, []);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     
-    // Fetch invite codes
     const { data: inviteData, error: inviteError } = await supabase
       .from('invite_codes')
       .select(`
@@ -65,7 +59,6 @@ const AdminPanel: React.FC = () => {
       setInviteCodes(inviteData || []);
     }
 
-    // Fetch users
     const { data: userData, error: userError } = await supabase
       .from('profiles')
       .select('*')
@@ -78,9 +71,14 @@ const AdminPanel: React.FC = () => {
     }
 
     setLoading(false);
-  };
+  }, []);
 
-  const generateInviteCode = async () => {
+  useEffect(() => {
+    fetchData();
+    fetchCurrentUser();
+  }, [fetchData, fetchCurrentUser]);
+
+  const generateInviteCode = useCallback(async () => {
     if (!newInviteCode.trim()) return;
 
     const { error } = await supabase
@@ -92,11 +90,11 @@ const AdminPanel: React.FC = () => {
       alert('Fehler beim Erstellen des Invite-Codes');
     } else {
       setNewInviteCode('');
-      fetchData();
+      fetchData(); // Re-fetch data
     }
-  };
+  }, [newInviteCode, fetchData]);
 
-  const deleteInviteCode = async (code: string) => {
+  const deleteInviteCode = useCallback(async (code: string) => {
     if (!window.confirm('Invite-Code wirklich löschen?')) return;
 
     const { error } = await supabase
@@ -108,12 +106,11 @@ const AdminPanel: React.FC = () => {
       console.error('Error deleting invite code:', error);
       alert('Fehler beim Löschen des Invite-Codes');
     } else {
-      fetchData();
+      fetchData(); // Re-fetch data
     }
-  };
+  }, [fetchData]);
 
-  const updateUserRole = async (userId: string, newRole: string) => {
-    // Berechtigungsprüfung
+  const updateUserRole = useCallback(async (userId: string, newRole: string) => {
     if (!currentUser) return;
     
     const roleHierarchy = {
@@ -127,7 +124,6 @@ const AdminPanel: React.FC = () => {
     const targetUserLevel = roleHierarchy[targetUser?.role as keyof typeof roleHierarchy] || 0;
     const newRoleLevel = roleHierarchy[newRole as keyof typeof roleHierarchy] || 0;
 
-    // Superadmin kann alles, Admin kann nur bis Moderator
     if (currentUser.role === 'superadmin' || 
         (currentUser.role === 'admin' && newRoleLevel <= 1 && targetUserLevel <= 1)) {
       
@@ -140,14 +136,14 @@ const AdminPanel: React.FC = () => {
         console.error('Error updating user role:', error);
         alert('Fehler beim Aktualisieren der Benutzerrolle');
       } else {
-        fetchData();
+        fetchData(); // Re-fetch data
       }
     } else {
       alert('Keine Berechtigung für diese Aktion');
     }
-  };
+  }, [currentUser, users, fetchData]);
 
-  const canManageRole = (targetRole: string) => {
+  const canManageRole = useCallback((targetRole: string) => {
     if (!currentUser) return false;
     
     const roleHierarchy = {
