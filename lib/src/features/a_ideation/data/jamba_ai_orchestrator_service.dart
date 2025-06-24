@@ -1,5 +1,4 @@
 import '../domain/multi_agent_system.dart';
-import 'agent_orchestrator_service.dart';
 import 'research_agent_service.dart' as research_data;
 import 'creative_director_agent_service.dart';
 import 'asset_generation_agent_service.dart' as asset_data;
@@ -7,11 +6,11 @@ import 'game_engine_agent_service.dart';
 import 'project_master_agent_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'asset_generation_agent_service.dart' show AssetGenerationRequest;
+import 'dart:developer';
 
 /// Jamba AI Orchestrator Service
 /// Zentrale KI-Schnittstelle, die das Multi-Agenten-System orchestriert
 class JambaAIOrchestratorService {
-  final AgentOrchestratorService _orchestrator;
   final research_data.ResearchAgentService _researchAgent;
   final CreativeDirectorAgentService _creativeDirector;
   final asset_data.AssetGenerationAgentService _assetAgent;
@@ -19,8 +18,7 @@ class JambaAIOrchestratorService {
   final ProjectMasterAgentService _projectMaster;
 
   JambaAIOrchestratorService()
-      : _orchestrator = AgentOrchestratorService(),
-        _researchAgent = research_data.ResearchAgentService(),
+      : _researchAgent = research_data.ResearchAgentService(),
         _creativeDirector = CreativeDirectorAgentService(),
         _assetAgent = asset_data.AssetGenerationAgentService(),
         _engineAgent = GameEngineAgentService(),
@@ -149,8 +147,7 @@ class JambaAIOrchestratorService {
         try {
           return await _executeAgent(agentId, request);
         } catch (e) {
-          // TODO: Replace with logging framework
-          print('Optional agent $agentId failed: $e');
+          log('Optional agent $agentId failed: $e');
           return null; // Optional agents können fehlschlagen
         }
       });

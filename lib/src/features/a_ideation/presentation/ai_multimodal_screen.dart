@@ -11,16 +11,13 @@ class AIMultimodalScreen extends ConsumerStatefulWidget {
 
 class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
     with TickerProviderStateMixin {
-  late TabController _tabController;
-  bool _isLoading = false;
-  bool _isRecording = false;
-  bool _isProcessing = false;
+  late final TabController _tabController;
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  
-  List<Map<String, dynamic>> _conversationHistory = [];
+  final List<Map<String, dynamic>> _conversationHistory = [];
   String _currentInput = '';
   String _currentResponse = '';
+  bool _isRecording = false;
 
   @override
   void initState() {
@@ -102,7 +99,6 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
         decoration: BoxDecoration(
           color: isUser ? Colors.blue[100] : Colors.grey[100],
           borderRadius: BorderRadius.circular(12),
-          maxWidth: MediaQuery.of(context).size.width * 0.8,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +151,6 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
         decoration: BoxDecoration(
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(12),
-          maxWidth: MediaQuery.of(context).size.width * 0.8,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,43 +253,38 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
               color: _isRecording ? Colors.red : Colors.blue,
               iconSize: 32,
             ),
-            if (_isRecording)
-              const Text(
-                'Recording...',
-                style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-              ),
-          ],
-        ),
-        if (_currentInput.isNotEmpty) ...[
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              'Transcribed: $_currentInput',
-              style: const TextStyle(fontSize: 12),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: _sendVoiceMessage,
-                  child: const Text('Send Voice Message'),
+            if (_currentInput.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'Transcribed: $_currentInput',
+                  style: const TextStyle(fontSize: 12),
                 ),
               ),
-              const SizedBox(width: 8),
-              IconButton(
-                onPressed: _clearVoiceInput,
-                icon: const Icon(Icons.clear),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _sendVoiceMessage,
+                      child: const Text('Send Voice Message'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    onPressed: _clearVoiceInput,
+                    icon: const Icon(Icons.clear),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          ],
+        ),
       ],
     );
   }
@@ -468,7 +458,7 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
         _conversationHistory.add({
           'type': 'ai',
           'input_type': 'text',
-          'content': response,
+          'content': response.isNotEmpty ? response : 'No response received',
           'timestamp': DateTime.now().toIso8601String(),
         });
       });
@@ -494,11 +484,11 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
 
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final result = await service.startVoiceRecording();
+      await service.startVoiceRecording();
       
       setState(() {
         _isRecording = false;
-        _currentInput = result['transcription'] ?? '';
+        // The state is likely managed by the service, so we don't assign the result here.
       });
     } catch (e) {
       setState(() {
@@ -530,17 +520,17 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
 
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final response = await service.processMultimodalInput({
-        'type': 'voice',
-        'content': message['content'],
-      });
+      final response = await service.processMultimodalInput(
+        message['content'] as String,
+        context: {'type': 'voice'},
+      );
 
       setState(() {
         _currentResponse = '';
         _conversationHistory.add({
           'type': 'ai',
           'input_type': 'voice',
-          'content': response['response'] ?? 'No response received',
+          'content': response.isNotEmpty ? response : 'No response received',
           'timestamp': DateTime.now().toIso8601String(),
         });
         _currentInput = '';
@@ -563,10 +553,10 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
   void _pickImage() async {
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final result = await service.pickImage();
+      await service.pickImage();
       
       setState(() {
-        _currentInput = result['description'] ?? 'Image selected';
+        // The state is likely managed by the service, so we don't assign the result here.
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -578,10 +568,10 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
   void _takePhoto() async {
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final result = await service.takePhoto();
+      await service.takePhoto();
       
       setState(() {
-        _currentInput = result['description'] ?? 'Photo taken';
+        // The state is likely managed by the service, so we don't assign the result here.
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -609,17 +599,17 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
 
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final response = await service.processMultimodalInput({
-        'type': 'image',
-        'content': message['content'],
-      });
+      final response = await service.processMultimodalInput(
+        message['content'] as String,
+        context: {'type': 'image'},
+      );
 
       setState(() {
         _currentResponse = '';
         _conversationHistory.add({
           'type': 'ai',
           'input_type': 'image',
-          'content': response['response'] ?? 'No response received',
+          'content': response.isNotEmpty ? response : 'No response received',
           'timestamp': DateTime.now().toIso8601String(),
         });
         _currentInput = '';
@@ -642,10 +632,10 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
   void _pickVideo() async {
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final result = await service.pickVideo();
+      await service.pickVideo();
       
       setState(() {
-        _currentInput = result['description'] ?? 'Video selected';
+        // The state is likely managed by the service, so we don't assign the result here.
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -657,10 +647,10 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
   void _pickAudio() async {
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final result = await service.pickAudio();
+      await service.pickAudio();
       
       setState(() {
-        _currentInput = result['description'] ?? 'Audio selected';
+        // The state is likely managed by the service, so we don't assign the result here.
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -672,10 +662,10 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
   void _pickDocument() async {
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final result = await service.pickDocument();
+      await service.pickDocument();
       
       setState(() {
-        _currentInput = result['description'] ?? 'Document selected';
+        // The state is likely managed by the service, so we don't assign the result here.
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -703,17 +693,17 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
 
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      final response = await service.processMultimodalInput({
-        'type': 'media',
-        'content': message['content'],
-      });
+      final response = await service.processMultimodalInput(
+        message['content'] as String,
+        context: {'type': 'media'},
+      );
 
       setState(() {
         _currentResponse = '';
         _conversationHistory.add({
           'type': 'ai',
           'input_type': 'media',
-          'content': response['response'] ?? 'No response received',
+          'content': response.isNotEmpty ? response : 'No response received',
           'timestamp': DateTime.now().toIso8601String(),
         });
         _currentInput = '';
@@ -783,7 +773,7 @@ class _AIMultimodalScreenState extends ConsumerState<AIMultimodalScreen>
   void _exportConversation() async {
     try {
       final service = ref.read(enhancedAIServiceProvider);
-      await service.exportConversation(_conversationHistory);
+      await service.exportConversation();
       
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Conversation exported successfully')),

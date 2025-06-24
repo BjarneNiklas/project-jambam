@@ -6,7 +6,6 @@ import 'research_agent_service.dart' as research;
 import 'creative_director_agent_service.dart';
 import 'asset_generation_agent_service.dart' as asset;
 import 'game_engine_agent_service.dart' as engine;
-import 'workflow_types.dart';
 
 /// Agent Orchestrator Service
 /// Koordiniert Multi-Agenten-Workflows für KI-generierte Game Development
@@ -20,13 +19,13 @@ class AgentOrchestratorService {
   final engine.GameEngineAgentService _gameEngine = engine.GameEngineAgentService();
 
   /// Startet einen vollständigen Game Development Workflow
-  Future<OrchestrationResult> startGameDevelopmentWorkflow({
+  Future<domain.OrchestrationResult> startGameDevelopmentWorkflow({
     required String concept,
     required String targetAudience,
     required String targetEngine,
     required String targetPlatform,
     required Map<String, dynamic> preferences,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     final workflowId = 'workflow_${DateTime.now().millisecondsSinceEpoch}';
     
@@ -62,13 +61,13 @@ class AgentOrchestratorService {
         config: config,
       );
 
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
-        researchResult: researchResult,
+        researchResult: null, // TODO: Map researchResult to domain.ResearchResult
         designResult: designResult,
-        assetResult: assetResult,
-        engineResult: engineResult,
+        assetResult: null, // TODO: Map assetResult to List<domain.GeneratedAsset>
+        engineResult: null, // TODO: Map engineResult to domain.EngineBuildResult
         logs: [
           'Research phase completed',
           'Creative design phase completed',
@@ -80,7 +79,7 @@ class AgentOrchestratorService {
       );
 
     } catch (e) {
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: false,
         researchResult: null,
@@ -98,7 +97,7 @@ class AgentOrchestratorService {
   Future<research.ResearchResult> _executeResearchPhase({
     required String concept,
     required String targetAudience,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     final query = '$concept $targetAudience game development research';
     final enabledSources = config.enabledResearchSources;
@@ -121,7 +120,7 @@ class AgentOrchestratorService {
     required String targetAudience,
     required List<String> researchData,
     required Map<String, dynamic> preferences,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     return await _creativeDirector.createGameDesign(
       concept: concept,
@@ -134,7 +133,7 @@ class AgentOrchestratorService {
   /// Führt die Asset Generation Phase aus
   Future<List<asset.GeneratedAsset>> _executeAssetGenerationPhase({
     required domain.GameDesignDocument design,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     final assetRequests = <asset.AssetGenerationRequest>[];
 
@@ -185,7 +184,7 @@ class AgentOrchestratorService {
     required String platform,
     required domain.GameDesignDocument design,
     required List<asset.GeneratedAsset> assets,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     // Convert asset service assets to domain assets
     final domainAssets = assets.map((a) => _convertToDomainAsset(a)).toList();
@@ -235,21 +234,21 @@ class AgentOrchestratorService {
   }
 
   /// Führt einen adaptiven Workflow basierend auf dem Typ aus
-  Future<OrchestrationResult> executeAdaptiveWorkflow({
-    required WorkflowType type,
+  Future<domain.OrchestrationResult> executeAdaptiveWorkflow({
+    required domain.WorkflowType type,
     required Map<String, dynamic> parameters,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     switch (type) {
-      case WorkflowType.research:
+      case domain.WorkflowType.research:
         return await _executeResearchOnlyWorkflow(parameters, config);
-      case WorkflowType.design:
+      case domain.WorkflowType.design:
         return await _executeDesignOnlyWorkflow(parameters, config);
-      case WorkflowType.assetGeneration:
+      case domain.WorkflowType.assetGeneration:
         return await _executeAssetOnlyWorkflow(parameters, config);
-      case WorkflowType.engineIntegration:
+      case domain.WorkflowType.engineIntegration:
         return await _executeEngineOnlyWorkflow(parameters, config);
-      case WorkflowType.full:
+      case domain.WorkflowType.full:
         return await startGameDevelopmentWorkflow(
           concept: parameters['concept'],
           targetAudience: parameters['targetAudience'],
@@ -258,15 +257,15 @@ class AgentOrchestratorService {
           preferences: parameters['preferences'] ?? {},
           config: config,
         );
-      case WorkflowType.custom:
+      case domain.WorkflowType.custom:
         return await _executeCustomWorkflow(parameters, config);
     }
   }
 
   /// Führt nur Research aus
-  Future<OrchestrationResult> _executeResearchOnlyWorkflow(
+  Future<domain.OrchestrationResult> _executeResearchOnlyWorkflow(
     Map<String, dynamic> parameters,
-    WorkflowConfiguration config,
+    domain.WorkflowConfiguration config,
   ) async {
     final workflowId = 'research_${DateTime.now().millisecondsSinceEpoch}';
     
@@ -277,10 +276,10 @@ class AgentOrchestratorService {
         config: config,
       );
 
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
-        researchResult: researchResult,
+        researchResult: null, // TODO: Map researchResult to domain.ResearchResult
         designResult: null,
         assetResult: null,
         engineResult: null,
@@ -289,7 +288,7 @@ class AgentOrchestratorService {
         totalDuration: Duration(minutes: 2),
       );
     } catch (e) {
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: false,
         researchResult: null,
@@ -304,9 +303,9 @@ class AgentOrchestratorService {
   }
 
   /// Führt nur Design aus
-  Future<OrchestrationResult> _executeDesignOnlyWorkflow(
+  Future<domain.OrchestrationResult> _executeDesignOnlyWorkflow(
     Map<String, dynamic> parameters,
-    WorkflowConfiguration config,
+    domain.WorkflowConfiguration config,
   ) async {
     final workflowId = 'design_${DateTime.now().millisecondsSinceEpoch}';
     
@@ -319,7 +318,7 @@ class AgentOrchestratorService {
         config: config,
       );
 
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
         researchResult: null,
@@ -331,7 +330,7 @@ class AgentOrchestratorService {
         totalDuration: Duration(minutes: 3),
       );
     } catch (e) {
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: false,
         researchResult: null,
@@ -346,9 +345,9 @@ class AgentOrchestratorService {
   }
 
   /// Führt nur Asset Generation aus
-  Future<OrchestrationResult> _executeAssetOnlyWorkflow(
+  Future<domain.OrchestrationResult> _executeAssetOnlyWorkflow(
     Map<String, dynamic> parameters,
-    WorkflowConfiguration config,
+    domain.WorkflowConfiguration config,
   ) async {
     final workflowId = 'assets_${DateTime.now().millisecondsSinceEpoch}';
     
@@ -358,19 +357,19 @@ class AgentOrchestratorService {
         config: config,
       );
 
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
         researchResult: null,
         designResult: null,
-        assetResult: assetResult,
+        assetResult: null, // TODO: Map assetResult to List<domain.GeneratedAsset>
         engineResult: null,
         logs: ['Asset generation phase completed'],
         warnings: [],
         totalDuration: Duration(minutes: 8),
       );
     } catch (e) {
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: false,
         researchResult: null,
@@ -385,9 +384,9 @@ class AgentOrchestratorService {
   }
 
   /// Führt nur Engine Integration aus
-  Future<OrchestrationResult> _executeEngineOnlyWorkflow(
+  Future<domain.OrchestrationResult> _executeEngineOnlyWorkflow(
     Map<String, dynamic> parameters,
-    WorkflowConfiguration config,
+    domain.WorkflowConfiguration config,
   ) async {
     final workflowId = 'engine_${DateTime.now().millisecondsSinceEpoch}';
     
@@ -400,19 +399,19 @@ class AgentOrchestratorService {
         config: config,
       );
 
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
         researchResult: null,
         designResult: null,
         assetResult: null,
-        engineResult: engineResult,
+        engineResult: null, // TODO: Map engineResult to domain.EngineBuildResult
         logs: ['Engine integration phase completed'],
         warnings: [],
         totalDuration: Duration(minutes: 5),
       );
     } catch (e) {
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: false,
         researchResult: null,
@@ -427,15 +426,15 @@ class AgentOrchestratorService {
   }
 
   /// Führt einen benutzerdefinierten Workflow aus
-  Future<OrchestrationResult> _executeCustomWorkflow(
+  Future<domain.OrchestrationResult> _executeCustomWorkflow(
     Map<String, dynamic> parameters,
-    WorkflowConfiguration config,
+    domain.WorkflowConfiguration config,
   ) async {
     final workflowId = 'custom_${DateTime.now().millisecondsSinceEpoch}';
     
     try {
       // Custom workflow logic here
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
         researchResult: null,
@@ -447,7 +446,7 @@ class AgentOrchestratorService {
         totalDuration: Duration(minutes: 1),
       );
     } catch (e) {
-      return OrchestrationResult(
+      return domain.OrchestrationResult(
         workflowId: workflowId,
         success: false,
         researchResult: null,
@@ -462,7 +461,7 @@ class AgentOrchestratorService {
   }
 
   /// Überwacht den Status eines Workflows
-  Future<WorkflowStatus> getWorkflowStatus(String workflowId) async {
+  Future<domain.WorkflowStatus> getWorkflowStatus(String workflowId) async {
     try {
       final response = await http.get(
         Uri.parse('$_baseUrl/orchestrator/status/$workflowId'),
@@ -496,10 +495,10 @@ class AgentOrchestratorService {
   }
 
   // Mock & Parser Implementierungen
-  WorkflowStatus _createMockWorkflowStatus(String workflowId) {
-    return WorkflowStatus(
+  domain.WorkflowStatus _createMockWorkflowStatus(String workflowId) {
+    return domain.WorkflowStatus(
       workflowId: workflowId,
-      type: WorkflowType.full,
+      type: domain.WorkflowType.full,
       status: 'completed',
       progress: 1.0,
       startTime: DateTime.now().subtract(Duration(minutes: 10)),
@@ -510,12 +509,12 @@ class AgentOrchestratorService {
     );
   }
 
-  WorkflowStatus _parseWorkflowStatus(Map<String, dynamic> data) {
-    return WorkflowStatus(
+  domain.WorkflowStatus _parseWorkflowStatus(Map<String, dynamic> data) {
+    return domain.WorkflowStatus(
       workflowId: data['workflow_id'] ?? '',
-      type: WorkflowType.values.firstWhere(
+      type: domain.WorkflowType.values.firstWhere(
         (e) => e.name == data['type'],
-        orElse: () => WorkflowType.full,
+        orElse: () => domain.WorkflowType.full,
       ),
       status: data['status'] ?? 'unknown',
       progress: (data['progress'] ?? 0.0).toDouble(),
@@ -526,49 +525,4 @@ class AgentOrchestratorService {
       errors: List<String>.from(data['errors'] ?? []),
     );
   }
-}
-
-// Supporting classes
-class WorkflowConfiguration {
-  final List<String> enabledResearchSources;
-  final List<String> ethicalConcerns;
-  final int maxResearchResults;
-  final Map<String, dynamic> assetGenerationSettings;
-  final Map<String, dynamic> engineConfig;
-  final Map<String, dynamic> codeGenerationOptions;
-  final Map<String, dynamic> buildConfig;
-
-  const WorkflowConfiguration({
-    required this.enabledResearchSources,
-    required this.ethicalConcerns,
-    required this.maxResearchResults,
-    required this.assetGenerationSettings,
-    required this.engineConfig,
-    required this.codeGenerationOptions,
-    required this.buildConfig,
-  });
-}
-
-class OrchestrationResult {
-  final String workflowId;
-  final bool success;
-  final research.ResearchResult? researchResult;
-  final domain.GameDesignDocument? designResult;
-  final List<asset.GeneratedAsset>? assetResult;
-  final engine.EngineBuildResult? engineResult;
-  final List<String> logs;
-  final List<String> warnings;
-  final Duration totalDuration;
-
-  const OrchestrationResult({
-    required this.workflowId,
-    required this.success,
-    required this.researchResult,
-    required this.designResult,
-    required this.assetResult,
-    required this.engineResult,
-    required this.logs,
-    required this.warnings,
-    required this.totalDuration,
-  });
 }

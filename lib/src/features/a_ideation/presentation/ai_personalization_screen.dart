@@ -6,67 +6,78 @@ class AIPersonalizationScreen extends ConsumerStatefulWidget {
   const AIPersonalizationScreen({super.key});
 
   @override
-  ConsumerState<AIPersonalizationScreen> createState() => _AIPersonalizationScreenState();
+  ConsumerState<AIPersonalizationScreen> createState() =>
+      _AIPersonalizationScreenState();
 }
 
-class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScreen> {
-  bool _isLoading = false;
-  final _formKey = GlobalKey<FormState>();
+class _AIPersonalizationScreenState
+    extends ConsumerState<AIPersonalizationScreen> {
+  Map<String, dynamic>? _personalizationData;
 
   @override
   Widget build(BuildContext context) {
     final aiService = ref.watch(enhancedAIServiceProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('AI Personalisierung'),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore),
+            onPressed: _resetToDefaults,
+            tooltip: 'Reset to Defaults',
+          ),
+        ],
       ),
       body: FutureBuilder<Map<String, dynamic>>(
         future: aiService.getPersonalizationSettings(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting &&
+              _personalizationData == null) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-          
-          final personalizationData = snapshot.data ?? {};
-          
+
+          if (snapshot.hasData && _personalizationData == null) {
+            _personalizationData = snapshot.data;
+          }
+
+          if (_personalizationData == null) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Could not load settings.'),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => setState(() {}),
+                    child: const Text('Retry'),
+                  )
+                ],
+              ),
+            );
+          }
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // User Profile Section
-                _buildUserProfileSection(personalizationData),
-                
+                _buildUserProfileSection(),
                 const SizedBox(height: 24),
-                
-                // Learning Preferences Section
-                _buildLearningPreferencesSection(personalizationData),
-                
+                _buildLearningPreferencesSection(),
                 const SizedBox(height: 24),
-                
-                // AI Interaction Preferences
-                _buildInteractionPreferencesSection(personalizationData),
-                
+                _buildInteractionPreferencesSection(),
                 const SizedBox(height: 24),
-                
-                // Content Preferences
-                _buildContentPreferencesSection(personalizationData),
-                
+                _buildContentPreferencesSection(),
                 const SizedBox(height: 24),
-                
-                // Privacy & Security
-                _buildPrivacySection(personalizationData),
-                
+                _buildPrivacySection(),
                 const SizedBox(height: 32),
-                
-                // Save Button
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -88,7 +99,7 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
     );
   }
 
-  Widget _buildUserProfileSection(Map<String, dynamic> data) {
+  Widget _buildUserProfileSection() {
     return Card(
       elevation: 4,
       child: Padding(
@@ -107,56 +118,60 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
               ],
             ),
             const SizedBox(height: 16),
-            
-            // Expertise Level
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: 'Expertise Level',
                 border: OutlineInputBorder(),
               ),
-              value: data['expertise_level'] ?? 'intermediate',
+              value: _personalizationData!['expertise_level'] as String? ??
+                  'intermediate',
               items: const [
                 DropdownMenuItem(value: 'beginner', child: Text('Beginner')),
-                DropdownMenuItem(value: 'intermediate', child: Text('Intermediate')),
+                DropdownMenuItem(
+                    value: 'intermediate', child: Text('Intermediate')),
                 DropdownMenuItem(value: 'advanced', child: Text('Advanced')),
                 DropdownMenuItem(value: 'expert', child: Text('Expert')),
               ],
-              onChanged: (value) => _updatePersonalization('expertise_level', value),
+              onChanged: (value) =>
+                  setState(() => _personalizationData!['expertise_level'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Preferred Language
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: 'Preferred Language',
                 border: OutlineInputBorder(),
               ),
-              value: data['preferred_language'] ?? 'english',
+              value: _personalizationData!['preferred_language'] as String? ??
+                  'english',
               items: const [
                 DropdownMenuItem(value: 'english', child: Text('English')),
                 DropdownMenuItem(value: 'german', child: Text('German')),
-                DropdownMenuItem(value: 'mixed', child: Text('Mixed (English/German)')),
+                DropdownMenuItem(
+                    value: 'mixed', child: Text('Mixed (English/German)')),
               ],
-              onChanged: (value) => _updatePersonalization('preferred_language', value),
+              onChanged: (value) => setState(
+                  () => _personalizationData!['preferred_language'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Development Focus
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: 'Primary Development Focus',
                 border: OutlineInputBorder(),
               ),
-              value: data['development_focus'] ?? 'game_development',
+              value: _personalizationData!['development_focus'] as String? ??
+                  'game_development',
               items: const [
-                DropdownMenuItem(value: 'game_development', child: Text('Game Development')),
-                DropdownMenuItem(value: '3d_applications', child: Text('3D Applications')),
-                DropdownMenuItem(value: 'media_production', child: Text('Media Production')),
+                DropdownMenuItem(
+                    value: 'game_development',
+                    child: Text('Game Development')),
+                DropdownMenuItem(
+                    value: '3d_applications', child: Text('3D Applications')),
+                DropdownMenuItem(
+                    value: 'media_production', child: Text('Media Production')),
                 DropdownMenuItem(value: 'general', child: Text('General')),
               ],
-              onChanged: (value) => _updatePersonalization('development_focus', value),
+              onChanged: (value) => setState(
+                  () => _personalizationData!['development_focus'] = value),
             ),
           ],
         ),
@@ -164,9 +179,10 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
     );
   }
 
-  Widget _buildLearningPreferencesSection(Map<String, dynamic> data) {
-    final learningPreferences = data['learning_preferences'] as Map<String, dynamic>? ?? {};
-    
+  Widget _buildLearningPreferencesSection() {
+    final learningPreferences = Map<String, dynamic>.from(
+        _personalizationData!['learning_preferences'] ?? {});
+
     return Card(
       elevation: 4,
       child: Padding(
@@ -185,56 +201,45 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
               ],
             ),
             const SizedBox(height: 16),
-            
-            // Learning Style
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: 'Learning Style',
                 border: OutlineInputBorder(),
               ),
-              value: learningPreferences['learning_style'] ?? 'visual',
+              value:
+                  learningPreferences['learning_style'] as String? ?? 'visual',
               items: const [
                 DropdownMenuItem(value: 'visual', child: Text('Visual')),
                 DropdownMenuItem(value: 'auditory', child: Text('Auditory')),
-                DropdownMenuItem(value: 'kinesthetic', child: Text('Hands-on')),
+                DropdownMenuItem(
+                    value: 'kinesthetic', child: Text('Hands-on')),
                 DropdownMenuItem(value: 'mixed', child: Text('Mixed')),
               ],
-              onChanged: (value) => _updateLearningPreference('learning_style', value),
+              onChanged: (value) =>
+                  setState(() => learningPreferences['learning_style'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Detail Level
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
-                labelText: 'Preferred Detail Level',
+                labelText: 'Pacing Preference',
                 border: OutlineInputBorder(),
               ),
-              value: learningPreferences['detail_level'] ?? 'moderate',
+              value: learningPreferences['pacing'] as String? ?? 'self_paced',
               items: const [
-                DropdownMenuItem(value: 'minimal', child: Text('Minimal (Quick answers)')),
-                DropdownMenuItem(value: 'moderate', child: Text('Moderate (Balanced)')),
-                DropdownMenuItem(value: 'detailed', child: Text('Detailed (Comprehensive)')),
-                DropdownMenuItem(value: 'expert', child: Text('Expert (Deep technical)')),
+                DropdownMenuItem(
+                    value: 'self_paced', child: Text('Self-paced')),
+                DropdownMenuItem(
+                    value: 'structured', child: Text('Structured')),
               ],
-              onChanged: (value) => _updateLearningPreference('detail_level', value),
+              onChanged: (value) =>
+                  setState(() => learningPreferences['pacing'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Code Examples Preference
-            SwitchListTile(
-              title: const Text('Include Code Examples'),
-              subtitle: const Text('Show practical code snippets in responses'),
-              value: learningPreferences['include_code_examples'] ?? true,
-              onChanged: (value) => _updateLearningPreference('include_code_examples', value),
-            ),
-            
-            SwitchListTile(
-              title: const Text('Step-by-Step Explanations'),
-              subtitle: const Text('Break down complex concepts into steps'),
-              value: learningPreferences['step_by_step_explanations'] ?? true,
-              onChanged: (value) => _updateLearningPreference('step_by_step_explanations', value),
+            CheckboxListTile(
+              title: const Text('Prefer video content'),
+              value: learningPreferences['prefer_video'] as bool? ?? false,
+              onChanged: (value) =>
+                  setState(() => learningPreferences['prefer_video'] = value),
             ),
           ],
         ),
@@ -242,9 +247,10 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
     );
   }
 
-  Widget _buildInteractionPreferencesSection(Map<String, dynamic> data) {
-    final interactionPreferences = data['interaction_preferences'] as Map<String, dynamic>? ?? {};
-    
+  Widget _buildInteractionPreferencesSection() {
+    final interactionPreferences = Map<String, dynamic>.from(
+        _personalizationData!['interaction_preferences'] ?? {});
+
     return Card(
       elevation: 4,
       child: Padding(
@@ -254,7 +260,7 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
           children: [
             Row(
               children: [
-                Icon(Icons.chat, color: Colors.orange[600]),
+                Icon(Icons.touch_app, color: Colors.orange[600]),
                 const SizedBox(width: 8),
                 const Text(
                   'AI Interaction Preferences',
@@ -263,45 +269,52 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
               ],
             ),
             const SizedBox(height: 16),
-            
-            // Response Style
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
-                labelText: 'Response Style',
+                labelText: 'Communication Style',
                 border: OutlineInputBorder(),
               ),
-              value: interactionPreferences['response_style'] ?? 'friendly',
+              value: interactionPreferences['communication_style'] as String? ??
+                  'neutral',
               items: const [
                 DropdownMenuItem(value: 'formal', child: Text('Formal')),
+                DropdownMenuItem(value: 'neutral', child: Text('Neutral')),
                 DropdownMenuItem(value: 'friendly', child: Text('Friendly')),
-                DropdownMenuItem(value: 'casual', child: Text('Casual')),
-                DropdownMenuItem(value: 'technical', child: Text('Technical')),
               ],
-              onChanged: (value) => _updateInteractionPreference('response_style', value),
+              onChanged: (value) => setState(
+                  () => interactionPreferences['communication_style'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Proactive Suggestions
+            DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                labelText: 'Response Verbosity',
+                border: OutlineInputBorder(),
+              ),
+              value:
+                  interactionPreferences['verbosity'] as String? ?? 'balanced',
+              items: const [
+                DropdownMenuItem(value: 'concise', child: Text('Concise')),
+                DropdownMenuItem(value: 'balanced', child: Text('Balanced')),
+                DropdownMenuItem(value: 'detailed', child: Text('Detailed')),
+              ],
+              onChanged: (value) =>
+                  setState(() => interactionPreferences['verbosity'] = value),
+            ),
+            const SizedBox(height: 16),
             SwitchListTile(
               title: const Text('Proactive Suggestions'),
-              subtitle: const Text('AI suggests improvements and alternatives'),
-              value: interactionPreferences['proactive_suggestions'] ?? true,
-              onChanged: (value) => _updateInteractionPreference('proactive_suggestions', value),
+              subtitle: const Text('Allow AI to make suggestions'),
+              value: interactionPreferences['proactive_suggestions'] as bool? ??
+                  true,
+              onChanged: (value) => setState(() =>
+                  interactionPreferences['proactive_suggestions'] = value),
             ),
-            
             SwitchListTile(
-              title: const Text('Follow-up Questions'),
-              subtitle: const Text('AI asks clarifying questions when needed'),
-              value: interactionPreferences['follow_up_questions'] ?? true,
-              onChanged: (value) => _updateInteractionPreference('follow_up_questions', value),
-            ),
-            
-            SwitchListTile(
-              title: const Text('Context Memory'),
-              subtitle: const Text('Remember conversation context'),
-              value: interactionPreferences['context_memory'] ?? true,
-              onChanged: (value) => _updateInteractionPreference('context_memory', value),
+              title: const Text('Use Emojis'),
+              subtitle: const Text('Allow AI to use emojis in responses'),
+              value: interactionPreferences['use_emojis'] as bool? ?? false,
+              onChanged: (value) =>
+                  setState(() => interactionPreferences['use_emojis'] = value),
             ),
           ],
         ),
@@ -309,9 +322,10 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
     );
   }
 
-  Widget _buildContentPreferencesSection(Map<String, dynamic> data) {
-    final contentPreferences = data['content_preferences'] as Map<String, dynamic>? ?? {};
-    
+  Widget _buildContentPreferencesSection() {
+    final contentPreferences = Map<String, dynamic>.from(
+        _personalizationData!['content_preferences'] ?? {});
+
     return Card(
       elevation: 4,
       child: Padding(
@@ -330,59 +344,61 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
               ],
             ),
             const SizedBox(height: 16),
-            
-            // Content Types
             const Text(
               'Preferred Content Types',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
-            
             CheckboxListTile(
               title: const Text('Tutorials & Guides'),
-              value: contentPreferences['tutorials'] ?? true,
-              onChanged: (value) => _updateContentPreference('tutorials', value),
+              value: contentPreferences['tutorials'] as bool? ?? true,
+              onChanged: (value) =>
+                  setState(() => contentPreferences['tutorials'] = value),
             ),
-            
             CheckboxListTile(
               title: const Text('Code Examples'),
-              value: contentPreferences['code_examples'] ?? true,
-              onChanged: (value) => _updateContentPreference('code_examples', value),
+              value: contentPreferences['code_examples'] as bool? ?? true,
+              onChanged: (value) =>
+                  setState(() => contentPreferences['code_examples'] = value),
             ),
-            
             CheckboxListTile(
               title: const Text('Best Practices'),
-              value: contentPreferences['best_practices'] ?? true,
-              onChanged: (value) => _updateContentPreference('best_practices', value),
+              value: contentPreferences['best_practices'] as bool? ?? true,
+              onChanged: (value) =>
+                  setState(() => contentPreferences['best_practices'] = value),
             ),
-            
             CheckboxListTile(
               title: const Text('Troubleshooting'),
-              value: contentPreferences['troubleshooting'] ?? true,
-              onChanged: (value) => _updateContentPreference('troubleshooting', value),
+              value: contentPreferences['troubleshooting'] as bool? ?? true,
+              onChanged: (value) =>
+                  setState(() => contentPreferences['troubleshooting'] = value),
             ),
-            
             CheckboxListTile(
               title: const Text('Industry News'),
-              value: contentPreferences['industry_news'] ?? false,
-              onChanged: (value) => _updateContentPreference('industry_news', value),
+              value: contentPreferences['industry_news'] as bool? ?? false,
+              onChanged: (value) =>
+                  setState(() => contentPreferences['industry_news'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Content Complexity
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: 'Content Complexity',
                 border: OutlineInputBorder(),
               ),
-              value: contentPreferences['complexity_level'] ?? 'balanced',
+              value: contentPreferences['complexity_level'] as String? ??
+                  'balanced',
               items: const [
-                DropdownMenuItem(value: 'simple', child: Text('Simple (Basic concepts)')),
-                DropdownMenuItem(value: 'balanced', child: Text('Balanced (Mixed complexity)')),
-                DropdownMenuItem(value: 'advanced', child: Text('Advanced (Complex topics)')),
+                DropdownMenuItem(
+                    value: 'simple', child: Text('Simple (Basic concepts)')),
+                DropdownMenuItem(
+                    value: 'balanced',
+                    child: Text('Balanced (Mixed complexity)')),
+                DropdownMenuItem(
+                    value: 'advanced',
+                    child: Text('Advanced (Complex topics)')),
               ],
-              onChanged: (value) => _updateContentPreference('complexity_level', value),
+              onChanged: (value) => setState(
+                  () => contentPreferences['complexity_level'] = value),
             ),
           ],
         ),
@@ -390,9 +406,10 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
     );
   }
 
-  Widget _buildPrivacySection(Map<String, dynamic> data) {
-    final privacySettings = data['privacy_settings'] as Map<String, dynamic>? ?? {};
-    
+  Widget _buildPrivacySection() {
+    final privacySettings =
+        Map<String, dynamic>.from(_personalizationData!['privacy_settings'] ?? {});
+
     return Card(
       elevation: 4,
       child: Padding(
@@ -411,45 +428,45 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
               ],
             ),
             const SizedBox(height: 16),
-            
             SwitchListTile(
               title: const Text('Data Collection'),
               subtitle: const Text('Allow AI to learn from your interactions'),
-              value: privacySettings['data_collection'] ?? true,
-              onChanged: (value) => _updatePrivacySetting('data_collection', value),
+              value: privacySettings['data_collection'] as bool? ?? true,
+              onChanged: (value) =>
+                  setState(() => privacySettings['data_collection'] = value),
             ),
-            
             SwitchListTile(
               title: const Text('Personalization'),
               subtitle: const Text('Use personal data for customization'),
-              value: privacySettings['personalization'] ?? true,
-              onChanged: (value) => _updatePrivacySetting('personalization', value),
+              value: privacySettings['personalization'] as bool? ?? true,
+              onChanged: (value) =>
+                  setState(() => privacySettings['personalization'] = value),
             ),
-            
             SwitchListTile(
               title: const Text('Analytics'),
               subtitle: const Text('Share usage data for improvements'),
-              value: privacySettings['analytics'] ?? false,
-              onChanged: (value) => _updatePrivacySetting('analytics', value),
+              value: privacySettings['analytics'] as bool? ?? false,
+              onChanged: (value) =>
+                  setState(() => privacySettings['analytics'] = value),
             ),
-            
             const SizedBox(height: 16),
-            
-            // Data Retention
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: 'Data Retention Period',
                 border: OutlineInputBorder(),
               ),
-              value: privacySettings['retention_period'] ?? '30_days',
+              value:
+                  privacySettings['retention_period'] as String? ?? '30_days',
               items: const [
                 DropdownMenuItem(value: '7_days', child: Text('7 Days')),
                 DropdownMenuItem(value: '30_days', child: Text('30 Days')),
                 DropdownMenuItem(value: '90_days', child: Text('90 Days')),
                 DropdownMenuItem(value: '1_year', child: Text('1 Year')),
-                DropdownMenuItem(value: 'indefinite', child: Text('Indefinite')),
+                DropdownMenuItem(
+                    value: 'indefinite', child: Text('Indefinite')),
               ],
-              onChanged: (value) => _updatePrivacySetting('retention_period', value),
+              onChanged: (value) =>
+                  setState(() => privacySettings['retention_period'] = value),
             ),
           ],
         ),
@@ -457,65 +474,56 @@ class _AIPersonalizationScreenState extends ConsumerState<AIPersonalizationScree
     );
   }
 
-  // Helper methods for updating preferences
-  void _updatePersonalization(String key, dynamic value) {
-    final service = ref.read(enhancedAIServiceProvider);
-    service.updatePersonalizationSettings({key: value});
-  }
-
-  void _updateLearningPreference(String key, dynamic value) {
-    final service = ref.read(enhancedAIServiceProvider);
-    final currentData = service.getPersonalizationSettings();
-    final learningPreferences = Map<String, dynamic>.from(
-      currentData['learning_preferences'] as Map<String, dynamic>? ?? {}
-    );
-    learningPreferences[key] = value;
-    service.updatePersonalizationSettings({'learning_preferences': learningPreferences});
-  }
-
-  void _updateInteractionPreference(String key, dynamic value) {
-    final service = ref.read(enhancedAIServiceProvider);
-    final currentData = service.getPersonalizationSettings();
-    final interactionPreferences = Map<String, dynamic>.from(
-      currentData['interaction_preferences'] as Map<String, dynamic>? ?? {}
-    );
-    interactionPreferences[key] = value;
-    service.updatePersonalizationSettings({'interaction_preferences': interactionPreferences});
-  }
-
-  void _updateContentPreference(String key, dynamic value) {
-    final service = ref.read(enhancedAIServiceProvider);
-    final currentData = service.getPersonalizationSettings();
-    final contentPreferences = Map<String, dynamic>.from(
-      currentData['content_preferences'] as Map<String, dynamic>? ?? {}
-    );
-    contentPreferences[key] = value;
-    service.updatePersonalizationSettings({'content_preferences': contentPreferences});
-  }
-
-  void _updatePrivacySetting(String key, dynamic value) {
-    final service = ref.read(enhancedAIServiceProvider);
-    final currentData = service.getPersonalizationSettings();
-    final privacySettings = Map<String, dynamic>.from(
-      currentData['privacy_settings'] as Map<String, dynamic>? ?? {}
-    );
-    privacySettings[key] = value;
-    service.updatePersonalizationSettings({'privacy_settings': privacySettings});
-  }
-
   Future<void> _saveSettings() async {
+    if (_personalizationData == null) return;
+
     final aiService = ref.read(enhancedAIServiceProvider);
-    final settings = <String, dynamic>{
-      'learning_style': _learningStyle,
-      'interaction_preference': _interactionPreference,
-      'content_preference': _contentPreference,
-      'privacy_level': _privacyLevel,
-    };
-    await aiService.savePersonalizationSettings(settings);
+    try {
+      await aiService.updatePersonalizationSettings(_personalizationData!);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Settings saved successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error saving settings: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   Future<void> _resetToDefaults() async {
     final aiService = ref.read(enhancedAIServiceProvider);
-    await aiService.resetPersonalizationSettings();
+    try {
+      await aiService.resetPersonalizationSettings();
+      setState(() {
+        _personalizationData = null;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Settings reset to defaults.'),
+            backgroundColor: Colors.blue,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error resetting settings: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 } 

@@ -3,115 +3,16 @@
 part of 'multi_agent_providers.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$AIInsightImpl _$$AIInsightImplFromJson(Map<String, dynamic> json) =>
-    _$AIInsightImpl(
-      id: json['id'] as String,
-      type: $enumDecode(_$AIInsightTypeEnumMap, json['type']),
-      title: json['title'] as String,
-      description: json['description'] as String,
-      priority: $enumDecode(_$InsightPriorityEnumMap, json['priority']),
-      suggestedActions: (json['suggestedActions'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      resolved: json['resolved'] as bool? ?? false,
-    );
-
-Map<String, dynamic> _$$AIInsightImplToJson(_$AIInsightImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'type': _$AIInsightTypeEnumMap[instance.type]!,
-      'title': instance.title,
-      'description': instance.description,
-      'priority': _$InsightPriorityEnumMap[instance.priority]!,
-      'suggestedActions': instance.suggestedActions,
-      'resolved': instance.resolved,
-    };
-
-const _$AIInsightTypeEnumMap = {
-  AIInsightType.info: 'info',
-  AIInsightType.suggestion: 'suggestion',
-  AIInsightType.warning: 'warning',
-  AIInsightType.error: 'error',
-};
-
-const _$InsightPriorityEnumMap = {
-  InsightPriority.low: 'low',
-  InsightPriority.medium: 'medium',
-  InsightPriority.high: 'high',
-  InsightPriority.critical: 'critical',
-};
-
-_$RetrospectiveSessionImpl _$$RetrospectiveSessionImplFromJson(
-  Map<String, dynamic> json,
-) => _$RetrospectiveSessionImpl(
-  id: json['id'] as String,
-  projectId: json['projectId'] as String,
-  date: DateTime.parse(json['date'] as String),
-  insights: (json['insights'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  recommendations: (json['recommendations'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  actionItems: (json['actionItems'] as List<dynamic>)
-      .map((e) => ActionItem.fromJson(e as Map<String, dynamic>))
-      .toList(),
-);
-
-Map<String, dynamic> _$$RetrospectiveSessionImplToJson(
-  _$RetrospectiveSessionImpl instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'projectId': instance.projectId,
-  'date': instance.date.toIso8601String(),
-  'insights': instance.insights,
-  'recommendations': instance.recommendations,
-  'actionItems': instance.actionItems,
-};
-
-_$ActionItemImpl _$$ActionItemImplFromJson(Map<String, dynamic> json) =>
-    _$ActionItemImpl(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      assignee: json['assignee'] as String,
-      dueDate: DateTime.parse(json['dueDate'] as String),
-      priority: $enumDecode(_$ActionPriorityEnumMap, json['priority']),
-      completed: json['completed'] as bool? ?? false,
-    );
-
-Map<String, dynamic> _$$ActionItemImplToJson(_$ActionItemImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'description': instance.description,
-      'assignee': instance.assignee,
-      'dueDate': instance.dueDate.toIso8601String(),
-      'priority': _$ActionPriorityEnumMap[instance.priority]!,
-      'completed': instance.completed,
-    };
-
-const _$ActionPriorityEnumMap = {
-  ActionPriority.low: 'low',
-  ActionPriority.medium: 'medium',
-  ActionPriority.high: 'high',
-  ActionPriority.urgent: 'urgent',
-};
-
-// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$agentOrchestratorServiceHash() =>
-    r'e6242bcb25a47e94ef50c74d38ae48522207ae78';
+    r'6964a9e7ff704f8a1ced386ac30f43ef5afb398a';
 
 /// See also [agentOrchestratorService].
 @ProviderFor(agentOrchestratorService)
 final agentOrchestratorServiceProvider =
-    AutoDisposeProvider<AgentOrchestratorService>.internal(
+    AutoDisposeProvider<orchestrator.AgentOrchestratorService>.internal(
       agentOrchestratorService,
       name: r'agentOrchestratorServiceProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -124,7 +25,7 @@ final agentOrchestratorServiceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AgentOrchestratorServiceRef =
-    AutoDisposeProviderRef<AgentOrchestratorService>;
+    AutoDisposeProviderRef<orchestrator.AgentOrchestratorService>;
 String _$projectMasterAgentServiceHash() =>
     r'846d9edbf300a619f2345ff7162842c951e01483';
 
@@ -224,14 +125,14 @@ final gameEngineAgentServiceProvider =
 // ignore: unused_element
 typedef GameEngineAgentServiceRef =
     AutoDisposeProviderRef<GameEngineAgentService>;
-String _$currentProjectHash() => r'a9e74d26b36912749814ac691d0656b4482bd453';
+String _$currentProjectHash() => r'5d220dfd7ab2a064fb4138e0396bd6db171c4183';
 
 /// See also [CurrentProject].
 @ProviderFor(CurrentProject)
 final currentProjectProvider =
     AutoDisposeAsyncNotifierProvider<
       CurrentProject,
-      ProjectMasterAgent?
+      domain.ProjectMasterAgent?
     >.internal(
       CurrentProject.new,
       name: r'currentProjectProvider',
@@ -242,13 +143,16 @@ final currentProjectProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$CurrentProject = AutoDisposeAsyncNotifier<ProjectMasterAgent?>;
-String _$activeWorkflowsHash() => r'0643ffbbdb6b127717da3f4df07dc84a8dc03095';
+typedef _$CurrentProject = AutoDisposeAsyncNotifier<domain.ProjectMasterAgent?>;
+String _$activeWorkflowsHash() => r'5c0a1b84de8f406d91c4c00e97338bb00e43e034';
 
 /// See also [ActiveWorkflows].
 @ProviderFor(ActiveWorkflows)
 final activeWorkflowsProvider =
-    AutoDisposeNotifierProvider<ActiveWorkflows, List<WorkflowStatus>>.internal(
+    AutoDisposeNotifierProvider<
+      ActiveWorkflows,
+      List<domain.WorkflowStatus>
+    >.internal(
       ActiveWorkflows.new,
       name: r'activeWorkflowsProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -258,15 +162,15 @@ final activeWorkflowsProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$ActiveWorkflows = AutoDisposeNotifier<List<WorkflowStatus>>;
-String _$agentStatusesHash() => r'bea1f1b133e268d56afb483dc8e05cac242417f1';
+typedef _$ActiveWorkflows = AutoDisposeNotifier<List<domain.WorkflowStatus>>;
+String _$agentStatusesHash() => r'3da06f6ec29bbba1e71c41907c33d8c4cc08dd37';
 
 /// See also [AgentStatuses].
 @ProviderFor(AgentStatuses)
 final agentStatusesProvider =
     AutoDisposeNotifierProvider<
       AgentStatuses,
-      Map<String, AgentStatus>
+      Map<String, domain.AgentStatus>
     >.internal(
       AgentStatuses.new,
       name: r'agentStatusesProvider',
@@ -277,13 +181,13 @@ final agentStatusesProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$AgentStatuses = AutoDisposeNotifier<Map<String, AgentStatus>>;
-String _$aIInsightsHash() => r'727b79a2e3efd3a7d00128f7511a154c4ccad96c';
+typedef _$AgentStatuses = AutoDisposeNotifier<Map<String, domain.AgentStatus>>;
+String _$aIInsightsHash() => r'fa0d4d5b189cb4c8158ec823e442e7e8dfdd1c75';
 
 /// See also [AIInsights].
 @ProviderFor(AIInsights)
 final aIInsightsProvider =
-    AutoDisposeNotifierProvider<AIInsights, List<AIInsight>>.internal(
+    AutoDisposeNotifierProvider<AIInsights, List<domain.AIInsight>>.internal(
       AIInsights.new,
       name: r'aIInsightsProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -293,16 +197,16 @@ final aIInsightsProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$AIInsights = AutoDisposeNotifier<List<AIInsight>>;
+typedef _$AIInsights = AutoDisposeNotifier<List<domain.AIInsight>>;
 String _$automatedRetrospectivesHash() =>
-    r'1b6023f01b8eae38323975def1c156bfeb02b9cc';
+    r'42899c6b3c1c69461b877eb9a3a3a0d77c581489';
 
 /// See also [AutomatedRetrospectives].
 @ProviderFor(AutomatedRetrospectives)
 final automatedRetrospectivesProvider =
     AutoDisposeNotifierProvider<
       AutomatedRetrospectives,
-      List<RetrospectiveSession>
+      List<domain.RetrospectiveSession>
     >.internal(
       AutomatedRetrospectives.new,
       name: r'automatedRetrospectivesProvider',
@@ -314,15 +218,15 @@ final automatedRetrospectivesProvider =
     );
 
 typedef _$AutomatedRetrospectives =
-    AutoDisposeNotifier<List<RetrospectiveSession>>;
-String _$adaptiveWorkflowsHash() => r'b342a41076229c35c952168e490ee109b9979762';
+    AutoDisposeNotifier<List<domain.RetrospectiveSession>>;
+String _$adaptiveWorkflowsHash() => r'803346cf0c9fb40e1b6046314d4db6741842e039';
 
 /// See also [AdaptiveWorkflows].
 @ProviderFor(AdaptiveWorkflows)
 final adaptiveWorkflowsProvider =
     AutoDisposeNotifierProvider<
       AdaptiveWorkflows,
-      WorkflowConfiguration
+      domain.WorkflowConfiguration
     >.internal(
       AdaptiveWorkflows.new,
       name: r'adaptiveWorkflowsProvider',
@@ -333,6 +237,6 @@ final adaptiveWorkflowsProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$AdaptiveWorkflows = AutoDisposeNotifier<WorkflowConfiguration>;
+typedef _$AdaptiveWorkflows = AutoDisposeNotifier<domain.WorkflowConfiguration>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

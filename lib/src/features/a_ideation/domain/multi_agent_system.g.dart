@@ -1052,3 +1052,98 @@ Map<String, dynamic> _$$OrchestrationResultImplToJson(
   'warnings': instance.warnings,
   'totalDuration': instance.totalDuration.inMicroseconds,
 };
+
+_$AIInsightImpl _$$AIInsightImplFromJson(Map<String, dynamic> json) =>
+    _$AIInsightImpl(
+      id: json['id'] as String,
+      type: $enumDecode(_$AIInsightTypeEnumMap, json['type']),
+      title: json['title'] as String,
+      description: json['description'] as String,
+      priority: $enumDecode(_$InsightPriorityEnumMap, json['priority']),
+      suggestedActions: (json['suggestedActions'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      resolved: json['resolved'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$AIInsightImplToJson(_$AIInsightImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': _$AIInsightTypeEnumMap[instance.type]!,
+      'title': instance.title,
+      'description': instance.description,
+      'priority': _$InsightPriorityEnumMap[instance.priority]!,
+      'suggestedActions': instance.suggestedActions,
+      'resolved': instance.resolved,
+    };
+
+const _$AIInsightTypeEnumMap = {
+  AIInsightType.info: 'info',
+  AIInsightType.suggestion: 'suggestion',
+  AIInsightType.warning: 'warning',
+  AIInsightType.error: 'error',
+};
+
+const _$InsightPriorityEnumMap = {
+  InsightPriority.low: 'low',
+  InsightPriority.medium: 'medium',
+  InsightPriority.high: 'high',
+  InsightPriority.critical: 'critical',
+};
+
+_$RetrospectiveSessionImpl _$$RetrospectiveSessionImplFromJson(
+  Map<String, dynamic> json,
+) => _$RetrospectiveSessionImpl(
+  id: json['id'] as String,
+  projectId: json['projectId'] as String,
+  date: DateTime.parse(json['date'] as String),
+  insights: (json['insights'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  recommendations: (json['recommendations'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  actionItems: (json['actionItems'] as List<dynamic>)
+      .map((e) => ActionItem.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
+
+Map<String, dynamic> _$$RetrospectiveSessionImplToJson(
+  _$RetrospectiveSessionImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'projectId': instance.projectId,
+  'date': instance.date.toIso8601String(),
+  'insights': instance.insights,
+  'recommendations': instance.recommendations,
+  'actionItems': instance.actionItems,
+};
+
+_$ActionItemImpl _$$ActionItemImplFromJson(Map<String, dynamic> json) =>
+    _$ActionItemImpl(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      assignee: json['assignee'] as String,
+      dueDate: DateTime.parse(json['dueDate'] as String),
+      priority: $enumDecode(_$ActionPriorityEnumMap, json['priority']),
+      completed: json['completed'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$ActionItemImplToJson(_$ActionItemImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+      'assignee': instance.assignee,
+      'dueDate': instance.dueDate.toIso8601String(),
+      'priority': _$ActionPriorityEnumMap[instance.priority]!,
+      'completed': instance.completed,
+    };
+
+const _$ActionPriorityEnumMap = {
+  ActionPriority.low: 'low',
+  ActionPriority.medium: 'medium',
+  ActionPriority.high: 'high',
+  ActionPriority.urgent: 'urgent',
+};

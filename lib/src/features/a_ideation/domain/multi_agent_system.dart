@@ -701,4 +701,73 @@ enum PrototypeStatus {
   inProgress,
   completed,
   failed,
+}
+
+// ============================================================================
+// DATA MODELS FOR INSIGHTS, RETROSPECTIVES, ACTIONS
+// ============================================================================
+
+@freezed
+class AIInsight with _$AIInsight {
+  const factory AIInsight({
+    required String id,
+    required AIInsightType type,
+    required String title,
+    required String description,
+    required InsightPriority priority,
+    required List<String> suggestedActions,
+    @Default(false) bool resolved,
+  }) = _AIInsight;
+
+  factory AIInsight.fromJson(Map<String, dynamic> json) => _$AIInsightFromJson(json);
+}
+
+enum AIInsightType {
+  info,
+  suggestion,
+  warning,
+  error,
+}
+
+enum InsightPriority {
+  low,
+  medium,
+  high,
+  critical,
+}
+
+@freezed
+class RetrospectiveSession with _$RetrospectiveSession {
+  const factory RetrospectiveSession({
+    required String id,
+    required String projectId,
+    required DateTime date,
+    required List<String> insights,
+    required List<String> recommendations,
+    required List<ActionItem> actionItems,
+  }) = _RetrospectiveSession;
+
+  factory RetrospectiveSession.fromJson(Map<String, dynamic> json) => _$RetrospectiveSessionFromJson(json);
+}
+
+@freezed
+class ActionItem with _$ActionItem {
+  const factory ActionItem({
+    required String id,
+    required String title,
+    required String description,
+    required String assignee,
+    required DateTime dueDate,
+    required ActionPriority priority,
+    @Default(false) bool completed,
+  }) = _ActionItem;
+
+  factory ActionItem.fromJson(Map<String, dynamic> json) => _$ActionItemFromJson(json);
+}
+
+enum ActionPriority {
+  low,
+  medium,
+  high,
+  urgent,
 } 

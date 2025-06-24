@@ -77,7 +77,7 @@ class ContentFilterChipScreen extends ConsumerStatefulWidget {
 class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScreen> {
   final _testController = TextEditingController();
   FilterResult? _testResult;
-  ContentAnalysis? _testAnalysis;
+  ContentAnalysis? _analysisResult;
   bool _isTesting = false;
 
   @override
@@ -188,7 +188,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
             const SizedBox(height: 24),
             
             // Test Results
-            if (_testResult != null || _testAnalysis != null)
+            if (_testResult != null || _analysisResult != null)
               _buildTestResults(),
           ],
         ),
@@ -362,14 +362,12 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
           spacing: 8,
           runSpacing: 8,
           children: availableChips.map((entry) {
-            final concern = entry.key;
             final category = entry.value;
-            
             return _buildFilterChip(
               category,
               isActive: false,
               onTap: () {
-                ref.read(activeFilterChipsProvider.notifier).addChip(concern);
+                ref.read(activeFilterChipsProvider.notifier).addChip(entry.key);
               },
             );
           }).toList(),
@@ -388,15 +386,15 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive ? color : color.withOpacity(0.1),
+          color: isActive ? color : color.withAlpha((0.1 * 255).toInt()),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isActive ? color : color.withOpacity(0.3),
+            color: isActive ? color : color.withAlpha((0.3 * 255).toInt()),
             width: isActive ? 2 : 1,
           ),
           boxShadow: isActive ? [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withAlpha((0.3 * 255).toInt()),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -534,7 +532,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
             ],
             
             // Analyse-Ergebnis
-            if (_testAnalysis != null) ...[
+            if (_analysisResult != null) ...[
               _buildAnalysisResult(),
             ],
           ],
@@ -589,9 +587,9 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
   }
 
   Widget _buildAnalysisResult() {
-    if (_testAnalysis == null) return const SizedBox.shrink();
+    if (_analysisResult == null) return const SizedBox.shrink();
     
-    final analysis = _testAnalysis!;
+    final analysis = _analysisResult!;
     
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -671,7 +669,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
     setState(() {
       _isTesting = true;
       _testResult = null;
-      _testAnalysis = null;
+      _analysisResult = null;
     });
     
     try {
@@ -701,7 +699,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
     setState(() {
       _isTesting = true;
       _testResult = null;
-      _testAnalysis = null;
+      _analysisResult = null;
     });
     
     try {
@@ -709,7 +707,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
       final analysis = await system.analyzeContent(_testController.text);
       
       setState(() {
-        _testAnalysis = analysis;
+        _analysisResult = analysis;
         _isTesting = false;
       });
     } catch (e) {

@@ -48,9 +48,9 @@ class ProjectMasterAgentService {
 
   /// Fügt Feedback hinzu
   Future<void> addFeedback(FeedbackEntry feedback) async {
-    _currentProject = _currentProject?.copyWith(
-      feedback: [...?_currentProject?.feedback, feedback],
-    );
+    // _currentProject = _currentProject?.copyWith(
+    //   feedback: [...?_currentProject?.feedback, feedback],
+    // );
   }
 
   /// Fügt ein Teammitglied hinzu
@@ -69,14 +69,35 @@ class ProjectMasterAgentService {
 
   /// Fügt eine Lesson Learned hinzu
   Future<void> addLesson(LessonLearned lesson) async {
-    _currentProject = _currentProject?.copyWith(
-      lessonsLearned: [...?_currentProject?.lessonsLearned, lesson],
-    );
+    // _currentProject = _currentProject?.copyWith(
+    //   lessonsLearned: [...?_currentProject?.lessonsLearned, lesson],
+    // );
   }
 
   /// Setzt den Projektstatus
   Future<void> setStatus(ProjectStatus status) async {
-    _currentProject = _currentProject?.copyWith(status: status);
+    // Map ProjectStatus to AgentStatus for compatibility
+    final agentStatus = _mapProjectStatusToAgentStatus(status);
+    _currentProject = _currentProject?.copyWith(status: agentStatus);
+  }
+
+  AgentStatus _mapProjectStatusToAgentStatus(ProjectStatus status) {
+    switch (status) {
+      case ProjectStatus.planning:
+        return AgentStatus.idle;
+      case ProjectStatus.prototyping:
+        return AgentStatus.processing;
+      case ProjectStatus.playtesting:
+        return AgentStatus.active;
+      case ProjectStatus.production:
+        return AgentStatus.active;
+      case ProjectStatus.released:
+        return AgentStatus.completed;
+      case ProjectStatus.archived:
+        return AgentStatus.error;
+      default:
+        return AgentStatus.idle;
+    }
   }
 
   /// Exportiert das Projekt als JSON

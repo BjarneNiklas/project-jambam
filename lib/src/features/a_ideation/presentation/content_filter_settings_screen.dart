@@ -153,8 +153,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
             const SizedBox(height: 24),
             
             // Test-Ergebnisse
-            if (_testResult != null || _testAnalysis != null)
-              _buildTestResults(),
+            _buildTestResults(),
           ],
         ),
       ),
@@ -215,7 +214,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
                 secondary: _getSeverityIcon(category.severity),
                 controlAffinity: ListTileControlAffinity.leading,
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -427,7 +426,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton.icon(
-                  onPressed: _isTesting ? null : _testAnalysis,
+                  onPressed: _isTesting ? null : _runTestAnalysis,
                   icon: const Icon(Icons.analytics),
                   label: const Text('Analyze'),
                   style: ElevatedButton.styleFrom(
@@ -444,6 +443,8 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
   }
 
   Widget _buildTestResults() {
+    if (_testResult == null && _testAnalysis == null) return const SizedBox.shrink();
+    
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -482,7 +483,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((0.1 * 255).toInt()),
         border: Border.all(color: color),
         borderRadius: BorderRadius.circular(8),
       ),
@@ -519,9 +520,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
 
   Widget _buildAnalysisResult() {
     if (_testAnalysis == null) return const SizedBox.shrink();
-    
     final analysis = _testAnalysis!;
-    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -534,11 +533,8 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
         ),
         const SizedBox(height: 8),
         ...analysis.concernAnalyses.entries.map((entry) {
-          final concern = entry.key;
           final concernAnalysis = entry.value;
-          
           if (concernAnalysis.overallRisk < 0.1) return const SizedBox.shrink();
-          
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Column(
@@ -563,7 +559,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }
@@ -611,7 +607,7 @@ class _ContentFilterSettingsScreenState extends ConsumerState<ContentFilterSetti
     }
   }
 
-  Future<void> _testAnalysis() async {
+  Future<void> _runTestAnalysis() async {
     if (_testController.text.isEmpty) return;
     
     setState(() {

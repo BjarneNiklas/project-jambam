@@ -1,16 +1,15 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import '../domain/multi_agent_system.dart';
-import 'agent_orchestrator_service.dart' as orchestrator;
+import '../domain/multi_agent_system.dart' as domain;
 import 'project_master_agent_service.dart';
 import 'research_agent_service.dart';
 import 'creative_director_agent_service.dart';
 import 'asset_generation_agent_service.dart';
 import 'game_engine_agent_service.dart';
+import 'agent_orchestrator_service.dart' as orchestrator;
 
 part 'multi_agent_providers.g.dart';
-part 'multi_agent_providers.freezed.dart';
+// part 'multi_agent_providers.freezed.dart'; // Commented out if file does not exist
 
 // ============================================================================
 // SERVICE PROVIDERS
@@ -53,7 +52,7 @@ GameEngineAgentService gameEngineAgentService(Ref ref) {
 @riverpod
 class CurrentProject extends _$CurrentProject {
   @override
-  FutureOr<ProjectMasterAgent?> build() async {
+  FutureOr<domain.ProjectMasterAgent?> build() async {
     // Load current project on initialization
     final service = ref.read(projectMasterAgentServiceProvider);
     return await service.loadProject('demo-project');
@@ -65,13 +64,13 @@ class CurrentProject extends _$CurrentProject {
     state = await AsyncValue.guard(() => service.loadProject(projectId));
   }
 
-  Future<void> saveProject(ProjectMasterAgent project) async {
+  Future<void> saveProject(domain.ProjectMasterAgent project) async {
     final service = ref.read(projectMasterAgentServiceProvider);
     await service.saveProject(project);
     state = AsyncValue.data(project);
   }
 
-  Future<void> addPrototype(Prototype prototype) async {
+  Future<void> addPrototype(domain.Prototype prototype) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -81,7 +80,7 @@ class CurrentProject extends _$CurrentProject {
     }
   }
 
-  Future<void> addPlaytest(PlaytestResult playtest) async {
+  Future<void> addPlaytest(domain.PlaytestResult playtest) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -90,7 +89,7 @@ class CurrentProject extends _$CurrentProject {
     }
   }
 
-  Future<void> addFeedback(FeedbackEntry feedback) async {
+  Future<void> addFeedback(domain.FeedbackEntry feedback) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -99,7 +98,7 @@ class CurrentProject extends _$CurrentProject {
     }
   }
 
-  Future<void> addTeamMember(TeamMember member) async {
+  Future<void> addTeamMember(domain.TeamMember member) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -108,7 +107,7 @@ class CurrentProject extends _$CurrentProject {
     }
   }
 
-  Future<void> addDecision(ProjectDecision decision) async {
+  Future<void> addDecision(domain.ProjectDecision decision) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -117,7 +116,7 @@ class CurrentProject extends _$CurrentProject {
     }
   }
 
-  Future<void> addLesson(LessonLearned lesson) async {
+  Future<void> addLesson(domain.LessonLearned lesson) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -126,7 +125,7 @@ class CurrentProject extends _$CurrentProject {
     }
   }
 
-  Future<void> setProjectStatus(ProjectStatus status) async {
+  Future<void> setProjectStatus(domain.ProjectStatus status) async {
     final currentProject = state.value;
     if (currentProject != null) {
       final service = ref.read(projectMasterAgentServiceProvider);
@@ -148,14 +147,14 @@ class CurrentProject extends _$CurrentProject {
 @riverpod
 class ActiveWorkflows extends _$ActiveWorkflows {
   @override
-  List<WorkflowStatus> build() {
+  List<domain.WorkflowStatus> build() {
     return [];
   }
 
   Future<void> startWorkflow({
-    required WorkflowType type,
+    required domain.WorkflowType type,
     required Map<String, dynamic> parameters,
-    required WorkflowConfiguration config,
+    required domain.WorkflowConfiguration config,
   }) async {
     final orchestratorService = ref.read(agentOrchestratorServiceProvider);
     final result = await orchestratorService.executeAdaptiveWorkflow(
@@ -166,7 +165,7 @@ class ActiveWorkflows extends _$ActiveWorkflows {
 
     if (result.success) {
       // Add to active workflows
-      final workflowStatus = WorkflowStatus(
+      final workflowStatus = domain.WorkflowStatus(
         workflowId: result.workflowId,
         type: type,
         status: 'running',
@@ -215,33 +214,33 @@ class ActiveWorkflows extends _$ActiveWorkflows {
 @riverpod
 class AgentStatuses extends _$AgentStatuses {
   @override
-  Map<String, AgentStatus> build() {
+  Map<String, domain.AgentStatus> build() {
     return {
-      'research': AgentStatus.active,
-      'creative_director': AgentStatus.active,
-      'asset_generation': AgentStatus.idle,
-      'game_engine': AgentStatus.idle,
-      'project_master': AgentStatus.active,
+      'research': domain.AgentStatus.active,
+      'creative_director': domain.AgentStatus.active,
+      'asset_generation': domain.AgentStatus.idle,
+      'game_engine': domain.AgentStatus.idle,
+      'project_master': domain.AgentStatus.active,
     };
   }
 
-  void updateAgentStatus(String agentId, AgentStatus status) {
+  void updateAgentStatus(String agentId, domain.AgentStatus status) {
     state = {...state, agentId: status};
   }
 
   void setAllAgentsIdle() {
     state = {
       for (var entry in state.entries)
-        entry.key: AgentStatus.idle
+        entry.key: domain.AgentStatus.idle
     };
   }
 
   void setAgentActive(String agentId) {
-    updateAgentStatus(agentId, AgentStatus.active);
+    updateAgentStatus(agentId, domain.AgentStatus.active);
   }
 
   void setAgentError(String agentId) {
-    updateAgentStatus(agentId, AgentStatus.error);
+    updateAgentStatus(agentId, domain.AgentStatus.error);
   }
 }
 
@@ -252,43 +251,43 @@ class AgentStatuses extends _$AgentStatuses {
 @riverpod
 class AIInsights extends _$AIInsights {
   @override
-  List<AIInsight> build() {
+  List<domain.AIInsight> build() {
     return [];
   }
 
-  Future<void> generateInsights(ProjectMasterAgent project) async {
-    final insights = <AIInsight>[];
+  Future<void> generateInsights(domain.ProjectMasterAgent project) async {
+    final insights = <domain.AIInsight>[];
 
     // Analyze project status and generate insights
     if (project.prototypes.isEmpty) {
-      insights.add(AIInsight(
+      insights.add(domain.AIInsight(
         id: 'no-prototypes',
-        type: AIInsightType.warning,
+        type: domain.AIInsightType.warning,
         title: 'Keine Prototypen vorhanden',
         description: 'Erstelle einen ersten Prototypen, um das Konzept zu testen.',
-        priority: InsightPriority.high,
+        priority: domain.InsightPriority.high,
         suggestedActions: ['Prototyp erstellen', 'Design verfeinern'],
       ));
     }
 
     if (project.playtests.isEmpty) {
-      insights.add(AIInsight(
+      insights.add(domain.AIInsight(
         id: 'no-playtests',
-        type: AIInsightType.suggestion,
+        type: domain.AIInsightType.suggestion,
         title: 'Playtests empfohlen',
         description: 'Führe Playtests durch, um Feedback zu sammeln.',
-        priority: InsightPriority.medium,
+        priority: domain.InsightPriority.medium,
         suggestedActions: ['Playtest planen', 'Testgruppe finden'],
       ));
     }
 
     if (project.team.length < 2) {
-      insights.add(AIInsight(
+      insights.add(domain.AIInsight(
         id: 'small-team',
-        type: AIInsightType.info,
+        type: domain.AIInsightType.info,
         title: 'Kleines Team',
         description: 'Erwäge, weitere Teammitglieder hinzuzufügen.',
-        priority: InsightPriority.low,
+        priority: domain.InsightPriority.low,
         suggestedActions: ['Team erweitern', 'Rollen definieren'],
       ));
     }
@@ -296,7 +295,7 @@ class AIInsights extends _$AIInsights {
     state = insights;
   }
 
-  void addInsight(AIInsight insight) {
+  void addInsight(domain.AIInsight insight) {
     state = [...state, insight];
   }
 
@@ -321,12 +320,12 @@ class AIInsights extends _$AIInsights {
 @riverpod
 class AutomatedRetrospectives extends _$AutomatedRetrospectives {
   @override
-  List<RetrospectiveSession> build() {
+  List<domain.RetrospectiveSession> build() {
     return [];
   }
 
-  Future<void> generateRetrospective(ProjectMasterAgent project) async {
-    final session = RetrospectiveSession(
+  Future<void> generateRetrospective(domain.ProjectMasterAgent project) async {
+    final session = domain.RetrospectiveSession(
       id: 'retro_${DateTime.now().millisecondsSinceEpoch}',
       projectId: project.id,
       date: DateTime.now(),
@@ -338,7 +337,7 @@ class AutomatedRetrospectives extends _$AutomatedRetrospectives {
     state = [...state, session];
   }
 
-  List<String> _analyzeProjectInsights(ProjectMasterAgent project) {
+  List<String> _analyzeProjectInsights(domain.ProjectMasterAgent project) {
     final insights = <String>[];
 
     // Analyze prototypes
@@ -362,7 +361,7 @@ class AutomatedRetrospectives extends _$AutomatedRetrospectives {
     return insights;
   }
 
-  List<String> _generateRecommendations(ProjectMasterAgent project) {
+  List<String> _generateRecommendations(domain.ProjectMasterAgent project) {
     final recommendations = <String>[];
 
     if (project.prototypes.isEmpty) {
@@ -380,15 +379,15 @@ class AutomatedRetrospectives extends _$AutomatedRetrospectives {
     return recommendations;
   }
 
-  List<ActionItem> _createActionItems(ProjectMasterAgent project) {
+  List<domain.ActionItem> _createActionItems(domain.ProjectMasterAgent project) {
     return [
-      ActionItem(
+      domain.ActionItem(
         id: 'action_1',
         title: 'Nächsten Prototypen planen',
         description: 'Basierend auf Feedback den nächsten Prototypen entwickeln',
         assignee: project.team.isNotEmpty ? project.team.first.name : 'Team',
         dueDate: DateTime.now().add(const Duration(days: 7)),
-        priority: ActionPriority.high,
+        priority: domain.ActionPriority.high,
       ),
     ];
   }
@@ -401,10 +400,10 @@ class AutomatedRetrospectives extends _$AutomatedRetrospectives {
 @riverpod
 class AdaptiveWorkflows extends _$AdaptiveWorkflows {
   @override
-  WorkflowConfiguration build() {
-    return WorkflowConfiguration(
+  domain.WorkflowConfiguration build() {
+    return domain.WorkflowConfiguration(
       enabledResearchSources: const ['arxiv'],
-      ethicalConcerns: const [EthicalConcern.addictionResearch],
+      ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
       maxResearchResults: 5,
       assetGenerationSettings: const {
         'quality': 'medium',
@@ -428,9 +427,9 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
   void adaptToTeamSize(int teamSize) {
     if (teamSize <= 2) {
       // Small team: Simplified workflow
-      state = WorkflowConfiguration(
+      state = domain.WorkflowConfiguration(
         enabledResearchSources: const ['arxiv', 'pubmed'],
-        ethicalConcerns: const [EthicalConcern.addictionResearch],
+        ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
         maxResearchResults: 10,
         assetGenerationSettings: {
           'quality': 'medium',
@@ -451,9 +450,9 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
       );
     } else if (teamSize <= 5) {
       // Medium team: Balanced workflow
-      state = WorkflowConfiguration(
+      state = domain.WorkflowConfiguration(
         enabledResearchSources: const ['arxiv', 'pubmed', 'ieee', 'acm'],
-        ethicalConcerns: const [EthicalConcern.addictionResearch],
+        ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
         maxResearchResults: 20,
         assetGenerationSettings: {
           'quality': 'high',
@@ -474,9 +473,9 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
       );
     } else {
       // Large team: Advanced workflow
-      state = WorkflowConfiguration(
+      state = domain.WorkflowConfiguration(
         enabledResearchSources: const ['arxiv', 'pubmed', 'ieee', 'acm'],
-        ethicalConcerns: const [EthicalConcern.addictionResearch],
+        ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
         maxResearchResults: 30,
         assetGenerationSettings: {
           'quality': 'ultra',
@@ -501,9 +500,9 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
   void adaptToTimeframe(Duration timeframe) {
     if (timeframe.inHours <= 48) {
       // Game Jam: Fast workflow
-      state = WorkflowConfiguration(
+      state = domain.WorkflowConfiguration(
         enabledResearchSources: const ['arxiv'],
-        ethicalConcerns: const [EthicalConcern.addictionResearch],
+        ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
         maxResearchResults: 5,
         assetGenerationSettings: {
           'quality': 'fast',
@@ -524,9 +523,9 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
       );
     } else if (timeframe.inDays <= 30) {
       // Short project: Balanced workflow
-      state = WorkflowConfiguration(
+      state = domain.WorkflowConfiguration(
         enabledResearchSources: const ['arxiv', 'pubmed', 'ieee'],
-        ethicalConcerns: const [EthicalConcern.addictionResearch],
+        ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
         maxResearchResults: 15,
         assetGenerationSettings: {
           'quality': 'medium',
@@ -547,9 +546,9 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
       );
     } else {
       // Long project: Quality workflow
-      state = WorkflowConfiguration(
+      state = domain.WorkflowConfiguration(
         enabledResearchSources: const ['arxiv', 'pubmed', 'ieee', 'acm'],
-        ethicalConcerns: const [EthicalConcern.addictionResearch],
+        ethicalConcerns: const [domain.EthicalConcern.addictionResearch],
         maxResearchResults: 25,
         assetGenerationSettings: {
           'quality': 'high',
@@ -570,73 +569,4 @@ class AdaptiveWorkflows extends _$AdaptiveWorkflows {
       );
     }
   }
-}
-
-// ============================================================================
-// DATA MODELS FOR NEW FEATURES
-// ============================================================================
-
-@freezed
-class AIInsight with _$AIInsight {
-  const factory AIInsight({
-    required String id,
-    required AIInsightType type,
-    required String title,
-    required String description,
-    required InsightPriority priority,
-    required List<String> suggestedActions,
-    @Default(false) bool resolved,
-  }) = _AIInsight;
-
-  factory AIInsight.fromJson(Map<String, dynamic> json) => _$AIInsightFromJson(json);
-}
-
-enum AIInsightType {
-  info,
-  suggestion,
-  warning,
-  error,
-}
-
-enum InsightPriority {
-  low,
-  medium,
-  high,
-  critical,
-}
-
-@freezed
-class RetrospectiveSession with _$RetrospectiveSession {
-  const factory RetrospectiveSession({
-    required String id,
-    required String projectId,
-    required DateTime date,
-    required List<String> insights,
-    required List<String> recommendations,
-    required List<ActionItem> actionItems,
-  }) = _RetrospectiveSession;
-
-  factory RetrospectiveSession.fromJson(Map<String, dynamic> json) => _$RetrospectiveSessionFromJson(json);
-}
-
-@freezed
-class ActionItem with _$ActionItem {
-  const factory ActionItem({
-    required String id,
-    required String title,
-    required String description,
-    required String assignee,
-    required DateTime dueDate,
-    required ActionPriority priority,
-    @Default(false) bool completed,
-  }) = _ActionItem;
-
-  factory ActionItem.fromJson(Map<String, dynamic> json) => _$ActionItemFromJson(json);
-}
-
-enum ActionPriority {
-  low,
-  medium,
-  high,
-  urgent,
 } 
