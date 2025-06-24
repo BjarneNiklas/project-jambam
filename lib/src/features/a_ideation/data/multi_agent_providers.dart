@@ -9,7 +9,6 @@ import 'game_engine_agent_service.dart';
 import 'agent_orchestrator_service.dart' as orchestrator;
 
 part 'multi_agent_providers.g.dart';
-// part 'multi_agent_providers.freezed.dart'; // Commented out if file does not exist
 
 // ============================================================================
 // SERVICE PROVIDERS
