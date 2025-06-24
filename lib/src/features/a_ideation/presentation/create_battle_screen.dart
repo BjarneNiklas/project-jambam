@@ -638,12 +638,14 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (picked != null) {
-      // TODO: Handle date selection
+      // Placeholder: Handle date selection
+      print("Selected date: $picked");
     }
   }
 
   void _saveDraft() {
-    // TODO: Save battle as draft
+    // Placeholder: Save battle as draft
+    print("Saving battle as draft...");
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Draft saved successfully!'),
@@ -664,7 +666,17 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
         return;
       }
 
-      // TODO: Create battle
+      // Placeholder: Create battle
+      print("Creating battle with the following details:");
+      print("Title: ${_titleController.text}");
+      print("Theme: ${_themeController.text}");
+      print("Category: $_selectedCategory");
+      print("Description: ${_descriptionController.text}");
+      print("Difficulty: $_selectedDifficulty");
+      print("Team Size: $_selectedTeamSize");
+      print("Duration: $_selectedDuration");
+      print("Platforms: $_selectedPlatforms");
+      // Add more details as needed
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Battle created successfully!'),
