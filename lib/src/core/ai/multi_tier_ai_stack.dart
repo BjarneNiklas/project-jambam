@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'intelligent_router.dart';
 
 abstract class AILayer {
@@ -62,23 +61,16 @@ class AIResponse {
 // Tier 1: Rule-Based Foundation
 class RuleBasedLayer implements AILayer {
   static const Map<String, Map<String, String>> _qaDatabase = {
-    'game_development': {
-      'what is unity': 'Unity is a cross-platform game engine developed by Unity Technologies.',
-      'how to create a sprite': 'To create a sprite in Unity: 1. Import image file 2. Set Texture Type to Sprite 3. Drag to scene',
-      'what is a game loop': 'A game loop is the main cycle that runs continuously during gameplay, handling input, updating game state, and rendering.',
-      'how to add physics': 'To add physics: 1. Add Rigidbody component 2. Add Collider component 3. Configure physics properties',
-    },
     'general': {
-      'what is jamba': 'Jamba is a next-generation AI-powered platform for game development and creative projects.',
-      'how to use ai': 'AI can help with ideation, asset generation, code writing, and problem solving.',
-      'what are game jams': 'Game jams are events where developers create games in a short time period, often 48-72 hours.',
+      'hello': 'Hello! How can I help you today?',
+      'help': 'I can help with various tasks. What do you need?',
+      'thanks': 'You\'re welcome! Is there anything else I can help with?',
     },
-  };
-
-  static const Map<String, List<String>> _validationRules = {
-    'email': [r'^[^@]+@[^@]+\.[^@]+$'],
-    'url': [r'^https?://.+'],
-    'code': [r'```[\s\S]*```'],
+    'game_dev': {
+      'engine': 'Popular game engines include Unity, Unreal Engine, and Godot.',
+      'programming': 'Game development often uses C#, C++, or GDScript.',
+      'assets': 'You can create assets using Blender, Maya, or other 3D tools.',
+    },
   };
 
   @override
@@ -96,13 +88,6 @@ class RuleBasedLayer implements AILayer {
         response = qaResponse;
         confidence = 0.9;
         sources = ['rule_based_qa'];
-      }
-
-      // Validate input if needed
-      if (response.isEmpty && request.content.contains('validate')) {
-        response = _validateInput(request.content);
-        confidence = 0.8;
-        sources = ['validation_rules'];
       }
 
       // Route request if needed
@@ -195,28 +180,6 @@ class RuleBasedLayer implements AILayer {
     return null;
   }
 
-  String _validateInput(String content) {
-    final validations = <String, bool>{};
-    
-    // Check for email
-    if (content.contains('@')) {
-      validations['email'] = RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(content);
-    }
-    
-    // Check for URL
-    if (content.contains('http')) {
-      validations['url'] = RegExp(r'^https?://.+').hasMatch(content);
-    }
-    
-    // Check for code blocks
-    if (content.contains('```')) {
-      validations['code'] = true;
-    }
-    
-    final results = validations.entries.map((e) => '${e.key}: ${e.value ? 'valid' : 'invalid'}').join(', ');
-    return 'Validation results: $results';
-  }
-
   String _routeRequest(String content) {
     if (content.contains('game')) return 'Route: Game Development';
     if (content.contains('research')) return 'Route: Research';
@@ -238,12 +201,6 @@ class RuleBasedLayer implements AILayer {
 
 // Tier 2: Local SLM Processing
 class LocalSLMLayer implements AILayer {
-  static const Map<String, String> _models = {
-    'phi-3-mini': 'Fast classification and basic generation',
-    'gemma-2b': 'Balanced performance and speed',
-    'llama-3.1-8b': 'Advanced local processing',
-  };
-
   @override
   Future<AIResponse> process(UserRequest request, Map<String, dynamic> config) async {
     final startTime = DateTime.now();
@@ -303,7 +260,7 @@ class LocalSLMLayer implements AILayer {
       else {
         response = _processWithLocalModel(request.content, model, maxTokens, temperature);
         confidence = 0.4;
-        sources = ['local_model_${model}'];
+        sources = ['local_model_$model'];
       }
 
       final duration = DateTime.now().difference(startTime).inMilliseconds;
@@ -564,19 +521,11 @@ class RAGLayer implements AILayer {
 
 // Tier 4: LLM for Complex Tasks
 class LLMLayer implements AILayer {
-  static const Map<String, String> _providers = {
-    'openai': 'GPT-4 for best overall performance',
-    'anthropic': 'Claude for excellent reasoning',
-    'google': 'Gemini for multimodal capabilities',
-    'local': 'Local LLM for privacy',
-  };
-
   @override
   Future<AIResponse> process(UserRequest request, Map<String, dynamic> config) async {
     final startTime = DateTime.now();
     
     try {
-      final provider = config['provider'] ?? 'openai';
       final model = config['model'] ?? 'gpt-4';
       final maxTokens = config['maxTokens'] ?? 2048;
       final temperature = config['temperature'] ?? 0.7;
@@ -587,37 +536,37 @@ class LLMLayer implements AILayer {
 
       // Creative generation
       if (request.content.contains('create') || request.content.contains('generate')) {
-        response = await _generateCreativeContent(request.content, provider, model, temperature);
+        response = await _generateCreativeContent(request.content, model, temperature);
         confidence = 0.8;
         sources = ['creative_generation'];
       }
 
       // Complex reasoning
       else if (request.content.contains('solve') || request.content.contains('analyze')) {
-        response = await _solveComplexProblem(request.content, provider, model, temperature);
+        response = await _solveComplexProblem(request.content, model, temperature);
         confidence = 0.7;
         sources = ['complex_reasoning'];
       }
 
       // Code generation
       else if (request.content.contains('code') || request.content.contains('function')) {
-        response = await _generateCode(request.content, provider, model, temperature);
+        response = await _generateCode(request.content, model, temperature);
         confidence = 0.6;
         sources = ['code_generation'];
       }
 
       // Multimodal processing
       else if (request.content.contains('image') || request.content.contains('visual')) {
-        response = await _processMultimodal(request.content, provider, model);
+        response = await _processMultimodal(request.content, model);
         confidence = 0.5;
         sources = ['multimodal_processing'];
       }
 
       // Default LLM processing
       else {
-        response = await _processWithLLM(request.content, provider, model, maxTokens, temperature);
+        response = await _processWithLLM(request.content, model, maxTokens, temperature);
         confidence = 0.4;
-        sources = ['llm_${provider}_${model}'];
+        sources = ['llm_$model'];
       }
 
       final duration = DateTime.now().difference(startTime).inMilliseconds;
@@ -631,7 +580,6 @@ class LLMLayer implements AILayer {
         durationMs: duration,
         sources: sources,
         metadata: {
-          'provider': provider,
           'model': model,
           'maxTokens': maxTokens,
           'temperature': temperature,
@@ -670,34 +618,34 @@ class LLMLayer implements AILayer {
     return 0.5;
   }
 
-  Future<String> _generateCreativeContent(String prompt, String provider, String model, double temperature) async {
+  Future<String> _generateCreativeContent(String prompt, String model, double temperature) async {
     // Mock creative generation
     await Future.delayed(Duration(milliseconds: 500 + Random().nextInt(1000)));
-    return 'Creative content generated with $provider/$model: $prompt\n\nThis is an innovative and creative response that demonstrates the model\'s creative capabilities.';
+    return 'Creative content generated with $model: $prompt\n\nThis is an innovative and creative response that demonstrates the model\'s creative capabilities.';
   }
 
-  Future<String> _solveComplexProblem(String problem, String provider, String model, double temperature) async {
+  Future<String> _solveComplexProblem(String problem, String model, double temperature) async {
     // Mock complex problem solving
     await Future.delayed(Duration(milliseconds: 800 + Random().nextInt(1500)));
-    return 'Complex problem solved with $provider/$model:\n\nProblem: $problem\n\nSolution: This is a detailed, step-by-step solution that demonstrates advanced reasoning and problem-solving capabilities.';
+    return 'Complex problem solved with $model:\n\nProblem: $problem\n\nSolution: This is a detailed, step-by-step solution that demonstrates advanced reasoning and problem-solving capabilities.';
   }
 
-  Future<String> _generateCode(String requirements, String provider, String model, double temperature) async {
+  Future<String> _generateCode(String requirements, String model, double temperature) async {
     // Mock code generation
     await Future.delayed(Duration(milliseconds: 600 + Random().nextInt(1200)));
-    return 'Code generated with $provider/$model:\n\nRequirements: $requirements\n\n```dart\n// Generated code based on requirements\nvoid main() {\n  print("Hello from generated code!");\n}\n```';
+    return 'Code generated with $model:\n\nRequirements: $requirements\n\n```dart\n// Generated code based on requirements\nvoid main() {\n  print("Hello from generated code!");\n}\n```';
   }
 
-  Future<String> _processMultimodal(String content, String provider, String model) async {
+  Future<String> _processMultimodal(String content, String model) async {
     // Mock multimodal processing
     await Future.delayed(Duration(milliseconds: 1000 + Random().nextInt(2000)));
-    return 'Multimodal content processed with $provider/$model:\n\nContent: $content\n\nThis response demonstrates the model\'s ability to process and understand multiple types of content including text, images, and other media.';
+    return 'Multimodal content processed with $model:\n\nContent: $content\n\nThis response demonstrates the model\'s ability to process and understand multiple types of content including text, images, and other media.';
   }
 
-  Future<String> _processWithLLM(String content, String provider, String model, int maxTokens, double temperature) async {
+  Future<String> _processWithLLM(String content, String model, int maxTokens, double temperature) async {
     // Mock LLM processing
     await Future.delayed(Duration(milliseconds: 400 + Random().nextInt(800)));
-    return 'Processed with $provider/$model (maxTokens: $maxTokens, temp: $temperature):\n\n$content\n\nThis is a comprehensive response generated by the language model based on the input provided.';
+    return 'Processed with $model (maxTokens: $maxTokens, temp: $temperature):\n\n$content\n\nThis is a comprehensive response generated by the language model based on the input provided.';
   }
 }
 

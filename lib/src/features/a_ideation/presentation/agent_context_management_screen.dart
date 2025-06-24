@@ -36,9 +36,6 @@ class _AgentContextManagementScreenState extends ConsumerState<AgentContextManag
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   
-  String? _selectedAgentId;
-  bool _isEditing = false;
-
   @override
   void dispose() {
     _systemPromptController.dispose();
@@ -128,8 +125,8 @@ class _AgentContextManagementScreenState extends ConsumerState<AgentContextManag
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               color: currentLanguage == 'de' 
-                ? Colors.blue.withOpacity(0.1) 
-                : Colors.green.withOpacity(0.1),
+                ? Colors.blue.withValues(alpha: 0.1) 
+                : Colors.green.withValues(alpha: 0.1),
               child: Row(
                 children: [
                   Icon(
@@ -522,12 +519,10 @@ class _AgentContextManagementScreenState extends ConsumerState<AgentContextManag
   }
 
   void _showCreateContextDialog(AgentContextManager manager) {
-    _selectedAgentId = null;
-    _isEditing = false;
-    _systemPromptController.clear();
-    _userPromptController.clear();
     _nameController.clear();
     _descriptionController.clear();
+    _systemPromptController.clear();
+    _userPromptController.clear();
 
     showDialog(
       context: context,

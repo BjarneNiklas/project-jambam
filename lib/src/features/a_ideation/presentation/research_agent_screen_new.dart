@@ -25,7 +25,6 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
   ResearchResult? _currentResult;
   bool _isLoading = false;
   String _errorMessage = '';
-  String _selectedSource = 'all';
   
   @override
   void initState() {
@@ -122,7 +121,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: sourceInfo['colors'][0].withOpacity(0.3),
+              color: sourceInfo['colors'][0].withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -147,7 +146,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
             ),
             const SizedBox(width: 4),
             const FaIcon(
-              FontAwesomeIcons.externalLink,
+              FontAwesomeIcons.arrowUpRightFromSquare,
               size: 10,
               color: Colors.white,
             ),
@@ -270,7 +269,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
                       const SnackBar(content: Text('PDF Export - Coming Soon!')),
                     );
                   },
-                  icon: const FaIcon(FontAwesomeIcons.regularFilePdf),
+                  icon: const FaIcon(FontAwesomeIcons.filePdf),
                   label: const Text('Export PDF'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade600,
@@ -321,7 +320,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const FaIcon(FontAwesomeIcons.regularQuestionCircle),
+            icon: const FaIcon(FontAwesomeIcons.circleQuestion),
             onPressed: () {
               showDialog(
                 context: context,
@@ -354,7 +353,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -366,7 +365,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
                   controller: _queryController,
                   decoration: InputDecoration(
                     hintText: 'Forschungsfrage eingeben... (z.B. "procedural generation games")',
-                    prefixIcon: const FaIcon(FontAwesomeIcons.search),
+                    prefixIcon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
                     suffixIcon: _isLoading
                         ? AnimatedBuilder(
                             animation: _loadingController,
@@ -497,7 +496,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 FaIcon(
-                                  FontAwesomeIcons.search,
+                                  FontAwesomeIcons.magnifyingGlass,
                                   size: 64,
                                   color: Colors.grey.shade400,
                                 ),

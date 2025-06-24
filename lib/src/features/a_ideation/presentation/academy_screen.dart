@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'terminology_config.dart';
 
 class AcademyScreen extends ConsumerStatefulWidget {
   const AcademyScreen({super.key});
@@ -63,7 +62,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.purple),
             onPressed: () {
-              // TODO: Show academy notifications
+              _showAcademyNotifications();
             },
           ),
         ],
@@ -104,7 +103,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.purple[50]!,
+            Colors.purple[50]!.withValues(alpha: 0.1),
             Colors.white,
           ],
         ),
@@ -193,7 +192,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.indigo[50]!,
+            Colors.indigo[50]!.withValues(alpha: 0.1),
             Colors.white,
           ],
         ),
@@ -278,7 +277,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.amber[50]!,
+            Colors.amber[50]!.withValues(alpha: 0.1),
             Colors.white,
           ],
         ),
@@ -375,7 +374,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.teal[50]!,
+            Colors.teal[50]!.withValues(alpha: 0.1),
             Colors.white,
           ],
         ),
@@ -481,7 +480,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.green[50]!,
+            Colors.green[50]!.withValues(alpha: 0.1),
             Colors.white,
           ],
         ),
@@ -563,9 +562,9 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -586,7 +585,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                 Text(
                   subtitle,
                   style: TextStyle(
-                    color: color.withOpacity(0.8),
+                    color: color.withValues(alpha: 0.8),
                     fontSize: 14,
                   ),
                 ),
@@ -607,7 +606,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -635,7 +634,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -651,7 +650,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.2),
+                      color: Colors.grey.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -669,7 +668,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withValues(alpha: 0.3),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
                 Text(
@@ -686,7 +685,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           trailing: IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              // TODO: Navigate to workshop details
+              _navigateToWorkshopDetails(title);
             },
           ),
         ),
@@ -703,7 +702,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -731,7 +730,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -747,7 +746,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.2),
+                      color: Colors.grey.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -765,7 +764,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withValues(alpha: 0.3),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
                 Text(
@@ -782,7 +781,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           trailing: IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              // TODO: Navigate to course details
+              _navigateToCourseDetails(title);
             },
           ),
         ),
@@ -799,7 +798,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -827,7 +826,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -844,7 +843,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Colors.amber.withOpacity(0.2),
+                        color: Colors.amber.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -864,7 +863,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           trailing: IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              // TODO: Navigate to challenge details
+              _navigateToChallengeDetails(title);
             },
           ),
         ),
@@ -881,7 +880,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -895,7 +894,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -912,7 +911,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to resource
+            _navigateToResource(title);
           },
         ),
       ),
@@ -929,7 +928,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -975,7 +974,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: progress,
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withValues(alpha: 0.3),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 8,
             ),
@@ -995,7 +994,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(Icons.star, color: color, size: 20),
@@ -1003,7 +1002,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         title: Text(skill, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: LinearProgressIndicator(
           value: progress,
-          backgroundColor: Colors.grey.withOpacity(0.3),
+          backgroundColor: Colors.grey.withValues(alpha: 0.3),
           valueColor: AlwaysStoppedAnimation<Color>(color),
         ),
         trailing: Text(
@@ -1027,7 +1026,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: unlocked ? color : Colors.grey.withOpacity(0.3),
+            color: unlocked ? color : Colors.grey.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
@@ -1136,7 +1135,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
               subtitle: const Text('Begin a quick learning session'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to workshop selection
+                _navigateToWorkshopSelection();
               },
             ),
             ListTile(
@@ -1145,7 +1144,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
               subtitle: const Text('Join a comprehensive learning path'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to course selection
+                _navigateToCourseSelection();
               },
             ),
             ListTile(
@@ -1154,7 +1153,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
               subtitle: const Text('Test your skills with a challenge'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to challenge selection
+                _navigateToChallengeSelection();
               },
             ),
             ListTile(
@@ -1163,12 +1162,145 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
               subtitle: const Text('Explore learning materials'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to resources
+                _navigateToResources();
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _showAcademyNotifications() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Academy Notifications'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildNotificationItem(
+              'New Workshop Available',
+              'Flutter State Management Workshop is now live!',
+              '2 hours ago',
+              Colors.blue,
+            ),
+            _buildNotificationItem(
+              'Course Progress Reminder',
+              'Complete your Unity course to earn a certificate',
+              '1 day ago',
+              Colors.green,
+            ),
+            _buildNotificationItem(
+              'Challenge Deadline',
+              'AI Integration Challenge ends in 3 days',
+              '2 days ago',
+              Colors.amber,
+            ),
+            _buildNotificationItem(
+              'Achievement Unlocked',
+              'Congratulations! You earned "Quick Learner" badge',
+              '3 days ago',
+              Colors.purple,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Mark All Read'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNotificationItem(String title, String message, String time, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            message,
+            style: const TextStyle(fontSize: 12),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            time,
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey[600],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToWorkshopDetails(String title) {
+    Navigator.pushNamed(
+      context,
+      '/workshop-details',
+      arguments: {'title': title},
+    );
+  }
+
+  void _navigateToCourseDetails(String title) {
+    Navigator.pushNamed(
+      context,
+      '/course-details',
+      arguments: {'title': title},
+    );
+  }
+
+  void _navigateToChallengeDetails(String title) {
+    Navigator.pushNamed(
+      context,
+      '/challenge-details',
+      arguments: {'title': title},
+    );
+  }
+
+  void _navigateToResource(String title) {
+    Navigator.pushNamed(
+      context,
+      '/resource-details',
+      arguments: {'title': title},
+    );
+  }
+
+  void _navigateToWorkshopSelection() {
+    Navigator.pushNamed(context, '/workshop-selection');
+  }
+
+  void _navigateToCourseSelection() {
+    Navigator.pushNamed(context, '/course-selection');
+  }
+
+  void _navigateToChallengeSelection() {
+    Navigator.pushNamed(context, '/challenge-selection');
+  }
+
+  void _navigateToResources() {
+    Navigator.pushNamed(context, '/resources');
   }
 } 

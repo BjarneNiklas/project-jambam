@@ -180,7 +180,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha(25),
             spreadRadius: 1,
             blurRadius: 3,
             offset: const Offset(0, 1),
@@ -253,7 +253,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.1),
+                      color: Colors.amber.withAlpha(25),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Text(
@@ -269,7 +269,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getCategoryColor(category).withOpacity(0.1),
+                    color: _getCategoryColor(category).withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -418,7 +418,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
         leading: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha(25),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(_getCategoryIcon(name), color: color, size: 24),
@@ -522,7 +522,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getCategoryColor(category).withOpacity(0.1),
+                    color: _getCategoryColor(category).withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -538,7 +538,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: status == 'Active' ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+                    color: status == 'Active' ? Colors.green.withAlpha(25) : Colors.grey.withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(

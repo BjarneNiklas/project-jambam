@@ -203,7 +203,6 @@ class ContentFilterSystem {
   /// Keyword-basierte Filterung
   FilterResult _performKeywordFiltering(String content, List<String> enabledConcerns) {
     final contentLower = content.toLowerCase();
-    final words = contentLower.split(RegExp(r'\s+'));
     
     for (final concern in enabledConcerns) {
       final category = _ethicalCategories[concern];
@@ -240,7 +239,6 @@ class ContentFilterSystem {
   /// Kontext-basierte Filterung
   FilterResult _performContextFiltering(String content, List<String> enabledConcerns) {
     final contentLower = content.toLowerCase();
-    final sentences = contentLower.split(RegExp(r'[.!?]+'));
 
     for (final concern in enabledConcerns) {
       final category = _ethicalCategories[concern];

@@ -66,7 +66,7 @@ class _EnhancedJambaAIScreenState extends ConsumerState<EnhancedJambaAIScreen> {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -180,7 +180,7 @@ class _EnhancedJambaAIScreenState extends ConsumerState<EnhancedJambaAIScreen> {
                   decoration: BoxDecoration(
                     color: isUser 
                         ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.surfaceVariant,
+                        : Theme.of(context).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -218,7 +218,7 @@ class _EnhancedJambaAIScreenState extends ConsumerState<EnhancedJambaAIScreen> {
                         MarkdownBody(
                           data: message.content,
                           styleSheet: MarkdownStyleSheet(
-                            textScaleFactor: 0.9,
+                            textScaler: const TextScaler.linear(0.9),
                           ),
                         )
                       else

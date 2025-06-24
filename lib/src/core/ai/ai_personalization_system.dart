@@ -1,6 +1,5 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ai_architecture_system.dart';
 
@@ -17,8 +16,8 @@ class AIPersonalizationSystem {
   
   // Personalization metrics
   int _totalInteractions = 0;
-  Map<String, int> _taskTypeUsage = {};
-  Map<String, double> _userSatisfaction = {};
+  final Map<String, int> _taskTypeUsage = {};
+  final Map<String, double> _userSatisfaction = {};
   
   // Initialize personalization
   Future<void> initialize() async {

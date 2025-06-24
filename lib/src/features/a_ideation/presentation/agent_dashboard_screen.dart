@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/multi_agent_system.dart' as domain;
 import '../data/agent_orchestrator_service.dart';
 import '../data/project_master_agent_service.dart';
-import '../data/workflow_types.dart';
 
 /// Modernes Agenten-Dashboard für Multi-Agenten-Interaktion
 class AgentDashboardScreen extends ConsumerStatefulWidget {
@@ -22,8 +21,9 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
   final ProjectMasterAgentService _projectMaster = ProjectMasterAgentService();
   
   String? _currentWorkflowId;
-  WorkflowStatus? _workflowStatus;
+  domain.WorkflowStatus? _workflowStatus;
   domain.ProjectMasterAgent? _currentProject;
+  bool _isStartingWorkflow = false;
 
   @override
   void initState() {
@@ -264,7 +264,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.green.withOpacity(0.3),
+                                  color: Colors.green.withAlpha(76),
                                   blurRadius: 8 * _pulseController.value,
                                   spreadRadius: 2 * _pulseController.value,
                                 ),
@@ -366,7 +366,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Workflow #${_currentWorkflowId}',
+                        'Workflow #$_currentWorkflowId',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -387,7 +387,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: (_workflowStatus?.progress ?? 0) / 100,
-              backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               valueColor: AlwaysStoppedAnimation<Color>(
                 Theme.of(context).colorScheme.primary,
               ),
@@ -451,13 +451,18 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
           color = Colors.orange;
           text = 'Bereit';
           break;
+        case domain.AgentStatus.processing:
+          color = Colors.blue;
+          text = 'Verarbeitung';
+          break;
         case domain.AgentStatus.error:
           color = Colors.red;
           text = 'Fehler';
           break;
-        default:
-          color = Colors.grey;
-          text = 'Unbekannt';
+        case domain.AgentStatus.completed:
+          color = Colors.green;
+          text = 'Abgeschlossen';
+          break;
       }
     } else if (status is domain.ProjectStatus) {
       switch (status) {
@@ -485,9 +490,6 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
           color = Colors.grey;
           text = 'Archiviert';
           break;
-        default:
-          color = Colors.grey;
-          text = 'Unbekannt';
       }
     } else {
       color = Colors.grey;
@@ -497,9 +499,9 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha(25),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha(76)),
       ),
       child: Text(
         text,
@@ -602,20 +604,64 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
   }
 
   Future<void> _startWorkflow() async {
-    // TODO: Implement workflow start
     setState(() {
-      _currentWorkflowId = 'workflow_${DateTime.now().millisecondsSinceEpoch}';
-      _workflowStatus = WorkflowStatus(
-        workflowId: _currentWorkflowId!,
-        type: WorkflowType.full,
-        status: 'running',
-        progress: 0.0,
-        startTime: DateTime.now(),
-        logs: ['Workflow started'],
-        warnings: [],
-        errors: [],
-      );
+      _isStartingWorkflow = true;
     });
+
+    try {
+      // Start the actual workflow orchestration using the correct method
+      final result = await _orchestrator.startGameDevelopmentWorkflow(
+        concept: 'AI Adventure Game',
+        targetAudience: 'Casual gamers',
+        targetEngine: 'Unity',
+        targetPlatform: 'Mobile',
+        preferences: {
+          'genre': 'adventure',
+          'style': 'casual',
+          'complexity': 'intermediate',
+        },
+        config: domain.WorkflowConfiguration(
+          enabledResearchSources: ['arxiv', 'google_scholar'],
+          ethicalConcerns: [domain.EthicalConcern.aiBias],
+          maxResearchResults: 10,
+          assetGenerationSettings: {'quality': 'medium'},
+          engineConfig: {'version': '2022.3'},
+          codeGenerationOptions: {'language': 'csharp'},
+          buildConfig: {'platform': 'android'},
+        ),
+      );
+
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Workflow started successfully! Result: ${result.workflowId}'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      // Handle errors
+      setState(() {
+        _workflowStatus = _workflowStatus?.copyWith(
+          status: 'error',
+          errors: [...(_workflowStatus?.errors ?? []), e.toString()],
+        );
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to start workflow: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      setState(() {
+        _isStartingWorkflow = false;
+      });
+    }
   }
 
   Future<void> _stopWorkflow() async {

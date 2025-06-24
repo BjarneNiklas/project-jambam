@@ -245,7 +245,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withAlpha((255 * 0.1).round()),
+        color: color.withAlpha(51),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
@@ -643,7 +643,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withAlpha(51),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
