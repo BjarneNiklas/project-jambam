@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // TODO: Implement or restore enhanced_chip.dart
-// import 'package:project_jambam/src/shared/enhanced_chip.dart';
+import 'package:project_jambam/src/shared/enhanced_chip.dart';
 import '../data/content_filter_service.dart';
 import '../domain/content_filter_system.dart';
 

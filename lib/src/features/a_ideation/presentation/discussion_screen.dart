@@ -59,12 +59,14 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
             icon: const Icon(Icons.search),
             onPressed: () {
               // TODO: Search discussions
+              print('Search discussions tapped');
             },
           ),
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
               // TODO: Show notifications
+              print('Show notifications tapped');
             },
           ),
         ],
@@ -331,6 +333,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                   icon: const Icon(Icons.thumb_up_outlined, size: 20),
                   onPressed: () {
                     // TODO: Like discussion
+                    print('Like discussion tapped');
                   },
                 ),
                 Text('$likes'),
@@ -339,6 +342,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                   icon: const Icon(Icons.reply, size: 20),
                   onPressed: () {
                     // TODO: Reply to discussion
+                    print('Reply to discussion tapped');
                   },
                 ),
                 Text('$replies'),
@@ -357,6 +361,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                   icon: const Icon(Icons.more_vert, size: 20),
                   onPressed: () {
                     // TODO: Show options
+                    print('Show options tapped');
                   },
                 ),
               ],
@@ -445,6 +450,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
         trailing: const Icon(Icons.arrow_forward_ios),
         onTap: () {
           // TODO: Navigate to category
+          print('Navigate to category tapped for $name');
         },
       ),
     );
@@ -611,6 +617,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                     label: const Text('Delete'),
                     onPressed: () {
                       // TODO: Delete topic
+                       print('Delete topic tapped for "$title"');
                     },
                   ),
                 ),
@@ -643,6 +650,9 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
               }).toList(),
               onChanged: (value) {
                 // TODO: Handle category selection
+                 if (value != null) {
+                   print('Category selected: $value');
+                 }
               },
             ),
             const SizedBox(height: 16),
@@ -673,6 +683,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
           ElevatedButton(
             onPressed: () {
               // TODO: Create topic
+               print('Create topic tapped');
               Navigator.pop(context);
             },
             child: const Text('Create'),
