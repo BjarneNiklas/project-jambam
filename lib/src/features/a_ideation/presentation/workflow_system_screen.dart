@@ -163,7 +163,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withAlpha((255 * 0.8).round()),
             fontSize: 12,
           ),
         ),
@@ -195,7 +195,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.1),
+                    color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -245,9 +245,9 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +278,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
+                  color: color.withAlpha((255 * 0.2).round()),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -343,7 +343,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
           const SizedBox(height: 12),
           LinearProgressIndicator(
             value: int.parse(progress.replaceAll('%', '')) / 100,
-            backgroundColor: Colors.grey.withOpacity(0.3),
+            backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
             valueColor: AlwaysStoppedAnimation<Color>(color),
             minHeight: 6,
           ),
@@ -448,9 +448,9 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Column(
         children: [
@@ -598,7 +598,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -661,9 +661,9 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Column(
         children: [
@@ -870,7 +870,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -920,10 +920,10 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: enabled ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: enabled ? color.withAlpha((255 * 0.1).round()) : Colors.grey.withAlpha((255 * 0.05).round()),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: enabled ? color : Colors.grey.withOpacity(0.3),
+          color: enabled ? color : Colors.grey.withAlpha((255 * 0.3).round()),
         ),
       ),
       child: Row(
@@ -960,7 +960,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
             onChanged: (value) {
               // TODO: Toggle automation
             },
-            activeColor: color,
+            activeThumbColor: color,
           ),
         ],
       ),
@@ -1000,10 +1000,10 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: enabled ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: enabled ? color.withAlpha((255 * 0.1).round()) : Colors.grey.withAlpha((255 * 0.05).round()),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: enabled ? color : Colors.grey.withOpacity(0.3),
+          color: enabled ? color : Colors.grey.withAlpha((255 * 0.3).round()),
         ),
       ),
       child: Row(
@@ -1040,7 +1040,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
             onChanged: (value) {
               // TODO: Toggle trigger
             },
-            activeColor: color,
+            activeThumbColor: color,
           ),
         ],
       ),
@@ -1147,7 +1147,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1236,7 +1236,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -1284,9 +1284,9 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Row(
         children: [
@@ -1369,9 +1369,9 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Row(
         children: [

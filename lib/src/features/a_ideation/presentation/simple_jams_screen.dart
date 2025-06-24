@@ -30,7 +30,7 @@ class _JamsScreenState extends ConsumerState<JamsScreen>
       body: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).primaryColor.withAlpha((255 * 0.1).round()),
             child: TabBar(
               controller: _tabController,
               labelColor: Theme.of(context).primaryColor,

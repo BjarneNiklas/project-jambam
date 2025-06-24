@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/edit_profile_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings_screen.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -36,13 +38,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              // TODO: Edit profile
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              // TODO: Settings
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
             },
           ),
         ],
@@ -138,7 +146,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withAlpha((255 * 0.2).round()),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Text(
@@ -208,7 +216,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withAlpha((255 * 0.8).round()),
             fontSize: 12,
           ),
         ),
@@ -278,7 +286,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 20),
@@ -415,7 +423,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: level,
-            backgroundColor: Colors.grey.withOpacity(0.3),
+            backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
             valueColor: AlwaysStoppedAnimation<Color>(color),
             minHeight: 6,
           ),
@@ -476,7 +484,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: statusColor.withOpacity(0.1),
+              color: statusColor.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -550,7 +558,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -577,7 +585,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(Icons.business, color: color, size: 24),
@@ -593,7 +601,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: Colors.green.withAlpha((255 * 0.1).round()),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
@@ -617,7 +625,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -636,7 +644,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to organization
+            // For now, show a snackbar. Replace with actual navigation logic.
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Navigate to $name - Coming Soon!')),
+            );
           },
         ),
       ),
@@ -679,7 +690,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(Icons.people, color: color, size: 20),
@@ -774,7 +785,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
+                color: Colors.amber.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -801,7 +812,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: unlocked ? color : Colors.grey.withOpacity(0.3),
+            color: unlocked ? color : Colors.grey.withAlpha((255 * 0.3).round()),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(
@@ -891,7 +902,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -917,7 +928,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 20),
