@@ -140,7 +140,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
             ),
             const SizedBox(width: 4),
             const FaIcon(
-              FontAwesomeIcons.externalLinkAlt,
+              FontAwesomeIcons.externalLink,
               size: 10,
               color: Colors.white,
             ),
@@ -263,7 +263,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                       const SnackBar(content: Text('PDF Export - Coming Soon!')),
                     );
                   },
-                  icon: const FaIcon(FontAwesomeIcons.filePdf),
+                  icon: const FaIcon(FontAwesomeIcons.regularFilePdf),
                   label: const Text('Export PDF'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade600,
@@ -314,7 +314,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const FaIcon(FontAwesomeIcons.questionCircle),
+            icon: const FaIcon(FontAwesomeIcons.regularQuestionCircle),
             onPressed: () {
               showDialog(
                 context: context,
@@ -456,7 +456,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const FaIcon(
-                              FontAwesomeIcons.exclamationTriangle,
+                              FontAwesomeIcons.triangleExclamation,
                               size: 48,
                               color: Colors.red,
                             ),

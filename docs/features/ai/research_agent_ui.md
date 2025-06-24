@@ -32,7 +32,7 @@ Widget _buildSourceBadge(ResearchSource source) {
         children: [
           FaIcon(sourceInfo['icon']), // Source-spezifisches Icon
           Text(sourceInfo['name']),   // Source Name
-          FaIcon(FontAwesomeIcons.externalLinkAlt), // Link Icon
+          FaIcon(FontAwesomeIcons.externalLink), // Link Icon
         ],
       ),
     ),
