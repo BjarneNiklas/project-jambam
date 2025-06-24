@@ -228,7 +228,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   _selectedTerminology = value!;
                 });
                 // TODO: Update terminology configuration
-                debugPrint('Terminology configuration updated to: $value');
+                _handlePlaceholderAction('Update terminology to $value');
               },
             ),
             const SizedBox(height: 16),
@@ -326,7 +326,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   _selectedLanguage = value!;
                 });
                 // TODO: Update language
-                debugPrint('Language updated to: $value');
+                _handlePlaceholderAction('Update language to $value');
               },
             ),
           ],
@@ -557,7 +557,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Export data
-                debugPrint('Export data tapped');
+                _handlePlaceholderAction('Export data');
               },
             ),
             ListTile(
@@ -681,7 +681,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ElevatedButton(
             onPressed: () {
               // TODO: Delete account
-              debugPrint('Delete account confirmed');
+               _handlePlaceholderAction('Delete account');
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
@@ -695,5 +695,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  void _handlePlaceholderAction(String featureName) {
+    // TODO: Implement actual action for featureName
+    debugPrint('$featureName feature not implemented yet.');
   }
 } 
