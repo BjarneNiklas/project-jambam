@@ -35,9 +35,9 @@ class AuthWrapper extends ConsumerWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1),
+              Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
             ],
           ),
         ),
@@ -63,9 +63,9 @@ class AuthWrapper extends ConsumerWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1),
+              Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
             ],
           ),
         ),
@@ -91,7 +91,7 @@ class AuthWrapper extends ConsumerWidget {
                 Text( // Cannot be const due to Theme.of(context)
                   'There was an error loading your authentication state.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -130,9 +130,9 @@ class AuthLoadingWidget extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1),
+              Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
             ],
           ),
         ),
@@ -149,7 +149,7 @@ class AuthLoadingWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                       blurRadius: 20,
                       offset: const Offset(0, 10),
                     ),
@@ -173,7 +173,7 @@ class AuthLoadingWidget extends StatelessWidget {
               Text(
                 'Loading JambaM...',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                 ),
               ),
             ],

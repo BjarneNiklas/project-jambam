@@ -17,9 +17,9 @@ class LoginScreen extends ConsumerWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
-              Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1),
+              Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              Theme.of(context).colorScheme.tertiary.withOpacity(0.1),
             ],
           ),
         ),
@@ -81,7 +81,7 @@ class LoginScreen extends ConsumerWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -109,7 +109,7 @@ class LoginScreen extends ConsumerWidget {
         Text(
           'Next-Generation Game Development Platform',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
           ),
           textAlign: TextAlign.center,
         ),
@@ -213,7 +213,7 @@ class LoginScreen extends ConsumerWidget {
                 ? IconButton(
                     icon: Icon(
                       isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                     ),
                     onPressed: onTogglePasswordVisibility,
                   )
@@ -316,7 +316,7 @@ class LoginScreen extends ConsumerWidget {
         Text( // Cannot be const due to Theme
           'Explore the platform without creating an account',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
           ),
           textAlign: TextAlign.center,
         ),
@@ -406,7 +406,7 @@ class LoginScreen extends ConsumerWidget {
           Text(
             'Processing...', // Generic loading text
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                 ),
           ),
           const SizedBox(height: 24),

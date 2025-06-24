@@ -17,6 +17,118 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
   final TextEditingController _queryController = TextEditingController();
   final ResearchAgent _researchAgent = ResearchAgent();
   final config.ResearchAgentConfig _config = config.ResearchAgentConfig();
+
+  // Store UI specific details for each source type
+  final Map<config.ResearchSourceType, Map<String, dynamic>> _sourceUIDetails = {
+    config.ResearchSourceType.arxiv: {
+      'name': 'ArXiv',
+      'icon': FontAwesomeIcons.archive,
+      'colors': [Colors.red.shade400, Colors.orange.shade600],
+      'url': 'https://arxiv.org/'
+    },
+    config.ResearchSourceType.pubmed: {
+      'name': 'PubMed',
+      'icon': FontAwesomeIcons.notesMedical,
+      'colors': [Colors.blue.shade400, Colors.teal.shade600],
+      'url': 'https://pubmed.ncbi.nlm.nih.gov/'
+    },
+    config.ResearchSourceType.doj: {
+      'name': 'DOAJ',
+      'icon': FontAwesomeIcons.bookOpen,
+      'colors': [Colors.green.shade400, Colors.lightGreen.shade600],
+      'url': 'https://doaj.org/'
+    },
+    config.ResearchSourceType.crossref: {
+      'name': 'Crossref',
+      'icon': FontAwesomeIcons.link,
+      'colors': [Colors.purple.shade400, Colors.pink.shade600],
+      'url': 'https://crossref.org/'
+    },
+    config.ResearchSourceType.semanticScholar: {
+      'name': 'Semantic Scholar',
+      'icon': FontAwesomeIcons.brain,
+      'colors': [Colors.cyan.shade400, Colors.blue.shade700],
+      'url': 'https://www.semanticscholar.org/'
+    },
+    config.ResearchSourceType.ieee: {
+      'name': 'IEEE Xplore',
+      'icon': FontAwesomeIcons.microchip,
+      'colors': [Colors.indigo.shade400, Colors.blue.shade800],
+      'url': 'https://ieeexplore.ieee.org/'
+    },
+    config.ResearchSourceType.acm: {
+      'name': 'ACM Digital Library',
+      'icon': FontAwesomeIcons.laptopCode,
+      'colors': [Colors.lightBlue.shade400, Colors.cyan.shade700],
+      'url': 'https://dl.acm.org/'
+    },
+    config.ResearchSourceType.openAlex: {
+      'name': 'OpenAlex',
+      'icon': FontAwesomeIcons.globe,
+      'colors': [Colors.teal.shade300, Colors.green.shade600],
+      'url': 'https://openalex.org/'
+    },
+    config.ResearchSourceType.dblp: {
+      'name': 'DBLP',
+      'icon': FontAwesomeIcons.database,
+      'colors': [Colors.amber.shade400, Colors.orange.shade700],
+      'url': 'https://dblp.org/'
+    },
+    config.ResearchSourceType.core: {
+      'name': 'CORE',
+      'icon': FontAwesomeIcons.atom,
+      'colors': [Colors.pink.shade300, Colors.red.shade500],
+      'url': 'https://core.ac.uk/'
+    },
+    config.ResearchSourceType.springer: {
+      'name': 'SpringerLink',
+      'icon': FontAwesomeIcons.book,
+      'colors': [Colors.lime.shade400, Colors.green.shade700],
+      'url': 'https://link.springer.com/'
+    },
+    config.ResearchSourceType.elsevier: {
+      'name': 'ScienceDirect',
+      'icon': FontAwesomeIcons.flask,
+      'colors': [Colors.orange.shade300, Colors.deepOrange.shade500],
+      'url': 'https://www.sciencedirect.com/'
+    },
+    config.ResearchSourceType.steam: {
+      'name': 'Steam',
+      'icon': FontAwesomeIcons.steamSymbol,
+      'colors': [Colors.grey.shade700, Colors.blueGrey.shade900],
+      'url': 'https://store.steampowered.com/'
+    },
+    config.ResearchSourceType.twitch: {
+      'name': 'Twitch',
+      'icon': FontAwesomeIcons.twitch,
+      'colors': [Colors.purple.shade600, Colors.deepPurple.shade800],
+      'url': 'https://twitch.tv/'
+    },
+    config.ResearchSourceType.reddit: {
+      'name': 'Reddit',
+      'icon': FontAwesomeIcons.redditAlien,
+      'colors': [Colors.orange.shade700, Colors.red.shade900],
+      'url': 'https://reddit.com/'
+    },
+    config.ResearchSourceType.youtube: {
+      'name': 'YouTube',
+      'icon': FontAwesomeIcons.youtube,
+      'colors': [Colors.red.shade600, Colors.red.shade900],
+      'url': 'https://youtube.com/'
+    },
+    config.ResearchSourceType.itchio: {
+      'name': 'Itch.io',
+      'icon': FontAwesomeIcons.gamepad,
+      'colors': [Colors.pink.shade400, Colors.red.shade600],
+      'url': 'https://itch.io/'
+    },
+    config.ResearchSourceType.gameDevBlogs: {
+      'name': 'Game Dev Blogs',
+      'icon': FontAwesomeIcons.blog,
+      'colors': [Colors.brown.shade400, Colors.brown.shade700],
+      'url': 'https://gamedeveloper.com/'
+    },
+  };
   
   late AnimationController _loadingController;
   late AnimationController _resultsController;
@@ -98,24 +210,59 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
     }
   }
 
-  Widget _buildSourceBadge(ResearchSource source) {
-    final sourceInfo = _getSourceConfig()[source.toString().split('.').last];
-    
+  Widget _buildSourceBadge(ResearchSource source) { // `source` is from `../data/research_agent.dart`
+    // Convert the string source.source (e.g. "ArXiv") to ResearchSourceType enum
+    config.ResearchSourceType? sourceEnumType;
+    try {
+      // Assuming source.source from ResearchAgent matches the enum names (case-insensitive)
+      sourceEnumType = config.ResearchSourceType.values.firstWhere(
+        (e) => e.name.toLowerCase() == source.source.toLowerCase(),
+      );
+    } catch (e) {
+      // Handle if no match, or source.source is not a valid enum name
+      sourceEnumType = null;
+    }
+
+    final sourceDetails = sourceEnumType != null ? _sourceUIDetails[sourceEnumType] : null;
+
+    if (sourceDetails == null) {
+      return Container(
+        margin: const EdgeInsets.only(right: 8, bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          '${source.source} (Config missing)',
+          style: TextStyle(color: Colors.grey.shade700, fontSize: 12),
+        ),
+      );
+    }
+
+    final String displayName = sourceDetails['name'] as String? ?? source.source;
+    final IconData icon = sourceDetails['icon'] as IconData? ?? FontAwesomeIcons.questionCircle;
+    final List<Color> colors = (sourceDetails['colors'] as List<Color>?) ?? [Colors.grey, Colors.blueGrey];
+    // Use the specific paper's URL from ResearchSource, not the base URL from _sourceUIDetails for onTap
+    final String launchableUrl = source.url.isNotEmpty ? source.url : (sourceDetails['url'] as String? ?? '#');
+
+
     return GestureDetector(
-      onTap: () => _launchSourceUrl(sourceInfo['url']),
+      onTap: () => _launchSourceUrl(launchableUrl), // Use actual paper URL
       child: Container(
+        // ... rest of the styling using displayName, icon, colors ...
         margin: const EdgeInsets.only(right: 8, bottom: 8),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: sourceInfo['colors'],
+            colors: colors.length >= 2 ? colors : [Colors.grey, Colors.blueGrey],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: sourceInfo['colors'][0].withOpacity(0.3),
+              color: (colors.isNotEmpty ? colors[0] : Colors.grey).withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -125,13 +272,13 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             FaIcon(
-              sourceInfo['icon'],
+              icon,
               size: 14,
               color: Colors.white,
             ),
             const SizedBox(width: 6),
             Text(
-              sourceInfo['name'],
+              displayName, // Use displayName from UI details
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -148,29 +295,6 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
         ),
       ),
     );
-  }
-
-  Map<String, dynamic> _getSourceConfig() {
-    return {
-      'arxiv': _config.getSourceConfig(config.ResearchSourceType.arxiv)?.toJson(),
-      'pubmed': _config.getSourceConfig(config.ResearchSourceType.pubmed)?.toJson(),
-      'doj': _config.getSourceConfig(config.ResearchSourceType.doj)?.toJson(),
-      'crossref': _config.getSourceConfig(config.ResearchSourceType.crossref)?.toJson(),
-      'semanticScholar': _config.getSourceConfig(config.ResearchSourceType.semanticScholar)?.toJson(),
-      'ieee': _config.getSourceConfig(config.ResearchSourceType.ieee)?.toJson(),
-      'acm': _config.getSourceConfig(config.ResearchSourceType.acm)?.toJson(),
-      'openAlex': _config.getSourceConfig(config.ResearchSourceType.openAlex)?.toJson(),
-      'dblp': _config.getSourceConfig(config.ResearchSourceType.dblp)?.toJson(),
-      'core': _config.getSourceConfig(config.ResearchSourceType.core)?.toJson(),
-      'springer': _config.getSourceConfig(config.ResearchSourceType.springer)?.toJson(),
-      'elsevier': _config.getSourceConfig(config.ResearchSourceType.elsevier)?.toJson(),
-      'steam': _config.getSourceConfig(config.ResearchSourceType.steam)?.toJson(),
-      'twitch': _config.getSourceConfig(config.ResearchSourceType.twitch)?.toJson(),
-      'reddit': _config.getSourceConfig(config.ResearchSourceType.reddit)?.toJson(),
-      'youtube': _config.getSourceConfig(config.ResearchSourceType.youtube)?.toJson(),
-      'itchio': _config.getSourceConfig(config.ResearchSourceType.itchio)?.toJson(),
-      'gameDevBlogs': _config.getSourceConfig(config.ResearchSourceType.gameDevBlogs)?.toJson(),
-    };
   }
 
   Widget _buildResearchResult(ResearchResult result) {
