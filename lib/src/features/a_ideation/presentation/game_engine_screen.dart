@@ -37,12 +37,14 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
             icon: const Icon(Icons.add),
             onPressed: () {
               // TODO: Add new engine
+              print('Add new engine button pressed');
             },
           ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
               // TODO: Engine settings
+              print('Engine settings button pressed');
             },
           ),
         ],
@@ -163,7 +165,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withAlpha((255 * 0.8).round()),
             fontSize: 12,
           ),
         ),
@@ -231,10 +233,10 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isConnected ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isConnected ? color.withAlpha((255 * 0.1).round()) : Colors.grey.withAlpha((255 * 0.05).round()),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isConnected ? color : Colors.grey.withOpacity(0.3),
+          color: isConnected ? color : Colors.grey.withAlpha((255 * 0.3).round()),
         ),
       ),
       child: Row(
@@ -242,7 +244,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withAlpha((255 * 0.2).round()),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: color, size: 24),
@@ -275,7 +277,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isConnected ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+                  color: isConnected ? Colors.green.withAlpha((255 * 0.1).round()) : Colors.grey.withAlpha((255 * 0.1).round()),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -292,8 +294,10 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 onPressed: () {
                   if (isConnected) {
                     // TODO: Manage engine
+                    print('Manage engine button pressed for $name');
                   } else {
                     // TODO: Connect engine
+                    print('Connect engine button pressed for $name');
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -403,6 +407,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: OutlinedButton.icon(
                     onPressed: () {
                       // TODO: Add custom engine
+                      print('Add custom engine button pressed');
                     },
                     icon: const Icon(Icons.add),
                     label: const Text('Add Engine'),
@@ -413,6 +418,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: OutlinedButton.icon(
                     onPressed: () {
                       // TODO: Import project
+                      print('Import project button pressed');
                     },
                     icon: const Icon(Icons.upload),
                     label: const Text('Import Project'),
@@ -464,7 +470,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -495,7 +501,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.games, color: Colors.blue, size: 20),
@@ -512,7 +518,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
+                    color: Colors.green.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Text(
@@ -538,6 +544,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: OutlinedButton(
                     onPressed: () {
                       // TODO: Configure Unity
+                      print('Configure Unity button pressed');
                     },
                     child: const Text('Configure'),
                   ),
@@ -547,6 +554,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: ElevatedButton(
                     onPressed: () {
                       // TODO: Sync Unity
+                      print('Sync Unity button pressed');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
@@ -606,7 +614,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.purple.withOpacity(0.1),
+                    color: Colors.purple.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.games, color: Colors.purple, size: 20),
@@ -623,7 +631,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
+                    color: Colors.green.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Text(
@@ -649,6 +657,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: OutlinedButton(
                     onPressed: () {
                       // TODO: Configure Unreal
+                      print('Configure Unreal button pressed');
                     },
                     child: const Text('Configure'),
                   ),
@@ -658,6 +667,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: ElevatedButton(
                     onPressed: () {
                       // TODO: Sync Unreal
+                      print('Sync Unreal button pressed');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
@@ -688,7 +698,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
+                    color: Colors.green.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.games, color: Colors.green, size: 20),
@@ -705,7 +715,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
+                    color: Colors.orange.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Text(
@@ -730,6 +740,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               child: ElevatedButton(
                 onPressed: () {
                   // TODO: Connect Godot
+                  print('Connect Godot button pressed');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
@@ -772,6 +783,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: OutlinedButton(
                     onPressed: () {
                       // TODO: View API docs
+                      print('View API docs button pressed');
                     },
                     child: const Text('API Docs'),
                   ),
@@ -781,6 +793,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                   child: ElevatedButton(
                     onPressed: () {
                       // TODO: Generate SDK
+                      print('Generate SDK button pressed');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepOrange,
@@ -885,7 +898,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepOrange.withOpacity(0.1),
+                color: Colors.deepOrange.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -917,7 +930,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(Icons.copy, color: color, size: 20),
@@ -947,7 +960,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -967,7 +980,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -983,6 +996,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 OutlinedButton(
                   onPressed: () {
                     // TODO: Preview template
+                    print('Preview template button pressed for $name');
                   },
                   child: const Text('Preview'),
                 ),
@@ -990,6 +1004,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 ElevatedButton(
                   onPressed: () {
                     // TODO: Use template
+                    print('Use template button pressed for $name');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
@@ -1041,7 +1056,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepOrange.withOpacity(0.1),
+                color: Colors.deepOrange.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1091,10 +1106,10 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: enabled ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: enabled ? color.withAlpha((255 * 0.1).round()) : Colors.grey.withAlpha((255 * 0.05).round()),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: enabled ? color : Colors.grey.withOpacity(0.3),
+          color: enabled ? color : Colors.grey.withAlpha((255 * 0.3).round()),
         ),
       ),
       child: Row(
@@ -1130,6 +1145,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
             ElevatedButton(
               onPressed: () {
                 // TODO: Deploy to platform
+                print('Deploy to platform button pressed for $platform');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: color,
@@ -1229,6 +1245,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               value: false,
               onChanged: (value) {
                 // TODO: Update setting
+                print('Auto Deploy setting changed to $value');
               },
               secondary: const Icon(Icons.auto_awesome),
             ),
@@ -1238,6 +1255,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               value: true,
               onChanged: (value) {
                 // TODO: Update setting
+                print('Build Optimization setting changed to $value');
               },
               secondary: const Icon(Icons.tune),
             ),
@@ -1247,6 +1265,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               value: true,
               onChanged: (value) {
                 // TODO: Update setting
+                print('Version Control setting changed to $value');
               },
               secondary: const Icon(Icons.history),
             ),
