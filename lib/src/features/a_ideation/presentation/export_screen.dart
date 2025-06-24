@@ -81,6 +81,18 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
   ];
   Set<String> _selectedDataTypeIds = {};
 
+  // Data for data export formats
+  final List<_DataExportFormat> _dataExportFormats = [
+    _DataExportFormat(id: 'dataFmtJson', name: 'JSON', description: 'Structured data format', color: Colors.blue, isInitiallySelected: true),
+    _DataExportFormat(id: 'dataFmtCsv', name: 'CSV', description: 'Spreadsheet format', color: Colors.green),
+    _DataExportFormat(id: 'dataFmtXml', name: 'XML', description: 'Markup format', color: Colors.orange),
+    _DataExportFormat(id: 'dataFmtPdf', name: 'PDF', description: 'Document format (summary)', color: Colors.red),
+  ];
+  String? _selectedDataExportFormatId;
+  bool _isExportingData = false; // For data export progress
+  double _dataExportProgress = 0.0; // For data export progress
+
+
   @override
   void initState() {
     super.initState(); // Should be first
@@ -94,11 +106,18 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
     // Initialize selected project export format
     final initiallySelectedFormat = _projectExportFormats.lastWhere(
       (f) => f.isInitiallySelected,
-      orElse: () => _projectExportFormats.isNotEmpty ? _projectExportFormats.first : null,
+      orElse: () {
+        if (_projectExportFormats.isEmpty) {
+          // This case should ideally not happen if formats are always defined.
+          // Throw an error or handle as per application's error strategy.
+          // For now, let's throw to make it explicit.
+          throw StateError("No project export formats available.");
+        }
+        return _projectExportFormats.first;
+      },
     );
-    if (initiallySelectedFormat != null) {
-      _selectedProjectExportFormatId = initiallySelectedFormat.id;
-    }
+    // No null check needed now as orElse guarantees a value or throws.
+    _selectedProjectExportFormatId = initiallySelectedFormat.id;
 
     // Initialize selected asset categories
     _selectedAssetCategoryIds = _assetCategories
@@ -109,17 +128,34 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
     // Initialize selected asset export format
     final initiallySelectedAssetFormat = _assetExportFormats.lastWhere(
       (f) => f.isInitiallySelected,
-      orElse: () => _assetExportFormats.isNotEmpty ? _assetExportFormats.first : null,
+      orElse: () {
+        if (_assetExportFormats.isEmpty) {
+          // Similar to project formats, this case should ideally not happen.
+          throw StateError("No asset export formats available.");
+        }
+        return _assetExportFormats.first;
+      },
     );
-    if (initiallySelectedAssetFormat != null) {
-      _selectedAssetExportFormatId = initiallySelectedAssetFormat.id;
-    }
+    // No null check needed now.
+    _selectedAssetExportFormatId = initiallySelectedAssetFormat.id;
 
     // Initialize selected data types
     _selectedDataTypeIds = _dataTypes
         .where((d) => d.isInitiallySelected)
         .map((d) => d.id)
         .toSet();
+
+    // Initialize selected data export format
+    final initiallySelectedDataFormat = _dataExportFormats.lastWhere(
+      (f) => f.isInitiallySelected,
+      orElse: () {
+        if (_dataExportFormats.isEmpty) {
+          throw StateError("No data export formats available.");
+        }
+        return _dataExportFormats.first;
+      },
+    );
+    _selectedDataExportFormatId = initiallySelectedDataFormat.id;
   }
 
   @override
@@ -128,7 +164,6 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
     super.dispose();
   }
 
-  @override
   Future<void> _exportSettings() async {
     // Gather settings data
     final promptConfig = ref.read(promptConfigProvider);
@@ -191,7 +226,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
 
     final historyData = {
       'chatHistory': messages,
-      // TODO: Potentially include JamKit history here if available
+      // TODO: Potentially include JamKit history here if available.
+      // Define structure and access method for JamKit history data.
+      // Example: 'jamKitHistory': fetchJamKitHistory(),
     };
 
     final jsonString = jsonEncode(historyData);
@@ -416,10 +453,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
+        color: isSelected ? project.color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
+          color: isSelected ? project.color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -501,10 +538,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
+        color: isSelected ? format.color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
+          color: isSelected ? format.color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -897,16 +934,16 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: category.color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        border: Border.all(color: category.color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.2),
+              color: category.color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(Icons.folder, color: category.color, size: 20), // Use category.color
@@ -982,10 +1019,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
+        color: isSelected ? format.color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
+          color: isSelected ? format.color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -1047,7 +1084,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               const SizedBox(height: 16),
               LinearProgressIndicator(
                 value: _assetExportProgress,
-                backgroundColor: Colors.grey.withOpacity(0.3),
+                backgroundColor: Colors.grey.withValues(alpha: 0.3),
                 valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
                 minHeight: 8,
               ),
@@ -1255,16 +1292,16 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: dataType.color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        border: Border.all(color: dataType.color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.2),
+              color: dataType.color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(Icons.storage, color: dataType.color, size: 20),
@@ -1335,49 +1372,54 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            _buildDataFormatItem('JSON', 'Structured data format', true, Colors.blue),
-            _buildDataFormatItem('CSV', 'Spreadsheet format', false, Colors.green),
-            _buildDataFormatItem('XML', 'Markup format', false, Colors.orange),
-            _buildDataFormatItem('PDF', 'Document format', true, Colors.red),
+            for (final format in _dataExportFormats)
+              _buildDataFormatItem(format),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDataFormatItem(String format, String description, bool isSelected, Color color) {
+  Widget _buildDataFormatItem(_DataExportFormat format) {
+    final isSelected = _selectedDataExportFormatId == format.id;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
+        color: isSelected ? format.color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
+          color: isSelected ? format.color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         children: [
-          Checkbox(
+          Checkbox( // Using Checkbox but acting like Radio
             value: isSelected,
             onChanged: (value) {
-              // TODO: Update format selection
+              setState(() {
+                if (value == true) {
+                  _selectedDataExportFormatId = format.id;
+                }
+                // For radio-button like behavior, unchecking is implicitly handled
+                // by checking another. If no format should be nullable, this is fine.
+              });
             },
-            activeColor: color,
+            activeColor: format.color,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  format,
+                  format.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  description,
+                  format.description,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -1415,14 +1457,54 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Export data
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
+              if (_isExportingData) ...[
+                const Text(
+                  'Exporting Data...',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                LinearProgressIndicator(
+                  value: _dataExportProgress,
+                  backgroundColor: Colors.grey.withValues(alpha: 0.3),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
+                  minHeight: 8,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '${(_dataExportProgress * 100).toInt()}% complete',
+                  style: const TextStyle(
+                    color: Colors.teal,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ] else ...[
+                const Text(
+                  'Ready to Export Data',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _selectedDataTypeIds.isEmpty
+                      ? 'No data types selected'
+                      : 'Selected: ${_selectedDataTypeIds.length} data type${_selectedDataTypeIds.length == 1 ? '' : 's'}',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _isExportingData ? null : _exportData,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -1438,6 +1520,80 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
     );
   }
 }
+
+Future<void> _exportData() async {
+  if (_selectedDataTypeIds.isEmpty) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Please select data types to export.')),
+    );
+    return;
+  }
+  if (_selectedDataExportFormatId == null) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Please select an export format for data.')),
+    );
+    return;
+  }
+
+  setState(() {
+    _isExportingData = true;
+    _dataExportProgress = 0.0;
+  });
+
+  // Simulate export progress
+  // In a real app, this would involve:
+  // 1. Fetching the actual data based on _selectedDataTypeIds.
+  // 2. Formatting the data according to _selectedDataExportFormatId.
+  // 3. Saving or sharing the formatted data.
+  final totalSteps = _selectedDataTypeIds.length;
+  for (int i = 0; i < totalSteps; i++) {
+    await Future.delayed(const Duration(milliseconds: 300)); // Simulate work for each data type
+    if (mounted) {
+      setState(() {
+        _dataExportProgress = (i + 1) / totalSteps;
+      });
+    }
+  }
+
+  await Future.delayed(const Duration(milliseconds: 200)); // Finalizing
+
+  if (mounted) {
+    setState(() {
+      _isExportingData = false;
+    });
+    _showDataExportCompleteDialog();
+  }
+}
+
+void _showDataExportCompleteDialog() {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Data Export Complete'),
+      content: const Text(
+        'Your selected data has been successfully exported (simulated)!',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('OK'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+            _openExportFolder(); // Re-use the existing open folder logic
+          },
+          child: const Text('Open Folder'),
+        ),
+      ],
+    ),
+  );
+}
+
 
 // Simple data class for Project
 class _Project {
@@ -1506,6 +1662,23 @@ class _DataType {
     required this.name,
     required this.description,
     required this.size,
+    required this.color,
+    this.isInitiallySelected = false,
+  });
+}
+
+// Simple data class for Data Export Format
+class _DataExportFormat {
+  final String id;
+  final String name;
+  final String description; // e.g., "Structured data format", "Spreadsheet format"
+  final Color color;
+  final bool isInitiallySelected;
+
+  _DataExportFormat({
+    required this.id,
+    required this.name,
+    required this.description,
     required this.color,
     this.isInitiallySelected = false,
   });
