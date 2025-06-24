@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_jambam/src/core/logger.dart'; // Added Logger import
 
 class WorkflowSystemScreen extends ConsumerStatefulWidget {
   const WorkflowSystemScreen({super.key});
@@ -11,6 +12,7 @@ class WorkflowSystemScreen extends ConsumerStatefulWidget {
 class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  final _logger = Logger('WorkflowSystemScreen'); // Logger instance
 
   @override
   void initState() {
@@ -24,6 +26,52 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
     super.dispose();
   }
 
+  // Placeholder methods for TODO actions
+  void _createNewWorkflow() {
+    _logger.info('Placeholder: Create new workflow tapped. Navigate to CreateWorkflowScreen or show dialog.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWorkflowScreen()));
+  }
+
+  void _navigateToWorkflowAnalytics() {
+    _logger.info('Placeholder: Workflow analytics tapped. Navigate to WorkflowAnalyticsScreen or switch to Analytics tab.');
+    // Example: _tabController.animateTo(3); // Assuming Analytics is the 4th tab (index 3)
+  }
+
+  void _viewWorkflow(String workflowName) {
+    _logger.info('Placeholder: View workflow tapped for "$workflowName". Navigate to WorkflowDetailScreen.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => WorkflowDetailScreen(workflowName: workflowName)));
+  }
+
+  void _manageWorkflow(String workflowName) {
+    _logger.info('Placeholder: Manage workflow tapped for "$workflowName". Navigate to ManageWorkflowScreen.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => ManageWorkflowScreen(workflowName: workflowName)));
+  }
+
+  void _useWorkflowTemplate(String templateName) {
+    _logger.info('Placeholder: Use template tapped for "$templateName". Create a new workflow using this template.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWorkflowScreen(template: templateName)));
+  }
+
+  void _filterTasksByStatus(String? status) {
+    _logger.info('Placeholder: Filter tasks by status: $status');
+    // Add actual filtering logic here
+  }
+
+  void _filterTasksByAssignee(String? assignee) {
+    _logger.info('Placeholder: Filter tasks by assignee: $assignee');
+    // Add actual filtering logic here
+  }
+
+  void _toggleAutomationRule(String ruleName, bool newValue) {
+    _logger.info('Placeholder: Toggle automation rule "$ruleName" to $newValue.');
+    // Add logic to update automation rule state
+  }
+
+  void _toggleAutomationTrigger(String triggerName, bool newValue) {
+    _logger.info('Placeholder: Toggle automation trigger "$triggerName" to $newValue.');
+    // Add logic to update automation trigger state
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,17 +83,11 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {
-              // TODO: Create new workflow
-              print('Navigate to CreateWorkflowScreen or show dialog');
-            },
+            onPressed: _createNewWorkflow,
           ),
           IconButton(
             icon: const Icon(Icons.analytics),
-            onPressed: () {
-              // TODO: Workflow analytics
-              print('Navigate to WorkflowAnalyticsScreen or switch to Analytics tab');
-            },
+            onPressed: _navigateToWorkflowAnalytics,
           ),
         ],
         bottom: TabBar(
@@ -354,20 +396,14 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: () {
-                    // TODO: View workflow
-                    print('Navigate to WorkflowDetailScreen for workflow: $name');
-                  },
+                  onPressed: () => _viewWorkflow(name),
                   child: const Text('View'),
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Manage workflow
-                    print('Navigate to ManageWorkflowScreen for workflow: $name');
-                  },
+                  onPressed: () => _manageWorkflow(name),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
                     foregroundColor: Colors.white,
@@ -478,10 +514,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
           ),
           const SizedBox(height: 8),
           ElevatedButton(
-            onPressed: () {
-              // TODO: Use template
-              print('Use template: $name to create a new workflow');
-            },
+            onPressed: () => _useWorkflowTemplate(name),
             style: ElevatedButton.styleFrom(
               backgroundColor: color,
               foregroundColor: Colors.white,
@@ -734,10 +767,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
                       DropdownMenuItem(value: 'Review', child: Text('Review')),
                       DropdownMenuItem(value: 'Done', child: Text('Done')),
                     ],
-                    onChanged: (value) {
-                      // TODO: Filter tasks
-                      print('Filter tasks by status: $value');
-                    },
+                    onChanged: _filterTasksByStatus,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -754,10 +784,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
                       DropdownMenuItem(value: 'Sarah M.', child: Text('Sarah M.')),
                       DropdownMenuItem(value: 'Mike R.', child: Text('Mike R.')),
                     ],
-                    onChanged: (value) {
-                      // TODO: Filter tasks
-                      print('Filter tasks by assignee: $value');
-                    },
+                    onChanged: _filterTasksByAssignee,
                   ),
                 ),
               ],
@@ -964,10 +991,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
           ),
           Switch(
             value: enabled,
-            onChanged: (value) {
-              // TODO: Toggle automation
-              print('Toggle automation rule: $name to $value');
-            },
+            onChanged: (value) => _toggleAutomationRule(name, value),
             activeThumbColor: color,
           ),
         ],
@@ -1045,10 +1069,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
           ),
           Switch(
             value: enabled,
-            onChanged: (value) {
-              // TODO: Toggle trigger
-              print('Toggle trigger: $trigger to $value');
-            },
+            onChanged: (value) => _toggleAutomationTrigger(trigger, value),
             activeThumbColor: color,
           ),
         ],
