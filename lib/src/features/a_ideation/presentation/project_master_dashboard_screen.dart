@@ -339,6 +339,10 @@ class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDash
       case 'export':
         // TODO: Implement export prototype
         break;
+      default:
+        // Log unhandled action for debugging, but don't crash
+        debugPrint('Unhandled prototype action: $action for prototype ${prototype.id}');
+        break;
     }
   }
 

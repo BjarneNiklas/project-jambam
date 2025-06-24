@@ -95,6 +95,8 @@ class ProjectMasterAgentService {
         return AgentStatus.completed;
       case ProjectStatus.archived:
         return AgentStatus.error;
+      // This default case should ideally be unreachable if all ProjectStatus enum values are handled above.
+      // Kept due to "do not delete code" constraint.
       default:
         return AgentStatus.idle;
     }
