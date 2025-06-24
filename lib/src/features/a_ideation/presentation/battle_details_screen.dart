@@ -68,7 +68,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withAlpha((255 * 0.1).round()),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -80,7 +80,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withAlpha((255 * 0.1).round()),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -105,6 +105,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                 icon: const Icon(Icons.share, color: Colors.white),
                 onPressed: () {
                   // TODO: Share battle
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Share battle functionality to be implemented')),
+                  );
                 },
               ),
             ],
@@ -199,7 +202,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withAlpha((255 * 0.2).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -373,7 +376,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -492,7 +495,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -558,6 +561,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
             // TODO: Navigate to team details
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Navigate to team details functionality to be implemented')),
+            );
           },
         ),
       ),
@@ -619,7 +625,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
+                color: Colors.amber.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -673,7 +679,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.1),
+                      color: Colors.amber.withAlpha((255 * 0.1).round()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Text(
@@ -701,7 +707,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -737,6 +743,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                     label: const Text('Play Demo'),
                     onPressed: () {
                       // TODO: Launch demo
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Launch demo functionality to be implemented')),
+                      );
                     },
                   ),
                 ),
@@ -747,6 +756,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                     label: const Text('Details'),
                     onPressed: () {
                       // TODO: Show submission details
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Show submission details functionality to be implemented')),
+                      );
                     },
                   ),
                 ),
@@ -813,7 +825,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -893,6 +905,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                   icon: const Icon(Icons.thumb_up_outlined, size: 20),
                   onPressed: () {
                     // TODO: Like post
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Like post functionality to be implemented')),
+                    );
                   },
                 ),
                 Text('$likes'),
@@ -901,6 +916,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                   icon: const Icon(Icons.reply, size: 20),
                   onPressed: () {
                     // TODO: Reply to post
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Reply to post functionality to be implemented')),
+                    );
                   },
                 ),
                 Text('$replies'),
@@ -909,6 +927,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                   icon: const Icon(Icons.more_vert, size: 20),
                   onPressed: () {
                     // TODO: Show options
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Show options functionality to be implemented')),
+                    );
                   },
                 ),
               ],
@@ -924,6 +945,9 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
       return FloatingActionButton.extended(
         onPressed: () {
           // TODO: Submit project
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Submit project functionality to be implemented')),
+          );
         },
         backgroundColor: Colors.green,
         icon: const Icon(Icons.upload, color: Colors.white),

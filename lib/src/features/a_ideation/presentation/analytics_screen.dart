@@ -37,12 +37,18 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
             icon: const Icon(Icons.download),
             onPressed: () {
               // TODO: Export analytics
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Export analytics functionality to be implemented')),
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
               // TODO: Share analytics
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Share analytics functionality to be implemented')),
+              );
             },
           ),
         ],
@@ -172,7 +178,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: Colors.green.withOpacity(0.2),
+            color: Colors.green.withAlpha((255 * 0.2).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -260,7 +266,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+         color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -286,7 +292,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.1),
+              color: Colors.green.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -336,7 +342,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
                       const SizedBox(height: 4),
                       LinearProgressIndicator(
                         value: 0.75,
-                        backgroundColor: Colors.grey.withOpacity(0.3),
+                        backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
                         valueColor: const AlwaysStoppedAnimation<Color>(Colors.indigo),
                         minHeight: 8,
                       ),
@@ -355,7 +361,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.indigo.withOpacity(0.1),
+                    color: Colors.indigo.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -561,7 +567,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 16),
@@ -626,7 +632,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -696,7 +702,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress,
-            backgroundColor: Colors.grey.withOpacity(0.3),
+            backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
             valueColor: AlwaysStoppedAnimation<Color>(color),
             minHeight: 6,
           ),
@@ -811,7 +817,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: 0.51, // 18/35
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
               minHeight: 8,
             ),
@@ -888,7 +894,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1331,7 +1337,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.1),
+             color: Colors.green.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

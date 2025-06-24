@@ -249,7 +249,7 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
                   subtitle: Text(threatData['description'] ?? ''),
                   trailing: Text(_formatTimestamp(threatData['timestamp'])),
                 );
-              }).toList(),
+              }),
           ],
         ),
       ),
@@ -284,7 +284,7 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
                   color: _getEventStatusColor(eventData['status']),
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -801,13 +801,13 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
+            onPressed: () => Navigator.of(context).pop(false),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Delete'),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
+            onPressed: () => Navigator.of(context).pop(true),
           ),
         ],
       ),
