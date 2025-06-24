@@ -201,9 +201,9 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.blue.withOpacity(0.1),
+        color: Colors.blue.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.blue.withOpacity(0.3)),
+        border: Border.all(color: Colors.blue.withAlpha((255 * 0.3).round())),
       ),
       child: Row(
         children: [
@@ -262,9 +262,9 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
         width: double.infinity,
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.1),
+          color: Colors.grey.withAlpha((255 * 0.1).round()),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+          border: Border.all(color: Colors.grey.withAlpha((255 * 0.3).round())),
         ),
         child: Column(
           children: [
@@ -551,7 +551,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         border: Border.all(color: color),
         borderRadius: BorderRadius.circular(8),
       ),
@@ -603,7 +603,6 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
         ),
         const SizedBox(height: 8),
         ...analysis.concernAnalyses.entries.map((entry) {
-          final concern = entry.key;
           final concernAnalysis = entry.value;
           
           if (concernAnalysis.overallRisk < 0.1) return const SizedBox.shrink();
@@ -632,7 +631,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }

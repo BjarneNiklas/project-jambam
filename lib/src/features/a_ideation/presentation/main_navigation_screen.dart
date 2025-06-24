@@ -121,7 +121,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               title: const Text('Profil'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to profile
+                // TODO: Navigate to profile - Functionality not yet implemented.
               },
             ),
             ListTile(
@@ -129,7 +129,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               title: const Text('Einstellungen'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to settings
+                // TODO: Navigate to settings - Functionality not yet implemented.
               },
             ),
             
@@ -206,7 +206,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               subtitle: const Text('Experimentieren & Lernen'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to labs
+                // TODO: Navigate to labs - Functionality not yet implemented.
               },
             ),
             ListTile(
@@ -215,7 +215,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               subtitle: const Text('Projekt-Statistiken'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to analytics
+                // TODO: Navigate to analytics - Functionality not yet implemented.
               },
             ),
           ],
@@ -233,7 +233,6 @@ class _PlaceholderScreen extends StatelessWidget {
   final String description;
 
   const _PlaceholderScreen({
-    super.key,
     required this.title,
     required this.icon,
     required this.color,
