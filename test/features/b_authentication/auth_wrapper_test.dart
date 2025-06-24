@@ -43,31 +43,10 @@ void main() {
   });
 
   testWidgets('AuthWrapper shows error screen and handles try again', (WidgetTester tester) async {
-    final mockErrorCurrentUserProvider = StreamProvider<domain_user.User?>((ref) async* {
-      // Ensure it's treated as async and throws after the first frame
-      await Future.delayed(Duration.zero);
-      throw Exception('Test Auth Error');
-    });
-
-    // To track if invalidate was called (simplified mock)
-    bool providerInvalidated = false;
-    final mockTrackingCurrentUserProvider = StreamProvider<domain_user.User?>((ref) {
-      // This is a trick: when invalidated, this will be called again.
-      // For a real test, you might use a proper mocking framework or a more complex setup.
-      if (providerInvalidated) { // After "Try Again"
-        return Stream.value(null); // Or simulate loading then data
-      }
-      // Initial error state
-      return Stream.error(Exception('Test Auth Error'));
-    });
-
-    // We will use a more direct way to check invalidation by observing a change in UI state
-    // (e.g. going back to loading state) rather than directly tracking invalidate calls here.
-
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          currentUserProvider.overrideWithProvider(mockErrorCurrentUserProvider),
+          currentUserProvider.overrideWith((ref) => Stream<domain_user.User?>.error(Exception('Test Auth Error'))),
         ],
         child: const MaterialApp(
           home: AuthWrapper(),
@@ -82,51 +61,17 @@ void main() {
     final tryAgainButtonFinder = find.widgetWithText(ElevatedButton, 'Try Again');
     expect(tryAgainButtonFinder, findsOneWidget);
 
-    // Re-pump with a provider that can change its state upon invalidation
-    // to simulate the effect of "Try Again".
-    // When "Try Again" is tapped, it calls ref.invalidate(currentUserProvider).
-    // The overridden provider should then re-execute its logic.
-
-    // For simplicity, we'll assume the invalidate causes a brief loading state.
-    // We will override again with a provider that shows loading, then an error.
-    // This simulates the "Try Again" causing a re-fetch.
-
-    final loadingThenErrorProvider = StreamProvider<domain_user.User?>((ref) async* {
-      yield* Stream.value(null).asyncMap((event) async { // Trick to make it emit loading first
-          await Future.delayed(const Duration(milliseconds: 10)); // Simulate network delay
-          throw Exception('Persistent Error After Retry');
-        });
-    });
-
     await tester.tap(tryAgainButtonFinder);
-    // Override the provider *before* pumping again to reflect the new state post-invalidation.
-    // This is a bit of a workaround for not directly mocking `ref.invalidate`.
-    // A more robust way would involve a mock provider that changes its output based on an external signal or count.
-
-    // For this test, let's assume invalidation leads to re-evaluation of the *original* mockErrorCurrentUserProvider.
-    // So, tapping "Try Again" should re-trigger the error state from mockErrorCurrentUserProvider.
-    // A more realistic test would involve a mock that changes behavior after an invalidate.
-
-    // Let's test that after tap, it goes to loading, then error again.
-    // To do this, we need a provider that changes state.
-    int callCount = 0;
-    final mockRetryProvider = StreamProvider<domain_user.User?>((ref) async* {
-      callCount++;
-      if (callCount == 1) { // Initial load
-        await Future.delayed(Duration.zero);
-        throw Exception('Initial Auth Error');
-      } else { // After "Try Again" (invalidate)
-        // Simulate loading
-        yield null; // Represents loading state for AsyncValue.when
-        await Future.delayed(const Duration(milliseconds: 50)); // Simulate work
-        throw Exception('Auth Error After Retry'); // Simulate error again
-      }
-    });
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          currentUserProvider.overrideWithProvider(mockRetryProvider),
+          currentUserProvider.overrideWith((ref) {
+            return Stream<domain_user.User?>.value(null).asyncExpand((_) async* {
+              await Future.delayed(const Duration(milliseconds: 50));
+              throw Exception('Auth Error After Retry');
+            });
+          }),
         ],
         child: const MaterialApp(
           home: AuthWrapper(),

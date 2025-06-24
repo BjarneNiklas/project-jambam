@@ -5,6 +5,8 @@ import 'package:project_jambam/src/features/a_ideation/application/prompt_optimi
 import 'package:project_jambam/src/features/a_ideation/domain/accessibility_system.dart';
 import 'package:project_jambam/src/features/a_ideation/domain/ideation_methods.dart';
 import 'package:project_jambam/src/features/a_ideation/domain/jam_kit.dart' as jam_kit;
+import 'package:project_jambam/src/features/a_ideation/domain/game_seed.dart'; // Direkter Import von GameSeed
+import 'package:project_jambam/src/features/a_ideation/domain/development_blueprint.dart';
 
 /// Enhanced concept generation service that uses prompt optimization
 class EnhancedConceptGenerationService implements ConceptGenerationService {
@@ -91,6 +93,98 @@ class EnhancedConceptGenerationService implements ConceptGenerationService {
     
     _logger.info('Jam Seed generation completed successfully');
     return jamSeed;
+  }
+
+  @override
+  Future<GameSeed> generateGameSeed(ConceptGenerationInput input) async { // Typkorrektur
+    _logger.info('Starting Game Seed generation with ${input.keywords.length} keywords and genres: ${input.genres}');
+
+    // Optimize keywords if enabled
+    List<String> optimizedKeywords = input.keywords;
+    if (enablePromptOptimization) {
+      optimizedKeywords = await _optimizeKeywords(input.keywords);
+      _logger.info('Keywords optimized for Game Seed from ${input.keywords.length} to ${optimizedKeywords.length}');
+    }
+
+    // Create optimized input, passing genres
+    final optimizedInput = ConceptGenerationInput(
+      keywords: optimizedKeywords,
+      genres: input.genres, // Pass genres to the optimized input
+      inspirationMode: input.inspirationMode,
+      useMechanics: input.useMechanics, // Game Seeds can have mechanics
+      useMonetization: input.useMonetization, // Game Seeds can have monetization
+      generationMode: GenerationMode.gameSeed, // Use gameSeed mode
+    );
+
+    // Generate concept parts using the multi-agent system
+    final parts = await _generateConceptParts(optimizedInput);
+
+    // Assemble the final GameSeed
+    final gameSeed = _assembleGameSeed(parts, optimizedInput);
+
+    _logger.info('Game Seed generation completed successfully');
+    return gameSeed;
+  }
+
+  @override
+  Future<jam_kit.JamKit> generateJamKit(ConceptGenerationInput input) async {
+    _logger.info('Starting Jam Kit generation with ${input.keywords.length} keywords');
+
+    // Optimize keywords if enabled
+    List<String> optimizedKeywords = input.keywords;
+    if (enablePromptOptimization) {
+      optimizedKeywords = await _optimizeKeywords(input.keywords);
+      _logger.info('Keywords optimized for Jam Kit from ${input.keywords.length} to ${optimizedKeywords.length}');
+    }
+
+    // Create optimized input for Jam Kit (genre-agnostic)
+    final optimizedInput = ConceptGenerationInput(
+      keywords: optimizedKeywords,
+      inspirationMode: input.inspirationMode,
+      useMechanics: input.useMechanics,
+      useMonetization: input.useMonetization,
+      generationMode: GenerationMode.jamKit,
+    );
+
+    // Generate concept parts using the multi-agent system
+    final parts = await _generateConceptParts(optimizedInput);
+    
+    // Assemble the final JamKit
+    final jamKit = _assembleJamKit(parts, optimizedInput);
+    
+    _logger.info('Jam Kit generation completed successfully');
+    return jamKit;
+  }
+
+  @override
+  Future<DevelopmentBlueprint> generateDevelopmentBlueprint(ConceptGenerationInput input) async {
+    _logger.info('Starting Development Blueprint generation with ${input.keywords.length} keywords and genres: ${input.genres}');
+
+    // Optimize keywords if enabled
+    List<String> optimizedKeywords = input.keywords;
+    if (enablePromptOptimization) {
+      optimizedKeywords = await _optimizeKeywords(input.keywords);
+      _logger.info('Keywords optimized for Development Blueprint from ${input.keywords.length} to ${optimizedKeywords.length}');
+    }
+
+    // Create optimized input for Development Blueprint (genre-specific)
+    final optimizedInput = ConceptGenerationInput(
+      keywords: optimizedKeywords,
+      genres: input.genres, // Pass genres to the optimized input
+      inspirationMode: input.inspirationMode,
+      useMechanics: input.useMechanics,
+      useMonetization: input.useMonetization,
+      generationMode: GenerationMode.developmentBlueprint,
+    );
+
+    // Generate concept parts using the multi-agent system
+    final parts = await _generateConceptParts(optimizedInput);
+
+    // Assemble the final Development Blueprint
+    final developmentBlueprint = _assembleDevelopmentBlueprint(parts, optimizedInput);
+
+    _logger.info('Development Blueprint generation completed successfully');
+    return developmentBlueprint;
   }
 
   /// Optimize keywords using the prompt optimizer
@@ -186,22 +280,30 @@ class EnhancedConceptGenerationService implements ConceptGenerationService {
     // Create quests based on the concept parts
     if (parts['world'] != null) {
       quests.add(jam_kit.Quest(
-        title: 'Explore the World',
-        description: parts['world']!,
+        title: 'World Building',
+        description: 'Develop the game world: ${parts['world']}',
       ));
     }
     
     if (parts['mechanics'] != null) {
       quests.add(jam_kit.Quest(
-        title: 'Master the Mechanics',
-        description: parts['mechanics']!,
+        title: 'Core Mechanics',
+        description: 'Implement core mechanics: ${parts['mechanics']}',
       ));
     }
     
     if (parts['artDirection'] != null) {
       quests.add(jam_kit.Quest(
-        title: 'Create Visual Style',
-        description: parts['artDirection']!,
+        title: 'Visual Design',
+        description: 'Create visual style: ${parts['artDirection']}',
+      ));
+    }
+
+    // Add default quests if none were generated
+    if (quests.isEmpty) {
+      quests.add(jam_kit.Quest(
+        title: 'Core Development',
+        description: 'Develop the core game concept',
       ));
     }
     
@@ -335,6 +437,156 @@ class EnhancedConceptGenerationService implements ConceptGenerationService {
     return constraints;
   }
 
+  /// Assemble a GameSeed from concept parts
+  GameSeed _assembleGameSeed(Map<String, String> parts, ConceptGenerationInput input) { // Typkorrektur
+    final title = _generateTitle(input.keywords);
+    final suggestedMechanics = _generateSuggestedMechanics(parts);
+    final roughStoryIdea = _assembleDescription(parts); // Reusing description for rough story
+
+    return GameSeed( // Typkorrektur
+      id: 'game-seed-${DateTime.now().millisecondsSinceEpoch}',
+      title: title,
+      coreConcept: _assembleDescription(parts), // Core concept from assembled description
+      suggestedMechanics: suggestedMechanics,
+      roughStoryIdea: roughStoryIdea,
+      genres: input.genres ?? [], // Assign genres from input
+      inspirationElements: input.keywords,
+      creativeConstraints: _generateConstraints(parts),
+      suggestedArtStyle: parts['artDirection'],
+      targetAudience: parts['research'], // Using research as a proxy for audience insight
+      monetizationStrategy: parts['monetization'],
+      aiGenerated: true,
+      createdAt: DateTime.now(),
+    );
+  }
+
+  /// Assemble a Development Blueprint from concept parts
+  DevelopmentBlueprint _assembleDevelopmentBlueprint(Map<String, String> parts, ConceptGenerationInput input) {
+    final title = _generateTitle(input.keywords);
+    final quests = _generateQuests(parts);
+    final assetSpecifications = _generateAssetSpecifications(parts);
+    final constructionGuides = _generateConstructionGuides(parts);
+
+    return DevelopmentBlueprint(
+      id: 'development-blueprint-${DateTime.now().millisecondsSinceEpoch}',
+      title: title,
+      coreConcept: _assembleDescription(parts), // Detailed core concept
+      genres: input.genres ?? [], // EXPLICIT genres for the blueprint
+      quests: quests, // Comprehensive quest structure
+      assetSpecifications: assetSpecifications, // Detailed asset requirements
+      constructionGuides: constructionGuides, // Comprehensive construction guides
+      technicalSpecifications: parts['research'], // Technical specifications from research
+      monetizationStrategy: parts['monetization'], // Monetization strategy
+      targetPlatforms: ['PC', 'Mobile', 'Web'], // Default target platforms
+      estimatedDevelopmentTime: _estimateDevelopmentTime(parts), // Estimated development time
+      createdAt: DateTime.now(),
+    );
+  }
+
+  /// Generate detailed asset specifications for Development Blueprint
+  List<AssetSpecification> _generateAssetSpecifications(Map<String, String> parts) {
+    final specifications = <AssetSpecification>[];
+    
+    if (parts['assets'] != null) {
+      specifications.add(AssetSpecification(
+        type: 'character_model',
+        description: parts['assets']!,
+        styleGuide: 'High quality, detailed character models with consistent art style',
+        polycountRange: 'medium',
+        textureResolution: '1024x1024',
+        animationRequirements: ['idle', 'walk', 'run'],
+        fileFormats: ['fbx', 'gltf'],
+      ));
+    }
+
+    // Add default asset specifications if none were generated
+    if (specifications.isEmpty) {
+      specifications.add(AssetSpecification(
+        type: 'environment_prop',
+        description: 'Basic environment props for the game world',
+        styleGuide: 'Consistent with the overall art direction',
+        polycountRange: 'low',
+        textureResolution: '512x512',
+        fileFormats: ['fbx', 'gltf'],
+      ));
+    }
+    
+    return specifications;
+  }
+
+  /// Generate comprehensive construction guides for Development Blueprint
+  List<jam_kit.ConstructionGuide> _generateConstructionGuides(Map<String, String> parts) {
+    final guides = <jam_kit.ConstructionGuide>[];
+    
+    // Create construction guides based on the concept parts
+    if (parts['mechanics'] != null) {
+      guides.add(jam_kit.ConstructionGuide(
+        id: 'mechanics-guide-${DateTime.now().millisecondsSinceEpoch}',
+        title: 'Core Mechanics Implementation',
+        description: 'Step-by-step guide for implementing core game mechanics',
+        steps: [
+          jam_kit.ConstructionStep(
+            id: 'step-1',
+            title: 'Design Core Loop',
+            description: 'Define the main gameplay loop',
+            order: 1,
+            estimatedTime: Duration(hours: 2),
+          ),
+          jam_kit.ConstructionStep(
+            id: 'step-2',
+            title: 'Implement Basic Mechanics',
+            description: 'Create basic game mechanics',
+            order: 2,
+            estimatedTime: Duration(hours: 4),
+          ),
+        ],
+        prerequisites: ['Basic programming knowledge', 'Game engine familiarity'],
+        tools: ['Unity/Unreal Engine', 'Code editor'],
+        tips: ['Start with simple mechanics and iterate', 'Test frequently'],
+        troubleshooting: [
+          jam_kit.TroubleshootingItem(
+            problem: 'Mechanics feel unresponsive',
+            solution: 'Check input handling and frame rate',
+          ),
+        ],
+      ));
+    }
+
+    // Add default construction guide if none were generated
+    if (guides.isEmpty) {
+      guides.add(jam_kit.ConstructionGuide(
+        id: 'default-guide-${DateTime.now().millisecondsSinceEpoch}',
+        title: 'Basic Game Development',
+        description: 'General guide for game development',
+        steps: [
+          jam_kit.ConstructionStep(
+            id: 'step-1',
+            title: 'Project Setup',
+            description: 'Set up the development environment',
+            order: 1,
+            estimatedTime: Duration(hours: 1),
+          ),
+        ],
+        prerequisites: ['Basic programming knowledge'],
+        tools: ['Game engine', 'Code editor'],
+        tips: ['Start small and iterate'],
+        troubleshooting: [],
+      ));
+    }
+    
+    return guides;
+  }
+
+  /// Generate suggested mechanics from concept parts
+  List<String> _generateSuggestedMechanics(Map<String, String> parts) {
+    final mechanics = <String>[];
+    if (parts['mechanics'] != null) {
+      // Simple split for now, could be more sophisticated
+      mechanics.addAll(parts['mechanics']!.split('. ').map((s) => s.trim()).where((s) => s.isNotEmpty));
+    }
+    return mechanics;
+  }
+
   /// Provide feedback to improve future prompt optimizations
   void provideOptimizationFeedback({
     required PromptOptimization optimization,
@@ -379,4 +631,4 @@ enum OptimizationLevel {
   standard, // Balanced optimization
   aggressive, // Maximum optimization
   adaptive, // Adaptive based on context
-} 
+}

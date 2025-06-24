@@ -45,7 +45,7 @@ void main() {
     // And AuthWrapper uses currentUserProvider which is a StreamProvider.
     // It will initially be in a loading state.
 
-    final loadingTextFinder = find.text('Loading...');
+    // final loadingTextFinder = find.text('Loading...'); // Removed unused variable
 
     // It's possible that by the time pumpAndSettle completes, the stream has resolved.
     // A more reliable way is to find a text that is always there, e.g. in LoginScreen

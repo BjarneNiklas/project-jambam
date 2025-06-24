@@ -22,13 +22,95 @@ interface User {
   last_login: string | null;
 }
 
+interface AuditLogEntry {
+  id: number;
+  admin_id: string;
+  action: string;
+  target_type: string;
+  target_id: string;
+  details: any;
+  created_at: string;
+}
+
+const PAGE_SIZE = 20;
+
 const AdminPanel: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [inviteCodes, setInviteCodes] = useState<InviteCode[]>([]);
   const [newInviteCode, setNewInviteCode] = useState('');
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'invites' | 'users' | 'system'>('invites');
+  const [activeTab, setActiveTab] = useState<'invites' | 'users' | 'system' | 'audit'>('invites');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [auditLog, setAuditLog] = useState<AuditLogEntry[]>([]);
+  const [auditLogLoading, setAuditLogLoading] = useState(false);
+  const [auditLogSearch, setAuditLogSearch] = useState('');
+  const [auditLogAction, setAuditLogAction] = useState('');
+  const [auditLogAdmin, setAuditLogAdmin] = useState('');
+  const [auditLogDateFrom, setAuditLogDateFrom] = useState('');
+  const [auditLogDateTo, setAuditLogDateTo] = useState('');
+  const [auditLogDetail, setAuditLogDetail] = useState<AuditLogEntry | null>(null);
+  const [auditLogPage, setAuditLogPage] = useState(1);
+  const [auditLogTotal, setAuditLogTotal] = useState(0);
+  const [adminIdToName, setAdminIdToName] = useState<Record<string, string>>({});
+
+  // Deep-Link Funktionen
+  const updateUrlWithAuditId = useCallback((auditId: string | null) => {
+    const url = new URL(window.location.href);
+    if (auditId) {
+      url.searchParams.set('audit_id', auditId);
+    } else {
+      url.searchParams.delete('audit_id');
+    }
+    window.history.pushState({}, '', url.toString());
+  }, []);
+
+  const checkUrlForAuditId = useCallback(() => {
+    const url = new URL(window.location.href);
+    const auditId = url.searchParams.get('audit_id');
+    if (auditId && !auditLogDetail) {
+      const entry = auditLog.find(e => e.id.toString() === auditId);
+      if (entry) {
+        setAuditLogDetail(entry);
+      }
+    }
+  }, [auditLogDetail, auditLog]);
+
+  // Admin-Name-Resolver
+  const getAdminName = useCallback((adminId: string | null) => {
+    if (!adminId) return '-';
+    return adminIdToName[adminId] || adminId;
+  }, [adminIdToName]);
+
+  // Deutsche Übersetzungen
+  const translateAction = useCallback((action: string) => {
+    const translations: Record<string, string> = {
+      'create': 'Erstellen',
+      'update': 'Aktualisieren',
+      'delete': 'Löschen',
+      'login': 'Anmeldung',
+      'logout': 'Abmeldung',
+      'role_change': 'Rollenänderung',
+      'invite_create': 'Einladung erstellen',
+      'invite_delete': 'Einladung löschen',
+      'user_verify': 'Benutzer verifizieren',
+    };
+    return translations[action] || action;
+  }, []);
+
+  const translateField = useCallback((key: string) => {
+    const translations: Record<string, string> = {
+      'id': 'ID',
+      'admin_id': 'Administrator',
+      'action': 'Aktion',
+      'target_type': 'Ziel-Typ',
+      'target_id': 'Ziel-ID',
+      'details': 'Details',
+      'created_at': 'Erstellt am',
+      'old': 'Vorher',
+      'new': 'Nachher',
+    };
+    return translations[key] || key;
+  }, []);
 
   const fetchCurrentUser = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -73,10 +155,62 @@ const AdminPanel: React.FC = () => {
     setLoading(false);
   }, []);
 
+  const fetchAuditLog = useCallback(async () => {
+    setAuditLogLoading(true);
+    // Build filter
+    let query = supabase.from('admin_audit_log').select('*', { count: 'exact' });
+    if (auditLogAction) query = query.eq('action', auditLogAction);
+    if (auditLogAdmin) query = query.ilike('admin_id', `%${auditLogAdmin}%`);
+    if (auditLogDateFrom) query = query.gte('created_at', auditLogDateFrom);
+    if (auditLogDateTo) query = query.lte('created_at', auditLogDateTo + 'T23:59:59');
+    if (auditLogSearch) {
+      // Supabase/Postgres: Volltextsuche ist limitiert, daher clientseitig für Demo
+    }
+    const from = (auditLogPage - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.order('created_at', { ascending: false }).range(from, to);
+    const { data, error, count } = await query;
+    if (!error && data) {
+      setAuditLog(data);
+      setAuditLogTotal(count || 0);
+      
+      // Admin-IDs sammeln und Namen auflösen
+      const adminIds = Array.from(new Set(data.map(row => row.admin_id).filter(Boolean)));
+      if (adminIds.length > 0) {
+        const { data: userRows } = await supabase
+          .from('profiles')
+          .select('id,username,email')
+          .in('id', adminIds);
+        
+        const idToName: Record<string, string> = {};
+        if (userRows) {
+          userRows.forEach(u => {
+            idToName[u.id] = u.username || u.email || u.id;
+          });
+        }
+        setAdminIdToName(idToName);
+      }
+    }
+    setAuditLogLoading(false);
+  }, [auditLogAction, auditLogAdmin, auditLogDateFrom, auditLogDateTo, auditLogPage]);
+
   useEffect(() => {
     fetchData();
     fetchCurrentUser();
+    // eslint-disable-next-line
   }, [fetchData, fetchCurrentUser]);
+
+  useEffect(() => {
+    if (activeTab === 'audit') {
+      fetchAuditLog();
+    }
+    // eslint-disable-next-line
+  }, [activeTab, fetchAuditLog]);
+
+  useEffect(() => {
+    // Nach dem Laden: Prüfe URL für Deep-Link
+    checkUrlForAuditId();
+  }, [checkUrlForAuditId, auditLog]);
 
   const generateInviteCode = useCallback(async () => {
     if (!newInviteCode.trim()) return;
@@ -159,7 +293,7 @@ const AdminPanel: React.FC = () => {
     if (currentUser.role === 'superadmin') return true;
     if (currentUser.role === 'admin' && currentUserLevel > targetRoleLevel) return true;
     return false;
-  };
+  }, [currentUser]);
 
   const getRoleColor = (role: string) => {
     switch (role) {
@@ -175,6 +309,11 @@ const AdminPanel: React.FC = () => {
     return new Date(dateString).toLocaleString('de-DE');
   };
 
+  const isAdmin = currentUser && ['admin', 'superadmin'].includes(currentUser.role);
+
+  // Aktionen für Dropdown extrahieren
+  const auditActions = Array.from(new Set(auditLog.map(e => e.action))).sort();
+
   if (loading) {
     return (
       <div className="admin-panel">
@@ -189,14 +328,9 @@ const AdminPanel: React.FC = () => {
         <h1>🔧 Admin-Panel</h1>
         <p>Verwaltung von Einladungscodes und Benutzern</p>
         {currentUser && (
-          <div className="current-user-info">
-            <span>Angemeldet als: </span>
-            <span 
-              className="role-badge"
-              style={{ backgroundColor: getRoleColor(currentUser.role) }}
-            >
-              {currentUser.role.toUpperCase()}
-            </span>
+          <div className="user-info">
+            <span>Angemeldet als: <b>{currentUser.email}</b></span>
+            {currentUser.role && <span> (Rolle: {currentUser.role})</span>}
           </div>
         )}
       </div>
@@ -220,6 +354,14 @@ const AdminPanel: React.FC = () => {
             onClick={() => setActiveTab('system')}
           >
             ⚙️ System
+          </button>
+        )}
+        {isAdmin && (
+          <button
+            className={`tab ${activeTab === 'audit' ? 'active' : ''}`}
+            onClick={() => setActiveTab('audit')}
+          >
+            📝 Audit-Log
           </button>
         )}
       </div>
@@ -387,6 +529,202 @@ const AdminPanel: React.FC = () => {
               <p>User: {users.filter(u => u.role === 'user').length}</p>
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === 'audit' && isAdmin && (
+        <div className="admin-section">
+          <h3>Audit-Log</h3>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
+            <input
+              type="text"
+              placeholder="Suche..."
+              value={auditLogSearch}
+              onChange={e => setAuditLogSearch(e.target.value)}
+              style={{ flex: 2, minWidth: 120, padding: 8, borderRadius: 8, border: '1px solid #ccc' }}
+            />
+            <select
+              value={auditLogAction}
+              onChange={e => setAuditLogAction(e.target.value)}
+              style={{ flex: 1, minWidth: 120, padding: 8, borderRadius: 8, border: '1px solid #ccc' }}
+            >
+              <option value="">Alle Aktionen</option>
+              {auditActions.map(a => (
+                <option key={a} value={a}>
+                  {translateAction(a)} ({a})
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Admin-ID..."
+              value={auditLogAdmin}
+              onChange={e => setAuditLogAdmin(e.target.value)}
+              style={{ flex: 1, minWidth: 120, padding: 8, borderRadius: 8, border: '1px solid #ccc' }}
+            />
+            <input
+              type="date"
+              value={auditLogDateFrom}
+              onChange={e => setAuditLogDateFrom(e.target.value)}
+              style={{ flex: 1, minWidth: 120, padding: 8, borderRadius: 8, border: '1px solid #ccc' }}
+            />
+            <input
+              type="date"
+              value={auditLogDateTo}
+              onChange={e => setAuditLogDateTo(e.target.value)}
+              style={{ flex: 1, minWidth: 120, padding: 8, borderRadius: 8, border: '1px solid #ccc' }}
+            />
+          </div>
+          {auditLogLoading ? (
+            <div className="loading">Lade Audit-Log...</div>
+          ) : (
+            <>
+              <div className="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Aktion</th>
+                      <th>Administrator</th>
+                      <th>Ziel</th>
+                      <th>Details</th>
+                      <th>Zeit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {auditLog
+                      .filter(entry => {
+                        const q = auditLogSearch.toLowerCase();
+                        return (
+                          !q ||
+                          entry.action.toLowerCase().includes(q) ||
+                          (entry.admin_id && entry.admin_id.toLowerCase().includes(q)) ||
+                          (entry.target_type && entry.target_type.toLowerCase().includes(q)) ||
+                          (entry.target_id && entry.target_id.toLowerCase().includes(q)) ||
+                          (entry.details && JSON.stringify(entry.details).toLowerCase().includes(q))
+                        );
+                      })
+                      .map(entry => (
+                        <tr 
+                          key={entry.id} 
+                          style={{ cursor: 'pointer' }} 
+                          onClick={() => {
+                            setAuditLogDetail(entry);
+                            updateUrlWithAuditId(entry.id.toString());
+                          }}
+                        >
+                          <td>{translateAction(entry.action)}</td>
+                          <td>
+                            <div title={`${getAdminName(entry.admin_id)} (ID: ${entry.admin_id})`}>
+                              {getAdminName(entry.admin_id)}
+                              <br />
+                              <code style={{ fontSize: '11px', color: '#666' }}>
+                                ({entry.admin_id})
+                              </code>
+                            </div>
+                          </td>
+                          <td>
+                            {entry.target_type} <br /> 
+                            <code>{entry.target_id}</code>
+                          </td>
+                          <td style={{ maxWidth: 200, wordBreak: 'break-all' }}>
+                            {entry.details ? JSON.stringify(entry.details) : '-'}
+                          </td>
+                          <td>
+                            {entry.created_at ? 
+                              new Date(entry.created_at).toLocaleString('de-DE', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              }) : ''
+                            }
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+                {auditLog.length === 0 && <div className="loading">Keine Audit-Log-Einträge gefunden.</div>}
+              </div>
+              {/* Pagination Controls */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 16 }}>
+                <button onClick={() => setAuditLogPage(p => Math.max(1, p - 1))} disabled={auditLogPage === 1}>←</button>
+                <span>Seite {auditLogPage} / {Math.max(1, Math.ceil(auditLogTotal / PAGE_SIZE))} ({auditLogTotal} Einträge)</span>
+                <button onClick={() => setAuditLogPage(p => p + 1)} disabled={auditLogPage * PAGE_SIZE >= auditLogTotal}>→</button>
+              </div>
+            </>
+          )}
+          {/* Details-Modal */}
+          {auditLogDetail && (
+            <div className="modal-overlay" onClick={() => {
+              setAuditLogDetail(null);
+              updateUrlWithAuditId(null);
+            }}>
+              <div className="modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 700, margin: '10vh auto', background: '#222', color: '#fff', borderRadius: 12, padding: 24, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <h4>Audit-Log-Details</h4>
+                  <button 
+                    onClick={() => {
+                      setAuditLogDetail(null);
+                      updateUrlWithAuditId(null);
+                    }}
+                    style={{ background: 'none', border: 'none', color: '#fff', fontSize: '20px', cursor: 'pointer' }}
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                  {Object.entries(auditLogDetail).map(([key, value]) => (
+                    <div key={key} style={{ marginBottom: 12 }}>
+                      <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                        {translateField(key)}:
+                      </div>
+                      <div style={{ 
+                        background: '#111', 
+                        padding: 12, 
+                        borderRadius: 8, 
+                        fontFamily: 'monospace',
+                        fontSize: '14px',
+                        wordBreak: 'break-all'
+                      }}>
+                        {key === 'admin_id' ? (
+                          <div title={`${getAdminName(value)} (ID: ${value})`}>
+                            {getAdminName(value)}
+                            <br />
+                            <span style={{ fontSize: '11px', color: '#666' }}>
+                              (ID: {value})
+                            </span>
+                          </div>
+                        ) : (
+                          typeof value === 'object' ? 
+                            JSON.stringify(value, null, 2) : 
+                            String(value || '')
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button 
+                  onClick={() => {
+                    setAuditLogDetail(null);
+                    updateUrlWithAuditId(null);
+                  }} 
+                  style={{ 
+                    marginTop: 16, 
+                    padding: '8px 24px', 
+                    borderRadius: 8, 
+                    border: 'none', 
+                    background: '#00bcd4', 
+                    color: '#fff', 
+                    fontWeight: 600, 
+                    cursor: 'pointer' 
+                  }}
+                >
+                  Schließen
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

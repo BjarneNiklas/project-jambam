@@ -1,21 +1,25 @@
 import 'package:flutter/foundation.dart';
 
-/// 🌱 Jam Seed - Der Keim einer Idee
+/// 🌱 Jam Seed - Der Keim einer Idee für Game Jam Events
 /// 
-/// Ein "Seed" ist der Anfangswert, aus dem sich eine vollständige Spielidee entwickeln kann.
-/// Wie ein echter Samen enthält er das Potenzial für etwas Großes, braucht aber Zeit,
-/// Nährstoffe (Community-Feedback) und Pflege (Entwicklung) um zu wachsen.
+/// Ein Jam Seed ist ein flexibler, inspirierender Ausgangspunkt für Game Jam Events.
+/// Er ist genre-agnostisch und entwickelt sich durch Community-Feedback weiter.
 /// 
-/// In der Informatik ist ein Seed der Initialisierungswert für reproduzierbare Kreativität.
-/// Gleicher Seed = Gleiche Basis, aber unterschiedliche Interpretationen durch verschiedene Entwickler.
+/// Eigenschaften:
+/// - Flexibel: Offen für verschiedene Interpretationen und Community-Beiträge
+/// - Inspirierend: Soll Kreativität anregen, nicht einschränken
+/// - Community-getrieben: Entwickelt sich durch Community-Feedback weiter
+/// - Genre-agnostisch: Enthält keine expliziten Genre-Zuweisungen
+/// 
+/// Verwendung: Wird in der Community diskutiert, verfeinert und kann sich zu einem Jam Kit entwickeln.
 @immutable
 class JamSeed {
   const JamSeed({
     required this.id,
     required this.title,
-    required this.coreConcept,
-    required this.inspirationElements,
-    required this.creativeConstraints,
+    required this.coreConcept, // Flexible concept, not specific
+    required this.inspirationElements, // Keywords, ideas, references
+    required this.creativeConstraints, // Guidelines, not rules
     this.communityContributions = const [],
     this.voteCount = 0,
     this.submitter = 'AI Assistant',
@@ -25,7 +29,7 @@ class JamSeed {
     this.status = JamSeedStatus.brainstorming, // Current phase
     this.inspirator, // The person who originally had the idea
     this.contributors = const [], // People who contributed to development
-    this.tags = const [], // For categorization and discovery
+    this.tags = const [], // For categorization and discovery (no genres!)
     this.labExperiments = const [], // Research experiments from Jam Lab
     this.integratedExperiments = const [], // Experiments integrated into this jam
     this.experimentalConstraints = const [], // Experimental constraints to test
@@ -45,7 +49,7 @@ class JamSeed {
   final JamSeedStatus status; // Current development phase
   final CommunityMember? inspirator; // The person who originally had the idea
   final List<CommunityMember> contributors; // People who contributed to development
-  final List<String> tags; // For categorization and discovery
+  final List<String> tags; // For categorization and discovery (NO GENRES!)
   final List<LabExperiment> labExperiments; // Research experiments from Jam Lab
   final List<IntegratedExperiment> integratedExperiments; // Experiments integrated into this jam
   final List<String> experimentalConstraints; // Experimental constraints to test

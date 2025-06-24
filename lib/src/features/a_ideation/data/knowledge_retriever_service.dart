@@ -4,10 +4,21 @@ class KnowledgeRetrieverService {
   List<_KnowledgeDocument> _documents = [];
 
   Future<void> loadKnowledgeBase() async {
-    final content = await rootBundle.loadString('docs/KNOWLEDGE_BASE.md');
-    final docStrings = content.split('---')..removeWhere((s) => s.trim().isEmpty);
+    try {
+      final content = await rootBundle.loadString('docs/KNOWLEDGE_BASE.md');
+      final docStrings = content.split('---')..removeWhere((s) => s.trim().isEmpty);
 
-    _documents = docStrings.map((s) => _KnowledgeDocument.fromString(s)).toList();
+      _documents = docStrings.map((s) => _KnowledgeDocument.fromString(s)).toList();
+    } catch (e) {
+      // If knowledge base file is not available, use default content
+      _documents = [
+        _KnowledgeDocument(
+          id: 'default',
+          title: 'Default Knowledge Base',
+          content: 'Game development best practices and creative inspiration.',
+        ),
+      ];
+    }
   }
 
   List<String> retrieveRelevantSnippets(List<String> keywords) {

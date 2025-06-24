@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:project_jambam/src/features/b_authentication/data/auth_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:project_jambam/src/features/b_authentication/data/auth_repository_provider.dart';
+import 'package:project_jambam/src/features/b_authentication_invite/invite_code_controller.dart';
 
 part 'login_screen_controller.g.dart';
 
@@ -29,6 +30,11 @@ class LoginScreenController extends _$LoginScreenController {
   void updateDisplayName(String displayName) {
     state = state.copyWith(displayName: displayName);
     _validateForm();
+  }
+
+  /// Update invite code field
+  void updateInviteCode(String value) {
+    state = state.copyWith(inviteCode: value);
   }
 
   /// Toggle between login and signup mode
@@ -86,16 +92,18 @@ class LoginScreenController extends _$LoginScreenController {
         state.password,
         state.displayName,
       );
-      
-      // Check if there was an error
-      final currentState = ref.read(authStateProvider);
-      if (currentState.error != null) {
+      final authData = ref.read(authStateProvider);
+      if (authData.user != null && state.inviteCode.isNotEmpty) {
+        final inviteController = ref.read(inviteCodeControllerProvider.notifier);
+        await inviteController.activate(state.inviteCode, authData.user!.id);
+      }
+      if (authData.error == null) {
+        state = state.copyWith(isLoading: false);
+      } else {
         state = state.copyWith(
           isLoading: false,
-          error: currentState.error,
+          error: authData.error,
         );
-      } else {
-        state = state.copyWith(isLoading: false);
       }
     } catch (e) {
       state = state.copyWith(
@@ -209,6 +217,14 @@ class LoginScreenController extends _$LoginScreenController {
     if (!state.isDisplayNameValid) return 'Display name must be at least 2 characters';
     return null;
   }
+
+  /// Get invite code error message
+  String? getInviteCodeError() {
+    if (!state.isSignUp) return null;
+    if (state.inviteCode.isEmpty) return null;
+    if (state.inviteCode.length < 4) return 'Invite-Code zu kurz';
+    return null;
+  }
 }
 
 /// State for the login screen
@@ -217,6 +233,7 @@ class LoginScreenState {
     this.email = '',
     this.password = '',
     this.displayName = '',
+    this.inviteCode = '',
     this.isSignUp = false,
     this.isPasswordVisible = false,
     this.isLoading = false,
@@ -231,6 +248,7 @@ class LoginScreenState {
   final String email;
   final String password;
   final String displayName;
+  final String inviteCode;
   final bool isSignUp;
   final bool isPasswordVisible;
   final bool isLoading;
@@ -245,6 +263,7 @@ class LoginScreenState {
     String? email,
     String? password,
     String? displayName,
+    String? inviteCode,
     bool? isSignUp,
     bool? isPasswordVisible,
     bool? isLoading,
@@ -259,6 +278,7 @@ class LoginScreenState {
       email: email ?? this.email,
       password: password ?? this.password,
       displayName: displayName ?? this.displayName,
+      inviteCode: inviteCode ?? this.inviteCode,
       isSignUp: isSignUp ?? this.isSignUp,
       isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
       isLoading: isLoading ?? this.isLoading,

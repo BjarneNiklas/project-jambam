@@ -2,6 +2,8 @@ import 'package:project_jambam/src/features/a_ideation/application/concept_gener
 import 'package:project_jambam/src/features/a_ideation/data/knowledge_retriever_service.dart';
 import 'package:project_jambam/src/features/a_ideation/data/llm_concept_generation_service.dart';
 import 'package:project_jambam/src/features/a_ideation/domain/jam_kit.dart';
+import 'package:project_jambam/src/features/a_ideation/domain/game_seed.dart';
+import 'package:project_jambam/src/features/a_ideation/domain/development_blueprint.dart';
 
 /// A more advanced implementation of [ConceptGenerationService] that uses a
 /// Retrieval-Augmented Generation (RAG) approach.
@@ -29,14 +31,115 @@ class RagConceptGenerationService implements ConceptGenerationService {
       style: 'rag-enhanced',
     );
 
-    // 4. Return the final JamKit, now including the sources of inspiration
+    // 4. Parse and return the result
+    return _parseJamKitResponse(generatedJamKit);
+  }
+
+  @override
+  Future<JamSeed> generateJamSeed(ConceptGenerationInput input) async {
+    // 1. Retrieve relevant knowledge snippets based on keywords
+    final inspirationSnippets = knowledgeRetriever.retrieveRelevantSnippets(input.keywords);
+
+    // 2. Augment the input for the LLM service
+    final augmentedInput = _augmentInput(input, inspirationSnippets);
+
+    // 3. Call the underlying LLM service with the augmented input
+    final generatedJamSeed = await llmService.generateJamSeed(
+      prompt: augmentedInput.keywords.join(', '),
+      category: 'game-design',
+      style: 'rag-enhanced',
+    );
+
+    // 4. Parse and return the result
+    return _parseJamSeedResponse(generatedJamSeed);
+  }
+
+  @override
+  Future<JamKit> generateJamKit(ConceptGenerationInput input) async {
+    // 1. Retrieve relevant knowledge snippets based on keywords
+    final inspirationSnippets = knowledgeRetriever.retrieveRelevantSnippets(input.keywords);
+
+    // 2. Augment the input for the LLM service
+    final augmentedInput = _augmentInput(input, inspirationSnippets);
+
+    // 3. Call the underlying LLM service with the augmented input
+    final generatedJamKit = await llmService.generateJamKit(
+      seed: {'title': 'RAG Enhanced Jam Kit', 'keywords': augmentedInput.keywords.join(', ')},
+      complexity: 'intermediate',
+      targetPlatform: 'multi-platform',
+    );
+
+    // 4. Parse and return the result
+    return _parseJamKitResponse(generatedJamKit);
+  }
+
+  @override
+  Future<GameSeed> generateGameSeed(ConceptGenerationInput input) async {
+    // 1. Retrieve relevant knowledge snippets based on keywords and genres
+    final allKeywords = [...input.keywords, ...(input.genres ?? [])];
+    final inspirationSnippets = knowledgeRetriever.retrieveRelevantSnippets(allKeywords);
+
+    // 2. Augment the input for the LLM service
+    final augmentedInput = _augmentInput(input, inspirationSnippets);
+
+    // 3. Call the underlying LLM service with the augmented input
+    final generatedGameSeed = await llmService.generateJamSeed(
+      prompt: augmentedInput.keywords.join(', '),
+      category: 'game-design',
+      style: 'rag-enhanced-genre',
+    );
+
+    // 4. Parse and return the result
+    return _parseGameSeedResponse(generatedGameSeed, input);
+  }
+
+  @override
+  Future<DevelopmentBlueprint> generateDevelopmentBlueprint(ConceptGenerationInput input) async {
+    // 1. Retrieve relevant knowledge snippets based on keywords and genres
+    final allKeywords = [...input.keywords, ...(input.genres ?? [])];
+    final inspirationSnippets = knowledgeRetriever.retrieveRelevantSnippets(allKeywords);
+
+    // 2. Augment the input for the LLM service
+    final augmentedInput = _augmentInput(input, inspirationSnippets);
+
+    // 3. Call the underlying LLM service with the augmented input
+    final generatedBlueprint = await llmService.generateJamKit(
+      seed: {'title': 'RAG Enhanced Development Blueprint', 'keywords': augmentedInput.keywords.join(', ')},
+      complexity: 'advanced',
+      targetPlatform: 'multi-platform',
+    );
+
+    // 4. Parse and return the result
+    return _parseDevelopmentBlueprintResponse(generatedBlueprint, input);
+  }
+
+  /// Augment the input with retrieved knowledge snippets
+  ConceptGenerationInput _augmentInput(ConceptGenerationInput input, List<String> inspirationSnippets) {
+    final augmentedKeywords = [
+      ...input.keywords,
+      '--- RAG ENHANCED CONTEXT ---',
+      ...inspirationSnippets,
+    ];
+
+    return ConceptGenerationInput(
+      keywords: augmentedKeywords,
+      genres: input.genres,
+      inspirationMode: input.inspirationMode,
+      useMechanics: input.useMechanics,
+      useMonetization: input.useMonetization,
+      generationMode: input.generationMode,
+    );
+  }
+
+  /// Parse the LLM response into a JamKit
+  JamKit _parseJamKitResponse(Map<String, dynamic> response) {
     return JamKit(
-      id: generatedJamKit['id'] ?? 'rag-kit-${DateTime.now().millisecondsSinceEpoch}',
-      title: generatedJamKit['title'] ?? 'RAG-Enhanced Game Concept',
-      theme: generatedJamKit['content'] ?? 'A game concept enhanced with retrieved knowledge',
+      id: response['id'] ?? 'rag-jam-kit-${DateTime.now().millisecondsSinceEpoch}',
+      title: response['title'] ?? 'RAG Enhanced Jam Kit',
+      theme: response['theme'] ?? 'A RAG-enhanced game concept',
       quests: [
         Quest(title: 'Main Quest', description: 'Complete the core game loop'),
-        Quest(title: 'Knowledge Quest', description: 'Explore the enhanced features'),
+        Quest(title: 'RAG Quest', description: 'Explore the RAG-enhanced features'),
       ],
       assetSuggestions: [
         AssetSuggestion(
@@ -50,76 +153,64 @@ class RagConceptGenerationService implements ConceptGenerationService {
           stylePrompt: 'Immersive, detailed environment',
         ),
       ],
-      inspirationSources: inspirationSnippets, // Attach the sources!
+      inspirationSources: response['inspirationSources'] ?? [],
     );
   }
 
-  @override
-  Future<JamSeed> generateJamSeed(ConceptGenerationInput input) async {
-    // RAG-based jam seed generation using knowledge retrieval
-    final relevantKnowledge = await _retrieveRelevantKnowledge(input.keywords);
-    final enhancedInput = _enhanceInputWithKnowledge(input, relevantKnowledge);
-    
+  /// Parse the LLM response into a JamSeed
+  JamSeed _parseJamSeedResponse(Map<String, dynamic> response) {
     return JamSeed(
-      id: 'rag-seed-${DateTime.now().millisecondsSinceEpoch}',
-      title: _generateTitleFromKnowledge(enhancedInput),
-      coreConcept: _generateConceptFromKnowledge(enhancedInput),
-      inspirationElements: enhancedInput.keywords,
-      creativeConstraints: _extractConstraintsFromKnowledge(relevantKnowledge),
+      id: response['id'] ?? 'rag-jam-seed-${DateTime.now().millisecondsSinceEpoch}',
+      title: response['title'] ?? 'RAG Enhanced Jam Seed',
+      coreConcept: response['coreConcept'] ?? 'A RAG-enhanced flexible game concept',
+      inspirationElements: response['inspirationElements'] ?? [],
+      creativeConstraints: response['creativeConstraints'] ?? ['RAG-enhanced'],
     );
-  }
-  
-  Future<List<String>> _retrieveRelevantKnowledge(List<String> keywords) async {
-    // Simulate knowledge retrieval from RAG system
-    return [
-      'Game design patterns for ${keywords.isNotEmpty ? keywords.first : 'adventure'} games',
-      'Player engagement strategies',
-      'Emergent gameplay mechanics',
-    ];
-  }
-  
-  ConceptGenerationInput _enhanceInputWithKnowledge(
-    ConceptGenerationInput input,
-    List<String> knowledge,
-  ) {
-    final enhancedKeywords = [...input.keywords, ...knowledge.take(2)];
-    return ConceptGenerationInput(
-      keywords: enhancedKeywords,
-      inspirationMode: input.inspirationMode,
-    );
-  }
-  
-  String _generateTitleFromKnowledge(ConceptGenerationInput input) {
-    return 'RAG-Enhanced: ${input.keywords.take(3).join(' ')}';
-  }
-  
-  String _generateConceptFromKnowledge(ConceptGenerationInput input) {
-    return 'A game concept enhanced with retrieved knowledge about ${input.keywords.join(', ')}';
-  }
-  
-  List<String> _extractConstraintsFromKnowledge(List<String> knowledge) {
-    return ['RAG-enhanced', 'Knowledge-driven'];
   }
 
-  ConceptGenerationInput _augmentInput(
-    ConceptGenerationInput originalInput,
-    List<String> snippets,
-  ) {
-    if (snippets.isEmpty) {
-      return originalInput;
-    }
-    
-    // We create a new keyword list that includes the original keywords
-    // and the retrieved snippets to create a richer context for the LLM.
-    final augmentedKeywords = [
-      ...originalInput.keywords,
-      'Please take inspiration from the following concepts:',
-      ...snippets,
-    ];
-
-    return ConceptGenerationInput(
-      keywords: augmentedKeywords,
-      inspirationMode: originalInput.inspirationMode,
+  /// Parse the LLM response into a GameSeed
+  GameSeed _parseGameSeedResponse(Map<String, dynamic> response, ConceptGenerationInput input) {
+    return GameSeed(
+      id: response['id'] ?? 'rag-game-seed-${DateTime.now().millisecondsSinceEpoch}',
+      title: response['title'] ?? 'RAG Enhanced Game Seed',
+      coreConcept: response['coreConcept'] ?? 'A RAG-enhanced game seed for long-term development',
+      suggestedMechanics: response['suggestedMechanics'] ?? [],
+      roughStoryIdea: response['roughStoryIdea'] ?? 'A rough story idea enhanced by RAG.',
+      genres: input.genres ?? [],
+      inspirationElements: response['inspirationElements'] ?? input.keywords,
+      creativeConstraints: response['creativeConstraints'] ?? ['RAG-enhanced'],
+      suggestedArtStyle: response['suggestedArtStyle'],
+      targetAudience: response['targetAudience'],
+      monetizationStrategy: response['monetizationStrategy'],
+      aiGenerated: true,
+      createdAt: DateTime.now(),
     );
   }
-} 
+
+  /// Parse the LLM response into a Development Blueprint
+  DevelopmentBlueprint _parseDevelopmentBlueprintResponse(Map<String, dynamic> response, ConceptGenerationInput input) {
+    return DevelopmentBlueprint(
+      id: response['id'] ?? 'rag-development-blueprint-${DateTime.now().millisecondsSinceEpoch}',
+      title: response['title'] ?? 'RAG Enhanced Development Blueprint',
+      coreConcept: response['coreConcept'] ?? 'A comprehensive RAG-enhanced development blueprint',
+      genres: input.genres ?? [],
+      quests: [
+        Quest(title: 'Core Development', description: 'Develop the core game concept'),
+        Quest(title: 'RAG Features', description: 'Implement RAG-enhanced features'),
+      ],
+      assetSpecifications: [
+        AssetSpecification(
+          type: 'character_model',
+          description: 'Main character models',
+          styleGuide: 'High quality, detailed character models',
+        ),
+      ],
+      constructionGuides: [],
+      technicalSpecifications: response['technicalSpecifications'],
+      monetizationStrategy: response['monetizationStrategy'],
+      targetPlatforms: ['PC', 'Mobile', 'Web'],
+      estimatedDevelopmentTime: Duration(hours: 48),
+      createdAt: DateTime.now(),
+    );
+  }
+}

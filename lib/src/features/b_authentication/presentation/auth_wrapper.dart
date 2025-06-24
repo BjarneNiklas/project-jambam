@@ -47,7 +47,7 @@ class AuthWrapper extends ConsumerWidget {
             children: [
               CircularProgressIndicator(),
               SizedBox(height: 16),
-              const Text('Loading...'), // Made const
+              Text('Loading...'),
             ],
           ),
         ),

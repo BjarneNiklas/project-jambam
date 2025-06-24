@@ -58,7 +58,7 @@ class LoginScreen extends ConsumerWidget {
                     if (state.showResetPasswordSuccess) _buildSuccessWidget(),
 
                     // Loading Indicator
-                    if (state.isLoading) _buildLoadingIndicator(),
+                    if (state.isLoading) _buildLoadingIndicator(context),
                   ],
                 ),
               ),
@@ -131,12 +131,12 @@ class LoginScreen extends ConsumerWidget {
             if (state.isSignUp) ...[
               _buildTextField(
                 context: context,
-                label: 'Display Name',
-                hint: 'Enter your display name',
-                icon: Icons.person,
-                value: state.displayName,
-                onChanged: controller.updateDisplayName,
-                error: controller.getDisplayNameError(),
+                label: 'Einladungscode (optional)',
+                hint: 'Gib deinen Einladungscode ein',
+                icon: Icons.vpn_key,
+                value: state.inviteCode,
+                onChanged: controller.updateInviteCode,
+                error: controller.getInviteCodeError(),
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
@@ -392,7 +392,7 @@ class LoginScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildLoadingIndicator() {
+  Widget _buildLoadingIndicator(BuildContext context) {
     // Similar style to AuthLoadingWidget for consistency, but simpler for inline use
     return Center(
       child: Column(

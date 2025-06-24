@@ -256,7 +256,7 @@ class SupabaseAuthRepository implements AuthRepository {
     // final userId = _supabaseClient.auth.currentUser?.id;
     // if (userId == null) return AuthResult(success: false, error: "User not logged in");
     // await _supabaseClient.rpc('delete_user_account', params: {'user_id_to_delete': userId});
-    _logger.warn("deleteAccount: This operation should ideally be handled by a trusted server environment using a service role key.");
+    _logger.warning("deleteAccount: This operation should ideally be handled by a trusted server environment using a service role key.");
     return const AuthResult(success: false, error: 'Account deletion from client-side is not directly supported for security reasons. Please implement a server-side function.');
   }
 
@@ -446,10 +446,7 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<List<domain_user.UserActivity>> getUserActivity(String userId) async {
-    // Example: Fetch from an 'user_activities' table
-    // final response = await _supabaseClient.from('user_activities').select().eq('user_id', userId).order('timestamp', ascending: false);
-    // return response.map((data) => domain_user.UserActivity(...)).toList();
+  Future<List<UserActivity>> getUserActivity(String userId) async {
     _logger.info("getUserActivity: Not implemented. Requires 'user_activities' table and schema.");
     return [];
   }

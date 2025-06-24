@@ -1,5 +1,6 @@
 import 'package:logging/logging.dart' as logging;
 import 'package:flutter/foundation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// Centralized logging service for the JambaM application
 /// using the `logging` package.
@@ -63,12 +64,14 @@ class Logger {
           debugPrint('StackTrace: ${record.stackTrace}');
         }
       } else {
-        // For release, only print the message for WARNING and SEVERE, or send to a logging service.
+        // For release, send warnings and errors to Sentry (DSGVO: keine PII senden!)
         if (record.level >= logging.Level.WARNING) {
-          print(
-              '${record.level.name} [${record.loggerName}]: ${record.message}');
+          Sentry.captureMessage(
+            '${record.level.name} [${record.loggerName}]: ${record.message}',
+            level: record.level >= logging.Level.SEVERE ? SentryLevel.error : SentryLevel.warning,
+          );
           if (record.error != null) {
-            print('Error: ${record.error}');
+            Sentry.captureException(record.error, stackTrace: record.stackTrace);
           }
         }
       }

@@ -167,42 +167,54 @@ enum ExperimentStatus {
   failed, // Experiment failed
 }
 
-// Legacy class for backward compatibility
+/// 🛠️ Jam Kit - Konkreter Leitfaden für Game Jam Events
+/// 
+/// Ein Jam Kit ist ein konkreter, umsetzbarer Leitfaden für Game Jam Events.
+/// Er entwickelt sich aus Jam Seeds und ist für den Jam-Zeitrahmen optimiert.
+/// 
+/// Eigenschaften:
+/// - Konkret: Spezifische Anweisungen und Ressourcen
+/// - Umsetzbar: Direkt für Game Jam Entwicklung verwendbar
+/// - Zeitlich begrenzt: Optimiert für Jam-Zeitrahmen
+/// - Vereinfacht: Fokus auf Schnelligkeit und Umsetzbarkeit
+/// - Genre-agnostisch: Enthält keine expliziten Genre-Felder
+/// 
+/// Verwendung: Wird direkt in Game Jam Events verwendet, um Spiele zu entwickeln.
 @immutable
 class JamKit {
   const JamKit({
     required this.id,
     required this.title,
-    required this.theme,
-    required this.quests,
-    required this.assetSuggestions,
+    required this.theme, // Specific theme and setting for the jam
+    required this.quests, // Clear objectives for the jam
+    required this.assetSuggestions, // Asset suggestions with style prompts
     this.inspirationSources = const [],
     this.sourceJamSeed, // Link back to the original Jam Seed
     this.inspirator, // The original inspirator
     this.contributors = const [], // People who helped develop the kit
     this.researchInsights = const [], // Insights from Jam Lab research
     this.buildingComponents = const [], // Modular building components
-    this.constructionGuides = const [], // Step-by-step construction guides
+    this.constructionGuides = const [], // Step-by-step construction guides (simplified for jam timeframe)
     this.kitType = KitType.standard, // Type of kit (standard, building, experimental)
     this.complexity = Complexity.intermediate, // Complexity level
-    this.estimatedBuildTime = Duration.zero, // Estimated time to build
+    this.estimatedBuildTime = Duration.zero, // Estimated time to build (optimized for jam)
   });
 
   final String id;
   final String title;
-  final String theme;
-  final List<Quest> quests;
-  final List<AssetSuggestion> assetSuggestions;
+  final String theme; // Specific theme and setting for the jam
+  final List<Quest> quests; // Clear objectives for the jam
+  final List<AssetSuggestion> assetSuggestions; // Asset suggestions with style prompts
   final List<String> inspirationSources;
   final JamSeed? sourceJamSeed; // The Jam Seed this Kit evolved from
   final CommunityMember? inspirator; // The original inspirator
   final List<CommunityMember> contributors; // People who helped develop the kit
   final List<LabExperiment> researchInsights; // Insights from Jam Lab research
   final List<BuildingComponent> buildingComponents; // Modular building components
-  final List<ConstructionGuide> constructionGuides; // Step-by-step construction guides
+  final List<ConstructionGuide> constructionGuides; // Step-by-step construction guides (simplified for jam timeframe)
   final KitType kitType; // Type of kit (standard, building, experimental)
   final Complexity complexity; // Complexity level
-  final Duration estimatedBuildTime; // Estimated time to build
+  final Duration estimatedBuildTime; // Estimated time to build (optimized for jam)
 }
 
 enum KitType {
@@ -411,4 +423,4 @@ enum RiskLevel {
   medium, // Moderate risk, some uncertainty
   high, // High risk, experimental approach
   extreme, // Very high risk, cutting-edge research
-} 
+}

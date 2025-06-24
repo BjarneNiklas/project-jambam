@@ -49,6 +49,7 @@ const Header: React.FC = () => {
               <li><NavLink to="/tech-radar" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.techRadar', 'Technologie-Radar')}</NavLink></li>
               <li><NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.about', 'Über Uns')}</NavLink></li>
               <li><NavLink to="/roadmap" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.roadmap', 'Roadmap')}</NavLink></li>
+              <li><NavLink to="/research-agent" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>🔬 Research Agent</NavLink></li>
               {/* Links for new pages, can be conditionally shown or grouped */}
               <li><NavLink to="/team" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.team', 'Team')}</NavLink></li>
               <li><NavLink to="/vision-mission" className={({ isActive }) => isActive ? "active-link" : ""} onClick={() => setIsMobileMenuOpen(false)}>{t('nav.visionMission', 'Vision & Mission')}</NavLink></li>

@@ -48,6 +48,7 @@ const FundingWorthinessPage = lazy(() => import('./pages/FundingWorthinessPage')
 const PrivacyPolicy = lazy(() => import('./pages/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/legal/TermsOfService'));
 const Impressum = lazy(() => import('./pages/legal/Impressum'));
+const ResearchAgentPage = lazy(() => import('./pages/ResearchAgentPage'));
 
 
 // Placeholder pages for links that don't have content yet
@@ -93,6 +94,7 @@ function App() {
                       <Route path="/team" element={<TeamPage />} />
                       <Route path="/vision-mission" element={<VisionMissionPage />} />
                       <Route path="/funding-worthiness" element={<FundingWorthinessPage />} />
+                      <Route path="/research-agent" element={<ResearchAgentPage />} />
 
                       {/* Placeholder routes for footer links */}
                       <Route path="/careers" element={<PlaceholderPage title="Careers" />} />

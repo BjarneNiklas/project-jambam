@@ -139,6 +139,17 @@ CREATE TABLE IF NOT EXISTS invite_codes (
   used_at TIMESTAMP WITH TIME ZONE
 );
 
+-- Admin Audit Log
+CREATE TABLE IF NOT EXISTS admin_audit_log (
+    id SERIAL PRIMARY KEY,
+    admin_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+    action TEXT NOT NULL,
+    target_type TEXT NOT NULL,
+    target_id TEXT,
+    details JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- -----------------------------------------------------------------
 -- Section 2: Indexes
 -- -----------------------------------------------------------------

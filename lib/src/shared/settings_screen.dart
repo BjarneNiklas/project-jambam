@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'chip_demo_screen.dart';
+import 'package:project_jambam/src/features/b_authentication_invite/invite_code_screen.dart';
+import 'package:project_jambam/src/features/b_authentication/data/auth_repository_provider.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -227,6 +229,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               label: const Text('Zurücksetzen'),
             ),
             const Divider(height: 32),
+            Text('Einladungscode', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 12),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.vpn_key),
+              label: const Text('Einladungscode eingeben/prüfen'),
+              onPressed: () {
+                final userAsync = ref.read(currentUserProvider);
+                userAsync.maybeWhen(
+                  data: (user) => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const InviteCodeScreen(),
+                    ),
+                  ),
+                  orElse: () => null,
+                );
+              },
+            ),
+            const Divider(height: 32),
             Text('Entwicklung & Tests', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 12),
             ListTile(
@@ -250,7 +270,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 }
 
 class _AvatarGeneratorDialog extends StatefulWidget {
-  const _AvatarGeneratorDialog({super.key}); // Added super.key
+  const _AvatarGeneratorDialog();
 
   @override
   State<_AvatarGeneratorDialog> createState() => _AvatarGeneratorDialogState();

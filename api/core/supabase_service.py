@@ -74,10 +74,21 @@ class SupabaseService:
             logger.error(f"Error getting user profile: {e}")
             return None
     
-    async def update_user_profile(self, user_id: str, data: Dict[str, Any]) -> bool:
-        """Update user profile in database."""
+    async def update_user_profile(self, user_id: str, data: Dict[str, Any], admin_id: str = None) -> bool:
+        """Update user profile in database. Optional: log admin action if admin_id is provided."""
         try:
             response = self.supabase.table("profiles").update(data).eq("id", user_id).execute()
+            # Log admin action if role or is_verified changed and admin_id is provided
+            if admin_id:
+                action = None
+                details = {}
+                if 'role' in data:
+                    action = 'update_role'
+                    details['new_role'] = data['role']
+                if 'is_verified' in data:
+                    action = 'verify_user' if data['is_verified'] else 'unverify_user'
+                if action:
+                    await self.log_admin_action(admin_id, action, 'user', user_id, details)
             return bool(response.data)
         except Exception as e:
             logger.error(f"Error updating user profile: {e}")
@@ -100,6 +111,44 @@ class SupabaseService:
         except Exception as e:
             logger.error(f"Error getting assets: {e}")
             return []
+    
+    async def log_admin_action(self, admin_id: str, action: str, target_type: str, target_id: str, details: dict = None) -> bool:
+        """Log an admin action to the audit log."""
+        try:
+            entry = {
+                "admin_id": admin_id,
+                "action": action,
+                "target_type": target_type,
+                "target_id": target_id,
+                "details": details or {},
+            }
+            response = self.supabase.table("admin_audit_log").insert(entry).execute()
+            return bool(response.data)
+        except Exception as e:
+            logger.error(f"Error logging admin action: {e}")
+            return False
+
+    async def create_invite_code(self, code: str, admin_id: str = None) -> bool:
+        """Create a new invite code and log admin action if admin_id is provided."""
+        try:
+            response = self.supabase.table("invite_codes").insert({"code": code}).execute()
+            if admin_id:
+                await self.log_admin_action(admin_id, 'create_invite_code', 'invite_code', code, {})
+            return bool(response.data)
+        except Exception as e:
+            logger.error(f"Error creating invite code: {e}")
+            return False
+
+    async def delete_invite_code(self, code: str, admin_id: str = None) -> bool:
+        """Delete an invite code and log admin action if admin_id is provided."""
+        try:
+            response = self.supabase.table("invite_codes").delete().eq("code", code).execute()
+            if admin_id:
+                await self.log_admin_action(admin_id, 'delete_invite_code', 'invite_code', code, {})
+            return bool(response.data)
+        except Exception as e:
+            logger.error(f"Error deleting invite code: {e}")
+            return False
 
 # Global instance
 supabase_service = SupabaseService() 
