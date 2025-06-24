@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 class CreateBattleScreen extends ConsumerStatefulWidget {
   const CreateBattleScreen({super.key});
@@ -9,6 +10,7 @@ class CreateBattleScreen extends ConsumerStatefulWidget {
 }
 
 class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
+  final _logger = Logger('CreateBattleScreen');
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -639,13 +641,13 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
     );
     if (picked != null) {
       // Placeholder: Handle date selection
-      print("Selected date: $picked");
+      _logger.info("Selected date: $picked");
     }
   }
 
   void _saveDraft() {
     // Placeholder: Save battle as draft
-    print("Saving battle as draft...");
+    _logger.info("Saving battle as draft...");
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Draft saved successfully!'),
@@ -667,15 +669,15 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
       }
 
       // Placeholder: Create battle
-      print("Creating battle with the following details:");
-      print("Title: ${_titleController.text}");
-      print("Theme: ${_themeController.text}");
-      print("Category: $_selectedCategory");
-      print("Description: ${_descriptionController.text}");
-      print("Difficulty: $_selectedDifficulty");
-      print("Team Size: $_selectedTeamSize");
-      print("Duration: $_selectedDuration");
-      print("Platforms: $_selectedPlatforms");
+      _logger.info("Creating battle with the following details:");
+      _logger.info("Title: ${_titleController.text}");
+      _logger.info("Theme: ${_themeController.text}");
+      _logger.info("Category: $_selectedCategory");
+      _logger.info("Description: ${_descriptionController.text}");
+      _logger.info("Difficulty: $_selectedDifficulty");
+      _logger.info("Team Size: $_selectedTeamSize");
+      _logger.info("Duration: $_selectedDuration");
+      _logger.info("Platforms: $_selectedPlatforms");
       // Add more details as needed
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
