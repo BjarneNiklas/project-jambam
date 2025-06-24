@@ -306,9 +306,9 @@ class AIAnalyticsSystem {
     for (final taskType in _responseTimes.keys) {
       metrics[taskType] = {
         'average_response_time': _calculateAverage(_responseTimes[taskType]!),
-        'average_confidence': _calculateAverage(_confidenceScores[taskType] ?? []),
-        'average_satisfaction': _calculateAverage(_userSatisfaction[taskType] ?? []),
-        'total_requests': _usageCounts[taskType] ?? 0,
+        'average_confidence': _calculateAverage(_confidenceScores[taskType]!),
+        'average_satisfaction': _calculateAverage(_userSatisfaction[taskType]!),
+        'total_requests': _usageCounts[taskType]!,
       };
     }
     
