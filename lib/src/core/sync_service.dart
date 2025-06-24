@@ -125,7 +125,8 @@ class SyncService {
           return false;
       }
 
-      return response.statusCode! >= 200 && response.statusCode! < 300;
+      final statusCode = response.statusCode;
+      return statusCode != null && statusCode >= 200 && statusCode < 300;
     } catch (e) {
       return false;
     }
@@ -142,7 +143,8 @@ class SyncService {
       // Try to sync immediately if online
       try {
         final response = await _dio.post('/api/v1/assets/generate', data: assetData);
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        final statusCode = response.statusCode;
+        if (statusCode != null && statusCode >= 200 && statusCode < 300) {
           return; // Success, no need to queue
         }
       } catch (e) {
@@ -163,7 +165,8 @@ class SyncService {
     if (await _connectivity.isConnected()) {
       try {
         final response = await _dio.put('/api/v1/assets/$assetId', data: updateData);
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        final statusCode = response.statusCode;
+        if (statusCode != null && statusCode >= 200 && statusCode < 300) {
           return;
         }
       } catch (e) {
@@ -183,7 +186,8 @@ class SyncService {
     if (await _connectivity.isConnected()) {
       try {
         final response = await _dio.post('/api/v1/assets/$assetId/rate', data: ratingData);
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        final statusCode = response.statusCode;
+        if (statusCode != null && statusCode >= 200 && statusCode < 300) {
           return;
         }
       } catch (e) {
@@ -203,7 +207,8 @@ class SyncService {
     if (await _connectivity.isConnected()) {
       try {
         final response = await _dio.post('/api/v1/community/themes', data: themeData);
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        final statusCode = response.statusCode;
+        if (statusCode != null && statusCode >= 200 && statusCode < 300) {
           return;
         }
       } catch (e) {
@@ -223,7 +228,8 @@ class SyncService {
     if (await _connectivity.isConnected()) {
       try {
         final response = await _dio.post('/api/v1/licenses/$licenseId/purchase', data: purchaseData);
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        final statusCode = response.statusCode;
+        if (statusCode != null && statusCode >= 200 && statusCode < 300) {
           return;
         }
       } catch (e) {

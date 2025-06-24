@@ -317,7 +317,7 @@ class EnhancedConceptGenerationService implements ConceptGenerationService {
     if (parts['assets'] != null) {
       suggestions.add(jam_kit.AssetSuggestion(
         type: '3D Models',
-        description: parts['assets']!,
+        description: parts['assets'] ?? '', // Provide fallback for null
         stylePrompt: 'High quality, detailed 3D models',
       ));
     }
@@ -580,9 +580,10 @@ class EnhancedConceptGenerationService implements ConceptGenerationService {
   /// Generate suggested mechanics from concept parts
   List<String> _generateSuggestedMechanics(Map<String, String> parts) {
     final mechanics = <String>[];
-    if (parts['mechanics'] != null) {
+    final mechanicsPart = parts['mechanics'];
+    if (mechanicsPart != null) {
       // Simple split for now, could be more sophisticated
-      mechanics.addAll(parts['mechanics']!.split('. ').map((s) => s.trim()).where((s) => s.isNotEmpty));
+      mechanics.addAll(mechanicsPart.split('. ').map((s) => s.trim()).where((s) => s.isNotEmpty));
     }
     return mechanics;
   }
