@@ -300,7 +300,7 @@ class ContentFilterService {
         _filterSystem.fromJson(data);
       } catch (e) {
         // If loading fails, start with empty system
-        print('Failed to load content filter tags: $e');
+        // print('Failed to load content filter tags: $e'); // Removed due to avoid_print
       }
     }
   }
@@ -328,7 +328,7 @@ class ContentFilterService {
         _autoCategorizeResearch = data['autoCategorizeResearch'] ?? true;
         _showUsageStats = data['showUsageStats'] ?? true;
       } catch (e) {
-        print('Failed to load content filter settings: $e');
+         // print('Failed to load content filter settings: $e'); // Removed due to avoid_print
       }
     }
   }

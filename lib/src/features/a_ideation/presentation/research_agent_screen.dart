@@ -24,7 +24,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
   ResearchResult? _currentResult;
   bool _isLoading = false;
   String _errorMessage = '';
-  String _selectedSource = 'all';
+  final String _selectedSource = 'all';
 
   @override
   void initState() {
@@ -140,7 +140,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
             ),
             const SizedBox(width: 4),
             const FaIcon(
-              FontAwesomeIcons.externalLink,
+              FontAwesomeIcons.arrowUpRightFromSquare,
               size: 10,
               color: Colors.white,
             ),
@@ -263,7 +263,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                       const SnackBar(content: Text('PDF Export - Coming Soon!')),
                     );
                   },
-                  icon: const FaIcon(FontAwesomeIcons.regularFilePdf),
+                  icon: const FaIcon(FontAwesomeIcons.filePdf),
                   label: const Text('Export PDF'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade600,
@@ -314,7 +314,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const FaIcon(FontAwesomeIcons.regularQuestionCircle),
+            icon: const FaIcon(FontAwesomeIcons.questionCircle),
             onPressed: () {
               showDialog(
                 context: context,
@@ -347,7 +347,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                   color: Colors.black.withAlpha(13),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -359,7 +359,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                   controller: _queryController,
                   decoration: InputDecoration(
                     hintText: 'Forschungsfrage eingeben... (z.B. "procedural generation games")',
-                    prefixIcon: const FaIcon(FontAwesomeIcons.search),
+                    prefixIcon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
                     suffixIcon: _isLoading
                         ? AnimatedBuilder(
                             animation: _loadingController,
@@ -490,7 +490,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 FaIcon(
-                                  FontAwesomeIcons.search,
+                                  FontAwesomeIcons.magnifyingGlass,
                                   size: 64,
                                   color: Colors.grey.shade400,
                                 ),

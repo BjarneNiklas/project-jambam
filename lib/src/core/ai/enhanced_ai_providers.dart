@@ -279,7 +279,7 @@ class EnhancedAIOrchestrator {
 
   Future<void> logInteraction(String interactionType, Map<String, dynamic> data) async {
     // Log interaction for analytics
-    print('Interaction logged: $interactionType - $data');
+    // print('Interaction logged: $interactionType - $data'); // Removed due to avoid_print
   }
 }
 
