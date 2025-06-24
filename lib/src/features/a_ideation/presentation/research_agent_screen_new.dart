@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../data/research_agent.dart';
 import '../data/research_agent_config.dart' as config;
+import '../application/export_service.dart'; // Added export service
 
 class ResearchAgentScreenNew extends ConsumerStatefulWidget {
   const ResearchAgentScreenNew({super.key});
@@ -17,6 +18,7 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
   final TextEditingController _queryController = TextEditingController();
   final ResearchAgent _researchAgent = ResearchAgent();
   final config.ResearchAgentConfig _config = config.ResearchAgentConfig();
+  final ExportService _exportService = ExportService(); // Added export service instance
   
   late AnimationController _loadingController;
   late AnimationController _resultsController;
@@ -263,11 +265,27 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
             children: [
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: Export to PDF
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('PDF Export - Coming Soon!')),
-                    );
+                    onPressed: () async {
+                      if (_currentResult != null) {
+                        try {
+                          await _exportService.exportToPdf(_currentResult!, _currentResult!.title.replaceAll(' ', '_'));
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('PDF export started...')),
+                            );
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('PDF Export failed: $e')),
+                            );
+                          }
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('No result to export.')),
+                        );
+                      }
                   },
                   icon: const FaIcon(FontAwesomeIcons.filePdf),
                   label: const Text('Export PDF'),
@@ -284,11 +302,27 @@ class _ResearchAgentScreenNewState extends ConsumerState<ResearchAgentScreenNew>
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: Export to Markdown
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Markdown Export - Coming Soon!')),
-                    );
+                  onPressed: () async {
+                    if (_currentResult != null) {
+                      try {
+                        await _exportService.exportToMarkdown(_currentResult!, _currentResult!.title.replaceAll(' ', '_'));
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Markdown export started...')),
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Markdown Export failed: $e')),
+                          );
+                        }
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('No result to export.')),
+                      );
+                    }
                   },
                   icon: const FaIcon(FontAwesomeIcons.code),
                   label: const Text('Export Markdown'),
