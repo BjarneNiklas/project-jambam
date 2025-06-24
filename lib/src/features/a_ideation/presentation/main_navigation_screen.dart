@@ -233,6 +233,7 @@ class _PlaceholderScreen extends StatelessWidget {
   final String description;
 
   const _PlaceholderScreen({
+    super.key,
     required this.title,
     required this.icon,
     required this.color,

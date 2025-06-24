@@ -224,7 +224,7 @@ class JambaMApp extends StatelessWidget {
 
 class AdminGuard extends ConsumerWidget {
   final Widget child;
-  const AdminGuard({required this.child, super.key});
+  const AdminGuard({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
