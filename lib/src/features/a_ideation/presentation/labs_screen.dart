@@ -36,13 +36,13 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           IconButton(
             icon: const Icon(Icons.science),
             onPressed: () {
-              // TODO: Lab settings
+              Navigator.pushNamed(context, '/lab-settings');
             },
           ),
           IconButton(
             icon: const Icon(Icons.help),
             onPressed: () {
-              // TODO: Lab help
+              Navigator.pushNamed(context, '/lab-help');
             },
           ),
         ],
@@ -305,7 +305,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           IconButton(
             icon: const Icon(Icons.play_arrow),
             onPressed: () {
-              // TODO: Continue experiment
+              Navigator.pushNamed(context, '/continue-experiment', arguments: {'experimentTitle': title});
             },
           ),
         ],
@@ -637,7 +637,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
         subtitle: Text(description),
         trailing: ElevatedButton(
           onPressed: () {
-            // TODO: Launch AI tool
+            Navigator.pushNamed(context, '/launch-ai-tool', arguments: {'toolName': title});
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: color,
@@ -825,7 +825,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      // TODO: View prototype
+                      Navigator.pushNamed(context, '/view-prototype', arguments: {'prototypeName': title});
                     },
                     child: const Text('View'),
                   ),
@@ -834,7 +834,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Test prototype
+                      Navigator.pushNamed(context, '/test-prototype', arguments: {'prototypeName': title});
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: color,
@@ -1005,7 +1005,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {
-                    // TODO: Explore idea
+                      Navigator.pushNamed(context, '/explore-idea', arguments: {'ideaName': title});
                   },
                   child: const Text('Explore'),
                 ),
@@ -1014,7 +1014,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Start research
+                      Navigator.pushNamed(context, '/start-research', arguments: {'ideaName': title});
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
@@ -1182,7 +1182,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              // TODO: Join challenge
+              Navigator.pushNamed(context, '/join-challenge', arguments: {'challengeName': description});
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: color,
