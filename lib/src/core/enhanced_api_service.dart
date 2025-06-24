@@ -22,6 +22,7 @@ class EnhancedApiService {
   late final ConnectivityService _connectivity;
   late final SyncService _syncService;
   late final CacheStore _globalCacheStore; // Added for shared cache store
+  late final CacheOptions _globalCacheOptionsInstanceMember; // New member
 
   // Cache options
   static const Duration _cacheDuration = Duration(hours: 24);
@@ -59,7 +60,7 @@ class EnhancedApiService {
     }
 
     // Add cache interceptor using the global store
-    final globalCacheOptions = CacheOptions(
+    _globalCacheOptionsInstanceMember = CacheOptions(
       store: _globalCacheStore,
       policy: CachePolicy.request, // Default policy
       hitCacheOnErrorExcept: [401, 403], // Try cache on error, except for auth errors
@@ -68,7 +69,7 @@ class EnhancedApiService {
       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
       allowPostMethod: false, // Do not cache POST requests by default
     );
-    _dio.interceptors.add(DioCacheInterceptor(options: globalCacheOptions));
+    _dio.interceptors.add(DioCacheInterceptor(options: _globalCacheOptionsInstanceMember));
 
     // Add connectivity interceptor
     _dio.interceptors.add(InterceptorsWrapper(
@@ -265,7 +266,7 @@ class EnhancedApiService {
       final response = await _dio.get(
         '/assets',
         queryParameters: {'skip': skip, 'limit': limit},
-        options: _globalCacheOptions.copyWith(
+        options: _globalCacheOptionsInstanceMember.copyWith(
           policy: CachePolicy.forceCache,
           maxStale: _shortCacheDuration,
         ).toOptions(),
@@ -290,7 +291,7 @@ class EnhancedApiService {
     try {
       final response = await _dio.get(
         '/assets/$assetId',
-        options: _globalCacheOptions.copyWith(
+        options: _globalCacheOptionsInstanceMember.copyWith(
           policy: CachePolicy.forceCache,
           maxStale: _cacheDuration,
         ).toOptions(),
@@ -375,7 +376,7 @@ class EnhancedApiService {
       final response = await _dio.get(
         '/marketplace',
         queryParameters: {'skip': skip, 'limit': limit},
-        options: _globalCacheOptions.copyWith(
+        options: _globalCacheOptionsInstanceMember.copyWith(
           policy: CachePolicy.forceCache,
           maxStale: _shortCacheDuration,
         ).toOptions(),
@@ -438,7 +439,7 @@ class EnhancedApiService {
 
   Future<List<Map<String, dynamic>>> getOrganizations() async {
     try {
-      final response = await _dio.get('/organizations', options: _globalCacheOptions.copyWith(
+      final response = await _dio.get('/organizations', options: _globalCacheOptionsInstanceMember.copyWith(
         policy: CachePolicy.forceCache,
         maxStale: _cacheDuration,
       ).toOptions());
@@ -473,7 +474,7 @@ class EnhancedApiService {
 
   Future<List<Map<String, dynamic>>> getLicenseTypes() async {
     try {
-      final response = await _dio.get('/license-types', options: _globalCacheOptions.copyWith(
+      final response = await _dio.get('/license-types', options: _globalCacheOptionsInstanceMember.copyWith(
         policy: CachePolicy.forceCache,
         maxStale: _cacheDuration,
       ).toOptions());
@@ -513,7 +514,7 @@ class EnhancedApiService {
 
   Future<Map<String, dynamic>> getAvailableStyles() async {
     try {
-      final response = await _dio.get('/generation/styles', options: _globalCacheOptions.copyWith(
+      final response = await _dio.get('/generation/styles', options: _globalCacheOptionsInstanceMember.copyWith(
         policy: CachePolicy.forceCache,
         maxStale: _cacheDuration,
       ).toOptions());
@@ -534,7 +535,7 @@ class EnhancedApiService {
     try {
       final response = await _dio.get(
         '/generation/styles/$style',
-        options: _globalCacheOptions.copyWith(
+        options: _globalCacheOptionsInstanceMember.copyWith(
           policy: CachePolicy.forceCache,
           maxStale: _cacheDuration,
         ).toOptions(),
