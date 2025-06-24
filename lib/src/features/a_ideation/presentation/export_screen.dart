@@ -1,5 +1,14 @@
+import 'dart:convert'; // For jsonEncode
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart'; // To get a temporary directory
+import 'package:share_plus/share_plus.dart'; // To share the exported file/text
+import 'package:permission_handler/permission_handler.dart'; // To request permissions
+import '../application/prompt_config_provider.dart'; // For prompt settings
+import 'package:shared_preferences/shared_preferences.dart'; // For avatar generation limits
+import '../data/jamba_ai_chat_provider.dart'; // For chat history
+import 'package:url_launcher/url_launcher.dart'; // For opening folder
+import 'dart:io'; // For Directory operations
 
 class ExportScreen extends ConsumerStatefulWidget {
   const ExportScreen({super.key});
@@ -14,16 +23,191 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
   bool _isExporting = false;
   double _exportProgress = 0.0;
 
+  // Data for projects
+  final List<_Project> _projects = [
+    _Project(id: 'proj1', name: 'AI Adventure Quest', details: 'Unity • 450MB', color: Colors.blue, isInitiallySelected: true),
+    _Project(id: 'proj2', name: 'Flutter RPG', details: 'Flutter • 280MB', color: Colors.indigo),
+    _Project(id: 'proj3', name: 'Web Strategy Game', details: 'Web • 120MB', color: Colors.green, isInitiallySelected: true),
+    _Project(id: 'proj4', name: '3D Platformer', details: 'Unity • 890MB', color: Colors.orange),
+  ];
+  Set<String> _selectedProjectIds = {};
+
+  // Data for project export formats
+  final List<_ExportFormat> _projectExportFormats = [
+    _ExportFormat(id: 'fmtProj1', name: 'Unity Package', description: 'Complete Unity project with all assets', size: '450MB', color: Colors.blue, isInitiallySelected: true),
+    _ExportFormat(id: 'fmtProj2', name: 'Flutter Package', description: 'Flutter project with dependencies', size: '280MB', color: Colors.indigo),
+    _ExportFormat(id: 'fmtProj3', name: 'Web Build', description: 'HTML5 build for web deployment', size: '120MB', color: Colors.green, isInitiallySelected: true), // Assuming last selected wins if multiple are true
+    _ExportFormat(id: 'fmtProj4', name: 'Source Code', description: 'Raw source code and assets', size: '890MB', color: Colors.orange),
+    _ExportFormat(id: 'fmtProj5', name: 'Documentation', description: 'Project documentation and guides', size: '45MB', color: Colors.purple, isInitiallySelected: true),
+  ];
+  String? _selectedProjectExportFormatId;
+
+  // State for export options
+  bool _includeDependencies = true;
+  bool _compressFiles = true;
+  bool _includeDocumentation = false;
+  bool _createBackup = true;
+
+  // Data for asset categories
+  final List<_AssetCategory> _assetCategories = [
+    _AssetCategory(id: 'assetCat1', name: '3D Models', files: '156 files', size: '890MB', color: Colors.blue, isInitiallySelected: true),
+    _AssetCategory(id: 'assetCat2', name: 'Textures', files: '234 files', size: '450MB', color: Colors.green, isInitiallySelected: true),
+    _AssetCategory(id: 'assetCat3', name: 'Audio', files: '89 files', size: '280MB', color: Colors.orange, isInitiallySelected: true),
+    _AssetCategory(id: 'assetCat4', name: 'Animations', files: '67 files', size: '180MB', color: Colors.purple, isInitiallySelected: true),
+  ];
+  Set<String> _selectedAssetCategoryIds = {};
+
+  // Data for asset export formats
+  final List<_AssetExportFormat> _assetExportFormats = [
+    _AssetExportFormat(id: 'assetFmt1', name: 'FBX', typeDescription: '3D Models', color: Colors.blue, isInitiallySelected: true),
+    _AssetExportFormat(id: 'assetFmt2', name: 'PNG', typeDescription: 'Textures', color: Colors.green, isInitiallySelected: true),
+    _AssetExportFormat(id: 'assetFmt3', name: 'MP3', typeDescription: 'Audio', color: Colors.orange),
+    _AssetExportFormat(id: 'assetFmt4', name: 'GIF', typeDescription: 'Animations', color: Colors.purple, isInitiallySelected: true), // Last one true wins for single select
+    _AssetExportFormat(id: 'assetFmt5', name: 'ZIP', typeDescription: 'Compressed', color: Colors.grey),
+  ];
+  String? _selectedAssetExportFormatId;
+
+  // State for asset export
+  bool _isExportingAssets = false;
+  double _assetExportProgress = 0.0;
+
+  // Data for data types
+  final List<_DataType> _dataTypes = [
+    _DataType(id: 'data1', name: 'User Profile', description: 'Personal information', size: '2MB', color: Colors.blue, isInitiallySelected: true),
+    _DataType(id: 'data2', name: 'Project History', description: 'All project data', size: '15MB', color: Colors.green, isInitiallySelected: true),
+    _DataType(id: 'data3', name: 'Analytics', description: 'Performance metrics', size: '8MB', color: Colors.orange, isInitiallySelected: true),
+    _DataType(id: 'data4', name: 'Achievements', description: 'Earned achievements', size: '5MB', color: Colors.purple, isInitiallySelected: true),
+    _DataType(id: 'data5', name: 'Social Data', description: 'Connections and activity', size: '15MB', color: Colors.teal, isInitiallySelected: true),
+  ];
+  Set<String> _selectedDataTypeIds = {};
+
   @override
   void initState() {
-    super.initState();
+    super.initState(); // Should be first
     _tabController = TabController(length: 3, vsync: this);
+    // Initialize selected projects based on their isInitiallySelected property
+    _selectedProjectIds = _projects
+        .where((p) => p.isInitiallySelected)
+        .map((p) => p.id)
+        .toSet();
+
+    // Initialize selected project export format
+    final initiallySelectedFormat = _projectExportFormats.lastWhere(
+      (f) => f.isInitiallySelected,
+      orElse: () => _projectExportFormats.isNotEmpty ? _projectExportFormats.first : null,
+    );
+    if (initiallySelectedFormat != null) {
+      _selectedProjectExportFormatId = initiallySelectedFormat.id;
+    }
+
+    // Initialize selected asset categories
+    _selectedAssetCategoryIds = _assetCategories
+        .where((c) => c.isInitiallySelected)
+        .map((c) => c.id)
+        .toSet();
+
+    // Initialize selected asset export format
+    final initiallySelectedAssetFormat = _assetExportFormats.lastWhere(
+      (f) => f.isInitiallySelected,
+      orElse: () => _assetExportFormats.isNotEmpty ? _assetExportFormats.first : null,
+    );
+    if (initiallySelectedAssetFormat != null) {
+      _selectedAssetExportFormatId = initiallySelectedAssetFormat.id;
+    }
+
+    // Initialize selected data types
+    _selectedDataTypeIds = _dataTypes
+        .where((d) => d.isInitiallySelected)
+        .map((d) => d.id)
+        .toSet();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  @override
+  Future<void> _exportSettings() async {
+    // Gather settings data
+    final promptConfig = ref.read(promptConfigProvider);
+    final prefs = await SharedPreferences.getInstance();
+
+    // Accessing settings from _SettingsScreenState is tricky directly.
+    // For now, I'll export what's easily accessible globally or via SharedPreferences.
+    // Ideally, these settings (userName, avatarUrl, appLanguage, promptLanguage, theme)
+    // would be in their own Riverpod provider.
+    // I will create a placeholder for them for now.
+
+    final settingsData = {
+      'promptConfig': {
+        'context': promptConfig.context,
+        'example': promptConfig.example,
+        'style': promptConfig.style,
+      },
+      'avatarGeneration': {
+        'month': prefs.getString('avatar_gen_month'),
+        'count': prefs.getInt('avatar_gen_count'),
+      },
+      // Placeholder for other settings - these would ideally come from a provider
+      'userProfile': {
+        'userName': 'Demo User', // Placeholder
+        'avatarUrl': '', // Placeholder
+      },
+      'preferences': {
+        'appLanguage': 'Deutsch', // Placeholder
+        'promptLanguage': 'Deutsch', // Placeholder
+        'theme': 'System', // Placeholder
+      }
+    };
+
+    final jsonString = jsonEncode(settingsData);
+
+    try {
+      // Use share_plus to share the JSON string. User can then save it as a file.
+      await Share.share(jsonString, subject: 'ProjectJambam_Settings_Export.json');
+       if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Settings ready to be shared/saved!')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error exporting settings: $e')),
+      );
+    }
+  }
+
+  Future<void> _exportHistory() async {
+    final chatState = ref.read(jambaAIChatProvider);
+    final messages = chatState.messages.map((msg) => {
+      'id': msg.id,
+      'content': msg.content,
+      'isUser': msg.isUser,
+      'timestamp': msg.timestamp.toIso8601String(),
+      'agentName': msg.agentName,
+    }).toList();
+
+    final historyData = {
+      'chatHistory': messages,
+      // TODO: Potentially include JamKit history here if available
+    };
+
+    final jsonString = jsonEncode(historyData);
+
+    try {
+      await Share.share(jsonString, subject: 'ProjectJambam_History_Export.json');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('History ready to be shared/saved!')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error exporting history: $e')),
+      );
+    }
   }
 
   @override
@@ -37,15 +221,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
         actions: [
           IconButton(
             icon: const Icon(Icons.history),
-            onPressed: () {
-              // TODO: Export history
-            },
+            onPressed: _exportHistory, // Updated
           ),
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {
-              // TODO: Export settings
-            },
+            onPressed: _exportSettings, // Updated
           ),
         ],
         bottom: TabBar(
@@ -190,47 +370,23 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            _buildProjectItem(
-              'AI Adventure Quest',
-              'Unity • 450MB',
-              true,
-              Colors.blue,
-            ),
-            _buildProjectItem(
-              'Flutter RPG',
-              'Flutter • 280MB',
-              false,
-              Colors.indigo,
-            ),
-            _buildProjectItem(
-              'Web Strategy Game',
-              'Web • 120MB',
-              true,
-              Colors.green,
-            ),
-            _buildProjectItem(
-              '3D Platformer',
-              'Unity • 890MB',
-              false,
-              Colors.orange,
-            ),
+            // Dynamically build project items
+            for (final project in _projects)
+              _buildProjectItem(project), // Pass the whole project object
+
             const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {
-                      // TODO: Select all
-                    },
+                    onPressed: _selectAllProjects,
                     child: const Text('Select All'),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {
-                      // TODO: Clear selection
-                    },
+                    onPressed: _clearProjectSelection,
                     child: const Text('Clear'),
                   ),
                 ),
@@ -242,7 +398,20 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
     );
   }
 
-  Widget _buildProjectItem(String name, String details, bool isSelected, Color color) {
+  void _selectAllProjects() {
+    setState(() {
+      _selectedProjectIds = _projects.map((p) => p.id).toSet();
+    });
+  }
+
+  void _clearProjectSelection() {
+    setState(() {
+      _selectedProjectIds.clear();
+    });
+  }
+
+  Widget _buildProjectItem(_Project project) { // Updated to take _Project object
+    final isSelected = _selectedProjectIds.contains(project.id);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
@@ -259,24 +428,28 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             value: isSelected,
             onChanged: (value) {
               setState(() {
-                // TODO: Update selection
+                if (value == true) {
+                  _selectedProjectIds.add(project.id);
+                } else {
+                  _selectedProjectIds.remove(project.id);
+                }
               });
             },
-            activeColor: color,
+            activeColor: project.color,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  project.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  details,
+                  project.details,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -287,7 +460,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
           ),
           Icon(
             isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isSelected ? color : Colors.grey,
+            color: isSelected ? project.color : Colors.grey,
             size: 20,
           ),
         ],
@@ -312,82 +485,58 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            _buildFormatItem(
-              'Unity Package',
-              'Complete Unity project with all assets',
-              '450MB',
-              true,
-              Colors.blue,
-            ),
-            _buildFormatItem(
-              'Flutter Package',
-              'Flutter project with dependencies',
-              '280MB',
-              false,
-              Colors.indigo,
-            ),
-            _buildFormatItem(
-              'Web Build',
-              'HTML5 build for web deployment',
-              '120MB',
-              true,
-              Colors.green,
-            ),
-            _buildFormatItem(
-              'Source Code',
-              'Raw source code and assets',
-              '890MB',
-              false,
-              Colors.orange,
-            ),
-            _buildFormatItem(
-              'Documentation',
-              'Project documentation and guides',
-              '45MB',
-              true,
-              Colors.purple,
-            ),
+            // Dynamically build format items
+            for (final format in _projectExportFormats)
+              _buildFormatItem(format),
+
           ],
         ),
       ),
     );
   }
 
-  Widget _buildFormatItem(String name, String description, String size, bool isSelected, Color color) {
+  Widget _buildFormatItem(_ExportFormat format) { // Updated to take _ExportFormat object
+    final isSelected = _selectedProjectExportFormatId == format.id;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isSelected ? format.color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? format.color : Colors.grey.withOpacity(0.3),
         ),
       ),
       child: Row(
         children: [
-          Checkbox(
+          Checkbox( // Using Checkbox but acting like Radio
             value: isSelected,
             onChanged: (value) {
               setState(() {
-                // TODO: Update format selection
+                if (value == true) {
+                  _selectedProjectExportFormatId = format.id;
+                }
+                // If value is false, it means user is unchecking.
+                // For radio-button like behavior, we don't allow unchecking to 'no selection'
+                // unless explicitly designed. Current setup: clicking another makes it active.
+                // So, if a checkbox is unchecked, it's because another was checked.
               });
             },
-            activeColor: color,
+            activeColor: format.color,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  format.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  description,
+                  format.description,
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -397,7 +546,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             ),
           ),
           Text(
-            size,
+            format.size,
             style: TextStyle(
               color: Colors.grey[600],
               fontSize: 12,
@@ -429,36 +578,44 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             SwitchListTile(
               title: const Text('Include Dependencies'),
               subtitle: const Text('Include all project dependencies'),
-              value: true,
+              value: _includeDependencies,
               onChanged: (value) {
-                // TODO: Update option
+                setState(() {
+                  _includeDependencies = value;
+                });
               },
               secondary: const Icon(Icons.link),
             ),
             SwitchListTile(
               title: const Text('Compress Files'),
               subtitle: const Text('Reduce file size with compression'),
-              value: true,
+              value: _compressFiles,
               onChanged: (value) {
-                // TODO: Update option
+                setState(() {
+                  _compressFiles = value;
+                });
               },
               secondary: const Icon(Icons.compress),
             ),
             SwitchListTile(
               title: const Text('Include Documentation'),
               subtitle: const Text('Add README and setup guides'),
-              value: false,
+              value: _includeDocumentation,
               onChanged: (value) {
-                // TODO: Update option
+                setState(() {
+                  _includeDocumentation = value;
+                });
               },
               secondary: const Icon(Icons.description),
             ),
             SwitchListTile(
               title: const Text('Create Backup'),
               subtitle: const Text('Create backup before export'),
-              value: true,
+              value: _createBackup,
               onChanged: (value) {
-                // TODO: Update option
+                setState(() {
+                  _createBackup = value;
+                });
               },
               secondary: const Icon(Icons.backup),
             ),
@@ -600,13 +757,60 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              // TODO: Open export folder
+              _openExportFolder(); // Call the new method
             },
             child: const Text('Open Folder'),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _openExportFolder() async {
+    try {
+      Directory? exportDir;
+      if (Platform.isAndroid || Platform.isIOS) {
+        // On mobile, getApplicationDocumentsDirectory is a good private place.
+        // For a more "user-accessible" folder, Downloads might be an option,
+        // but requires more setup (permissions, platform channels for specific paths).
+        // Let's use app documents for simplicity and reliability.
+        exportDir = await getApplicationDocumentsDirectory();
+      } else if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+        // For desktop, Downloads directory is usually preferred.
+        exportDir = await getDownloadsDirectory();
+      }
+
+      if (exportDir == null) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not determine export directory for this platform.')),
+        );
+        return;
+      }
+
+      final jambamExportsPath = '${exportDir.path}${Platform.pathSeparator}ProjectJambamExports';
+      final jambamExportsDir = Directory(jambamExportsPath);
+
+      if (!await jambamExportsDir.exists()) {
+        await jambamExportsDir.create(recursive: true);
+      }
+
+      final uri = Uri.file(jambamExportsDir.path);
+
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not open folder: ${jambamExportsDir.path}')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error opening export folder: $e')),
+      );
+    }
   }
 
   Widget _buildAssetsTab() {
@@ -679,34 +883,33 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            _buildAssetCategoryItem('3D Models', '156 files', '890MB', Colors.blue),
-            _buildAssetCategoryItem('Textures', '234 files', '450MB', Colors.green),
-            _buildAssetCategoryItem('Audio', '89 files', '280MB', Colors.orange),
-            _buildAssetCategoryItem('Animations', '67 files', '180MB', Colors.purple),
+            for (final category in _assetCategories)
+              _buildAssetCategoryItem(category),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAssetCategoryItem(String category, String files, String size, Color color) {
+  Widget _buildAssetCategoryItem(_AssetCategory category) { // Updated parameter
+    final isSelected = _selectedAssetCategoryIds.contains(category.id);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: category.color.withOpacity(0.1), // Use category.color
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: category.color.withOpacity(0.3)), // Use category.color
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: category.color.withOpacity(0.2), // Use category.color
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(Icons.folder, color: color, size: 20),
+            child: Icon(Icons.folder, color: category.color, size: 20), // Use category.color
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -714,14 +917,14 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  category,
+                  category.name, // Use category.name
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  '$files • $size',
+                  '${category.files} • ${category.size}', // Use category.files and category.size
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -731,11 +934,17 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             ),
           ),
           Checkbox(
-            value: true,
+            value: isSelected,
             onChanged: (value) {
-              // TODO: Update selection
+              setState(() {
+                if (value == true) {
+                  _selectedAssetCategoryIds.add(category.id);
+                } else {
+                  _selectedAssetCategoryIds.remove(category.id);
+                }
+              });
             },
-            activeColor: color,
+            activeColor: category.color, // Use category.color
           ),
         ],
       ),
@@ -759,50 +968,53 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            _buildAssetFormatItem('FBX', '3D Models', true, Colors.blue),
-            _buildAssetFormatItem('PNG', 'Textures', true, Colors.green),
-            _buildAssetFormatItem('MP3', 'Audio', false, Colors.orange),
-            _buildAssetFormatItem('GIF', 'Animations', true, Colors.purple),
-            _buildAssetFormatItem('ZIP', 'Compressed', false, Colors.grey),
+            for (final format in _assetExportFormats)
+              _buildAssetFormatItem(format),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAssetFormatItem(String format, String type, bool isSelected, Color color) {
+  Widget _buildAssetFormatItem(_AssetExportFormat format) { // Renamed parameter, using new class
+    final isSelected = _selectedAssetExportFormatId == format.id;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isSelected ? format.color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? format.color : Colors.grey.withOpacity(0.3),
         ),
       ),
       child: Row(
         children: [
-          Checkbox(
+          Checkbox( // Using Checkbox but acting like Radio
             value: isSelected,
             onChanged: (value) {
-              // TODO: Update format selection
+              setState(() {
+                if (value == true) {
+                  _selectedAssetExportFormatId = format.id;
+                }
+                // For radio-button like behavior
+              });
             },
-            activeColor: color,
+            activeColor: format.color,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  format,
+                  format.name, // Use format.name
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  type,
+                  format.typeDescription, // Use format.typeDescription
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -824,44 +1036,140 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const Text(
-              'Export Assets',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Selected: 1.2GB',
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 14,
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Export assets
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: const Text(
-                  'Export Assets',
-                  style: TextStyle(fontSize: 16),
+            if (_isExportingAssets) ...[
+              const Text(
+                'Exporting Assets...',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+              const SizedBox(height: 16),
+              LinearProgressIndicator(
+                value: _assetExportProgress,
+                backgroundColor: Colors.grey.withOpacity(0.3),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
+                minHeight: 8,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '${(_assetExportProgress * 100).toInt()}% complete',
+                style: const TextStyle(
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ] else ...[
+              const Text(
+                'Ready to Export Assets',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                _selectedAssetCategoryIds.isEmpty
+                    ? 'No asset categories selected'
+                    : 'Selected: ${_selectedAssetCategoryIds.length} categor${_selectedAssetCategoryIds.length == 1 ? 'y' : 'ies'}',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _isExportingAssets ? null : _exportAssets,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text(
+                    'Export Assets',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
     );
   }
+
+  Future<void> _exportAssets() async {
+    if (_selectedAssetCategoryIds.isEmpty) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select asset categories to export.')),
+      );
+      return;
+    }
+    if (_selectedAssetExportFormatId == null) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select an export format for assets.')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isExportingAssets = true;
+      _assetExportProgress = 0.0;
+    });
+
+    // Simulate export progress
+    // In a real app, this would involve actual file operations.
+    final totalSteps = _selectedAssetCategoryIds.length;
+    for (int i = 0; i < totalSteps; i++) {
+      await Future.delayed(const Duration(milliseconds: 500)); // Simulate work for each category
+      if (mounted) {
+        setState(() {
+          _assetExportProgress = (i + 1) / totalSteps;
+        });
+      }
+    }
+
+    await Future.delayed(const Duration(milliseconds: 300)); // Finalizing
+
+    if (mounted) {
+      setState(() {
+        _isExportingAssets = false;
+      });
+      _showAssetExportCompleteDialog();
+    }
+  }
+
+  void _showAssetExportCompleteDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Asset Export Complete'),
+        content: const Text(
+          'Your selected assets have been successfully exported (simulated)!',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _openExportFolder(); // Re-use the existing open folder logic
+            },
+            child: const Text('Open Folder'),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget _buildDataTab() {
     return ListView(
@@ -933,35 +1241,33 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-            _buildDataTypeItem('User Profile', 'Personal information', '2MB', Colors.blue),
-            _buildDataTypeItem('Project History', 'All project data', '15MB', Colors.green),
-            _buildDataTypeItem('Analytics', 'Performance metrics', '8MB', Colors.orange),
-            _buildDataTypeItem('Achievements', 'Earned achievements', '5MB', Colors.purple),
-            _buildDataTypeItem('Social Data', 'Connections and activity', '15MB', Colors.teal),
+            for (final dataType in _dataTypes)
+              _buildDataTypeItem(dataType),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDataTypeItem(String type, String description, String size, Color color) {
+  Widget _buildDataTypeItem(_DataType dataType) { // Updated parameter
+    final isSelected = _selectedDataTypeIds.contains(dataType.id);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: dataType.color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: dataType.color.withOpacity(0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: dataType.color.withOpacity(0.2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(Icons.storage, color: color, size: 20),
+            child: Icon(Icons.storage, color: dataType.color, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -969,14 +1275,14 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  type,
+                  dataType.name, // Use dataType.name
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  description,
+                  dataType.description, // Use dataType.description
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12,
@@ -986,7 +1292,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             ),
           ),
           Text(
-            size,
+            dataType.size, // Use dataType.size
             style: TextStyle(
               color: Colors.grey[600],
               fontSize: 12,
@@ -995,11 +1301,17 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
           ),
           const SizedBox(width: 8),
           Checkbox(
-            value: true,
+            value: isSelected,
             onChanged: (value) {
-              // TODO: Update selection
+              setState(() {
+                if (value == true) {
+                  _selectedDataTypeIds.add(dataType.id);
+                } else {
+                  _selectedDataTypeIds.remove(dataType.id);
+                }
+              });
             },
-            activeColor: color,
+            activeColor: dataType.color,
           ),
         ],
       ),
@@ -1125,4 +1437,95 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       ),
     );
   }
-} 
+}
+
+// Simple data class for Project
+class _Project {
+  final String id;
+  final String name;
+  final String details;
+  final Color color;
+  final bool isInitiallySelected;
+
+  _Project({
+    required this.id,
+    required this.name,
+    required this.details,
+    required this.color,
+    this.isInitiallySelected = false,
+  });
+}
+
+// Simple data class for Asset Export Format
+class _AssetExportFormat {
+  final String id;
+  final String name;
+  final String typeDescription; // e.g., "3D Models", "Textures"
+  final Color color;
+  final bool isInitiallySelected;
+
+  _AssetExportFormat({
+    required this.id,
+    required this.name,
+    required this.typeDescription,
+    required this.color,
+    this.isInitiallySelected = false,
+  });
+}
+
+// Simple data class for Asset Category
+class _AssetCategory {
+  final String id;
+  final String name;
+  final String files;
+  final String size;
+  final Color color;
+  final bool isInitiallySelected;
+
+  _AssetCategory({
+    required this.id,
+    required this.name,
+    required this.files,
+    required this.size,
+    required this.color,
+    this.isInitiallySelected = false,
+  });
+}
+
+// Simple data class for Data Type
+class _DataType {
+  final String id;
+  final String name;
+  final String description;
+  final String size;
+  final Color color;
+  final bool isInitiallySelected;
+
+  _DataType({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.size,
+    required this.color,
+    this.isInitiallySelected = false,
+  });
+}
+
+// Simple data class for Export Format
+class _ExportFormat {
+  final String id;
+  final String name;
+  final String description;
+  final String size;
+  final Color color;
+  final bool isInitiallySelected;
+
+  _ExportFormat({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.size,
+    required this.color,
+    this.isInitiallySelected = false,
+  });
+}
