@@ -36,13 +36,13 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // TODO: Create new prototype
+              debugPrint('Create new prototype tapped');
             },
           ),
           IconButton(
             icon: const Icon(Icons.analytics),
             onPressed: () {
-              // TODO: Prototype analytics
+              debugPrint('Prototype analytics tapped');
             },
           ),
         ],
@@ -353,7 +353,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {
-                    // TODO: View prototype
+                      debugPrint('View prototype: $name');
                   },
                   child: const Text('View'),
                 ),
@@ -362,7 +362,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Edit prototype
+                      debugPrint('Edit prototype: $name');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
@@ -680,7 +680,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
           IconButton(
             icon: const Icon(Icons.download),
             onPressed: () {
-              // TODO: Download version
+              debugPrint('Download version: $version');
             },
           ),
         ],
@@ -720,7 +720,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
                       DropdownMenuItem(value: 'v2.0.0', child: Text('v2.0.0')),
                     ],
                     onChanged: (value) {
-                      // TODO: Update from version
+                      debugPrint('Update from version: $value');
                     },
                   ),
                 ),
@@ -738,7 +738,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
                       DropdownMenuItem(value: 'v2.0.0', child: Text('v2.0.0')),
                     ],
                     onChanged: (value) {
-                      // TODO: Update to version
+                      debugPrint('Update to version: $value');
                     },
                   ),
                 ),
@@ -747,7 +747,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // TODO: Compare versions
+                debugPrint('Compare versions tapped');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.indigo,
@@ -783,7 +783,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               subtitle: const Text('Automatically create versions'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                debugPrint('Update Auto Versioning setting: $value');
               },
               secondary: const Icon(Icons.auto_awesome),
             ),
@@ -792,7 +792,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               subtitle: const Text('Protect main branch'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                debugPrint('Update Branch Protection setting: $value');
               },
               secondary: const Icon(Icons.security),
             ),
@@ -801,7 +801,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               subtitle: const Text('Require code review'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                debugPrint('Update Code Review setting: $value');
               },
               secondary: const Icon(Icons.rate_review),
             ),
@@ -1027,7 +1027,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
           if (connected)
             ElevatedButton(
               onPressed: () {
-                // TODO: Open tool
+                debugPrint('Open tool: $tool');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: color,
@@ -1063,7 +1063,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // TODO: Start meeting
+                      debugPrint('Start meeting tapped');
                     },
                     icon: const Icon(Icons.video_call),
                     label: const Text('Start Meeting'),
@@ -1077,7 +1077,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // TODO: Create channel
+                      debugPrint('Create channel tapped');
                     },
                     icon: const Icon(Icons.chat),
                     label: const Text('New Channel'),
@@ -1247,7 +1247,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               subtitle: const Text('Run tests automatically'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                debugPrint('Update Auto Testing setting: $value');
               },
               secondary: const Icon(Icons.auto_awesome),
             ),
@@ -1256,7 +1256,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               subtitle: const Text('Deploy on successful build'),
               value: false,
               onChanged: (value) {
-                // TODO: Update setting
+                debugPrint('Update Auto Deployment setting: $value');
               },
               secondary: const Icon(Icons.rocket_launch),
             ),
@@ -1265,7 +1265,7 @@ class _PrototypeManagementScreenState extends ConsumerState<PrototypeManagementS
               subtitle: const Text('Send workflow notifications'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                debugPrint('Update Notifications setting: $value');
               },
               secondary: const Icon(Icons.notifications),
             ),
