@@ -1352,7 +1352,6 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
   void _exportAnalytics() {
     // Generate analytics report
     final report = _generateAnalyticsReport();
-    
     // Show export options
     showDialog(
       context: context,
@@ -1401,7 +1400,6 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
 
   void _shareAnalytics() {
     final analyticsSummary = _generateAnalyticsSummary();
-    
     Share.share(
       analyticsSummary,
       subject: 'My Jambam Analytics Report',

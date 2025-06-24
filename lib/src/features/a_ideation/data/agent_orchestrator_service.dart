@@ -532,7 +532,6 @@ class AgentOrchestratorService {
   /// Maps research service result to domain ResearchResult
   domain.ResearchResult? _mapToDomainResearchResult(research.ResearchResult? researchResult) {
     if (researchResult == null) return null;
-    
     // Since the domain ResearchResult has a different structure, we'll create a simplified mapping
     return domain.ResearchResult(
       id: 'research_${DateTime.now().millisecondsSinceEpoch}',
@@ -549,7 +548,6 @@ class AgentOrchestratorService {
   /// Maps asset service assets to domain GeneratedAssets
   List<domain.GeneratedAsset>? _mapToDomainGeneratedAssets(List<asset.GeneratedAsset>? assetResult) {
     if (assetResult == null) return null;
-    
     return assetResult.map((asset) => domain.GeneratedAsset(
       id: asset.id,
       name: asset.name,
@@ -565,7 +563,6 @@ class AgentOrchestratorService {
   /// Maps engine service result to domain EngineBuildResult
   domain.EngineBuildResult? _mapToDomainEngineBuildResult(engine.EngineBuildResult? engineResult) {
     if (engineResult == null) return null;
-    
     return domain.EngineBuildResult(
       success: engineResult.success,
       engine: engineResult.engine,

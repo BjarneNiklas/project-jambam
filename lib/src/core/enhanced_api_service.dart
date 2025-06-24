@@ -160,7 +160,7 @@ class EnhancedApiService {
       final publicAssets = await _database.getAssets(isPublic: true, limit: 15);
       final premiumAssets = await _database.getAssets(isPublic: false, limit: 5);
       // Filter premium assets by checking if they have a price > 0
-      final filteredPremiumAssets = premiumAssets.where((asset) => 
+      final filteredPremiumAssets = premiumAssets.where((asset) =>
         (asset['price'] ?? 0.0) > 0.0 || (asset['is_for_sale'] ?? 0) == 1
       ).toList();
       return [...publicAssets, ...filteredPremiumAssets];
@@ -197,7 +197,6 @@ class EnhancedApiService {
     if (path == '/generation/styles') {
       return await _database.getGenerationStyles();
     }
-    
     final styleDetailMatch = RegExp(r'^/generation/styles/[\w-]+$').firstMatch(path);
     if (styleDetailMatch != null) {
       final styleName = path.split('/').last;

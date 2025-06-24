@@ -1440,7 +1440,6 @@ class _AdvancedAnalyticsScreenState extends ConsumerState<AdvancedAnalyticsScree
   void _exportAdvancedAnalytics() {
     // Generate comprehensive analytics report
     final report = _generateAdvancedAnalyticsReport();
-    
     // Show export options
     showDialog(
       context: context,
@@ -1492,7 +1491,6 @@ class _AdvancedAnalyticsScreenState extends ConsumerState<AdvancedAnalyticsScree
 
   void _shareAdvancedAnalytics() {
     final analyticsSummary = _generateAdvancedAnalyticsSummary();
-    
     Share.share(
       analyticsSummary,
       subject: 'Advanced Analytics Report - Jambam',

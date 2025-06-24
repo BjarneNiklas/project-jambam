@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'placeholder_screen.dart';
 
 class LegionDetailsScreen extends ConsumerStatefulWidget {
   final String legionId;
@@ -93,14 +94,18 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
               IconButton(
                 icon: const Icon(Icons.share, color: Colors.white),
                 onPressed: () {
-                  // TODO: Share legion
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Share Legion - Coming Soon!')),
+                  );
                 },
               ),
               if (_isAdmin)
                 IconButton(
                   icon: const Icon(Icons.settings, color: Colors.white),
                   onPressed: () {
-                    // TODO: Legion settings
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Legion Settings - Coming Soon!')),
+                    );
                   },
                 ),
             ],
@@ -997,7 +1002,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to member profile
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Member Profile')),
+            );
           },
         ),
       ),
@@ -1166,7 +1174,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                     icon: const Icon(Icons.visibility),
                     label: const Text('View'),
                     onPressed: () {
-                      // TODO: View project details
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Project Details')),
+                      );
                     },
                   ),
                 ),
@@ -1176,7 +1187,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                     icon: const Icon(Icons.edit),
                     label: const Text('Edit'),
                     onPressed: () {
-                      // TODO: Edit project
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Edit Project')),
+                      );
                     },
                   ),
                 ),
@@ -1313,7 +1327,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
     if (_isMember) {
       return FloatingActionButton.extended(
         onPressed: () {
-          // TODO: Create new project
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Create New Project')),
+          );
         },
         backgroundColor: Colors.indigo,
         icon: const Icon(Icons.add, color: Colors.white),

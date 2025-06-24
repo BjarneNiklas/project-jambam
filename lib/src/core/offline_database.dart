@@ -561,10 +561,9 @@ class OfflineDatabase {
       // Mobile: Use SQLite
       final db = await database;
       if (db == null) throw Exception('Database not initialized');
-      
+
       String whereClause = '1=1';
       List<dynamic> whereArgs = [];
-      
       if (assetId != null) {
         whereClause += ' AND asset_id = ?';
         whereArgs.add(assetId);

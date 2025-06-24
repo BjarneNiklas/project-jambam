@@ -17,7 +17,6 @@ class ProjectMasterAgentService {
         Uri.parse('$_baseUrl/projects/$id'),
         headers: {'Content-Type': 'application/json'},
       );
-      
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return ProjectMasterAgent.fromJson(data);
@@ -35,7 +34,7 @@ class ProjectMasterAgentService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final projectJson = prefs.getString('project_$id');
-      
+
       if (projectJson != null) {
         final projectData = jsonDecode(projectJson) as Map<String, dynamic>;
         return ProjectMasterAgent.fromJson(projectData);
@@ -43,7 +42,6 @@ class ProjectMasterAgentService {
     } catch (e) {
       debugPrint('Error loading project from local database: $e');
     }
-    
     // Return demo project if no local data found
     return ProjectMasterAgent(
       id: id,
@@ -73,7 +71,6 @@ class ProjectMasterAgentService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(project.toJson()),
       );
-      
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw Exception('Failed to save project: ${response.statusCode}');
       }
@@ -81,7 +78,6 @@ class ProjectMasterAgentService {
       // Fallback to local storage
       await _saveToLocalDatabase(project);
     }
-    
     _currentProject = project;
   }
 
@@ -91,10 +87,8 @@ class ProjectMasterAgentService {
       final prefs = await SharedPreferences.getInstance();
       final projectJson = jsonEncode(project.toJson());
       await prefs.setString('project_${project.id}', projectJson);
-      
       // Also save as current project
       await prefs.setString('current_project', projectJson);
-      
       debugPrint('Project saved to local database: ${project.id}');
     } catch (e) {
       debugPrint('Error saving project to local database: $e');
@@ -208,7 +202,6 @@ class ProjectMasterAgentService {
           'data': _currentProject?.toJson(),
         }),
       );
-      
       if (response.statusCode != 200) {
         throw Exception('Git sync failed: ${response.statusCode}');
       }
@@ -233,7 +226,6 @@ class ProjectMasterAgentService {
           },
         }),
       );
-      
       if (response.statusCode != 200) {
         throw Exception('Discord sync failed: ${response.statusCode}');
       }
@@ -257,7 +249,6 @@ class ProjectMasterAgentService {
           },
         }),
       );
-      
       if (response.statusCode != 200) {
         throw Exception('Miro sync failed: ${response.statusCode}');
       }
@@ -281,7 +272,6 @@ class ProjectMasterAgentService {
           },
         }),
       );
-      
       if (response.statusCode != 200) {
         throw Exception('Slack sync failed: ${response.statusCode}');
       }
@@ -306,7 +296,6 @@ class ProjectMasterAgentService {
           },
         }),
       );
-      
       if (response.statusCode != 200) {
         throw Exception('Trello sync failed: ${response.statusCode}');
       }
