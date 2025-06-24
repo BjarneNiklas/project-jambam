@@ -287,6 +287,8 @@ $failureNames
         ];
         break;
         
+      // This default case should ideally be unreachable if all AIRequestType enum values are handled above.
+      // Kept due to "do not delete code" constraint.
       default:
         mainContent = _consolidateGeneralHelpWithPriority(successfulResponses);
         suggestions = [

@@ -48,11 +48,15 @@ class ConnectivityService {
       case ConnectivityResult.wifi:
       case ConnectivityResult.mobile:
       case ConnectivityResult.ethernet:
+      case ConnectivityResult.vpn: // Added VPN as a connected state
         newStatus = ConnectionStatus.connected;
         break;
       case ConnectivityResult.none:
         newStatus = ConnectionStatus.disconnected;
         break;
+      // Cases like Bluetooth or 'other' will fall into the default.
+      // For many apps, Bluetooth-only might not mean "connected" in the sense of internet access.
+      // 'other' is undefined. 'connecting' is a safe default.
       default:
         newStatus = ConnectionStatus.connecting;
     }
