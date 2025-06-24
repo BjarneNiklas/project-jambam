@@ -954,9 +954,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
     final battleTitle = 'AI-Powered Adventure Games Battle';
     final battleDescription = 'Join this exciting game development battle! Create innovative adventure games with AI integration.';
     final battleUrl = 'https://jambam.com/battles/ai-adventure-games';
-
     final shareText = '$battleTitle\n\n$battleDescription\n\nJoin now: $battleUrl';
-
     Share.share(
       shareText,
       subject: battleTitle,
@@ -975,7 +973,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
   void _launchDemo(String title, String team) {
     // Launch demo URL or open in browser
     final demoUrl = 'https://jambam.com/demos/${title.toLowerCase().replaceAll(' ', '-')}';
-
+    
     // You can use url_launcher package here
     debugPrint('Launching demo: $demoUrl for $team');
 
@@ -1037,7 +1035,6 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
         duration: const Duration(seconds: 1),
       ),
     );
-
     // Here you would typically:
     // 1. Call API to like the post
     // 2. Update local state

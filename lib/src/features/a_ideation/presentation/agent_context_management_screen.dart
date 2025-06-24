@@ -125,7 +125,7 @@ class _AgentContextManagementScreenState extends ConsumerState<AgentContextManag
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               color: currentLanguage == 'de' 
-                ? Colors.blue.withValues(alpha: 0.1)
+                ? Colors.blue.withValues(alpha: 0.1) 
                 : Colors.green.withValues(alpha: 0.1),
               child: Row(
                 children: [

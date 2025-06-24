@@ -197,7 +197,6 @@ class EnhancedApiService {
     if (path == '/generation/styles') {
       return await _database.getGenerationStyles();
     }
-
     final styleDetailMatch = RegExp(r'^/generation/styles/[\w-]+$').firstMatch(path);
     if (styleDetailMatch != null) {
       final styleName = path.split('/').last;

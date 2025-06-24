@@ -33,7 +33,6 @@ class GodotEngineAdapter implements EngineAdapter {
       // Real Godot CLI integration
       final projectPath = projectData['projectPath'] as String? ?? '';
       final godotPath = _findGodotExecutable();
-
       if (godotPath == null) {
         throw Exception('Godot executable not found. Please install Godot and add it to PATH.');
       }
@@ -106,7 +105,6 @@ class UnityEngineAdapter implements EngineAdapter {
       // Real Unity CLI integration
       final projectPath = projectData['projectPath'] as String? ?? '';
       final unityPath = _findUnityExecutable();
-
       if (unityPath == null) {
         throw Exception('Unity executable not found. Please install Unity Hub and Unity.');
       }
@@ -196,7 +194,6 @@ class BevyEngineAdapter implements EngineAdapter {
     try {
       // Real Bevy build integration
       final projectPath = projectData['projectPath'] as String? ?? '';
-
       // Check if Cargo is available
       final cargoResult = await Process.run('cargo', ['--version']);
       if (cargoResult.exitCode != 0) {
@@ -249,7 +246,6 @@ class UnrealEngineAdapter implements EngineAdapter {
       // Real Unreal CLI integration
       final projectPath = projectData['projectPath'] as String? ?? '';
       final unrealPath = _findUnrealExecutable();
-
       if (unrealPath == null) {
         throw Exception('Unreal Engine executable not found. Please install Unreal Engine.');
       }

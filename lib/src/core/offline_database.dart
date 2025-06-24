@@ -564,7 +564,6 @@ class OfflineDatabase {
 
       String whereClause = '1=1';
       List<dynamic> whereArgs = [];
-
       if (assetId != null) {
         whereClause += ' AND asset_id = ?';
         whereArgs.add(assetId);

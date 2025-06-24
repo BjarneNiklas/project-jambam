@@ -14,6 +14,7 @@ class ProjectMasterDashboardScreen extends ConsumerStatefulWidget {
 class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDashboardScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  bool _isRefreshing = false;
   
   @override
   void initState() {
@@ -103,10 +104,16 @@ class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDash
                 ],
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () => _refreshProject(),
-            ),
+            _isRefreshing
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.refresh),
+                    onPressed: _refreshProject, // No need for () =>
+                  ),
           ],
         ),
       ),
@@ -235,7 +242,45 @@ class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDash
   // ACTION HANDLERS
   // ============================================================================
 
-  void _refreshProject() async {
-    // TODO: Implement project refresh
+  Future<void> _refreshProject() async {
+    if (_isRefreshing) return;
+
+    setState(() {
+      _isRefreshing = true;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Refreshing project data...')),
+    );
+
+    try {
+      // Invalidate the provider to refetch data
+      await ref.refresh(currentProjectProvider.future);
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Project data refreshed successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error refreshing project: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRefreshing = false;
+        });
+      }
+    }
   }
 } 
