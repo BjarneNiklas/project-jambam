@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'terminology_config.dart';
 
 class ArenaScreen extends ConsumerStatefulWidget {
@@ -11,6 +12,7 @@ class ArenaScreen extends ConsumerStatefulWidget {
 
 class _ArenaScreenState extends ConsumerState<ArenaScreen>
     with TickerProviderStateMixin {
+  final _logger = Logger('ArenaScreen');
   late TabController _tabController;
 
   @override
@@ -64,7 +66,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.notifications, color: Colors.blue),
             onPressed: () {
               // Placeholder: Show arena notifications
-              print("Navigate to Arena Notifications");
+              _logger.info("Navigate to Arena Notifications");
             },
           ),
         ],
@@ -496,7 +498,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               // Placeholder: Navigate to battle details
-              print("Navigate to Battle Details");
+              _logger.info("Navigate to Battle Details");
             },
           ),
         ),
@@ -531,7 +533,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
             // Placeholder: Navigate to trending content
-            print("Navigate to Trending Content");
+            _logger.info("Navigate to Trending Content");
           },
         ),
       ),
@@ -580,7 +582,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               // Placeholder: Navigate to champion profile
-              print("Navigate to Champion Profile for $name");
+              _logger.info("Navigate to Champion Profile for $name");
             },
           ),
         ),
@@ -641,7 +643,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
             // Placeholder: Navigate to discussion
-            print("Navigate to Discussion: $title");
+            _logger.info("Navigate to Discussion: $title");
           },
         ),
       ),
@@ -698,7 +700,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               // Placeholder: Navigate to legion details
-              print("Navigate to Legion Details for $name");
+              _logger.info("Navigate to Legion Details for $name");
             },
           ),
         ),
@@ -760,7 +762,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to create jam
-                print("Navigate to Create Jam");
+                _logger.info("Navigate to Create Jam");
               },
             ),
             ListTile(
@@ -769,7 +771,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to join legion
-                print("Navigate to Join Legion");
+                _logger.info("Navigate to Join Legion");
               },
             ),
             ListTile(
@@ -778,7 +780,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to form squad
-                print("Navigate to Form Squad");
+                _logger.info("Navigate to Form Squad");
               },
             ),
             ListTile(
@@ -787,7 +789,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to start discussion
-                print("Navigate to Start Discussion");
+                _logger.info("Navigate to Start Discussion");
               },
             ),
           ],
