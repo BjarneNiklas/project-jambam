@@ -464,28 +464,6 @@ class GameEngineAgentService {
 
   // --- Mock & Parser Implementierungen ---
 
-  Future<Map<String, dynamic>> _createMockIntegrationResult(
-    String engineName,
-    String projectPath,
-    List<GeneratedAsset> assets,
-    GameDesignDocument? designDoc,
-  ) async {
-    return {
-      'engine': engineName,
-      'projectPath': projectPath,
-      'assets': assets.map((asset) => {
-        'id': asset.id,
-        'name': asset.name,
-        'type': asset.type.toString(),
-        'fileUrl': asset.fileUrl,
-        'quality': asset.quality,
-      }).toList(),
-      'designDocument': designDoc?.toJson(),
-      'integrationStatus': 'success',
-      'timestamp': DateTime.now().toIso8601String(),
-    };
-  }
-
   EngineIntegrationResult _parseIntegrationResult(Map<String, dynamic> data) {
     return EngineIntegrationResult(
       engine: data['engine'] ?? '',
