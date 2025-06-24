@@ -229,17 +229,14 @@ class EnhancedApiService {
     int skip = 0,
     int limit = 20,
   }) async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _shortCacheDuration,
-    );
-
     try {
       final response = await _dio.get(
         '/assets',
         queryParameters: {'skip': skip, 'limit': limit},
-        options: cacheOptions.toOptions(),
+        options: _globalCacheOptions.copyWith(
+          policy: CachePolicy.forceCache,
+          maxStale: _shortCacheDuration,
+        ).toOptions(),
       );
       
       final List<dynamic> data = response.data;
@@ -258,16 +255,13 @@ class EnhancedApiService {
   }
 
   Future<Map<String, dynamic>> getAssetDetails(int assetId) async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _cacheDuration,
-    );
-
     try {
       final response = await _dio.get(
         '/assets/$assetId',
-        options: cacheOptions.toOptions(),
+        options: _globalCacheOptions.copyWith(
+          policy: CachePolicy.forceCache,
+          maxStale: _cacheDuration,
+        ).toOptions(),
       );
       
       final asset = response.data;
@@ -345,17 +339,14 @@ class EnhancedApiService {
     int skip = 0,
     int limit = 20,
   }) async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _shortCacheDuration,
-    );
-
     try {
       final response = await _dio.get(
         '/marketplace',
         queryParameters: {'skip': skip, 'limit': limit},
-        options: cacheOptions.toOptions(),
+        options: _globalCacheOptions.copyWith(
+          policy: CachePolicy.forceCache,
+          maxStale: _shortCacheDuration,
+        ).toOptions(),
       );
       
       final List<dynamic> data = response.data;
@@ -414,14 +405,11 @@ class EnhancedApiService {
   // ===== ORGANIZATION FEATURES =====
 
   Future<List<Map<String, dynamic>>> getOrganizations() async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _cacheDuration,
-    );
-
     try {
-      final response = await _dio.get('/organizations', options: cacheOptions.toOptions());
+      final response = await _dio.get('/organizations', options: _globalCacheOptions.copyWith(
+        policy: CachePolicy.forceCache,
+        maxStale: _cacheDuration,
+      ).toOptions());
       final List<dynamic> data = response.data;
       return data.cast<Map<String, dynamic>>();
     } catch (e) {
@@ -452,14 +440,11 @@ class EnhancedApiService {
   // ===== LICENSE FEATURES =====
 
   Future<List<Map<String, dynamic>>> getLicenseTypes() async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _cacheDuration,
-    );
-
     try {
-      final response = await _dio.get('/license-types', options: cacheOptions.toOptions());
+      final response = await _dio.get('/license-types', options: _globalCacheOptions.copyWith(
+        policy: CachePolicy.forceCache,
+        maxStale: _cacheDuration,
+      ).toOptions());
       final List<dynamic> data = response.data;
       return data.cast<Map<String, dynamic>>();
     } catch (e) {
@@ -495,14 +480,11 @@ class EnhancedApiService {
   // ===== GENERATION STYLES =====
 
   Future<Map<String, dynamic>> getAvailableStyles() async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _cacheDuration,
-    );
-
     try {
-      final response = await _dio.get('/generation/styles', options: cacheOptions.toOptions());
+      final response = await _dio.get('/generation/styles', options: _globalCacheOptions.copyWith(
+        policy: CachePolicy.forceCache,
+        maxStale: _cacheDuration,
+      ).toOptions());
       return response.data;
     } catch (e) {
       // Return default styles
@@ -517,16 +499,13 @@ class EnhancedApiService {
   }
 
   Future<Map<String, dynamic>> getStyleInfo(String style) async {
-    final cacheOptions = CacheOptions(
-      store: _globalCacheStore, // Use shared store
-      policy: CachePolicy.forceCache,
-      maxStale: _cacheDuration,
-    );
-
     try {
       final response = await _dio.get(
         '/generation/styles/$style',
-        options: cacheOptions.toOptions(),
+        options: _globalCacheOptions.copyWith(
+          policy: CachePolicy.forceCache,
+          maxStale: _cacheDuration,
+        ).toOptions(),
       );
       return response.data;
     } catch (e) {
