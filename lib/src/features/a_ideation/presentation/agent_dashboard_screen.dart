@@ -264,7 +264,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.green.withOpacity(0.3),
+                                  color: Colors.green.withAlpha((255 * 0.3).round()),
                                   blurRadius: 8 * _pulseController.value,
                                   spreadRadius: 2 * _pulseController.value,
                                 ),
@@ -366,7 +366,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Workflow #${_currentWorkflowId}',
+                        'Workflow #$_currentWorkflowId',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -387,7 +387,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: (_workflowStatus?.progress ?? 0) / 100,
-              backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               valueColor: AlwaysStoppedAnimation<Color>(
                 Theme.of(context).colorScheme.primary,
               ),
@@ -485,9 +485,6 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
           color = Colors.grey;
           text = 'Archiviert';
           break;
-        default:
-          color = Colors.grey;
-          text = 'Unbekannt';
       }
     } else {
       color = Colors.grey;
@@ -497,9 +494,9 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Text(
         text,

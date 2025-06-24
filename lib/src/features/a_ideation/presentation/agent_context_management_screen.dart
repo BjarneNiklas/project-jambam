@@ -35,9 +35,6 @@ class _AgentContextManagementScreenState extends ConsumerState<AgentContextManag
   final _userPromptController = TextEditingController();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
-  
-  String? _selectedAgentId;
-  bool _isEditing = false;
 
   @override
   void dispose() {
@@ -127,9 +124,9 @@ class _AgentContextManagementScreenState extends ConsumerState<AgentContextManag
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
-              color: currentLanguage == 'de' 
-                ? Colors.blue.withOpacity(0.1) 
-                : Colors.green.withOpacity(0.1),
+              color: currentLanguage == 'de'
+                  ? Colors.blue.withAlpha((255 * 0.1).round())
+                  : Colors.green.withAlpha((255 * 0.1).round()),
               child: Row(
                 children: [
                   Icon(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'terminology_config.dart';
 
 class AcademyScreen extends ConsumerStatefulWidget {
   const AcademyScreen({super.key});
@@ -563,9 +562,9 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Row(
         children: [
@@ -607,7 +606,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withAlpha((255 * 0.1).round()), color.withAlpha((255 * 0.05).round())],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -635,7 +634,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withAlpha((255 * 0.2).round()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -651,7 +650,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.2),
+                      color: Colors.grey.withAlpha((255 * 0.2).round()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -669,7 +668,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
                 Text(
@@ -703,7 +702,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withAlpha((255 * 0.1).round()), color.withAlpha((255 * 0.05).round())],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -731,7 +730,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withAlpha((255 * 0.2).round()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -747,7 +746,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.2),
+                      color: Colors.grey.withAlpha((255 * 0.2).round()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -765,7 +764,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
                 Text(
@@ -799,7 +798,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withAlpha((255 * 0.1).round()), color.withAlpha((255 * 0.05).round())],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -827,7 +826,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withAlpha((255 * 0.2).round()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -844,7 +843,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Colors.amber.withOpacity(0.2),
+                        color: Colors.amber.withAlpha((255 * 0.2).round()),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -881,7 +880,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -895,7 +894,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withAlpha((255 * 0.2).round()),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -929,7 +928,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withAlpha((255 * 0.1).round()), color.withAlpha((255 * 0.05).round())],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -975,7 +974,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: progress,
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 8,
             ),
@@ -995,7 +994,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(Icons.star, color: color, size: 20),
@@ -1003,7 +1002,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
         title: Text(skill, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: LinearProgressIndicator(
           value: progress,
-          backgroundColor: Colors.grey.withOpacity(0.3),
+          backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
           valueColor: AlwaysStoppedAnimation<Color>(color),
         ),
         trailing: Text(
@@ -1027,7 +1026,7 @@ class _AcademyScreenState extends ConsumerState<AcademyScreen>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: unlocked ? color : Colors.grey.withOpacity(0.3),
+            color: unlocked ? color : Colors.grey.withAlpha((255 * 0.3).round()),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
