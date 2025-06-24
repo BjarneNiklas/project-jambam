@@ -186,7 +186,7 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db!.insert(tableAssets, asset);
+      return await db.insert(tableAssets, asset);
     }
   }
 
@@ -236,7 +236,7 @@ class OfflineDatabase {
         whereArgs.add(status);
       }
 
-      return await db!.query(
+      return await db.query(
         tableAssets,
         where: whereClause,
         whereArgs: whereArgs,
@@ -259,20 +259,20 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      final result = await db?.query(
+      final result = await db.query( // No '?' needed here if db is guaranteed non-null
         tableAssets,
         where: 'id = ?',
         whereArgs: [id],
         limit: 1,
       );
-      return result?.isNotEmpty == true ? result!.first : null;
+      return result.isNotEmpty ? result.first : null; // result itself is non-nullable List<Map>
     }
   }
 
   Future<int> updateAsset(int id, Map<String, dynamic> asset) async {
     if (kIsWeb) {
       // Web: Update in memory
-      final assets = _webStorage['assets']!;
+      final assets = _webStorage['assets'];
       final index = assets.indexWhere((a) => a['id'] == id);
       if (index != -1) {
         assets[index].addAll(asset);
@@ -282,30 +282,30 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.update(
+      return await db.update( // No '?' or '?? 0'
         tableAssets,
         asset,
         where: 'id = ?',
         whereArgs: [id],
-      ) ?? 0;
+      );
     }
   }
 
   Future<int> deleteAsset(int id) async {
     if (kIsWeb) {
       // Web: Remove from memory
-      final assets = _webStorage['assets']!;
+      final assets = _webStorage['assets'];
       final initialLength = assets.length;
       assets.removeWhere((asset) => asset['id'] == id);
       return initialLength - assets.length;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.delete(
+      return await db.delete( // No '?' or '?? 0'
         tableAssets,
         where: 'id = ?',
         whereArgs: [id],
-      ) ?? 0;
+      );
     }
   }
 
@@ -314,38 +314,38 @@ class OfflineDatabase {
   Future<int> insertUser(Map<String, dynamic> user) async {
     if (kIsWeb) {
       // Web: Use in-memory storage
-      final id = _webStorage['users']!.length + 1;
+      final id = _webStorage['users'].length + 1;
       user['id'] = id;
-      _webStorage['users']!.add(user);
+      _webStorage['users'].add(user);
       return id;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.insert(tableUsers, user) ?? 0;
+      return await db.insert(tableUsers, user); // No '?' or '?? 0'
     }
   }
 
   Future<List<Map<String, dynamic>>> getUsers({int limit = 20, int offset = 0}) async {
     if (kIsWeb) {
       // Web: Return from memory
-      return _webStorage['users']!.skip(offset).take(limit).toList();
+      return _webStorage['users'].skip(offset).take(limit).toList();
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      final result = await db?.query(
+      final result = await db.query( // No '?'
         tableUsers,
         limit: limit,
         offset: offset,
         orderBy: 'created_at DESC',
       );
-      return result ?? [];
+      return result; // result is already List<Map>
     }
   }
 
   Future<int> updateUser(int id, Map<String, dynamic> user) async {
     if (kIsWeb) {
       // Web: Update in memory
-      final users = _webStorage['users']!;
+      final users = _webStorage['users'];
       final index = users.indexWhere((u) => u['id'] == id);
       if (index != -1) {
         users[index].addAll(user);
@@ -355,12 +355,12 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.update(
+      return await db.update( // No '?' or '?? 0'
         tableUsers,
         user,
         where: 'id = ?',
         whereArgs: [id],
-      ) ?? 0;
+      );
     }
   }
 
@@ -374,7 +374,7 @@ class OfflineDatabase {
   }) async {
     if (kIsWeb) {
       // Web: Add to memory
-      final id = _webStorage['sync_queue']!.length + 1;
+      final id = _webStorage['sync_queue'].length + 1;
       final queueItem = {
         'id': id,
         'operation': operation,
@@ -385,12 +385,12 @@ class OfflineDatabase {
         'max_retries': 3,
         'priority': priority,
       };
-      _webStorage['sync_queue']!.add(queueItem);
+      _webStorage['sync_queue'].add(queueItem);
       return id;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.insert(tableSyncQueue, {
+      return await db.insert(tableSyncQueue, { // No '?' or '?? 0'
         'operation': operation,
         'endpoint': endpoint,
         'data': jsonEncode(data),
@@ -398,52 +398,52 @@ class OfflineDatabase {
         'retry_count': 0,
         'max_retries': 3,
         'priority': priority,
-      }) ?? 0;
+      });
     }
   }
 
   Future<List<Map<String, dynamic>>> getSyncQueue({int limit = 50}) async {
     if (kIsWeb) {
       // Web: Return from memory
-      return _webStorage['sync_queue']!.take(limit).toList();
+      return _webStorage['sync_queue'].take(limit).toList();
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      final result = await db?.query(
+      final result = await db.query( // No '?'
         tableSyncQueue,
         limit: limit,
         orderBy: 'priority ASC, created_at ASC',
       );
-      return result?.map((row) {
+      return result.map((row) { // result is non-nullable
         final item = Map<String, dynamic>.from(row);
         item['data'] = jsonDecode(item['data']);
         return item;
-      }).toList() ?? [];
+      }).toList();
     }
   }
 
   Future<int> removeFromSyncQueue(int id) async {
     if (kIsWeb) {
       // Web: Remove from memory
-      final queue = _webStorage['sync_queue']!;
+      final queue = _webStorage['sync_queue'];
       final initialLength = queue.length;
       queue.removeWhere((item) => item['id'] == id);
       return initialLength - queue.length;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.delete(
+      return await db.delete( // No '?' or '?? 0'
         tableSyncQueue,
         where: 'id = ?',
         whereArgs: [id],
-      ) ?? 0;
+      );
     }
   }
 
   Future<int> updateSyncQueueItem(int id, Map<String, dynamic> updates) async {
     if (kIsWeb) {
       // Web: Update in memory
-      final queue = _webStorage['sync_queue']!;
+      final queue = _webStorage['sync_queue'];
       final index = queue.indexWhere((item) => item['id'] == id);
       if (index != -1) {
         queue[index].addAll(updates);
@@ -453,12 +453,12 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.update(
+      return await db.update( // No '?' or '?? 0'
         tableSyncQueue,
         updates,
         where: 'id = ?',
         whereArgs: [id],
-      ) ?? 0;
+      );
     }
   }
 
@@ -467,38 +467,38 @@ class OfflineDatabase {
   Future<int> insertCommunityTheme(Map<String, dynamic> theme) async {
     if (kIsWeb) {
       // Web: Use in-memory storage
-      final id = _webStorage['community_themes']!.length + 1;
+      final id = _webStorage['community_themes'].length + 1;
       theme['id'] = id;
-      _webStorage['community_themes']!.add(theme);
+      _webStorage['community_themes'].add(theme);
       return id;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.insert(tableCommunityThemes, theme) ?? 0;
+      return await db.insert(tableCommunityThemes, theme); // No '?' or '?? 0'
     }
   }
 
   Future<List<Map<String, dynamic>>> getCommunityThemes({int limit = 20, int offset = 0}) async {
     if (kIsWeb) {
       // Web: Return from memory
-      return _webStorage['community_themes']!.skip(offset).take(limit).toList();
+      return _webStorage['community_themes'].skip(offset).take(limit).toList();
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      final result = await db?.query(
+      final result = await db.query( // No '?'
         tableCommunityThemes,
         limit: limit,
         offset: offset,
         orderBy: 'votes DESC, created_at DESC',
       );
-      return result ?? [];
+      return result; // result is already List<Map>
     }
   }
 
   Future<int> updateCommunityTheme(int id, Map<String, dynamic> theme) async {
     if (kIsWeb) {
       // Web: Update in memory
-      final themes = _webStorage['community_themes']!;
+      final themes = _webStorage['community_themes'];
       final index = themes.indexWhere((t) => t['id'] == id);
       if (index != -1) {
         themes[index].addAll(theme);
@@ -508,12 +508,12 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.update(
+      return await db.update( // No '?' or '?? 0'
         tableCommunityThemes,
         theme,
         where: 'id = ?',
         whereArgs: [id],
-      ) ?? 0;
+      );
     }
   }
 
@@ -522,21 +522,21 @@ class OfflineDatabase {
   Future<int> insertLicense(Map<String, dynamic> license) async {
     if (kIsWeb) {
       // Web: Use in-memory storage
-      final id = _webStorage['licenses']!.length + 1;
+      final id = _webStorage['licenses'].length + 1;
       license['id'] = id;
-      _webStorage['licenses']!.add(license);
+      _webStorage['licenses'].add(license);
       return id;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      return await db?.insert(tableLicenses, license) ?? 0;
+      return await db.insert(tableLicenses, license); // No '?' or '?? 0'
     }
   }
 
   Future<List<Map<String, dynamic>>> getLicenses({int? assetId}) async {
     if (kIsWeb) {
       // Web: Filter from memory
-      List<Map<String, dynamic>> licenses = List.from(_webStorage['licenses']!);
+      List<Map<String, dynamic>> licenses = List.from(_webStorage['licenses']);
       if (assetId != null) {
         licenses = licenses.where((license) => license['asset_id'] == assetId).toList();
       }
@@ -544,12 +544,12 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      final result = await db?.query(
+      final result = await db.query( // No '?'
         tableLicenses,
         where: assetId != null ? 'asset_id = ?' : null,
         whereArgs: assetId != null ? [assetId] : null,
       );
-      return result ?? [];
+      return result; // result is already List<Map>
     }
   }
 
@@ -562,7 +562,7 @@ class OfflineDatabase {
     } else {
       // Mobile: Use SQLite transaction
       final db = await database;
-      await db?.transaction((txn) async {
+      await db.transaction((txn) async { // No '?'
         await txn.delete(tableAssets);
         await txn.delete(tableUsers);
         await txn.delete(tableSyncQueue);
@@ -576,12 +576,12 @@ class OfflineDatabase {
   Future<int> getSyncQueueCount() async {
     if (kIsWeb) {
       // Web: Return count from memory
-      return _webStorage['sync_queue']!.length;
+      return _webStorage['sync_queue'].length;
     } else {
       // Mobile: Use SQLite
       final db = await database;
-      final result = await db?.rawQuery('SELECT COUNT(*) as count FROM $tableSyncQueue');
-      return Sqflite.firstIntValue(result ?? []) ?? 0;
+      final result = await db.rawQuery('SELECT COUNT(*) as count FROM $tableSyncQueue'); // No '?'
+      return Sqflite.firstIntValue(result) ?? 0; // result is non-nullable
     }
   }
 
@@ -589,7 +589,7 @@ class OfflineDatabase {
     if (!kIsWeb) {
       // Only close on mobile platforms
       final db = await database;
-      await db?.close();
+      await db.close(); // No '?'
     }
   }
 } 

@@ -102,7 +102,7 @@ class AIAnalyticsSystem {
     if (!_responseTimes.containsKey(taskType)) {
       _responseTimes[taskType] = [];
     }
-    _responseTimes[taskType]!.add(responseTime);
+    _responseTimes[taskType].add(responseTime);
     
     // Confidence scores
     if (!_confidenceScores.containsKey(taskType)) {
@@ -336,8 +336,8 @@ class AIAnalyticsSystem {
     
     // Response time trends
     for (final taskType in _responseTimes.keys) {
-      final times = _responseTimes[taskType]!;
-      if (times.length > 10) {
+      final times = _responseTimes[taskType];
+      if (times != null && times.length > 10) {
         final recent = times.skip(times.length - 10).toList();
         final older = times.take(times.length - 10).toList();
         

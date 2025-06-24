@@ -285,7 +285,8 @@ class AIOrchestrator {
   Future<AIResponse> processRequest(AIRequest request) async {
     try {
       // 1. Determine optimal model based on task type
-      final model = _selectOptimalModel(request);
+      final modelConfig = _selectOptimalModel(request);
+      final model = modelConfig ?? AIModelRegistry.getModel('slm_classifier')!; // Fallback if selection returns null
       
       // 2. Enhance context with RAG if needed
       final enhancedContext = await _enhanceContext(request, model);
@@ -305,7 +306,7 @@ class AIOrchestrator {
       final errorResponse = AIResponse(
         id: request.id,
         content: '',
-        usedModel: request.preferredModel ?? AIModelRegistry.getModel('slm_classifier')!,
+        usedModel: request.preferredModel ?? AIModelRegistry.getModel('slm_classifier') /* Guaranteed model */,
         isSuccess: false,
         error: e.toString(),
       );
@@ -318,7 +319,7 @@ class AIOrchestrator {
   AIModelConfig _selectOptimalModel(AIRequest request) {
     // Use preferred model if specified
     if (request.preferredModel != null) {
-      return request.preferredModel!;
+      return request.preferredModel;
     }
 
     // Select based on task type
