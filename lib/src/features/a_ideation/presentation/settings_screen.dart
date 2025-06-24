@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/edit_profile_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/profile_visibility_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/privacy_settings_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/two_factor_auth_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/data_usage_settings_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/change_email_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/change_password_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/terms_of_service_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/privacy_policy_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/help_support_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/settings/send_feedback_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -100,7 +111,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    // TODO: Edit profile
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EditProfileScreen(),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -212,6 +228,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   _selectedTerminology = value!;
                 });
                 // TODO: Update terminology configuration
+                debugPrint('Terminology configuration updated to: $value');
               },
             ),
             const SizedBox(height: 16),
@@ -309,6 +326,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   _selectedLanguage = value!;
                 });
                 // TODO: Update language
+                debugPrint('Language updated to: $value');
               },
             ),
           ],
@@ -410,6 +428,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Profile visibility settings
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileVisibilityScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -419,6 +443,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Privacy settings
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PrivacySettingsScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -428,6 +458,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: 2FA settings
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TwoFactorAuthScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -437,6 +473,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Data usage settings
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DataUsageSettingsScreen(),
+                  ),
+                );
               },
             ),
           ],
@@ -470,6 +512,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Edit profile
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EditProfileScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -479,6 +527,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Change email
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChangeEmailScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -488,6 +542,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Change password
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChangePasswordScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -497,6 +557,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Export data
+                debugPrint('Export data tapped');
               },
             ),
             ListTile(
@@ -546,6 +607,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Terms of service
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TermsOfServiceScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -554,6 +621,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Privacy policy
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PrivacyPolicyScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -562,6 +635,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Help & support
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HelpSupportScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -570,6 +649,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // TODO: Send feedback
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SendFeedbackScreen(),
+                  ),
+                );
               },
             ),
           ],
@@ -596,6 +681,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ElevatedButton(
             onPressed: () {
               // TODO: Delete account
+              debugPrint('Delete account confirmed');
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
