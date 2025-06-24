@@ -36,13 +36,13 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           IconButton(
             icon: const Icon(Icons.science),
             onPressed: () {
-              // TODO: Lab settings
+              Navigator.pushNamed(context, '/lab-settings');
             },
           ),
           IconButton(
             icon: const Icon(Icons.help),
             onPressed: () {
-              // TODO: Lab help
+              Navigator.pushNamed(context, '/lab-help');
             },
           ),
         ],
@@ -167,7 +167,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withValues(alpha: 0.8),
             fontSize: 12,
           ),
         ),
@@ -203,7 +203,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.1),
+                    color: Colors.deepPurple.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -250,16 +250,16 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -286,7 +286,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: int.parse(progress.replaceAll('%', '')) / 100,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withValues(alpha: 0.3),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                   minHeight: 4,
                 ),
@@ -305,7 +305,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           IconButton(
             icon: const Icon(Icons.play_arrow),
             onPressed: () {
-              // TODO: Continue experiment
+              Navigator.pushNamed(context, '/continue-experiment', arguments: {'experimentTitle': title});
             },
           ),
         ],
@@ -383,9 +383,9 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -492,7 +492,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -582,7 +582,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -608,7 +608,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
         leading: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -620,7 +620,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: _getStatusColor(status).withOpacity(0.1),
+                color: _getStatusColor(status).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -637,7 +637,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
         subtitle: Text(description),
         trailing: ElevatedButton(
           onPressed: () {
-            // TODO: Launch AI tool
+            Navigator.pushNamed(context, '/launch-ai-tool', arguments: {'toolName': title});
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: color,
@@ -728,7 +728,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -760,7 +760,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(Icons.build, color: color, size: 20),
@@ -790,7 +790,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -815,7 +815,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             const SizedBox(height: 12),
             LinearProgressIndicator(
               value: int.parse(progress.replaceAll('%', '')) / 100,
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withValues(alpha: 0.3),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 6,
             ),
@@ -825,7 +825,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      // TODO: View prototype
+                      Navigator.pushNamed(context, '/view-prototype', arguments: {'prototypeName': title});
                     },
                     child: const Text('View'),
                   ),
@@ -834,7 +834,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Test prototype
+                      Navigator.pushNamed(context, '/test-prototype', arguments: {'prototypeName': title});
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: color,
@@ -887,7 +887,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -956,9 +956,9 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -977,7 +977,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
+                  color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -1005,7 +1005,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {
-                    // TODO: Explore idea
+                      Navigator.pushNamed(context, '/explore-idea', arguments: {'ideaName': title});
                   },
                   child: const Text('Explore'),
                 ),
@@ -1014,7 +1014,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Start research
+                      Navigator.pushNamed(context, '/start-research', arguments: {'ideaName': title});
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
@@ -1078,7 +1078,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -1141,9 +1141,9 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1182,7 +1182,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              // TODO: Join challenge
+              Navigator.pushNamed(context, '/join-challenge', arguments: {'challengeName': description});
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: color,

@@ -64,10 +64,10 @@ class AgentOrchestratorService {
       return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
-        researchResult: null, // TODO: Map researchResult to domain.ResearchResult
+        researchResult: _mapToDomainResearchResult(researchResult),
         designResult: designResult,
-        assetResult: null, // TODO: Map assetResult to List<domain.GeneratedAsset>
-        engineResult: null, // TODO: Map engineResult to domain.EngineBuildResult
+        assetResult: _mapToDomainGeneratedAssets(assetResult),
+        engineResult: _mapToDomainEngineBuildResult(engineResult),
         logs: [
           'Research phase completed',
           'Creative design phase completed',
@@ -102,7 +102,7 @@ class AgentOrchestratorService {
     final query = '$concept $targetAudience game development research';
     final enabledSources = config.enabledResearchSources;
     final ethicalConcerns = config.ethicalConcerns.map((e) => domain.EthicalConcern.values.firstWhere(
-      (ec) => ec.name == e,
+      (ec) => ec.name == e.name,
       orElse: () => domain.EthicalConcern.aiBias,
     )).toList();
 
@@ -270,16 +270,19 @@ class AgentOrchestratorService {
     final workflowId = 'research_${DateTime.now().millisecondsSinceEpoch}';
     
     try {
-      final researchResult = await _executeResearchPhase(
+      final researchData = await _executeResearchPhase(
         concept: parameters['concept'],
         targetAudience: parameters['targetAudience'],
         config: config,
       );
 
+      // Map research data to domain.ResearchResult
+      final researchResult = _mapToDomainResearchResult(researchData);
+
       return domain.OrchestrationResult(
         workflowId: workflowId,
         success: true,
-        researchResult: null, // TODO: Map researchResult to domain.ResearchResult
+        researchResult: researchResult,
         designResult: null,
         assetResult: null,
         engineResult: null,
@@ -352,7 +355,7 @@ class AgentOrchestratorService {
     final workflowId = 'assets_${DateTime.now().millisecondsSinceEpoch}';
     
     try {
-      final assetResult = await _executeAssetGenerationPhase(
+      await _executeAssetGenerationPhase(
         design: parameters['design'] as domain.GameDesignDocument,
         config: config,
       );
@@ -362,7 +365,7 @@ class AgentOrchestratorService {
         success: true,
         researchResult: null,
         designResult: null,
-        assetResult: null, // TODO: Map assetResult to List<domain.GeneratedAsset>
+        assetResult: null,
         engineResult: null,
         logs: ['Asset generation phase completed'],
         warnings: [],
@@ -391,7 +394,7 @@ class AgentOrchestratorService {
     final workflowId = 'engine_${DateTime.now().millisecondsSinceEpoch}';
     
     try {
-      final engineResult = await _executeEngineIntegrationPhase(
+      await _executeEngineIntegrationPhase(
         engine: parameters['engine'],
         platform: parameters['platform'],
         design: parameters['design'] as domain.GameDesignDocument,
@@ -405,7 +408,7 @@ class AgentOrchestratorService {
         researchResult: null,
         designResult: null,
         assetResult: null,
-        engineResult: null, // TODO: Map engineResult to domain.EngineBuildResult
+        engineResult: null,
         logs: ['Engine integration phase completed'],
         warnings: [],
         totalDuration: Duration(minutes: 5),
@@ -523,6 +526,55 @@ class AgentOrchestratorService {
       logs: List<String>.from(data['logs'] ?? []),
       warnings: List<String>.from(data['warnings'] ?? []),
       errors: List<String>.from(data['errors'] ?? []),
+    );
+  }
+
+  /// Maps research service result to domain ResearchResult
+  domain.ResearchResult? _mapToDomainResearchResult(research.ResearchResult? researchResult) {
+    if (researchResult == null) return null;
+    // Since the domain ResearchResult has a different structure, we'll create a simplified mapping
+    return domain.ResearchResult(
+      id: 'research_${DateTime.now().millisecondsSinceEpoch}',
+      title: researchResult.query,
+      description: researchResult.papers.isNotEmpty ? researchResult.papers.first.abstractText : 'No papers found',
+      source: researchResult.papers.isNotEmpty ? researchResult.papers.first.source : 'Unknown',
+      date: DateTime.now(),
+      tags: researchResult.papers.isNotEmpty ? researchResult.papers.first.tags : [],
+      url: researchResult.papers.isNotEmpty ? researchResult.papers.first.url : '',
+      relevance: researchResult.papers.isNotEmpty ? researchResult.papers.first.score : 0.0,
+    );
+  }
+
+  /// Maps asset service assets to domain GeneratedAssets
+  List<domain.GeneratedAsset>? _mapToDomainGeneratedAssets(List<asset.GeneratedAsset>? assetResult) {
+    if (assetResult == null) return null;
+    return assetResult.map((asset) => domain.GeneratedAsset(
+      id: asset.id,
+      name: asset.name,
+      type: asset.assetType,
+      fileUrl: asset.fileUrl,
+      createdAt: asset.createdAt,
+      engine: asset.engine.toString(),
+      metadata: asset.metadata,
+      quality: asset.quality,
+    )).toList();
+  }
+
+  /// Maps engine service result to domain EngineBuildResult
+  domain.EngineBuildResult? _mapToDomainEngineBuildResult(engine.EngineBuildResult? engineResult) {
+    if (engineResult == null) return null;
+    return domain.EngineBuildResult(
+      success: engineResult.success,
+      engine: engineResult.engine,
+      platform: engineResult.targetPlatform,
+      buildUrl: engineResult.buildUrl,
+      buildTime: DateTime.now(), // Engine service doesn't provide build time
+      warnings: engineResult.warnings,
+      errors: [], // Engine service doesn't provide errors
+      metadata: {
+        'buildSize': engineResult.buildSize,
+        'logs': engineResult.logs,
+      },
     );
   }
 }

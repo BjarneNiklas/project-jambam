@@ -122,9 +122,8 @@ final enhancedAssetGenerationServiceProvider = Provider<EnhancedAssetGenerationS
 // Enhanced Game Engine Agent with AI Architecture
 class EnhancedGameEngineService {
   final AIService _aiService;
-  final ContentFilterAIService _filterService;
 
-  EnhancedGameEngineService(this._aiService, this._filterService);
+  EnhancedGameEngineService(this._aiService);
 
   // Code generation with LLM
   Future<String> generateGameCode(String engine, String feature, Map<String, dynamic> specs) async {
@@ -161,12 +160,6 @@ class EnhancedGameEngineService {
 
   // Code validation with SLM
   Future<bool> validateCode(String code) async {
-    final request = AIRequest(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      taskType: AITaskType.classification,
-      prompt: 'Validate this code for syntax and basic errors: $code',
-    );
-    
     // This would use a specialized SLM for code validation
     return true; // Placeholder
   }
@@ -174,8 +167,7 @@ class EnhancedGameEngineService {
 
 final enhancedGameEngineServiceProvider = Provider<EnhancedGameEngineService>((ref) {
   final aiService = ref.watch(aiServiceProvider);
-  final filterService = ref.watch(contentFilterAIServiceProvider);
-  return EnhancedGameEngineService(aiService, filterService);
+  return EnhancedGameEngineService(aiService);
 });
 
 // Enhanced Project Master Agent with AI Architecture
@@ -237,9 +229,8 @@ final enhancedProjectMasterServiceProvider = Provider<EnhancedProjectMasterServi
 // Enhanced Jamba AI Orchestrator with AI Architecture
 class EnhancedJambaAIOrchestratorService {
   final AIOrchestrator _orchestrator;
-  final Map<String, dynamic> _agentServices;
 
-  EnhancedJambaAIOrchestratorService(this._orchestrator, this._agentServices);
+  EnhancedJambaAIOrchestratorService(this._orchestrator);
 
   // Intelligent request routing
   Future<AIResponse> processUserRequest(String userInput, Map<String, dynamic> context) async {
@@ -392,12 +383,5 @@ class EnhancedJambaAIOrchestratorService {
 
 final enhancedJambaAIOrchestratorServiceProvider = Provider<EnhancedJambaAIOrchestratorService>((ref) {
   final orchestrator = ref.watch(aiOrchestratorProvider);
-  final agentServices = {
-    'research': ref.watch(enhancedResearchAgentServiceProvider),
-    'creative': ref.watch(enhancedCreativeDirectorServiceProvider),
-    'asset': ref.watch(enhancedAssetGenerationServiceProvider),
-    'engine': ref.watch(enhancedGameEngineServiceProvider),
-    'project': ref.watch(enhancedProjectMasterServiceProvider),
-  };
-  return EnhancedJambaAIOrchestratorService(orchestrator, agentServices);
+  return EnhancedJambaAIOrchestratorService(orchestrator);
 }); 

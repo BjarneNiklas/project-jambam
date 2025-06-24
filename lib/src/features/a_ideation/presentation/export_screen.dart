@@ -345,7 +345,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withValues(alpha: 0.8),
             fontSize: 12,
           ),
         ),
@@ -416,10 +416,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -501,10 +501,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? format.color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? format.color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -644,7 +644,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               const SizedBox(height: 16),
               LinearProgressIndicator(
                 value: _exportProgress,
-                backgroundColor: Colors.grey.withOpacity(0.3),
+                backgroundColor: Colors.grey.withValues(alpha: 0.3),
                 valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
                 minHeight: 8,
               ),
@@ -849,7 +849,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.teal.withOpacity(0.1),
+                color: Colors.teal.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -897,16 +897,16 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: category.color.withOpacity(0.1), // Use category.color
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: category.color.withOpacity(0.3)), // Use category.color
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: category.color.withOpacity(0.2), // Use category.color
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(Icons.folder, color: category.color, size: 20), // Use category.color
@@ -982,10 +982,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? format.color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? format.color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -1207,7 +1207,7 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.teal.withOpacity(0.1),
+                color: Colors.teal.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1255,16 +1255,16 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: dataType.color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: dataType.color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: dataType.color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(Icons.storage, color: dataType.color, size: 20),
@@ -1350,10 +1350,10 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isSelected ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isSelected ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? color : Colors.grey.withValues(alpha: 0.3),
         ),
       ),
       child: Row(

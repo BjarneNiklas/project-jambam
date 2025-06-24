@@ -6,6 +6,7 @@ import 'ai_multimodal_system.dart';
 import 'ai_analytics_system.dart';
 import 'ai_security_system.dart';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 // Enhanced AI Providers - Integration of all AI systems
 
@@ -279,7 +280,7 @@ class EnhancedAIOrchestrator {
 
   Future<void> logInteraction(String interactionType, Map<String, dynamic> data) async {
     // Log interaction for analytics
-    print('Interaction logged: $interactionType - $data');
+    debugPrint('Interaction logged: $interactionType - $data');
   }
 }
 

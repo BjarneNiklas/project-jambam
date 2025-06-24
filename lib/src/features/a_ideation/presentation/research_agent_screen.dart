@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../data/research_agent.dart';
 import '../data/research_agent_config.dart' as config;
+import '../application/export_service.dart'; // Added export service
 
 class ResearchAgentScreen extends ConsumerStatefulWidget {
   const ResearchAgentScreen({super.key});
@@ -17,6 +18,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
   final TextEditingController _queryController = TextEditingController();
   final ResearchAgent _researchAgent = ResearchAgent();
   final config.ResearchAgentConfig _config = config.ResearchAgentConfig();
+  final ExportService _exportService = ExportService(); // Added export service instance
   
   late AnimationController _loadingController;
   late AnimationController _resultsController;
@@ -24,7 +26,6 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
   ResearchResult? _currentResult;
   bool _isLoading = false;
   String _errorMessage = '';
-  String _selectedSource = 'all';
 
   @override
   void initState() {
@@ -115,7 +116,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: sourceInfo['colors'][0].withOpacity(0.3),
+              color: sourceInfo['colors'][0].withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -140,7 +141,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
             ),
             const SizedBox(width: 4),
             const FaIcon(
-              FontAwesomeIcons.externalLink,
+              FontAwesomeIcons.arrowUpRightFromSquare,
               size: 10,
               color: Colors.white,
             ),
@@ -257,13 +258,29 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
             children: [
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: Export to PDF
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('PDF Export - Coming Soon!')),
-                    );
+                    onPressed: () async {
+                      if (_currentResult != null) {
+                        try {
+                          await _exportService.exportToPdf(_currentResult!, _currentResult!.title.replaceAll(' ', '_'));
+                           if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('PDF export started...')),
+                            );
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('PDF Export failed: $e')),
+                            );
+                          }
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('No result to export.')),
+                        );
+                      }
                   },
-                  icon: const FaIcon(FontAwesomeIcons.regularFilePdf),
+                  icon: const FaIcon(FontAwesomeIcons.filePdf),
                   label: const Text('Export PDF'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade600,
@@ -278,11 +295,27 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: Export to Markdown
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Markdown Export - Coming Soon!')),
-                    );
+                  onPressed: () async {
+                    if (_currentResult != null) {
+                      try {
+                        await _exportService.exportToMarkdown(_currentResult!, _currentResult!.title.replaceAll(' ', '_'));
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Markdown export started...')),
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Markdown Export failed: $e')),
+                          );
+                        }
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('No result to export.')),
+                      );
+                    }
                   },
                   icon: const FaIcon(FontAwesomeIcons.code),
                   label: const Text('Export Markdown'),
@@ -314,7 +347,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const FaIcon(FontAwesomeIcons.regularQuestionCircle),
+            icon: const FaIcon(FontAwesomeIcons.circleQuestion),
             onPressed: () {
               showDialog(
                 context: context,
@@ -347,7 +380,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -359,7 +392,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                   controller: _queryController,
                   decoration: InputDecoration(
                     hintText: 'Forschungsfrage eingeben... (z.B. "procedural generation games")',
-                    prefixIcon: const FaIcon(FontAwesomeIcons.search),
+                    prefixIcon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
                     suffixIcon: _isLoading
                         ? AnimatedBuilder(
                             animation: _loadingController,
@@ -490,7 +523,7 @@ class _ResearchAgentScreenState extends ConsumerState<ResearchAgentScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 FaIcon(
-                                  FontAwesomeIcons.search,
+                                  FontAwesomeIcons.magnifyingGlass,
                                   size: 64,
                                   color: Colors.grey.shade400,
                                 ),

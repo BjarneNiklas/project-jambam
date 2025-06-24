@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/create_project_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/project_details_screen.dart';
 
 class ProjectsScreen extends ConsumerStatefulWidget {
   const ProjectsScreen({super.key});
@@ -30,7 +32,7 @@ class _ProjectsScreenState extends ConsumerState<ProjectsScreen>
       body: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).primaryColor.withAlpha(25),
             child: TabBar(
               controller: _tabController,
               labelColor: Theme.of(context).primaryColor,
@@ -59,9 +61,9 @@ class _ProjectsScreenState extends ConsumerState<ProjectsScreen>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Navigate to create project screen
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Create Project - Coming Soon!')),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateProjectScreen()),
           );
         },
         child: const Icon(Icons.add),
@@ -93,9 +95,11 @@ class AllProjectsTab extends StatelessWidget {
             subtitle: Text(_getProjectDescription(index)),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to project details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Project ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProjectDetailsScreen(projectId: 'project_${index + 1}'),
+                ),
               );
             },
           ),
@@ -156,9 +160,11 @@ class MyProjectsTab extends StatelessWidget {
             subtitle: Text(_getStatusText(index)),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to my project details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('My Project ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProjectDetailsScreen(projectId: 'my_project_${index + 1}'),
+                ),
               );
             },
           ),
@@ -211,9 +217,11 @@ class CollaboratingProjectsTab extends StatelessWidget {
             subtitle: Text('Team: Innovation Squad ${index + 1}'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to collaborating project details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Collaborating Project ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProjectDetailsScreen(projectId: 'collab_project_${index + 1}'),
+                ),
               );
             },
           ),
@@ -246,9 +254,11 @@ class ArchivedProjectsTab extends StatelessWidget {
             subtitle: Text('Completed ${(index + 1) * 30} days ago'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to archived project details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Archived Project ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProjectDetailsScreen(projectId: 'archive_project_${index + 1}'),
+                ),
               );
             },
           ),

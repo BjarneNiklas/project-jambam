@@ -1,10 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ai_architecture_system.dart';
 
-// Advanced Security & Privacy System for AI
+// AI Security and Privacy System
 class AISecuritySystem {
   static const String _securityConfigKey = 'ai_security_config';
   static const String _privacySettingsKey = 'ai_privacy_settings';
@@ -15,71 +14,14 @@ class AISecuritySystem {
   Map<String, dynamic> _privacySettings = {};
   List<Map<String, dynamic>> _auditLog = [];
   
-  // Encryption keys (in production, use secure key management)
-  late String _encryptionKey;
-  late String _hmacKey;
-  
   // Privacy controls
   bool _dataRetentionEnabled = true;
   int _dataRetentionDays = 30;
   bool _anonymizationEnabled = true;
   bool _auditLoggingEnabled = true;
   
-  // Security policies
-  Map<String, SecurityPolicy> _securityPolicies = {};
-  
   AISecuritySystem() {
-    _initializeSecurity();
-  }
-  
-  void _initializeSecurity() {
-    // Initialize encryption keys (in production, use proper key management)
-    _encryptionKey = _generateEncryptionKey();
-    _hmacKey = _generateHMACKey();
-    
-    // Initialize security policies
-    _securityPolicies = {
-      'data_classification': SecurityPolicy(
-        name: 'Data Classification',
-        rules: [
-          SecurityRule(
-            condition: 'contains_personal_data',
-            action: SecurityAction.encrypt,
-            priority: SecurityPriority.high,
-          ),
-          SecurityRule(
-            condition: 'contains_sensitive_data',
-            action: SecurityAction.anonymize,
-            priority: SecurityPriority.critical,
-          ),
-        ],
-      ),
-      'access_control': SecurityPolicy(
-        name: 'Access Control',
-        rules: [
-          SecurityRule(
-            condition: 'user_not_authenticated',
-            action: SecurityAction.deny,
-            priority: SecurityPriority.critical,
-          ),
-          SecurityRule(
-            condition: 'insufficient_permissions',
-            action: SecurityAction.deny,
-            priority: SecurityPriority.high,
-          ),
-        ],
-      ),
-      'data_retention': SecurityPolicy(
-        name: 'Data Retention',
-        rules: [
-          SecurityRule(
-            condition: 'data_older_than_retention_period',
-            action: SecurityAction.delete,
-            priority: SecurityPriority.medium,
-          ),
-        ],
-      ),
-    };
+    // Initialize with default settings
   }
   
   // Secure AI request processing
@@ -379,19 +321,6 @@ class AISecuritySystem {
     }
     
     return encryptedMap;
-  }
-  
-  // Generate encryption keys
-  String _generateEncryptionKey() {
-    final random = Random.secure();
-    final bytes = List<int>.generate(32, (i) => random.nextInt(256));
-    return base64.encode(bytes);
-  }
-  
-  String _generateHMACKey() {
-    final random = Random.secure();
-    final bytes = List<int>.generate(32, (i) => random.nextInt(256));
-    return base64.encode(bytes);
   }
   
   // Security settings management

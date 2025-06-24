@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/content_filter_system.dart';
+import 'package:flutter/foundation.dart';
 
 class ContentFilterService {
   static const String _storageKey = 'content_filter_system';
@@ -300,7 +301,7 @@ class ContentFilterService {
         _filterSystem.fromJson(data);
       } catch (e) {
         // If loading fails, start with empty system
-        print('Failed to load content filter tags: $e');
+        debugPrint('Failed to load content filter tags: $e');
       }
     }
   }
@@ -328,7 +329,7 @@ class ContentFilterService {
         _autoCategorizeResearch = data['autoCategorizeResearch'] ?? true;
         _showUsageStats = data['showUsageStats'] ?? true;
       } catch (e) {
-        print('Failed to load content filter settings: $e');
+        debugPrint('Failed to load content filter settings: $e');
       }
     }
   }

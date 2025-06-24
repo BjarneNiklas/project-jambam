@@ -27,8 +27,6 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
 
   @override
   Widget build(BuildContext context) {
-    final terminologyState = ref.watch(terminologyProvider);
-    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -65,7 +63,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.blue),
             onPressed: () {
-              // TODO: Show arena notifications
+              // Placeholder: Show arena notifications
+              print("Navigate to Arena Notifications");
             },
           ),
         ],
@@ -421,9 +420,9 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -453,7 +452,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -479,7 +478,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
+                  color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -496,7 +495,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           trailing: IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              // TODO: Navigate to battle details
+              // Placeholder: Navigate to battle details
+              print("Navigate to Battle Details");
             },
           ),
         ),
@@ -513,7 +513,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(Icons.trending_up, color: color, size: 24),
@@ -530,7 +530,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to trending content
+            // Placeholder: Navigate to trending content
+            print("Navigate to Trending Content");
           },
         ),
       ),
@@ -546,7 +547,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         decoration: isChampion ? BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.2), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.2), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -578,7 +579,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           trailing: IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              // TODO: Navigate to champion profile
+              // Placeholder: Navigate to champion profile
+              print("Navigate to Champion Profile for $name");
             },
           ),
         ),
@@ -621,7 +623,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(Icons.forum, color: color, size: 24),
@@ -638,7 +640,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to discussion
+            // Placeholder: Navigate to discussion
+            print("Navigate to Discussion: $title");
           },
         ),
       ),
@@ -654,7 +657,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         decoration: isActive ? BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -694,7 +697,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           trailing: IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
-              // TODO: Navigate to legion details
+              // Placeholder: Navigate to legion details
+              print("Navigate to Legion Details for $name");
             },
           ),
         ),
@@ -755,7 +759,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               title: Text(ref.read(terminologyProvider.notifier).getTerminology('create_new_jam')),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to create jam
+                // Placeholder: Navigate to create jam
+                print("Navigate to Create Jam");
               },
             ),
             ListTile(
@@ -763,7 +768,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               title: Text(ref.read(terminologyProvider.notifier).getTerminology('join_legion_action')),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to join legion
+                // Placeholder: Navigate to join legion
+                print("Navigate to Join Legion");
               },
             ),
             ListTile(
@@ -771,7 +777,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               title: Text(ref.read(terminologyProvider.notifier).getTerminology('form_squad')),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to form squad
+                // Placeholder: Navigate to form squad
+                print("Navigate to Form Squad");
               },
             ),
             ListTile(
@@ -779,7 +786,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               title: Text(ref.read(terminologyProvider.notifier).getTerminology('start_new_discussion')),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to start discussion
+                // Placeholder: Navigate to start discussion
+                print("Navigate to Start Discussion");
               },
             ),
           ],

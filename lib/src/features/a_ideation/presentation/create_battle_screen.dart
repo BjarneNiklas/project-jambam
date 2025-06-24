@@ -18,7 +18,7 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
   String _selectedDifficulty = 'Intermediate';
   String _selectedTeamSize = '1-4 members';
   String _selectedDuration = '7 days';
-  List<String> _selectedPlatforms = [];
+  final List<String> _selectedPlatforms = [];
   
   final List<String> _categories = [
     'Game Development',
@@ -360,7 +360,7 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
                       }
                     });
                   },
-                  selectedColor: Colors.purple.withOpacity(0.2),
+                  selectedColor: Colors.purple.withAlpha(51),
                   checkmarkColor: Colors.purple,
                 );
               }).toList(),
@@ -468,7 +468,7 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: Colors.amber.withOpacity(0.1),
+              color: Colors.amber.withAlpha(25),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -638,12 +638,14 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (picked != null) {
-      // TODO: Handle date selection
+      // Placeholder: Handle date selection
+      print("Selected date: $picked");
     }
   }
 
   void _saveDraft() {
-    // TODO: Save battle as draft
+    // Placeholder: Save battle as draft
+    print("Saving battle as draft...");
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Draft saved successfully!'),
@@ -664,7 +666,17 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
         return;
       }
 
-      // TODO: Create battle
+      // Placeholder: Create battle
+      print("Creating battle with the following details:");
+      print("Title: ${_titleController.text}");
+      print("Theme: ${_themeController.text}");
+      print("Category: $_selectedCategory");
+      print("Description: ${_descriptionController.text}");
+      print("Difficulty: $_selectedDifficulty");
+      print("Team Size: $_selectedTeamSize");
+      print("Duration: $_selectedDuration");
+      print("Platforms: $_selectedPlatforms");
+      // Add more details as needed
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Battle created successfully!'),

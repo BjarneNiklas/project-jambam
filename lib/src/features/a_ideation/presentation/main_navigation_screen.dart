@@ -8,6 +8,7 @@ import 'research_agent_screen.dart';
 import 'game_engine_agent_screen.dart';
 import 'agent_context_management_screen.dart';
 import 'inspiration_of_the_day_screen.dart';
+import 'placeholder_screen.dart';
 
 class MainNavigationScreen extends ConsumerStatefulWidget {
   const MainNavigationScreen({super.key});
@@ -121,7 +122,10 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               title: const Text('Profil'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to profile
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Profile')),
+                );
               },
             ),
             ListTile(
@@ -129,7 +133,10 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               title: const Text('Einstellungen'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to settings
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Settings')),
+                );
               },
             ),
             
@@ -206,7 +213,10 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               subtitle: const Text('Experimentieren & Lernen'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to labs
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Labs')),
+                );
               },
             ),
             ListTile(
@@ -215,7 +225,10 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               subtitle: const Text('Projekt-Statistiken'),
               onTap: () {
                 Navigator.pop(context);
-                // TODO: Navigate to analytics
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Analytics')),
+                );
               },
             ),
           ],
@@ -233,7 +246,6 @@ class _PlaceholderScreen extends StatelessWidget {
   final String description;
 
   const _PlaceholderScreen({
-    super.key,
     required this.title,
     required this.icon,
     required this.color,

@@ -227,7 +227,7 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
                   ],
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -268,7 +268,7 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
                   ),
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -435,7 +435,7 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
                   ],
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -502,7 +502,7 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
                 subtitle: Text('Satisfaction: ${((data['satisfaction'] ?? 0.0) * 100).toStringAsFixed(1)}%'),
                 trailing: Text(_formatTimestamp(data['timestamp'])),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -680,7 +680,7 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
                 title: Text(data['event_type']?.toString().toUpperCase() ?? 'Unknown'),
                 subtitle: Text(_formatTimestamp(data['timestamp'])),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -715,7 +715,7 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
           const SizedBox(height: 16),
           ...recommendations.map((recommendation) {
             return _buildRecommendationCard(recommendation);
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -812,11 +812,6 @@ class _AIAnalyticsDashboardScreenState extends ConsumerState<AIAnalyticsDashboar
 
   void _exportData() async {
     try {
-      final service = ref.read(enhancedAIServiceProvider);
-      final analyticsData = service.getAnalyticsDashboard();
-      final userData = service.getUserInsights();
-      final securityData = service.getSecurityReport();
-      
       // In a real app, you'd save this to a file or share it
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Data exported successfully')),

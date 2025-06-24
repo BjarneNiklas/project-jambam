@@ -238,8 +238,7 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
                 style: TextStyle(color: Colors.green),
               )
             else
-              ...recentThreats.take(3).map((threat) {
-                final threatData = threat as Map<String, dynamic>;
+              ...recentThreats.take(5).map((threatData) {
                 return ListTile(
                   leading: Icon(
                     Icons.warning,
@@ -249,7 +248,7 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
                   subtitle: Text(threatData['description'] ?? ''),
                   trailing: Text(_formatTimestamp(threatData['timestamp'])),
                 );
-              }).toList(),
+              }),
           ],
         ),
       ),
@@ -284,7 +283,7 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
                   color: _getEventStatusColor(eventData['status']),
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -806,8 +805,8 @@ class _AISecurityScreenState extends ConsumerState<AISecurityScreen>
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
           ),
         ],
       ),

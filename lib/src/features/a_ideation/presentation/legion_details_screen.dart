@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'placeholder_screen.dart';
 
 class LegionDetailsScreen extends ConsumerStatefulWidget {
   final String legionId;
@@ -19,7 +20,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   bool _isMember = false;
-  bool _isAdmin = false;
+  final bool _isAdmin = false;
 
   @override
   void initState() {
@@ -68,7 +69,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -80,7 +81,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -93,14 +94,18 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
               IconButton(
                 icon: const Icon(Icons.share, color: Colors.white),
                 onPressed: () {
-                  // TODO: Share legion
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Share Legion - Coming Soon!')),
+                  );
                 },
               ),
               if (_isAdmin)
                 IconButton(
                   icon: const Icon(Icons.settings, color: Colors.white),
                   onPressed: () {
-                    // TODO: Legion settings
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Legion Settings - Coming Soon!')),
+                    );
                   },
                 ),
             ],
@@ -282,7 +287,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -323,7 +328,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withValues(alpha: 0.8),
             fontSize: 12,
           ),
         ),
@@ -384,7 +389,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress,
-            backgroundColor: Colors.grey.withOpacity(0.3),
+            backgroundColor: Colors.grey.withValues(alpha: 0.3),
             valueColor: AlwaysStoppedAnimation<Color>(color),
             minHeight: 8,
           ),
@@ -417,7 +422,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.amber.withOpacity(0.1),
+                    color: Colors.amber.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -452,7 +457,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(Icons.person, color: color, size: 20),
@@ -479,7 +484,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -528,7 +533,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isCurrent ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isCurrent ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
         border: isCurrent ? Border.all(color: color, width: 2) : null,
       ),
@@ -596,7 +601,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.indigo.withOpacity(0.1),
+                    color: Colors.indigo.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -612,7 +617,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: 0.75,
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withValues(alpha: 0.3),
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.indigo),
               minHeight: 12,
             ),
@@ -779,7 +784,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -893,7 +898,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.1),
+                color: Colors.indigo.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -997,7 +1002,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to member profile
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Member Profile')),
+            );
           },
         ),
       ),
@@ -1059,7 +1067,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.1),
+                color: Colors.indigo.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1113,7 +1121,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -1133,7 +1141,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -1166,7 +1174,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                     icon: const Icon(Icons.visibility),
                     label: const Text('View'),
                     onPressed: () {
-                      // TODO: View project details
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Project Details')),
+                      );
                     },
                   ),
                 ),
@@ -1176,7 +1187,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                     icon: const Icon(Icons.edit),
                     label: const Text('Edit'),
                     onPressed: () {
-                      // TODO: Edit project
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Edit Project')),
+                      );
                     },
                   ),
                 ),
@@ -1254,7 +1268,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.1),
+                color: Colors.indigo.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1280,7 +1294,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 20),
@@ -1313,7 +1327,10 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
     if (_isMember) {
       return FloatingActionButton.extended(
         onPressed: () {
-          // TODO: Create new project
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Create New Project')),
+          );
         },
         backgroundColor: Colors.indigo,
         icon: const Icon(Icons.add, color: Colors.white),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/multi_agent_providers.dart';
-import '../data/external_integration_service.dart';
 import 'package:project_jambam/src/core/ai/enhanced_ai_providers.dart';
-import 'package:project_jambam/src/features/a_ideation/domain/multi_agent_system.dart' as domain;
 
 /// Modernes ProjectMasterAgent Dashboard
 class ProjectMasterDashboardScreen extends ConsumerStatefulWidget {
@@ -16,6 +14,7 @@ class ProjectMasterDashboardScreen extends ConsumerStatefulWidget {
 class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDashboardScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  bool _isRefreshing = false;
   
   @override
   void initState() {
@@ -105,10 +104,16 @@ class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDash
                 ],
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () => _refreshProject(),
-            ),
+            _isRefreshing
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.refresh),
+                    onPressed: _refreshProject, // No need for () =>
+                  ),
           ],
         ),
       ),
@@ -233,225 +238,49 @@ class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDash
   // HELPER METHODS
   // ============================================================================
 
-  IconData _getAgentIcon(domain.AgentStatus status) {
-    switch (status) {
-      case domain.AgentStatus.active:
-        return Icons.play_circle;
-      case domain.AgentStatus.idle:
-        return Icons.pause_circle;
-      case domain.AgentStatus.processing:
-        return Icons.sync;
-      case domain.AgentStatus.error:
-        return Icons.error;
-      case domain.AgentStatus.completed:
-        return Icons.check_circle;
-    }
-  }
-
-  Color _getAgentColor(domain.AgentStatus status) {
-    switch (status) {
-      case domain.AgentStatus.active:
-        return Colors.green;
-      case domain.AgentStatus.idle:
-        return Colors.grey;
-      case domain.AgentStatus.processing:
-        return Colors.blue;
-      case domain.AgentStatus.error:
-        return Colors.red;
-      case domain.AgentStatus.completed:
-        return Colors.green;
-    }
-  }
-
   // ============================================================================
   // ACTION HANDLERS
   // ============================================================================
 
   Future<void> _refreshProject() async {
-    final controller = ref.read(currentProjectProvider.notifier);
-    await controller.loadProject('demo-project');
-  }
+    if (_isRefreshing) return;
 
-  void _showExportDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Projekt exportieren'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.code),
-              title: const Text('Als JSON'),
-              onTap: () => _exportProject('json'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.description),
-              title: const Text('Als Markdown'),
-              onTap: () => _exportProject('markdown'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.account_balance),
-              title: const Text('Für Förderantrag'),
-              onTap: () => _exportProject('funding'),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Abbrechen'),
-          ),
-        ],
-      ),
-    );
-  }
+    setState(() {
+      _isRefreshing = true;
+    });
 
-  void _showSettingsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Einstellungen'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Einstellungen werden hier implementiert...'),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Schließen'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _handlePrototypeAction(String action, domain.Prototype prototype) {
-    switch (action) {
-      case 'edit':
-        // TODO: Implement edit prototype
-        break;
-      case 'test':
-        // TODO: Implement test prototype
-        break;
-      case 'export':
-        // TODO: Implement export prototype
-        break;
-      default:
-        // Log unhandled action for debugging, but don't crash
-        debugPrint('Unhandled prototype action: $action for prototype ${prototype.id}');
-        break;
-    }
-  }
-
-  void _showPrototypeDetails(domain.Prototype prototype) {
-    // TODO: Implement prototype details view
-  }
-
-  void _showPlaytestDetails(domain.PlaytestResult playtest) {
-    // TODO: Implement playtest details view
-  }
-
-  void _handleInsightAction(domain.AIInsight insight, String action) {
-    // TODO: Implement insight action handling
-  }
-
-  void _handleInsightMenu(String action, domain.AIInsight insight) {
-    // TODO: Implement insight menu handling
-  }
-
-  Future<void> _stopWorkflow(String workflowId) async {
-    // TODO: Implement workflow stopping
-  }
-
-  Future<void> _exportProject(String format) async {
-    final projectAsync = ref.read(currentProjectProvider);
-    final project = projectAsync.value;
-    
-    if (project == null) return;
-
-    String filename;
-    
-    switch (format) {
-      case 'json':
-        filename = '${project.name}_export.json';
-        break;
-      case 'markdown':
-        filename = '${project.name}_export.md';
-        break;
-      case 'funding':
-        filename = '${project.name}_funding.md';
-        break;
-      default:
-        return;
-    }
-
-    // TODO: Implement file download/save
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Export abgeschlossen: $filename')),
+      const SnackBar(content: Text('Refreshing project data...')),
     );
-  }
 
-  Widget _buildNoProjectView() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.folder_open,
-            size: 64,
-            color: Colors.grey[400],
+    try {
+      // Invalidate the provider to refetch data
+      await ref.refresh(currentProjectProvider.future);
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Project data refreshed successfully!'),
+            backgroundColor: Colors.green,
           ),
-          const SizedBox(height: 16),
-          Text(
-            'Kein Projekt geladen',
-            style: Theme.of(context).textTheme.headlineSmall,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error refreshing project: $e'),
+            backgroundColor: Colors.red,
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Lade ein Projekt oder erstelle ein neues',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () => _refreshProject(),
-            child: const Text('Projekt laden'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildErrorView(Object error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error,
-            size: 64,
-            color: Colors.red[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Fehler beim Laden des Projekts',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            error.toString(),
-            style: Theme.of(context).textTheme.bodyLarge,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () => _refreshProject(),
-            child: const Text('Erneut versuchen'),
-          ),
-        ],
-      ),
-    );
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isRefreshing = false;
+        });
+      }
+    }
   }
 } 
