@@ -79,7 +79,7 @@ class InspirationOfTheDayService {
   /// Generiert die Inspiration des Tages
   Future<DailyInspiration> generateTodaysInspiration() async {
     final today = DateTime.now();
-    final todayKey = _getDateKey(today);
+    // final todayKey = _getDateKey(today); // Unused
     
     // Prüfe ob heute schon eine Inspiration generiert wurde
     final existing = await _loadTodaysInspiration();

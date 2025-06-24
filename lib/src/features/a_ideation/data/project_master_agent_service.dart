@@ -6,7 +6,6 @@ class ProjectMasterAgentService {
 
   /// Lädt ein Projekt anhand der ID (Mock)
   Future<ProjectMasterAgent> loadProject(String id) async {
-    // TODO: API-Call oder lokale Datenbank
     return ProjectMasterAgent(
       id: id,
       name: 'Demo Game Jam',
@@ -28,7 +27,6 @@ class ProjectMasterAgentService {
 
   /// Speichert das aktuelle Projekt (Mock)
   Future<void> saveProject(ProjectMasterAgent project) async {
-    // TODO: API-Call oder lokale Speicherung
     _currentProject = project;
   }
 
@@ -95,10 +93,6 @@ class ProjectMasterAgentService {
         return AgentStatus.completed;
       case ProjectStatus.archived:
         return AgentStatus.error;
-      // This default case should ideally be unreachable if all ProjectStatus enum values are handled above.
-      // Kept due to "do not delete code" constraint.
-      default:
-        return AgentStatus.idle;
     }
   }
 
@@ -109,7 +103,6 @@ class ProjectMasterAgentService {
 
   /// Synchronisiert mit externen Tools (Mock)
   Future<void> syncWithExternal(String tool) async {
-    // TODO: Implementierung für Git, Discord, Miro etc.
   }
 
   /// Gibt das aktuelle Projekt zurück

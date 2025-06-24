@@ -4,31 +4,19 @@ import 'package:http/http.dart' as http;
 /// Research Agent für wissenschaftlich fundierte Recherche mit verifizierbaren Quellen
 class ResearchAgent {
   static const String _arxivUrl = 'http://export.arxiv.org/api/query';
-  static const String _pubmedUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi';
   static const String _doajUrl = 'https://doaj.org/api/v2/search/articles';
   static const String _crossrefUrl = 'https://api.crossref.org/works';
   
   // APIs mit Rate Limits für bessere Game Design Forschung
   static const String _semanticScholarUrl = 'https://api.semanticscholar.org/v1';
-  static const String _ieeeUrl = 'https://ieeexplore.ieee.org/rest/search';
-  static const String _acmUrl = 'https://dl.acm.org/action/doSearch';
   static const String _openAlexUrl = 'https://api.openalex.org/works';
   static const String _dblpUrl = 'https://dblp.org/search/publ/api';
   static const String _coreUrl = 'https://api.core.ac.uk/v3/search/works';
   static const String _springerUrl = 'https://api.springernature.com/metadata/v2/objects';
-  static const String _elsevierUrl = 'https://api.elsevier.com/content/search/sciencedirect';
   
   // Praktische APIs für Game Engineering & Design (Industrie-fokussiert)
-  static const String _steamApiUrl = 'https://api.steampowered.com';
-  static const String _twitchApiUrl = 'https://api.twitch.tv/helix';
-  static const String _redditApiUrl = 'https://oauth.reddit.com';
-  static const String _youtubeApiUrl = 'https://www.googleapis.com/youtube/v3';
-  static const String _itchioApiUrl = 'https://itch.io/api/1';
   
   // Game Development Blogs & News (RSS Feeds)
-  static const String _gamasutraRss = 'https://www.gamedeveloper.com/rss.xml';
-  static const String _indieDbRss = 'https://www.indiedb.com/rss';
-  static const String _polygonRss = 'https://www.polygon.com/rss/index.xml';
   
   // Google Scholar hat KEINE offizielle API (nur Web Scraping möglich, aber gegen ToS)
   // Alternativen: Semantic Scholar, OpenAlex, CORE, Crossref
@@ -866,7 +854,7 @@ class ResearchResult {
     papers = papers ?? sources.map((s) => s.title).toList();
   
   static List<String> _generateKeyInsights(List<ResearchSource> sources) {
-    return sources.take(3).map((s) => s.abstract.substring(0, s.abstract.length > 100 ? 100 : s.abstract.length) + '...').toList();
+    return sources.take(3).map((s) => '${s.abstract.substring(0, s.abstract.length > 100 ? 100 : s.abstract.length)}...').toList();
   }
   
   Map<String, dynamic> toJson() => {

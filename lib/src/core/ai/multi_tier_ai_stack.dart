@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'intelligent_router.dart';
 
 abstract class AILayer {
@@ -73,12 +72,6 @@ class RuleBasedLayer implements AILayer {
       'how to use ai': 'AI can help with ideation, asset generation, code writing, and problem solving.',
       'what are game jams': 'Game jams are events where developers create games in a short time period, often 48-72 hours.',
     },
-  };
-
-  static const Map<String, List<String>> _validationRules = {
-    'email': [r'^[^@]+@[^@]+\.[^@]+$'],
-    'url': [r'^https?://.+'],
-    'code': [r'```[\s\S]*```'],
   };
 
   @override
@@ -238,12 +231,6 @@ class RuleBasedLayer implements AILayer {
 
 // Tier 2: Local SLM Processing
 class LocalSLMLayer implements AILayer {
-  static const Map<String, String> _models = {
-    'phi-3-mini': 'Fast classification and basic generation',
-    'gemma-2b': 'Balanced performance and speed',
-    'llama-3.1-8b': 'Advanced local processing',
-  };
-
   @override
   Future<AIResponse> process(UserRequest request, Map<String, dynamic> config) async {
     final startTime = DateTime.now();
@@ -396,7 +383,7 @@ class LocalSLMLayer implements AILayer {
     if (words.length <= 50) return content;
     
     final summary = words.take(50).join(' ');
-    return '$summary... (summarized from ${words.length} words)';
+    return '$summary... (summarized from $words.length words)';
   }
 
   String _translateText(String content, String targetLanguage) {
@@ -564,13 +551,6 @@ class RAGLayer implements AILayer {
 
 // Tier 4: LLM for Complex Tasks
 class LLMLayer implements AILayer {
-  static const Map<String, String> _providers = {
-    'openai': 'GPT-4 for best overall performance',
-    'anthropic': 'Claude for excellent reasoning',
-    'google': 'Gemini for multimodal capabilities',
-    'local': 'Local LLM for privacy',
-  };
-
   @override
   Future<AIResponse> process(UserRequest request, Map<String, dynamic> config) async {
     final startTime = DateTime.now();

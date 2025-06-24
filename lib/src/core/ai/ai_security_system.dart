@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ai_architecture_system.dart';
 
@@ -15,18 +14,12 @@ class AISecuritySystem {
   Map<String, dynamic> _privacySettings = {};
   List<Map<String, dynamic>> _auditLog = [];
   
-  // Encryption keys (in production, use secure key management)
-  late String _encryptionKey;
-  late String _hmacKey;
   
   // Privacy controls
   bool _dataRetentionEnabled = true;
   int _dataRetentionDays = 30;
   bool _anonymizationEnabled = true;
   bool _auditLoggingEnabled = true;
-  
-  // Security policies
-  Map<String, SecurityPolicy> _securityPolicies = {};
   
   AISecuritySystem() {
     _initializeSecurity();

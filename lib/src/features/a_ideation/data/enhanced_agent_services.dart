@@ -87,9 +87,8 @@ final enhancedCreativeDirectorServiceProvider = Provider<EnhancedCreativeDirecto
 // Enhanced Asset Generation Agent with AI Architecture
 class EnhancedAssetGenerationService {
   final CreativeAIService _aiService;
-  final ContentFilterAIService _filterService;
 
-  EnhancedAssetGenerationService(this._aiService, this._filterService);
+  EnhancedAssetGenerationService(this._aiService, ContentFilterAIService filterService);
 
   // Asset description generation with LLM
   Future<String> generateAssetDescription(String assetType, String context) async {
@@ -161,11 +160,11 @@ class EnhancedGameEngineService {
 
   // Code validation with SLM
   Future<bool> validateCode(String code) async {
-    final request = AIRequest(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      taskType: AITaskType.classification,
-      prompt: 'Validate this code for syntax and basic errors: $code',
-    );
+    // final request = AIRequest( // Unused
+    //   id: DateTime.now().millisecondsSinceEpoch.toString(),
+    //   taskType: AITaskType.classification,
+    //   prompt: 'Validate this code for syntax and basic errors: $code',
+    // );
     
     // This would use a specialized SLM for code validation
     return true; // Placeholder
@@ -237,9 +236,8 @@ final enhancedProjectMasterServiceProvider = Provider<EnhancedProjectMasterServi
 // Enhanced Jamba AI Orchestrator with AI Architecture
 class EnhancedJambaAIOrchestratorService {
   final AIOrchestrator _orchestrator;
-  final Map<String, dynamic> _agentServices;
 
-  EnhancedJambaAIOrchestratorService(this._orchestrator, this._agentServices);
+  EnhancedJambaAIOrchestratorService(this._orchestrator, Map<String, dynamic> agentServices);
 
   // Intelligent request routing
   Future<AIResponse> processUserRequest(String userInput, Map<String, dynamic> context) async {

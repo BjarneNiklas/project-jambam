@@ -1,8 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 // Enhanced AI Triad System for Media Platform
 // Optimized for: Community building, competition, teamwork, scalability, user engagement
@@ -516,7 +512,7 @@ class EnhancedAITriadOrchestrator {
   // Enhanced request analysis
   Future<RequestAnalysis> _analyzeRequest(UserRequest request) async {
     // Use SLM for fast analysis
-    final slmModel = EnhancedModelRegistry.getModel('slm_classifier')!;
+    // final slmModel = EnhancedModelRegistry.getModel('slm_classifier')!; // Unused
     
     // Analyze complexity, domain, privacy needs, etc.
     final complexity = _analyzeComplexity(request.content);
@@ -722,7 +718,7 @@ class EnhancedAITriadOrchestrator {
               .toList();
         }
       } catch (e) {
-        print('RAG enhancement failed: $e');
+        // print('RAG enhancement failed: $e');
       }
     }
     
@@ -889,8 +885,7 @@ class EnhancedAITriadOrchestrator {
       
       // Generate response based on retrieved documents
       final sources = documents.map((doc) => doc['source'].toString()).toList();
-      final content = 'RAG response based on ${documents.length} sources:\n\n' +
-          documents.map((doc) => '- ${doc['content']}').join('\n');
+      final content = 'RAG response based on ${documents.length} sources:\n\n${documents.map((doc) => '- ${doc['content']}').join('\n')}';
       
       final duration = DateTime.now().difference(startTime).inMilliseconds;
       final cost = _calculateCost(model, content.length);
