@@ -36,13 +36,13 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // TODO: Add new engine
+              print('Add new engine');
             },
           ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              // TODO: Engine settings
+              print('Engine settings');
             },
           ),
         ],
@@ -291,9 +291,9 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               ElevatedButton(
                 onPressed: () {
                   if (isConnected) {
-                    // TODO: Manage engine
+                    print('Manage engine');
                   } else {
-                    // TODO: Connect engine
+                    print('Connect engine');
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -402,7 +402,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      // TODO: Add custom engine
+                      print('Add custom engine');
                     },
                     icon: const Icon(Icons.add),
                     label: const Text('Add Engine'),
@@ -412,7 +412,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () {
-                      // TODO: Import project
+                      print('Import project');
                     },
                     icon: const Icon(Icons.upload),
                     label: const Text('Import Project'),
@@ -537,7 +537,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      // TODO: Configure Unity
+                      print('Configure Unity');
                     },
                     child: const Text('Configure'),
                   ),
@@ -546,7 +546,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Sync Unity
+                      print('Sync Unity');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
@@ -648,7 +648,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      // TODO: Configure Unreal
+                      print('Configure Unreal');
                     },
                     child: const Text('Configure'),
                   ),
@@ -657,7 +657,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Sync Unreal
+                      print('Sync Unreal');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
@@ -729,7 +729,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Connect Godot
+                  print('Connect Godot');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
@@ -771,7 +771,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      // TODO: View API docs
+                      print('View API docs');
                     },
                     child: const Text('API Docs'),
                   ),
@@ -780,7 +780,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: Generate SDK
+                      print('Generate SDK');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepOrange,
@@ -982,14 +982,14 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
                 const Spacer(),
                 OutlinedButton(
                   onPressed: () {
-                    // TODO: Preview template
+                    print('Preview template');
                   },
                   child: const Text('Preview'),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: Use template
+                    print('Use template');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
@@ -1129,7 +1129,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
           if (enabled)
             ElevatedButton(
               onPressed: () {
-                // TODO: Deploy to platform
+                print('Deploy to platform');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: color,
@@ -1228,7 +1228,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               subtitle: const Text('Automatically deploy on build'),
               value: false,
               onChanged: (value) {
-                // TODO: Update setting
+                print('Update setting');
               },
               secondary: const Icon(Icons.auto_awesome),
             ),
@@ -1237,7 +1237,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               subtitle: const Text('Optimize builds for size'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                print('Update setting');
               },
               secondary: const Icon(Icons.tune),
             ),
@@ -1246,7 +1246,7 @@ class _GameEngineScreenState extends ConsumerState<GameEngineScreen>
               subtitle: const Text('Track deployment versions'),
               value: true,
               onChanged: (value) {
-                // TODO: Update setting
+                print('Update setting');
               },
               secondary: const Icon(Icons.history),
             ),
