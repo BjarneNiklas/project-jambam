@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 enum TagCategory {
   interests,   // Green - things user likes
   dislikes,    // Red - things user dislikes

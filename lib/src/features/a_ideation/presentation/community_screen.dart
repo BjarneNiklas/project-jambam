@@ -27,8 +27,6 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
 
   @override
   Widget build(BuildContext context) {
-    final terminologyState = ref.watch(terminologyProvider);
-    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -421,9 +419,9 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -453,7 +451,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -479,7 +477,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
+                  color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -513,7 +511,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(Icons.trending_up, color: color, size: 24),
@@ -546,7 +544,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         decoration: isChampion ? BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.2), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.2), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -621,7 +619,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(Icons.forum, color: color, size: 24),
@@ -654,7 +652,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         decoration: isActive ? BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

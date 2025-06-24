@@ -163,7 +163,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withAlpha((255 * 0.8).round()),
+            color: color.withAlpha(51),
             fontSize: 12,
           ),
         ),
@@ -679,7 +679,7 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withAlpha(51),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // TODO: Implement or restore enhanced_chip.dart
-import 'package:project_jambam/src/shared/enhanced_chip.dart';
+// import 'package:project_jambam/src/shared/enhanced_chip.dart';
 import '../data/content_filter_service.dart';
 import '../domain/content_filter_system.dart';
 
@@ -22,7 +22,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
   bool _showUsageStats = true;
   bool _showSourceIcons = true;
   bool _isEditing = false;
-  Set<String> _selectedTags = {};
+  final List<String> _selectedTags = [];
   
   // Quick add
   final TextEditingController _quickAddController = TextEditingController();
@@ -162,7 +162,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -206,8 +206,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(_getCategoryIcon(category), 
-                             color: _getCategoryColor(category), 
-                             size: 16),
+                             color: _getCategoryColor(category)),
                         const SizedBox(width: 4),
                         Text(_getCategoryName(category)),
                       ],
@@ -256,7 +255,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -271,7 +270,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
           return Column(
             children: [
               Icon(_getCategoryIcon(category), 
-                   color: _getCategoryColor(category)),
+                   color: _getCategoryColor(category).withAlpha(128)),
               Text('$count', style: const TextStyle(fontWeight: FontWeight.bold)),
               Text(_getCategoryName(category), 
                    style: const TextStyle(fontSize: 12)),
@@ -331,7 +330,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
                       if (_showUsageStats && tag.usageCount > 0)
                         Chip(
                           label: Text('${tag.usageCount}'),
-                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                         ),
                       PopupMenuButton<String>(
                         onSelected: (value) => _handleTagAction(value, tag),
@@ -385,7 +384,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
           Icon(
             _getCategoryIcon(category),
             size: 64,
-            color: _getCategoryColor(category).withOpacity(0.5),
+            color: _getCategoryColor(category).withAlpha(51),
           ),
           const SizedBox(height: 16),
           Text(
@@ -404,7 +403,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
 
   Widget _buildTagIcon(ContentTag tag) {
     return CircleAvatar(
-      backgroundColor: _getCategoryColor(tag.category).withOpacity(0.2),
+      backgroundColor: _getCategoryColor(tag.category).withAlpha(51),
       child: Icon(
         _getSourceIcon(tag.source),
         color: _getCategoryColor(tag.category),

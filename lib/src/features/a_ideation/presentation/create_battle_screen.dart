@@ -18,7 +18,7 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
   String _selectedDifficulty = 'Intermediate';
   String _selectedTeamSize = '1-4 members';
   String _selectedDuration = '7 days';
-  List<String> _selectedPlatforms = [];
+  final List<String> _selectedPlatforms = [];
   
   final List<String> _categories = [
     'Game Development',
@@ -360,7 +360,7 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
                       }
                     });
                   },
-                  selectedColor: Colors.purple.withOpacity(0.2),
+                  selectedColor: Colors.purple.withAlpha(51),
                   checkmarkColor: Colors.purple,
                 );
               }).toList(),
@@ -468,7 +468,7 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: Colors.amber.withOpacity(0.1),
+              color: Colors.amber.withAlpha(25),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(

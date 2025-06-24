@@ -30,7 +30,7 @@ class _ProjectsScreenState extends ConsumerState<ProjectsScreen>
       body: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).primaryColor.withAlpha(25),
             child: TabBar(
               controller: _tabController,
               labelColor: Theme.of(context).primaryColor,

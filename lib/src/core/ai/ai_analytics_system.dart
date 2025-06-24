@@ -102,7 +102,7 @@ class AIAnalyticsSystem {
     if (!_responseTimes.containsKey(taskType)) {
       _responseTimes[taskType] = [];
     }
-    _responseTimes[taskType].add(responseTime);
+    _responseTimes[taskType]!.add(responseTime);
     
     // Confidence scores
     if (!_confidenceScores.containsKey(taskType)) {

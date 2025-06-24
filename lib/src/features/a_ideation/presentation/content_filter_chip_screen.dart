@@ -201,9 +201,9 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.blue.withOpacity(0.1),
+        color: Colors.blue.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.blue.withOpacity(0.3)),
+        border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -262,9 +262,9 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
         width: double.infinity,
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.1),
+          color: Colors.grey.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
         ),
         child: Column(
           children: [
@@ -386,15 +386,15 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive ? color : color.withAlpha((0.1 * 255).toInt()),
+          color: isActive ? color : color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isActive ? color : color.withAlpha((0.3 * 255).toInt()),
+            color: isActive ? color : color.withValues(alpha: 0.3),
             width: isActive ? 2 : 1,
           ),
           boxShadow: isActive ? [
             BoxShadow(
-              color: color.withAlpha((0.3 * 255).toInt()),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -551,7 +551,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         border: Border.all(color: color),
         borderRadius: BorderRadius.circular(8),
       ),
@@ -603,7 +603,6 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
         ),
         const SizedBox(height: 8),
         ...analysis.concernAnalyses.entries.map((entry) {
-          final concern = entry.key;
           final concernAnalysis = entry.value;
           
           if (concernAnalysis.overallRisk < 0.1) return const SizedBox.shrink();
@@ -632,7 +631,7 @@ class _ContentFilterChipScreenState extends ConsumerState<ContentFilterChipScree
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }

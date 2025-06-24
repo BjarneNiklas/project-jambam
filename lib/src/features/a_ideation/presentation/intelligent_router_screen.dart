@@ -18,7 +18,7 @@ class _IntelligentRouterScreenState extends ConsumerState<IntelligentRouterScree
   RequestAnalysis? _currentAnalysis;
   RouteSelection? _currentRoute;
   AIResponse? _currentResponse;
-  List<Map<String, dynamic>> _requestHistory = [];
+  final List<Map<String, dynamic>> _requestHistory = [];
 
   late final IntelligentRouter _router;
   late final MultiTierAIStack _aiStack;
@@ -466,9 +466,9 @@ class _IntelligentRouterScreenState extends ConsumerState<IntelligentRouterScree
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [

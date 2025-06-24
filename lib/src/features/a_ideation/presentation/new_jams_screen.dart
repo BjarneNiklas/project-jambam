@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'placeholder_screen.dart';
 
 class JamsScreen extends ConsumerStatefulWidget {
   const JamsScreen({super.key});
@@ -30,7 +31,7 @@ class _JamsScreenState extends ConsumerState<JamsScreen>
       body: Column(
         children: [
           Container(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).primaryColor.withAlpha(128),
             child: TabBar(
               controller: _tabController,
               labelColor: Theme.of(context).primaryColor,
@@ -59,9 +60,9 @@ class _JamsScreenState extends ConsumerState<JamsScreen>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Navigate to create jam screen
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Create Jam - Coming Soon!')),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PlaceholderScreen(title: 'Create Jam')),
           );
         },
         child: const Icon(Icons.add),
@@ -90,9 +91,9 @@ class AllJamsTab extends StatelessWidget {
             subtitle: Text('A fantastic game jam experience'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to jam details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Jam ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaceholderScreen(title: 'Jam ${index + 1} Details')),
               );
             },
           ),
@@ -125,9 +126,9 @@ class MyJamsTab extends StatelessWidget {
             subtitle: Text(index == 0 ? 'In Progress' : 'Completed'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to my jam details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('My Jam ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaceholderScreen(title: 'My Jam ${index + 1} Details')),
               );
             },
           ),
@@ -160,9 +161,9 @@ class ParticipatingJamsTab extends StatelessWidget {
             subtitle: Text('Team: Awesome Squad ${index + 1}'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to participating jam details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Participating Jam ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaceholderScreen(title: 'Participating Jam ${index + 1} Details')),
               );
             },
           ),
@@ -195,9 +196,9 @@ class UpcomingJamsTab extends StatelessWidget {
             subtitle: Text('Starts in ${(index + 1) * 7} days'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navigate to upcoming jam details
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Upcoming Jam ${index + 1} Details - Coming Soon!')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaceholderScreen(title: 'Upcoming Jam ${index + 1} Details')),
               );
             },
           ),

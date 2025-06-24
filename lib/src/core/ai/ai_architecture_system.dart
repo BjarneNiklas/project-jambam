@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 // Core AI Architecture Types
 enum AIModelType {
@@ -286,7 +284,7 @@ class AIOrchestrator {
     try {
       // 1. Determine optimal model based on task type
       final modelConfig = _selectOptimalModel(request);
-      final model = modelConfig ?? AIModelRegistry.getModel('slm_classifier')!; // Fallback if selection returns null
+      final model = modelConfig;
       
       // 2. Enhance context with RAG if needed
       final enhancedContext = await _enhanceContext(request, model);
@@ -306,7 +304,7 @@ class AIOrchestrator {
       final errorResponse = AIResponse(
         id: request.id,
         content: '',
-        usedModel: request.preferredModel ?? AIModelRegistry.getModel('slm_classifier') /* Guaranteed model */,
+        usedModel: request.preferredModel ?? AIModelRegistry.getModel('slm_classifier')!,
         isSuccess: false,
         error: e.toString(),
       );
@@ -319,7 +317,7 @@ class AIOrchestrator {
   AIModelConfig _selectOptimalModel(AIRequest request) {
     // Use preferred model if specified
     if (request.preferredModel != null) {
-      return request.preferredModel;
+      return request.preferredModel!;
     }
 
     // Select based on task type
@@ -369,7 +367,7 @@ class AIOrchestrator {
         }
       } catch (e) {
         // Continue without RAG if it fails
-        print('RAG enhancement failed: $e');
+        debugPrint('RAG enhancement failed: $e');
       }
     }
     
@@ -505,8 +503,7 @@ class AIOrchestrator {
       
       // Generate response based on retrieved documents
       final sources = documents.map((doc) => doc['source'].toString()).toList();
-      final content = 'RAG response based on ${documents.length} sources:\n\n' +
-          documents.map((doc) => '- ${doc['content']}').join('\n');
+      final content = 'RAG response based on ${documents.length} sources:\n\n${documents.map((doc) => '- ${doc['content']}').join('\n')}';
       
       return AIResponse(
         id: request.id,

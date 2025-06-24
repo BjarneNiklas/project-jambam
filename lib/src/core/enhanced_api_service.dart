@@ -22,6 +22,7 @@ class EnhancedApiService {
   late final ConnectivityService _connectivity;
   late final SyncService _syncService;
   late final CacheStore _globalCacheStore; // Added for shared cache store
+  late final CacheOptions _globalCacheOptions; // Added missing field
 
   // Cache options
   static const Duration _cacheDuration = Duration(hours: 24);
@@ -59,7 +60,7 @@ class EnhancedApiService {
     }
 
     // Add cache interceptor using the global store
-    final globalCacheOptions = CacheOptions(
+    _globalCacheOptions = CacheOptions(
       store: _globalCacheStore,
       policy: CachePolicy.request, // Default policy
       hitCacheOnErrorExcept: [401, 403], // Try cache on error, except for auth errors
@@ -68,7 +69,7 @@ class EnhancedApiService {
       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
       allowPostMethod: false, // Do not cache POST requests by default
     );
-    _dio.interceptors.add(DioCacheInterceptor(options: globalCacheOptions));
+    _dio.interceptors.add(DioCacheInterceptor(options: _globalCacheOptions));
 
     // Add connectivity interceptor
     _dio.interceptors.add(InterceptorsWrapper(
@@ -151,17 +152,26 @@ class EnhancedApiService {
     // IMPORTANT: This method must return data in the exact shape the original method expects for response.data
 
     // Endpoints returning List<Map<String, dynamic>>
-    if (path == '/assets' || path == '/marketplace') {
-      // TODO: Differentiate marketplace if its offline source is different
+    if (path == '/assets') {
       return await _database.getAssets(isPublic: true, limit: 20);
     }
+    if (path == '/marketplace') {
+      // Marketplace includes both public assets and premium content
+      final publicAssets = await _database.getAssets(isPublic: true, limit: 15);
+      final premiumAssets = await _database.getAssets(isPublic: false, limit: 5);
+      // Filter premium assets by checking if they have a price > 0
+      final filteredPremiumAssets = premiumAssets.where((asset) =>
+        (asset['price'] ?? 0.0) > 0.0 || (asset['is_for_sale'] ?? 0) == 1
+      ).toList();
+      return [...publicAssets, ...filteredPremiumAssets];
+    }
     if (path == '/organizations') {
-      // TODO: Implement offline storage for organizations if needed
-      return []; // Return empty list as a safe default
+      // Return cached organizations from offline storage
+      return await _database.getOrganizations();
     }
     if (path == '/license-types') {
-      // TODO: Implement offline storage for license types if needed
-      return []; // Return empty list as a safe default
+      // Return cached license types from offline storage
+      return await _database.getLicenseTypes();
     }
     // Matches /assets/{id}/licenses
     final assetLicensesMatch = RegExp(r'^/assets/(\d+)/licenses$').firstMatch(path);
@@ -183,10 +193,16 @@ class EnhancedApiService {
       }
     }
 
-    // TODO: Add more specific path matching for other offline-supported GET requests
-    // For example, /generation/styles, /generation/styles/{style}, etc.
-    // if (path == '/generation/styles') { ... return map ... }
-    // if (RegExp(r'^/generation/styles/[\w-]+$').hasMatch(path)) { ... return map ... }
+    // Generation styles endpoints
+    if (path == '/generation/styles') {
+      return await _database.getGenerationStyles();
+    }
+
+    final styleDetailMatch = RegExp(r'^/generation/styles/[\w-]+$').firstMatch(path);
+    if (styleDetailMatch != null) {
+      final styleName = path.split('/').last;
+      return await _database.getGenerationStyleByName(styleName);
+    }
 
     return null; // Default if no specific offline handling is defined for the path
   }
@@ -267,7 +283,7 @@ class EnhancedApiService {
         queryParameters: {'skip': skip, 'limit': limit},
         options: _globalCacheOptions.copyWith(
           policy: CachePolicy.forceCache,
-          maxStale: _shortCacheDuration,
+          maxStale: Nullable(_shortCacheDuration),
         ).toOptions(),
       );
       
@@ -292,7 +308,7 @@ class EnhancedApiService {
         '/assets/$assetId',
         options: _globalCacheOptions.copyWith(
           policy: CachePolicy.forceCache,
-          maxStale: _cacheDuration,
+          maxStale: Nullable(_cacheDuration),
         ).toOptions(),
       );
       
@@ -377,7 +393,7 @@ class EnhancedApiService {
         queryParameters: {'skip': skip, 'limit': limit},
         options: _globalCacheOptions.copyWith(
           policy: CachePolicy.forceCache,
-          maxStale: _shortCacheDuration,
+          maxStale: Nullable(_shortCacheDuration),
         ).toOptions(),
       );
       
@@ -440,7 +456,7 @@ class EnhancedApiService {
     try {
       final response = await _dio.get('/organizations', options: _globalCacheOptions.copyWith(
         policy: CachePolicy.forceCache,
-        maxStale: _cacheDuration,
+        maxStale: Nullable(_cacheDuration),
       ).toOptions());
       final List<dynamic> data = response.data;
       return data.cast<Map<String, dynamic>>();
@@ -475,7 +491,7 @@ class EnhancedApiService {
     try {
       final response = await _dio.get('/license-types', options: _globalCacheOptions.copyWith(
         policy: CachePolicy.forceCache,
-        maxStale: _cacheDuration,
+        maxStale: Nullable(_cacheDuration),
       ).toOptions());
       final List<dynamic> data = response.data;
       return data.cast<Map<String, dynamic>>();
@@ -515,7 +531,7 @@ class EnhancedApiService {
     try {
       final response = await _dio.get('/generation/styles', options: _globalCacheOptions.copyWith(
         policy: CachePolicy.forceCache,
-        maxStale: _cacheDuration,
+        maxStale: Nullable(_cacheDuration),
       ).toOptions());
       return response.data;
     } catch (e) {
@@ -536,7 +552,7 @@ class EnhancedApiService {
         '/generation/styles/$style',
         options: _globalCacheOptions.copyWith(
           policy: CachePolicy.forceCache,
-          maxStale: _cacheDuration,
+          maxStale: Nullable(_cacheDuration),
         ).toOptions(),
       );
       return response.data;

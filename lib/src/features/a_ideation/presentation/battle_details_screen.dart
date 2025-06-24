@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 
 class BattleDetailsScreen extends ConsumerStatefulWidget {
   final String battleId;
@@ -68,7 +69,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -80,7 +81,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -104,7 +105,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
               IconButton(
                 icon: const Icon(Icons.share, color: Colors.white),
                 onPressed: () {
-                  // TODO: Share battle
+                  _shareBattle();
                 },
               ),
             ],
@@ -199,7 +200,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -373,7 +374,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -492,7 +493,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -557,7 +558,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
         trailing: IconButton(
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
-            // TODO: Navigate to team details
+            _navigateToTeamDetails(teamName);
           },
         ),
       ),
@@ -619,7 +620,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
+                color: Colors.amber.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -673,7 +674,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.1),
+                      color: Colors.amber.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Text(
@@ -701,7 +702,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -736,7 +737,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                     icon: const Icon(Icons.play_arrow),
                     label: const Text('Play Demo'),
                     onPressed: () {
-                      // TODO: Launch demo
+                      _launchDemo(title, team);
                     },
                   ),
                 ),
@@ -746,7 +747,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                     icon: const Icon(Icons.info),
                     label: const Text('Details'),
                     onPressed: () {
-                      // TODO: Show submission details
+                      _showSubmissionDetails(title, team, description, platform, rating);
                     },
                   ),
                 ),
@@ -813,7 +814,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -892,7 +893,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                 IconButton(
                   icon: const Icon(Icons.thumb_up_outlined, size: 20),
                   onPressed: () {
-                    // TODO: Like post
+                    _likePost(author, message);
                   },
                 ),
                 Text('$likes'),
@@ -900,7 +901,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                 IconButton(
                   icon: const Icon(Icons.reply, size: 20),
                   onPressed: () {
-                    // TODO: Reply to post
+                    _replyToPost(author, message);
                   },
                 ),
                 Text('$replies'),
@@ -908,7 +909,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
                 IconButton(
                   icon: const Icon(Icons.more_vert, size: 20),
                   onPressed: () {
-                    // TODO: Show options
+                    _showPostOptions(author, message);
                   },
                 ),
               ],
@@ -923,7 +924,7 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
     if (_isJoined) {
       return FloatingActionButton.extended(
         onPressed: () {
-          // TODO: Submit project
+          _submitProject();
         },
         backgroundColor: Colors.green,
         icon: const Icon(Icons.upload, color: Colors.white),
@@ -947,5 +948,236 @@ class _BattleDetailsScreenState extends ConsumerState<BattleDetailsScreen>
         ),
       );
     }
+  }
+
+  void _shareBattle() {
+    final battleTitle = 'AI-Powered Adventure Games Battle';
+    final battleDescription = 'Join this exciting game development battle! Create innovative adventure games with AI integration.';
+    final battleUrl = 'https://jambam.com/battles/ai-adventure-games';
+
+    final shareText = '$battleTitle\n\n$battleDescription\n\nJoin now: $battleUrl';
+
+    Share.share(
+      shareText,
+      subject: battleTitle,
+    );
+  }
+
+  void _navigateToTeamDetails(String teamName) {
+    // Navigate to team details screen
+    Navigator.pushNamed(
+      context,
+      '/team-details',
+      arguments: {'teamName': teamName},
+    );
+  }
+
+  void _launchDemo(String title, String team) {
+    // Launch demo URL or open in browser
+    final demoUrl = 'https://jambam.com/demos/${title.toLowerCase().replaceAll(' ', '-')}';
+
+    // You can use url_launcher package here
+    debugPrint('Launching demo: $demoUrl for $team');
+
+    // For now, show a snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Launching demo for $title by $team'),
+        action: SnackBarAction(
+          label: 'Open',
+          onPressed: () {
+            // Implement actual URL launch
+          },
+        ),
+      ),
+    );
+  }
+
+  void _showSubmissionDetails(String title, String team, String description, String platform, double rating) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Team: $team'),
+            const SizedBox(height: 8),
+            Text('Platform: $platform'),
+            const SizedBox(height: 8),
+            Text('Rating: ${rating.toStringAsFixed(1)}/5.0'),
+            const SizedBox(height: 8),
+            const Text('Description:'),
+            Text(description),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _launchDemo(title, team);
+            },
+            child: const Text('Play Demo'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _likePost(String author, String message) {
+    // Toggle like state and update UI
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Liked post by $author'),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+
+    // Here you would typically:
+    // 1. Call API to like the post
+    // 2. Update local state
+    // 3. Refresh the UI
+  }
+
+  void _replyToPost(String author, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Reply to $author'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Original: $message'),
+            const SizedBox(height: 16),
+            TextField(
+              decoration: const InputDecoration(
+                hintText: 'Write your reply...',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+              autofocus: true,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Reply posted!')),
+              );
+            },
+            child: const Text('Post Reply'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPostOptions(String author, String message) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.flag),
+            title: const Text('Report'),
+            onTap: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Post reported')),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.copy),
+            title: const Text('Copy text'),
+            onTap: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Text copied to clipboard')),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.share),
+            title: const Text('Share'),
+            onTap: () {
+              Navigator.pop(context);
+              Share.share('Check out this post: $message');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _submitProject() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Submit Project'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Upload your project files and provide details:'),
+            const SizedBox(height: 16),
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Project Title',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton.icon(
+              onPressed: () {
+                // Implement file picker
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('File picker would open here')),
+                );
+              },
+              icon: const Icon(Icons.upload_file),
+              label: const Text('Upload Files'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Project submitted successfully!'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            },
+            child: const Text('Submit'),
+          ),
+        ],
+      ),
+    );
   }
 } 

@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../domain/multi_agent_system.dart';
+import 'package:path/path.dart' as path;
 
 /// Interface für Engine-Adapter
 abstract class EngineAdapter {
@@ -26,9 +29,49 @@ class GodotEngineAdapter implements EngineAdapter {
 
   @override
   Future<bool> build(Map<String, dynamic> projectData) async {
-    // TODO: Echte Godot-CLI/API-Integration
-    await Future.delayed(const Duration(milliseconds: 300));
-    return true;
+    try {
+      // Real Godot CLI integration
+      final projectPath = projectData['projectPath'] as String? ?? '';
+      final godotPath = _findGodotExecutable();
+
+      if (godotPath == null) {
+        throw Exception('Godot executable not found. Please install Godot and add it to PATH.');
+      }
+
+      final result = await Process.run(
+        godotPath,
+        ['--headless', '--export', 'Windows Desktop', projectPath],
+        workingDirectory: path.dirname(projectPath),
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      debugPrint('Godot build error: $e');
+      return false;
+    }
+  }
+
+  String? _findGodotExecutable() {
+    // Common Godot installation paths
+    final possiblePaths = [
+      'godot', // If in PATH
+      'godot.exe', // Windows
+      '/usr/bin/godot', // Linux
+      '/usr/local/bin/godot', // macOS
+      'C:\\Program Files\\Godot\\Godot.exe', // Windows default
+    ];
+
+    for (final path in possiblePaths) {
+      try {
+        final result = Process.runSync('which', [path]);
+        if (result.exitCode == 0) {
+          return result.stdout.toString().trim();
+        }
+      } catch (e) {
+        // Continue to next path
+      }
+    }
+    return null;
   }
 
   @override
@@ -59,9 +102,67 @@ class UnityEngineAdapter implements EngineAdapter {
 
   @override
   Future<bool> build(Map<String, dynamic> projectData) async {
-    // TODO: Echte Unity-CLI/API-Integration
-    await Future.delayed(const Duration(milliseconds: 300));
-    return true;
+    try {
+      // Real Unity CLI integration
+      final projectPath = projectData['projectPath'] as String? ?? '';
+      final unityPath = _findUnityExecutable();
+
+      if (unityPath == null) {
+        throw Exception('Unity executable not found. Please install Unity Hub and Unity.');
+      }
+
+      final result = await Process.run(
+        unityPath,
+        [
+          '-batchmode',
+          '-quit',
+          '-projectPath', projectPath,
+          '-executeMethod', 'BuildScript.BuildGame',
+          '-logFile', 'unity_build.log',
+        ],
+        workingDirectory: path.dirname(projectPath),
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      debugPrint('Unity build error: $e');
+      return false;
+    }
+  }
+
+  String? _findUnityExecutable() {
+    // Common Unity installation paths
+    final possiblePaths = [
+      'Unity', // If in PATH
+      'Unity.exe', // Windows
+      '/Applications/Unity/Hub/Editor/*/Unity.app/Contents/MacOS/Unity', // macOS
+      '/opt/unity/editor/Unity', // Linux
+    ];
+
+    for (final path in possiblePaths) {
+      try {
+        if (path.contains('*')) {
+          // Handle wildcard paths
+          final dir = Directory(path.substring(0, path.lastIndexOf('*')));
+          if (dir.existsSync()) {
+            final files = dir.listSync();
+            for (final file in files) {
+              if (file.path.contains('Unity') && file.path.endsWith('Unity')) {
+                return file.path;
+              }
+            }
+          }
+        } else {
+          final result = Process.runSync('which', [path]);
+          if (result.exitCode == 0) {
+            return result.stdout.toString().trim();
+          }
+        }
+      } catch (e) {
+        // Continue to next path
+      }
+    }
+    return null;
   }
 
   @override
@@ -92,9 +193,28 @@ class BevyEngineAdapter implements EngineAdapter {
 
   @override
   Future<bool> build(Map<String, dynamic> projectData) async {
-    // TODO: Echte Bevy-Build-Integration
-    await Future.delayed(const Duration(milliseconds: 300));
-    return true;
+    try {
+      // Real Bevy build integration
+      final projectPath = projectData['projectPath'] as String? ?? '';
+
+      // Check if Cargo is available
+      final cargoResult = await Process.run('cargo', ['--version']);
+      if (cargoResult.exitCode != 0) {
+        throw Exception('Cargo not found. Please install Rust and Cargo.');
+      }
+
+      // Build the Bevy project
+      final result = await Process.run(
+        'cargo',
+        ['build', '--release'],
+        workingDirectory: projectPath,
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      debugPrint('Bevy build error: $e');
+      return false;
+    }
   }
 
   @override
@@ -125,9 +245,68 @@ class UnrealEngineAdapter implements EngineAdapter {
 
   @override
   Future<bool> build(Map<String, dynamic> projectData) async {
-    // TODO: Echte Unreal-CLI/API-Integration
-    await Future.delayed(const Duration(milliseconds: 300));
-    return true;
+    try {
+      // Real Unreal CLI integration
+      final projectPath = projectData['projectPath'] as String? ?? '';
+      final unrealPath = _findUnrealExecutable();
+
+      if (unrealPath == null) {
+        throw Exception('Unreal Engine executable not found. Please install Unreal Engine.');
+      }
+
+      final result = await Process.run(
+        unrealPath,
+        [
+          projectPath,
+          '-run=Cook',
+          '-TargetPlatform=Windows',
+          '-NoLogTimes',
+          '-Unversioned',
+          '-Compressed',
+        ],
+        workingDirectory: path.dirname(projectPath),
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      debugPrint('Unreal build error: $e');
+      return false;
+    }
+  }
+
+  String? _findUnrealExecutable() {
+    // Common Unreal Engine installation paths
+    final possiblePaths = [
+      'UnrealEditor', // If in PATH
+      'UnrealEditor.exe', // Windows
+      '/Applications/Epic Games/UE_*/Engine/Binaries/Mac/UnrealEditor', // macOS
+      '/opt/UnrealEngine/Engine/Binaries/Linux/UnrealEditor', // Linux
+    ];
+
+    for (final path in possiblePaths) {
+      try {
+        if (path.contains('*')) {
+          // Handle wildcard paths
+          final dir = Directory(path.substring(0, path.lastIndexOf('*')));
+          if (dir.existsSync()) {
+            final files = dir.listSync();
+            for (final file in files) {
+              if (file.path.contains('UE_') && file.path.contains('UnrealEditor')) {
+                return file.path;
+              }
+            }
+          }
+        } else {
+          final result = Process.runSync('which', [path]);
+          if (result.exitCode == 0) {
+            return result.stdout.toString().trim();
+          }
+        }
+      } catch (e) {
+        // Continue to next path
+      }
+    }
+    return null;
   }
 
   @override
@@ -207,7 +386,7 @@ class GameEngineAgentService {
         body: jsonEncode({
           'engine': engine,
           'assets': assets.map((a) => a.id).toList(),
-          'design': design, // ggf. toJson()
+          'design': design.toJson(),
           'engine_config': engineConfig ?? {},
         }),
       );
@@ -215,11 +394,17 @@ class GameEngineAgentService {
         final data = jsonDecode(response.body);
         return _parseIntegrationResult(data);
       } else {
-        throw Exception('Failed to import to engine: {response.statusCode}');
+        throw Exception('Failed to import to engine: ${response.statusCode}');
       }
     } catch (e) {
-      // Fallback: Mock
-      return _createMockIntegrationResult(engine, assets, design);
+      return EngineIntegrationResult(
+        engine: engine,
+        success: false,
+        importedAssets: [],
+        sceneCount: 0,
+        warnings: ['Import failed: $e'],
+        logs: [e.toString()],
+      );
     }
   }
 
@@ -236,7 +421,7 @@ class GameEngineAgentService {
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
         body: jsonEncode({
           'engine': engine,
-          'design': design, // ggf. toJson()
+          'design': design.toJson(),
           'assets': assets.map((a) => a.id).toList(),
           'code_options': codeOptions ?? {},
         }),
@@ -245,7 +430,7 @@ class GameEngineAgentService {
         final data = jsonDecode(response.body);
         return _parseCodeResult(data);
       } else {
-        throw Exception('Failed to generate engine code: {response.statusCode}');
+        throw Exception('Failed to generate engine code: ${response.statusCode}');
       }
     } catch (e) {
       // Fallback: Mock
@@ -273,7 +458,7 @@ class GameEngineAgentService {
         final data = jsonDecode(response.body);
         return _parseBuildResult(data);
       } else {
-        throw Exception('Failed to build/export: {response.statusCode}');
+        throw Exception('Failed to build/export: ${response.statusCode}');
       }
     } catch (e) {
       // Fallback: Mock
@@ -283,20 +468,31 @@ class GameEngineAgentService {
 
   // --- Mock & Parser Implementierungen ---
 
-  EngineIntegrationResult _createMockIntegrationResult(String engine, List<GeneratedAsset> assets, GameDesignDocument design) {
-    return EngineIntegrationResult(
-      engine: engine,
-      success: true,
-      importedAssets: assets.map((a) => a.id).toList(),
-      sceneCount: 3,
-      warnings: [],
-      logs: ['Mock import successful'],
-    );
+  Future<Map<String, dynamic>> _createMockIntegrationResult(
+    String engineName,
+    String projectPath,
+    List<GeneratedAsset> assets,
+    GameDesignDocument? designDoc,
+  ) async {
+    return {
+      'engine': engineName,
+      'projectPath': projectPath,
+      'assets': assets.map((asset) => {
+        'id': asset.id,
+        'name': asset.name,
+        'type': asset.type.toString(),
+        'fileUrl': asset.fileUrl,
+        'quality': asset.quality,
+      }).toList(),
+      'designDocument': designDoc?.toJson(),
+      'integrationStatus': 'success',
+      'timestamp': DateTime.now().toIso8601String(),
+    };
   }
 
   EngineIntegrationResult _parseIntegrationResult(Map<String, dynamic> data) {
     return EngineIntegrationResult(
-      engine: data['engine'] ?? 'unknown',
+      engine: data['engine'] ?? '',
       success: data['success'] ?? false,
       importedAssets: List<String>.from(data['imported_assets'] ?? []),
       sceneCount: data['scene_count'] ?? 0,
