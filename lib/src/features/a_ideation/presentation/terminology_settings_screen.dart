@@ -67,7 +67,7 @@ class TerminologySettingsScreen extends ConsumerWidget {
                     Text(
                       'Customize the app language and terminology to match your preferences',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withAlpha((255 * 0.9).round()),
                         fontSize: 16,
                       ),
                     ),
@@ -163,7 +163,7 @@ class TerminologySettingsScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(icon, color: color, size: 24),
@@ -215,16 +215,16 @@ class TerminologySettingsScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? color : Colors.grey.withOpacity(0.3),
+          color: isSelected ? color : Colors.grey.withAlpha((255 * 0.3).round()),
           width: isSelected ? 2 : 1,
         ),
-        color: isSelected ? color.withOpacity(0.1) : Colors.transparent,
+        color: isSelected ? color.withAlpha((255 * 0.1).round()) : Colors.transparent,
       ),
       child: ListTile(
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -261,10 +261,10 @@ class TerminologySettingsScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? Colors.purple : Colors.grey.withOpacity(0.3),
+          color: isSelected ? Colors.purple : Colors.grey.withAlpha((255 * 0.3).round()),
           width: isSelected ? 2 : 1,
         ),
-        color: isSelected ? Colors.purple.withOpacity(0.1) : Colors.transparent,
+        color: isSelected ? Colors.purple.withAlpha((255 * 0.1).round()) : Colors.transparent,
       ),
       child: ListTile(
         leading: Text(
@@ -303,7 +303,7 @@ class TerminologySettingsScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
+                    color: Colors.orange.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.preview, color: Colors.orange, size: 24),
@@ -324,7 +324,7 @@ class TerminologySettingsScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                 border: Border.all(color: Colors.grey.withAlpha((255 * 0.3).round())),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,7 +399,7 @@ class TerminologySettingsScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.info, color: Colors.grey, size: 24),
