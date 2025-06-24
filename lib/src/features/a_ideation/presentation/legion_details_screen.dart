@@ -19,7 +19,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   bool _isMember = false;
-  bool _isAdmin = false;
+  final bool _isAdmin = false;
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withAlpha((255 * 0.1).round()),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -80,7 +80,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withAlpha((255 * 0.1).round()),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -282,7 +282,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withAlpha((255 * 0.2).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -323,7 +323,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withAlpha((255 * 0.8).round()),
             fontSize: 12,
           ),
         ),
@@ -384,7 +384,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress,
-            backgroundColor: Colors.grey.withOpacity(0.3),
+            backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
             valueColor: AlwaysStoppedAnimation<Color>(color),
             minHeight: 8,
           ),
@@ -417,7 +417,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.amber.withOpacity(0.1),
+                    color: Colors.amber.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -452,7 +452,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(Icons.person, color: color, size: 20),
@@ -479,7 +479,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withAlpha((255 * 0.1).round()),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -528,7 +528,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isCurrent ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
+        color: isCurrent ? color.withAlpha((255 * 0.1).round()) : Colors.grey.withAlpha((255 * 0.05).round()),
         borderRadius: BorderRadius.circular(8),
         border: isCurrent ? Border.all(color: color, width: 2) : null,
       ),
@@ -596,7 +596,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.indigo.withOpacity(0.1),
+                    color: Colors.indigo.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -612,7 +612,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: 0.75,
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.indigo),
               minHeight: 12,
             ),
@@ -893,7 +893,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.1),
+                color: Colors.indigo.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1059,7 +1059,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.indigo.withOpacity(0.1),
+                color: Colors.indigo.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -1113,7 +1113,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -1133,7 +1133,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: Colors.blue.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -1280,7 +1280,7 @@ class _LegionDetailsScreenState extends ConsumerState<LegionDetailsScreen>
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+                color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: color, size: 20),

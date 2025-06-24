@@ -167,7 +167,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
         Text(
           label,
           style: TextStyle(
-            color: color.withOpacity(0.8),
+            color: color.withAlpha((255 * 0.8).round()),
             fontSize: 12,
           ),
         ),
@@ -203,7 +203,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.1),
+                    color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -250,16 +250,16 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withAlpha((255 * 0.2).round()),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -286,7 +286,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: int.parse(progress.replaceAll('%', '')) / 100,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                   minHeight: 4,
                 ),
@@ -383,9 +383,9 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Column(
         children: [
@@ -582,7 +582,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -608,7 +608,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
         leading: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withAlpha((255 * 0.1).round()),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -620,7 +620,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: _getStatusColor(status).withOpacity(0.1),
+                color: _getStatusColor(status).withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -728,7 +728,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -760,7 +760,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(Icons.build, color: color, size: 20),
@@ -790,7 +790,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.1).round()),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -815,7 +815,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             const SizedBox(height: 12),
             LinearProgressIndicator(
               value: int.parse(progress.replaceAll('%', '')) / 100,
-              backgroundColor: Colors.grey.withOpacity(0.3),
+              backgroundColor: Colors.grey.withAlpha((255 * 0.3).round()),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 6,
             ),
@@ -887,7 +887,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+        color: Colors.deepPurple.withAlpha((255 * 0.1).round()),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -956,9 +956,9 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1078,7 +1078,7 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+                    color: color.withAlpha((255 * 0.2).round()),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -1141,9 +1141,9 @@ class _LabsScreenState extends ConsumerState<LabsScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha((255 * 0.1).round()),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha((255 * 0.3).round())),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
