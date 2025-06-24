@@ -146,17 +146,49 @@ class EnhancedApiService {
     return 4;
   }
 
-  Future<Map<String, dynamic>?> _getOfflineData(String path) async {
+  Future<dynamic> _getOfflineData(String path) async {
     // Get data from offline database based on path
-    if (path.contains('/assets')) {
-      return await _getOfflineAssets();
-    }
-    return null;
-  }
+    // IMPORTANT: This method must return data in the exact shape the original method expects for response.data
 
-  Future<Map<String, dynamic>?> _getOfflineAssets() async {
-    final assets = await _database.getAssets(isPublic: true, limit: 20);
-    return {'data': assets};
+    // Endpoints returning List<Map<String, dynamic>>
+    if (path == '/assets' || path == '/marketplace') {
+      // TODO: Differentiate marketplace if its offline source is different
+      return await _database.getAssets(isPublic: true, limit: 20);
+    }
+    if (path == '/organizations') {
+      // TODO: Implement offline storage for organizations if needed
+      return []; // Return empty list as a safe default
+    }
+    if (path == '/license-types') {
+      // TODO: Implement offline storage for license types if needed
+      return []; // Return empty list as a safe default
+    }
+    // Matches /assets/{id}/licenses
+    final assetLicensesMatch = RegExp(r'^/assets/(\d+)/licenses$').firstMatch(path);
+    if (assetLicensesMatch != null) {
+      final assetId = int.tryParse(assetLicensesMatch.group(1)!);
+      if (assetId != null) {
+        return await _database.getLicenses(assetId: assetId);
+      }
+      return []; // Return empty list if ID parsing fails
+    }
+
+    // Endpoints returning Map<String, dynamic>
+    // Matches /assets/{id}
+    final assetDetailMatch = RegExp(r'^/assets/(\d+)$').firstMatch(path);
+    if (assetDetailMatch != null) {
+      final assetId = int.tryParse(assetDetailMatch.group(1)!);
+      if (assetId != null) {
+        return await _database.getAssetById(assetId); // This should return Map<String, dynamic>?
+      }
+    }
+
+    // TODO: Add more specific path matching for other offline-supported GET requests
+    // For example, /generation/styles, /generation/styles/{style}, etc.
+    // if (path == '/generation/styles') { ... return map ... }
+    // if (RegExp(r'^/generation/styles/[\w-]+$').hasMatch(path)) { ... return map ... }
+
+    return null; // Default if no specific offline handling is defined for the path
   }
 
   // ===== ASSET GENERATION =====
