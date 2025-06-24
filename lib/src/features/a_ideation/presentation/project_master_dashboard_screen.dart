@@ -255,7 +255,7 @@ class _ProjectMasterDashboardScreenState extends ConsumerState<ProjectMasterDash
 
     try {
       // Invalidate the provider to refetch data
-      await ref.refresh(currentProjectProvider.future);
+      final _ = await ref.refresh(currentProjectProvider.future);
       if (mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(

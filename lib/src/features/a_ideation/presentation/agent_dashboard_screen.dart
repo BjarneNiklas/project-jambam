@@ -23,7 +23,6 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
   String? _currentWorkflowId;
   domain.WorkflowStatus? _workflowStatus;
   domain.ProjectMasterAgent? _currentProject;
-  bool _isStartingWorkflow = false;
 
   @override
   void initState() {
@@ -604,10 +603,6 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
   }
 
   Future<void> _startWorkflow() async {
-    setState(() {
-      _isStartingWorkflow = true;
-    });
-
     try {
       // Start the actual workflow orchestration using the correct method
       final result = await _orchestrator.startGameDevelopmentWorkflow(
@@ -658,9 +653,8 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen>
         );
       }
     } finally {
-      setState(() {
-        _isStartingWorkflow = false;
-      });
+      // The _isStartingWorkflow flag and its corresponding setState calls were removed.
+      // Nothing else to do in this finally block for now.
     }
   }
 
