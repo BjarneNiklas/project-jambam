@@ -22,7 +22,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
   bool _showUsageStats = true;
   bool _showSourceIcons = true;
   bool _isEditing = false;
-  Set<String> _selectedTags = {};
+  final Set<String> _selectedTags = {};
   
   // Quick add
   final TextEditingController _quickAddController = TextEditingController();
@@ -162,7 +162,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -256,7 +256,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -385,7 +385,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
           Icon(
             _getCategoryIcon(category),
             size: 64,
-            color: _getCategoryColor(category).withOpacity(0.5),
+            color: _getCategoryColor(category).withAlpha((0.5 * 255).round()),
           ),
           const SizedBox(height: 16),
           Text(
@@ -404,7 +404,7 @@ class _EnhancedContentFilterScreenState extends ConsumerState<EnhancedContentFil
 
   Widget _buildTagIcon(ContentTag tag) {
     return CircleAvatar(
-      backgroundColor: _getCategoryColor(tag.category).withOpacity(0.2),
+      backgroundColor: _getCategoryColor(tag.category).withAlpha((0.2 * 255).round()),
       child: Icon(
         _getSourceIcon(tag.source),
         color: _getCategoryColor(tag.category),
