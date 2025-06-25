@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'terminology_config.dart';
+import 'dart:developer';
 
 class ArenaScreen extends ConsumerStatefulWidget {
   const ArenaScreen({super.key});
@@ -64,7 +65,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.notifications, color: Colors.blue),
             onPressed: () {
               // Placeholder: Show arena notifications
-              print("Navigate to Arena Notifications");
+              log("Navigate to Arena Notifications");
             },
           ),
         ],
@@ -496,7 +497,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               // Placeholder: Navigate to battle details
-              print("Navigate to Battle Details");
+              log("Navigate to Battle Details");
             },
           ),
         ),
@@ -531,7 +532,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
             // Placeholder: Navigate to trending content
-            print("Navigate to Trending Content");
+            log("Navigate to Trending Content");
           },
         ),
       ),
@@ -580,7 +581,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               // Placeholder: Navigate to champion profile
-              print("Navigate to Champion Profile for $name");
+              log("Navigate to Champion Profile for $name");
             },
           ),
         ),
@@ -641,7 +642,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
             // Placeholder: Navigate to discussion
-            print("Navigate to Discussion: $title");
+            log("Navigate to Discussion: $title");
           },
         ),
       ),
@@ -698,7 +699,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               // Placeholder: Navigate to legion details
-              print("Navigate to Legion Details for $name");
+              log("Navigate to Legion Details for $name");
             },
           ),
         ),
@@ -760,7 +761,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to create jam
-                print("Navigate to Create Jam");
+                log("Navigate to Create Jam");
               },
             ),
             ListTile(
@@ -769,7 +770,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to join legion
-                print("Navigate to Join Legion");
+                log("Navigate to Join Legion");
               },
             ),
             ListTile(
@@ -778,7 +779,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to form squad
-                print("Navigate to Form Squad");
+                log("Navigate to Form Squad");
               },
             ),
             ListTile(
@@ -787,7 +788,7 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
               onTap: () {
                 Navigator.pop(context);
                 // Placeholder: Navigate to start discussion
-                print("Navigate to Start Discussion");
+                log("Navigate to Start Discussion");
               },
             ),
           ],

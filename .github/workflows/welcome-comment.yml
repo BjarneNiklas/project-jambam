@@ -1,0 +1,20 @@
+name: Welcome new issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Willkommen im JamBam Board! 🎉\n\nDanke für deinen Beitrag. Das Team prüft dein Issue und meldet sich zeitnah."
+            }) 

@@ -1,0 +1,16 @@
+name: Mark stale issues
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: 'Dieses Issue ist seit 30 Tagen inaktiv. Bitte prüfe, ob es noch relevant ist oder gib ein Update!'
+          days-before-stale: 30
+          days-before-close: -1  # Nie automatisch schließen

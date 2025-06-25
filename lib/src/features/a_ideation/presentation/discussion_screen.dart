@@ -10,7 +10,7 @@ class _DiscussionData {
   final int replies;
   final int views;
   final bool isPinned;
-  bool isLiked; // Added for like functionality
+  bool isLiked; // Keep the property but remove from constructor
 
   _DiscussionData({
     required this.title,
@@ -21,8 +21,7 @@ class _DiscussionData {
     required this.replies,
     required this.views,
     required this.isPinned,
-    this.isLiked = false,
-  });
+  }) : isLiked = false; // Set default value in initializer list
 }
 
 class _MyTopicData {
@@ -287,7 +286,6 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                 discussion.replies,
                 discussion.views,
                 discussion.isPinned,
-                discussion.isLiked, // Pass liked state
                 () { // Callback for liking
                   setState(() {
                     discussion.isLiked = !discussion.isLiked;
@@ -400,7 +398,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
     );
   }
 
-  Widget _buildDiscussionCard(String title, String author, String category, String time, int likes, int replies, int views, bool isPinned, bool isLiked, VoidCallback onLikePressed) {
+  Widget _buildDiscussionCard(String title, String author, String category, String time, int likes, int replies, int views, bool isPinned, VoidCallback onLikePressed) {
     // The 'likes' count will come directly from the discussion data.
     // The 'isLiked' state will control the icon.
     // Actual increment/decrement of 'likes' would be a backend operation.
@@ -436,13 +434,13 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getCategoryColor(topic.category).withAlpha(25),
+                    color: _getCategoryColor(category).withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    topic.category,
+                    category,
                     style: TextStyle(
-                      color: _getCategoryColor(topic.category),
+                      color: _getCategoryColor(category),
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -496,9 +494,9 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
               children: [
                 IconButton(
                   icon: Icon(
-                    isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
+                    Icons.thumb_up,
                     size: 20,
-                    color: isLiked ? Colors.green : null,
+                    color: Colors.grey[600],
                   ),
                   onPressed: onLikePressed,
                 ),
@@ -705,13 +703,13 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getCategoryColor(category).withAlpha(25),
+                    color: _getCategoryColor(topic.category).withAlpha(25),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    category,
+                    topic.category,
                     style: TextStyle(
-                      color: _getCategoryColor(category),
+                      color: _getCategoryColor(topic.category),
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),

@@ -1,0 +1,266 @@
+name: Phase Automation & Project Board Management
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+  pull_request:
+    types: [opened, edited, labeled, unlabeled]
+
+jobs:
+  phase-automation:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID_SECRET: ${{ secrets.PROJECT_ID }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run with Project ID
+        if: env.PROJECT_ID_SECRET != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ID: ${{ env.PROJECT_ID_SECRET }}
+        run: |
+          echo "✅ PROJECT_ID is configured. Running with project board integration."
+          python .github/scripts/phase_automation.py
+
+      - name: Run without Project ID
+        if: env.PROJECT_ID_SECRET == ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "⚠️  PROJECT_ID not set. Running without project board integration."
+          python .github/scripts/phase_automation.py
+
+  auto-assign-issues:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    steps:
+      - name: Auto-assign based on labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+            
+            // Auto-assign based on module labels
+            const moduleAssignments = {
+              'module-ai': ['revor'], // Replace with actual usernames
+              'module-community': ['revor'],
+              'module-battle': ['revor'],
+              'module-assets': ['revor'],
+              'module-academy': ['revor'],
+              'module-workflow': ['revor'],
+              'module-security': ['revor'],
+              'module-business': ['revor']
+            };
+            
+            // Auto-assign based on phase labels
+            const phaseAssignments = {
+              'phase-1-kickoff': ['revor'],
+              'phase-2-ideation': ['revor'],
+              'phase-3-mvp': ['revor'],
+              'phase-4-masterthesis': ['revor'],
+              'phase-5-alpha': ['revor'],
+              'phase-6-beta': ['revor'],
+              'phase-7-launch': ['revor'],
+              'phase-8-growth': ['revor'],
+              'phase-9-future': ['revor']
+            };
+            
+            let assignees = [];
+            
+            // Check module labels
+            for (const label of labels) {
+              if (moduleAssignments[label]) {
+                assignees = assignees.concat(moduleAssignments[label]);
+              }
+              if (phaseAssignments[label]) {
+                assignees = assignees.concat(phaseAssignments[label]);
+              }
+            }
+            
+            // Remove duplicates
+            assignees = [...new Set(assignees)];
+            
+            if (assignees.length > 0) {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                assignees: assignees
+              });
+            }
+
+  welcome-comment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    steps:
+      - name: Welcome comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+            let welcomeMessage = "## 👋 Welcome to JamBam Platform Development!\n\n" +
+              "Thank you for contributing to the JamBam platform! This issue has been automatically processed and categorized.\n\n";
+            // Add phase information
+            const phaseLabels = labels.filter(l => l.startsWith('phase-'));
+            if (phaseLabels.length > 0) {
+              welcomeMessage += "### 📅 Phase Information\nThis issue is part of: " + phaseLabels.map(l => "`" + l + "`").join(', ') + "\n\n";
+            }
+            // Add module information
+            const moduleLabels = labels.filter(l => l.startsWith('module-'));
+            if (moduleLabels.length > 0) {
+              welcomeMessage += "### 🏗️ Module Information\nThis issue relates to: " + moduleLabels.map(l => "`" + l + "`").join(', ') + "\n\n";
+            }
+            // Add priority information
+            const priorityLabels = labels.filter(l => l.startsWith('priority-'));
+            if (priorityLabels.length > 0) {
+              welcomeMessage += "### ⚡ Priority\nPriority level: " + priorityLabels.map(l => "`" + l + "`").join(', ') + "\n\n";
+            }
+            // Add type information
+            const typeLabels = labels.filter(l => l.startsWith('type-'));
+            if (typeLabels.length > 0) {
+              welcomeMessage += "### 📋 Issue Type\nType: " + typeLabels.map(l => "`" + l + "`").join(', ') + "\n\n";
+            }
+            welcomeMessage += "### 📚 Useful Resources\n" +
+              "- [Phase Roadmap](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/blob/main/docs/development/phases_roadmap.md)\n" +
+              "- [Contributing Guidelines](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/blob/main/CONTRIBUTING.md)\n" +
+              "- [Project Documentation](https://github.com/" + context.repo.owner + "/" + context.repo.repo + "/tree/main/docs)\n\n" +
+              "### 🎯 Next Steps\n" +
+              "1. Review the issue description and requirements\n" +
+              "2. Check the assigned phase and module labels\n" +
+              "3. Update the issue with additional context if needed\n" +
+              "4. Start working on the implementation\n\n" +
+              "Happy coding! 🚀";
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: welcomeMessage
+            });
+
+  label-suggestions:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    steps:
+      - name: Suggest labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            const body = issue.body ? issue.body.toLowerCase() : '';
+            const content = title + ' ' + body;
+            
+            const suggestions = [];
+            
+            // Phase suggestions based on content
+            if (content.includes('kickoff') || content.includes('setup') || content.includes('foundation')) {
+              suggestions.push('phase-1-kickoff');
+            }
+            if (content.includes('research') || content.includes('ideation') || content.includes('market')) {
+              suggestions.push('phase-2-ideation');
+            }
+            if (content.includes('mvp') || content.includes('minimum') || content.includes('core')) {
+              suggestions.push('phase-3-mvp');
+            }
+            if (content.includes('thesis') || content.includes('academic') || content.includes('research')) {
+              suggestions.push('phase-4-masterthesis');
+            }
+            if (content.includes('alpha') || content.includes('testing') || content.includes('internal')) {
+              suggestions.push('phase-5-alpha');
+            }
+            if (content.includes('beta') || content.includes('external') || content.includes('user feedback')) {
+              suggestions.push('phase-6-beta');
+            }
+            if (content.includes('launch') || content.includes('public') || content.includes('release')) {
+              suggestions.push('phase-7-launch');
+            }
+            if (content.includes('growth') || content.includes('scaling') || content.includes('expansion')) {
+              suggestions.push('phase-8-growth');
+            }
+            if (content.includes('future') || content.includes('innovation') || content.includes('vision')) {
+              suggestions.push('phase-9-future');
+            }
+            
+            // Module suggestions
+            if (content.includes('ai') || content.includes('agent') || content.includes('intelligence')) {
+              suggestions.push('module-ai');
+            }
+            if (content.includes('community') || content.includes('squad') || content.includes('legion')) {
+              suggestions.push('module-community');
+            }
+            if (content.includes('battle') || content.includes('competition') || content.includes('game')) {
+              suggestions.push('module-battle');
+            }
+            if (content.includes('asset') || content.includes('content') || content.includes('generation')) {
+              suggestions.push('module-assets');
+            }
+            if (content.includes('academy') || content.includes('lab') || content.includes('learning')) {
+              suggestions.push('module-academy');
+            }
+            if (content.includes('workflow') || content.includes('integration') || content.includes('api')) {
+              suggestions.push('module-workflow');
+            }
+            if (content.includes('security') || content.includes('compliance') || content.includes('gdpr')) {
+              suggestions.push('module-security');
+            }
+            if (content.includes('business') || content.includes('pro') || content.includes('premium')) {
+              suggestions.push('module-business');
+            }
+            
+            // Type suggestions
+            if (content.includes('bug') || content.includes('fix') || content.includes('error')) {
+              suggestions.push('type-bug');
+            }
+            if (content.includes('feature') || content.includes('new') || content.includes('add')) {
+              suggestions.push('type-feature');
+            }
+            if (content.includes('enhancement') || content.includes('improve') || content.includes('optimize')) {
+              suggestions.push('type-enhancement');
+            }
+            if (content.includes('documentation') || content.includes('doc') || content.includes('guide')) {
+              suggestions.push('type-documentation');
+            }
+            
+            // Priority suggestions
+            if (content.includes('critical') || content.includes('urgent') || content.includes('blocker')) {
+              suggestions.push('priority-critical');
+            }
+            if (content.includes('high') || content.includes('important')) {
+              suggestions.push('priority-high');
+            }
+            if (content.includes('medium') || content.includes('normal')) {
+              suggestions.push('priority-medium');
+            }
+            if (content.includes('low') || content.includes('nice to have')) {
+              suggestions.push('priority-low');
+            }
+            
+            // Remove duplicates
+            const uniqueSuggestions = [...new Set(suggestions)];
+            
+            if (uniqueSuggestions.length > 0) {
+              const suggestionMessage = "## 🏷️ Label Suggestions\n\n" +
+                "Based on the issue content, consider adding these labels:\n" +
+                uniqueSuggestions.map(s => "- `" + s + "`").join("\n") +
+                "\n\nTo add labels, edit the issue and select from the labels dropdown.";
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: suggestionMessage
+              });
+            } 

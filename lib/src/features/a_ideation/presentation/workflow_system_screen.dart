@@ -26,51 +26,259 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
     super.dispose();
   }
 
-  // Placeholder methods for TODO actions
-  void _createNewWorkflow() {
-    _logger.info('Placeholder: Create new workflow tapped. Navigate to CreateWorkflowScreen or show dialog.');
-    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWorkflowScreen()));
+  // Modern workflow actions management system
+  Widget _buildWorkflowActionsPanel() {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Workflow Actions',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: _showAddActionDialog,
+                  tooltip: 'Add New Action',
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildWorkflowActionsList(),
+          ],
+        ),
+      ),
+    );
   }
 
-  void _navigateToWorkflowAnalytics() {
-    _logger.info('Placeholder: Workflow analytics tapped. Navigate to WorkflowAnalyticsScreen or switch to Analytics tab.');
-    // Example: _tabController.animateTo(3); // Assuming Analytics is the 4th tab (index 3)
+  Widget _buildWorkflowActionsList() {
+    return Column(
+      children: [
+        for (int i = 0; i < _workflowActions.length; i++)
+          _buildWorkflowActionItem(_workflowActions[i], i),
+      ],
+    );
   }
 
-  void _viewWorkflow(String workflowName) {
-    _logger.info('Placeholder: View workflow tapped for "$workflowName". Navigate to WorkflowDetailScreen.');
-    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => WorkflowDetailScreen(workflowName: workflowName)));
+  Widget _buildWorkflowActionItem(_WorkflowAction action, int index) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: _getActionTypeColor(action.type),
+          child: Icon(
+            _getActionTypeIcon(action.type),
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+        title: Text(
+          action.name,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(action.description),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: _getActionTypeColor(action.type).withAlpha(25),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    action.type.name.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: _getActionTypeColor(action.type),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.schedule,
+                  size: 12,
+                  color: Colors.grey[600],
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '${action.estimatedDuration}min',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit, size: 20),
+              onPressed: () => _showEditActionDialog(action, index),
+              tooltip: 'Edit Action',
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete, size: 20),
+              onPressed: () => _showDeleteActionDialog(index),
+              tooltip: 'Delete Action',
+            ),
+            ReorderableDragStartListener(
+              index: index,
+              child: const Icon(Icons.drag_handle, size: 20),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  void _manageWorkflow(String workflowName) {
-    _logger.info('Placeholder: Manage workflow tapped for "$workflowName". Navigate to ManageWorkflowScreen.');
-    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => ManageWorkflowScreen(workflowName: workflowName)));
+  void _showAddActionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => _WorkflowActionDialog(
+        onSave: (action) {
+          setState(() {
+            _workflowActions.add(action);
+          });
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 
-  void _useWorkflowTemplate(String templateName) {
-    _logger.info('Placeholder: Use template tapped for "$templateName". Create a new workflow using this template.');
-    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWorkflowScreen(template: templateName)));
+  void _showEditActionDialog(_WorkflowAction action, int index) {
+    showDialog(
+      context: context,
+      builder: (context) => _WorkflowActionDialog(
+        action: action,
+        onSave: (updatedAction) {
+          setState(() {
+            _workflowActions[index] = updatedAction;
+          });
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 
-  void _filterTasksByStatus(String? status) {
-    _logger.info('Placeholder: Filter tasks by status: $status');
-    // Add actual filtering logic here
+  void _showDeleteActionDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Action'),
+        content: Text('Are you sure you want to delete "${_workflowActions[index].name}"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _workflowActions.removeAt(index);
+              });
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
   }
 
-  void _filterTasksByAssignee(String? assignee) {
-    _logger.info('Placeholder: Filter tasks by assignee: $assignee');
-    // Add actual filtering logic here
+  Color _getActionTypeColor(ActionType type) {
+    switch (type) {
+      case ActionType.development:
+        return Colors.blue;
+      case ActionType.design:
+        return Colors.purple;
+      case ActionType.testing:
+        return Colors.orange;
+      case ActionType.deployment:
+        return Colors.green;
+      case ActionType.documentation:
+        return Colors.teal;
+    }
   }
 
-  void _toggleAutomationRule(String ruleName, bool newValue) {
-    _logger.info('Placeholder: Toggle automation rule "$ruleName" to $newValue.');
-    // Add logic to update automation rule state
+  IconData _getActionTypeIcon(ActionType type) {
+    switch (type) {
+      case ActionType.development:
+        return Icons.code;
+      case ActionType.design:
+        return Icons.design_services;
+      case ActionType.testing:
+        return Icons.bug_report;
+      case ActionType.deployment:
+        return Icons.rocket_launch;
+      case ActionType.documentation:
+        return Icons.description;
+    }
   }
 
-  void _toggleAutomationTrigger(String triggerName, bool newValue) {
-    _logger.info('Placeholder: Toggle automation trigger "$triggerName" to $newValue.');
-    // Add logic to update automation trigger state
-  }
+  // Workflow action data model
+  final List<_WorkflowAction> _workflowActions = [
+    _WorkflowAction(
+      name: 'Code Review',
+      description: 'Review pull requests and provide feedback',
+      type: ActionType.development,
+      estimatedDuration: 30,
+      assignee: 'Team Lead',
+      priority: 'High',
+    ),
+    _WorkflowAction(
+      name: 'UI Design Review',
+      description: 'Review and approve UI/UX designs',
+      type: ActionType.design,
+      estimatedDuration: 45,
+      assignee: 'Design Lead',
+      priority: 'Medium',
+    ),
+    _WorkflowAction(
+      name: 'Integration Testing',
+      description: 'Run integration tests for new features',
+      type: ActionType.testing,
+      estimatedDuration: 60,
+      assignee: 'QA Engineer',
+      priority: 'High',
+    ),
+    _WorkflowAction(
+      name: 'Deploy to Staging',
+      description: 'Deploy latest changes to staging environment',
+      type: ActionType.deployment,
+      estimatedDuration: 20,
+      assignee: 'DevOps Engineer',
+      priority: 'Medium',
+    ),
+    _WorkflowAction(
+      name: 'Update Documentation',
+      description: 'Update API and user documentation',
+      type: ActionType.documentation,
+      estimatedDuration: 40,
+      assignee: 'Technical Writer',
+      priority: 'Low',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +330,8 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildWorkflowsHeader(),
+          const SizedBox(height: 16),
+          _buildWorkflowActionsPanel(),
           const SizedBox(height: 16),
           _buildActiveWorkflowsCard(),
           const SizedBox(height: 16),
@@ -1435,5 +1645,236 @@ class _WorkflowSystemScreenState extends ConsumerState<WorkflowSystemScreen>
         ],
       ),
     );
+  }
+
+  // Placeholder methods for existing functionality
+  void _createNewWorkflow() {
+    _logger.info('Create new workflow tapped. Navigate to CreateWorkflowScreen or show dialog.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWorkflowScreen()));
+  }
+
+  void _navigateToWorkflowAnalytics() {
+    _logger.info('Workflow analytics tapped. Navigate to WorkflowAnalyticsScreen or switch to Analytics tab.');
+    // Example: _tabController.animateTo(3); // Assuming Analytics is the 4th tab (index 3)
+  }
+
+  void _viewWorkflow(String workflowName) {
+    _logger.info('View workflow tapped for "$workflowName". Navigate to WorkflowDetailScreen.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => WorkflowDetailScreen(workflowName: workflowName)));
+  }
+
+  void _manageWorkflow(String workflowName) {
+    _logger.info('Manage workflow tapped for "$workflowName". Navigate to ManageWorkflowScreen.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => ManageWorkflowScreen(workflowName: workflowName)));
+  }
+
+  void _useWorkflowTemplate(String templateName) {
+    _logger.info('Use template tapped for "$templateName". Create a new workflow using this template.');
+    // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateWorkflowScreen(template: templateName)));
+  }
+
+  void _filterTasksByStatus(String? status) {
+    _logger.info('Filter tasks by status: $status');
+    // Add actual filtering logic here
+  }
+
+  void _filterTasksByAssignee(String? assignee) {
+    _logger.info('Filter tasks by assignee: $assignee');
+    // Add actual filtering logic here
+  }
+
+  void _toggleAutomationRule(String ruleName, bool newValue) {
+    _logger.info('Toggle automation rule "$ruleName" to $newValue.');
+    // Add logic to update automation rule state
+  }
+
+  void _toggleAutomationTrigger(String triggerName, bool newValue) {
+    _logger.info('Toggle automation trigger "$triggerName" to $newValue.');
+    // Add logic to update automation trigger state
+  }
+}
+
+// Workflow action data class
+class _WorkflowAction {
+  final String name;
+  final String description;
+  final ActionType type;
+  final int estimatedDuration;
+  final String assignee;
+  final String priority;
+
+  _WorkflowAction({
+    required this.name,
+    required this.description,
+    required this.type,
+    required this.estimatedDuration,
+    required this.assignee,
+    required this.priority,
+  });
+}
+
+enum ActionType {
+  development,
+  design,
+  testing,
+  deployment,
+  documentation,
+}
+
+// Workflow action dialog widget
+class _WorkflowActionDialog extends StatefulWidget {
+  final _WorkflowAction? action;
+  final Function(_WorkflowAction) onSave;
+
+  const _WorkflowActionDialog({
+    this.action,
+    required this.onSave,
+  });
+
+  @override
+  State<_WorkflowActionDialog> createState() => _WorkflowActionDialogState();
+}
+
+class _WorkflowActionDialogState extends State<_WorkflowActionDialog> {
+  late TextEditingController _nameController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _assigneeController;
+  late TextEditingController _durationController;
+  late ActionType _selectedType;
+  late String _selectedPriority;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.action?.name ?? '');
+    _descriptionController = TextEditingController(text: widget.action?.description ?? '');
+    _assigneeController = TextEditingController(text: widget.action?.assignee ?? '');
+    _durationController = TextEditingController(text: widget.action?.estimatedDuration.toString() ?? '');
+    _selectedType = widget.action?.type ?? ActionType.development;
+    _selectedPriority = widget.action?.priority ?? 'Medium';
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _assigneeController.dispose();
+    _durationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.action == null ? 'Add Action' : 'Edit Action'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Action Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<ActionType>(
+              value: _selectedType,
+              decoration: const InputDecoration(
+                labelText: 'Action Type',
+                border: OutlineInputBorder(),
+              ),
+              items: ActionType.values.map((type) {
+                return DropdownMenuItem(
+                  value: type,
+                  child: Text(type.name.toUpperCase()),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedType = value!;
+                });
+              },
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _assigneeController,
+              decoration: const InputDecoration(
+                labelText: 'Assignee',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _durationController,
+              decoration: const InputDecoration(
+                labelText: 'Estimated Duration (minutes)',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: _selectedPriority,
+              decoration: const InputDecoration(
+                labelText: 'Priority',
+                border: OutlineInputBorder(),
+              ),
+              items: ['Low', 'Medium', 'High'].map((priority) {
+                return DropdownMenuItem(
+                  value: priority,
+                  child: Text(priority),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedPriority = value!;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: _saveAction,
+          child: Text(widget.action == null ? 'Add' : 'Save'),
+        ),
+      ],
+    );
+  }
+
+  void _saveAction() {
+    if (_nameController.text.isEmpty || _descriptionController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all required fields')),
+      );
+      return;
+    }
+
+    final action = _WorkflowAction(
+      name: _nameController.text,
+      description: _descriptionController.text,
+      type: _selectedType,
+      estimatedDuration: int.tryParse(_durationController.text) ?? 30,
+      assignee: _assigneeController.text,
+      priority: _selectedPriority,
+    );
+
+    widget.onSave(action);
   }
 } 

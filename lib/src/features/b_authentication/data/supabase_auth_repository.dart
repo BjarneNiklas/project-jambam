@@ -14,43 +14,75 @@ class SupabaseAuthRepository implements AuthRepository {
 
   domain_user.User? _mapSupabaseUser(sb.User? supabaseUser, Map<String, dynamic>? profileData) {
     if (supabaseUser == null) {
+      _logger.warning('Cannot map null Supabase user');
       return null;
     }
-    // Combine Supabase auth user data with profile data
-    return domain_user.User(
-      id: supabaseUser.id,
-      email: supabaseUser.email ?? '',
-      displayName: profileData?['username'] as String? ?? supabaseUser.userMetadata?['display_name'] as String? ?? supabaseUser.email?.split('@').first ?? 'Anonymous',
-      avatar: profileData?['avatar_url'] as String?,
-      bio: profileData?['bio'] as String?,
-      isAnonymous: supabaseUser.isAnonymous,
-      interests: (profileData?['interests'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
-      skillLevel: _parseSkillLevel(profileData?['skill_level'] as String?),
-      learningStyle: _parseLearningStyle(profileData?['learning_style'] as String?),
-      accessibilityNeeds: (profileData?['accessibility_needs'] as List<dynamic>?)
-          ?.map((e) => _parseAccessibilityNeed(e as String?))
-          .where((element) => element != null)
-          .cast<AccessibilityNeed>()
-          .toList() ?? [],
-      reputation: profileData?['reputation'] as int? ?? 0,
-      badges: (profileData?['badges'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
-      preferences: domain_user.UserPreferences(
-        theme: _parseThemePreference(profileData?['preferences']?['theme'] as String?),
-        notifications: domain_user.NotificationPreferences(
-          emailNotifications: profileData?['preferences']?['notifications']?['emailNotifications'] as bool? ?? true,
-          pushNotifications: profileData?['preferences']?['notifications']?['pushNotifications'] as bool? ?? true,
-          communityUpdates: profileData?['preferences']?['notifications']?['communityUpdates'] as bool? ?? true,
-          researchUpdates: profileData?['preferences']?['notifications']?['researchUpdates'] as bool? ?? true,
-          achievementNotifications: profileData?['preferences']?['notifications']?['achievementNotifications'] as bool? ?? true,
-          followerNotifications: profileData?['preferences']?['notifications']?['followerNotifications'] as bool? ?? true,
+    
+    try {
+      _logger.info('Mapping Supabase user: ${supabaseUser.id} with profile data: ${profileData != null}');
+      
+      // Determine display name with fallbacks
+      String displayName = 'Anonymous';
+      if (profileData != null && profileData['username'] != null) {
+        displayName = profileData['username'] as String;
+      } else if (supabaseUser.userMetadata?['display_name'] != null) {
+        displayName = supabaseUser.userMetadata!['display_name'] as String;
+      } else if (supabaseUser.email != null && supabaseUser.email!.isNotEmpty) {
+        displayName = supabaseUser.email!.split('@').first;
+      } else if (supabaseUser.isAnonymous) {
+        displayName = 'Anonymous User (${supabaseUser.id.substring(0, 6)})';
+      }
+      
+      // Determine email with fallback
+      String email = supabaseUser.email ?? '';
+      if (email.isEmpty && supabaseUser.isAnonymous) {
+        email = 'anonymous@jambam.com';
+      }
+      
+      return domain_user.User(
+        id: supabaseUser.id,
+        email: email,
+        displayName: displayName,
+        avatar: profileData?['avatar_url'] as String?,
+        bio: profileData?['bio'] as String?,
+        isAnonymous: supabaseUser.isAnonymous,
+        interests: (profileData?['interests'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+        skillLevel: _parseSkillLevel(profileData?['skill_level'] as String?),
+        learningStyle: _parseLearningStyle(profileData?['learning_style'] as String?),
+        accessibilityNeeds: (profileData?['accessibility_needs'] as List<dynamic>?)
+            ?.map((e) => _parseAccessibilityNeed(e as String?))
+            .where((element) => element != null)
+            .cast<AccessibilityNeed>()
+            .toList() ?? [],
+        reputation: profileData?['reputation'] as int? ?? 0,
+        badges: (profileData?['badges'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+        preferences: domain_user.UserPreferences(
+          theme: _parseThemePreference(profileData?['preferences']?['theme'] as String?),
+          notifications: domain_user.NotificationPreferences(
+            emailNotifications: profileData?['preferences']?['notifications']?['emailNotifications'] as bool? ?? true,
+            pushNotifications: profileData?['preferences']?['notifications']?['pushNotifications'] as bool? ?? true,
+            communityUpdates: profileData?['preferences']?['notifications']?['communityUpdates'] as bool? ?? true,
+            researchUpdates: profileData?['preferences']?['notifications']?['researchUpdates'] as bool? ?? true,
+            achievementNotifications: profileData?['preferences']?['notifications']?['achievementNotifications'] as bool? ?? true,
+            followerNotifications: profileData?['preferences']?['notifications']?['followerNotifications'] as bool? ?? true,
+          ),
         ),
-      ),
-      statistics: domain_user.UserStatistics(
-        jamSeedsCreated: profileData?['statistics']?['jam_seeds_created'] as int? ?? 0,
-        jamKitsGenerated: profileData?['statistics']?['jam_kits_generated'] as int? ?? 0,
-        communityContributions: profileData?['statistics']?['contributions_made'] as int? ?? 0,
-      ),
-    );
+        statistics: domain_user.UserStatistics(
+          jamSeedsCreated: profileData?['statistics']?['jam_seeds_created'] as int? ?? 0,
+          jamKitsGenerated: profileData?['statistics']?['jam_kits_generated'] as int? ?? 0,
+          communityContributions: profileData?['statistics']?['contributions_made'] as int? ?? 0,
+        ),
+      );
+    } catch (e) {
+      _logger.error('Error mapping Supabase user ${supabaseUser.id}: $e');
+      // Return a basic user object as fallback
+      return domain_user.User(
+        id: supabaseUser.id,
+        email: supabaseUser.email ?? 'anonymous@jambam.com',
+        displayName: supabaseUser.isAnonymous ? 'Anonymous User' : 'User',
+        isAnonymous: supabaseUser.isAnonymous,
+      );
+    }
   }
 
   domain_user.ThemePreference _parseThemePreference(String? value) {
@@ -91,28 +123,42 @@ class SupabaseAuthRepository implements AuthRepository {
 
   Future<Map<String, dynamic>?> _fetchUserProfile(String userId, {sb.User? authUser, String? defaultUsername}) async {
     try {
+      _logger.info('Fetching profile for user: $userId');
       final response = await _supabaseClient.from('profiles').select().eq('id', userId).single();
+      _logger.info('Profile fetched successfully for $userId');
       return response;
     } catch (e) {
       _logger.error('Error fetching profile for $userId: $e');
-      if (e is sb.PostgrestException && e.code == 'PGRST116') { // Profile not found
-        if (authUser != null) { // Only attempt creation if we have auth user context
-          _logger.info('Profile not found for $userId (PGRST116), attempting to create...');
+      
+      // Check if it's a "not found" error
+      if (e is sb.PostgrestException && e.code == 'PGRST116') {
+        _logger.info('Profile not found for $userId (PGRST116), attempting to create...');
+        if (authUser != null) {
           try {
             final newProfileData = {
               'id': authUser.id,
               'username': defaultUsername ?? authUser.email?.split('@').first ?? 'New User',
-              'email': authUser.email,
+              'email': authUser.email ?? 'anonymous@jambam.com',
+              'role': 'user',
+              'is_verified': true,
+              'is_active': true,
             };
+            _logger.info('Creating profile with data: $newProfileData');
             final profileCreationResponse = await _supabaseClient.from('profiles').insert(newProfileData).select().single();
-            _logger.info('Profile created for $userId.');
+            _logger.info('Profile created successfully for $userId');
             return profileCreationResponse;
           } catch (creationError) {
             _logger.error('Error creating profile for $userId after PGRST116: $creationError');
             return null;
           }
+        } else {
+          _logger.warning('Cannot create profile for $userId: no auth user provided');
+          return null;
         }
       }
+      
+      // For other errors, log and return null
+      _logger.error('Unexpected error fetching profile for $userId: $e');
       return null;
     }
   }
@@ -183,24 +229,57 @@ class SupabaseAuthRepository implements AuthRepository {
   @override
   Future<AuthResult> signInAnonymously() async {
     try {
+      _logger.info('Starting anonymous sign-in...');
+      
       final authResponse = await _supabaseClient.auth.signInAnonymously();
+      _logger.info('Anonymous auth response received: ${authResponse.user?.id}');
+      
       if (authResponse.user != null) {
-        Map<String, dynamic>? profileData = await _fetchUserProfile(authResponse.user!.id);
-        if (profileData == null) {
+        try {
+          Map<String, dynamic>? profileData = await _fetchUserProfile(authResponse.user!.id);
+          _logger.info('Profile data fetched: ${profileData != null}');
+          
+          if (profileData == null) {
+            _logger.info('Creating new profile for anonymous user...');
             try {
-                final anonProfile = {
-                    'id': authResponse.user!.id,
-                    'username': 'Anonymous User (${authResponse.user!.id.substring(0,6)})',
-                };
-                profileData = await _supabaseClient.from('profiles').insert(anonProfile).select().single();
-            } catch(e) {
-                _logger.error("Error creating profile for anon user: $e");
+              final anonProfile = {
+                'id': authResponse.user!.id,
+                'username': 'Anonymous User (${authResponse.user!.id.substring(0,6)})',
+                'email': 'anonymous@jambam.com',
+                'role': 'user',
+                'is_verified': true,
+                'is_active': true,
+              };
+              
+              final profileResponse = await _supabaseClient
+                  .from('profiles')
+                  .insert(anonProfile)
+                  .select()
+                  .single();
+              
+              profileData = profileResponse;
+              _logger.info('Anonymous profile created successfully');
+            } catch (profileError) {
+              _logger.error("Error creating profile for anon user: $profileError");
+              // Continue without profile data - user can still be authenticated
             }
+          }
+          
+          final user = _mapSupabaseUser(authResponse.user, profileData);
+          _logger.info('Anonymous sign-in successful: ${user?.displayName}');
+          return AuthResult(success: true, user: user);
+        } catch (profileError) {
+          _logger.error("Error handling profile for anon user: $profileError");
+          // Return success even if profile creation fails
+          final user = _mapSupabaseUser(authResponse.user, null);
+          return AuthResult(success: true, user: user);
         }
-        return AuthResult(success: true, user: _mapSupabaseUser(authResponse.user, profileData));
       }
+      
+      _logger.error('Anonymous sign-in failed: No user returned');
       return AuthResult(success: false, error: 'Anonymous sign-in failed.');
     } catch (e) {
+      _logger.error("Anonymous sign-in exception: $e");
       return AuthResult(success: false, error: e.toString());
     }
   }

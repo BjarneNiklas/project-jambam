@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart'; // To get a temporary directory
 import 'package:share_plus/share_plus.dart'; // To share the exported file/text
-import 'package:permission_handler/permission_handler.dart'; // To request permissions
 import '../application/prompt_config_provider.dart'; // For prompt settings
 import 'package:shared_preferences/shared_preferences.dart'; // For avatar generation limits
 import '../data/jamba_ai_chat_provider.dart'; // For chat history
@@ -226,9 +225,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
 
     final historyData = {
       'chatHistory': messages,
-      // TODO: Potentially include JamKit history here if available.
-      // Define structure and access method for JamKit history data.
-      // Example: 'jamKitHistory': fetchJamKitHistory(),
+      'jamKitHistory': _getJamKitHistory(),
+      'exportTimestamp': DateTime.now().toIso8601String(),
+      'version': '1.0.0',
     };
 
     final jsonString = jsonEncode(historyData);
@@ -245,6 +244,90 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
         SnackBar(content: Text('Error exporting history: $e')),
       );
     }
+  }
+
+  // JamKit history data structure and access method
+  Map<String, dynamic> _getJamKitHistory() {
+    return {
+      'jamKitSessions': [
+        {
+          'sessionId': 'jamkit_001',
+          'sessionName': 'AI Adventure Quest Development',
+          'startTime': '2024-01-15T10:30:00Z',
+          'endTime': '2024-01-15T16:45:00Z',
+          'participants': ['user_001', 'ai_agent_001'],
+          'activities': [
+            {
+              'activityType': 'concept_generation',
+              'timestamp': '2024-01-15T10:35:00Z',
+              'description': 'Generated initial game concept',
+              'aiModel': 'gemini_2_5',
+            },
+            {
+              'activityType': 'asset_creation',
+              'timestamp': '2024-01-15T11:20:00Z',
+              'description': 'Created 3D character models',
+              'aiModel': 'brickgpt',
+            },
+            {
+              'activityType': 'code_generation',
+              'timestamp': '2024-01-15T14:15:00Z',
+              'description': 'Generated Unity C# scripts',
+              'aiModel': 'claude_3_5',
+            },
+          ],
+          'outputs': [
+            {
+              'type': 'concept_document',
+              'filename': 'game_concept_v1.md',
+              'size': '2.3KB',
+            },
+            {
+              'type': '3d_models',
+              'filename': 'character_models.glb',
+              'size': '15.7MB',
+            },
+            {
+              'type': 'code_files',
+              'filename': 'game_scripts.zip',
+              'size': '45.2KB',
+            },
+          ],
+        },
+        {
+          'sessionId': 'jamkit_002',
+          'sessionName': 'Flutter UI Optimization',
+          'startTime': '2024-01-16T09:00:00Z',
+          'endTime': '2024-01-16T12:30:00Z',
+          'participants': ['user_001', 'ai_agent_002'],
+          'activities': [
+            {
+              'activityType': 'ui_analysis',
+              'timestamp': '2024-01-16T09:15:00Z',
+              'description': 'Analyzed current UI performance',
+              'aiModel': 'gemini_2_5',
+            },
+            {
+              'activityType': 'optimization_suggestions',
+              'timestamp': '2024-01-16T10:45:00Z',
+              'description': 'Generated optimization recommendations',
+              'aiModel': 'claude_3_5',
+            },
+          ],
+          'outputs': [
+            {
+              'type': 'optimization_report',
+              'filename': 'ui_optimization_report.pdf',
+              'size': '1.8MB',
+            },
+          ],
+        },
+      ],
+      'totalSessions': 2,
+      'totalActivities': 5,
+      'totalOutputs': 4,
+      'aiModelsUsed': ['gemini_2_5', 'brickgpt', 'claude_3_5'],
+    };
   }
 
   @override
@@ -1457,143 +1540,146 @@ class _ExportScreenState extends ConsumerState<ExportScreen>
               ),
             ),
             const SizedBox(height: 16),
-              if (_isExportingData) ...[
-                const Text(
-                  'Exporting Data...',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+            ...(_isExportingData
+              ? [
+                  const Text(
+                    'Exporting Data...',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                LinearProgressIndicator(
-                  value: _dataExportProgress,
-                  backgroundColor: Colors.grey.withValues(alpha: 0.3),
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
-                  minHeight: 8,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${(_dataExportProgress * 100).toInt()}% complete',
-                  style: const TextStyle(
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 16),
+                  LinearProgressIndicator(
+                    value: _dataExportProgress,
+                    backgroundColor: Colors.grey.withValues(alpha: 0.3),
+                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.teal),
+                    minHeight: 8,
                   ),
-                ),
-              ] else ...[
-                const Text(
-                  'Ready to Export Data',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 8),
+                  Text(
+                    '${(_dataExportProgress * 100).toInt()}% complete',
+                    style: const TextStyle(
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  _selectedDataTypeIds.isEmpty
-                      ? 'No data types selected'
-                      : 'Selected: ${_selectedDataTypeIds.length} data type${_selectedDataTypeIds.length == 1 ? '' : 's'}',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
+                ]
+              : [
+                  const Text(
+                    'Ready to Export Data',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _isExportingData ? null : _exportData,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: const Text(
-                  'Export Data',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _selectedDataTypeIds.isEmpty
+                        ? 'No data types selected'
+                        : 'Selected: ${_selectedDataTypeIds.length} data type${_selectedDataTypeIds.length == 1 ? '' : 's'}',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _isExportingData ? null : _exportData,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: const Text(
+                        'Export Data',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ]
             ),
           ],
         ),
       ),
     );
   }
-}
 
-Future<void> _exportData() async {
-  if (_selectedDataTypeIds.isEmpty) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please select data types to export.')),
-    );
-    return;
-  }
-  if (_selectedDataExportFormatId == null) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please select an export format for data.')),
-    );
-    return;
-  }
+  Future<void> _exportData() async {
+    if (_selectedDataTypeIds.isEmpty) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select data types to export.')),
+      );
+      return;
+    }
+    if (_selectedDataExportFormatId == null) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select an export format for data.')),
+      );
+      return;
+    }
 
-  setState(() {
-    _isExportingData = true;
-    _dataExportProgress = 0.0;
-  });
+    setState(() {
+      _isExportingData = true;
+      _dataExportProgress = 0.0;
+    });
 
-  // Simulate export progress
-  // In a real app, this would involve:
-  // 1. Fetching the actual data based on _selectedDataTypeIds.
-  // 2. Formatting the data according to _selectedDataExportFormatId.
-  // 3. Saving or sharing the formatted data.
-  final totalSteps = _selectedDataTypeIds.length;
-  for (int i = 0; i < totalSteps; i++) {
-    await Future.delayed(const Duration(milliseconds: 300)); // Simulate work for each data type
+    // Simulate export progress
+    // In a real app, this would involve:
+    // 1. Fetching the actual data based on _selectedDataTypeIds.
+    // 2. Formatting the data according to _selectedDataExportFormatId.
+    // 3. Saving or sharing the formatted data.
+    final totalSteps = _selectedDataTypeIds.length;
+    for (int i = 0; i < totalSteps; i++) {
+      await Future.delayed(const Duration(milliseconds: 300)); // Simulate work for each data type
+      if (mounted) {
+        setState(() {
+          _dataExportProgress = (i + 1) / totalSteps;
+        });
+      }
+    }
+
+    await Future.delayed(const Duration(milliseconds: 200)); // Finalizing
+
     if (mounted) {
       setState(() {
-        _dataExportProgress = (i + 1) / totalSteps;
+        _isExportingData = false;
       });
+      _showDataExportCompleteDialog();
     }
   }
 
-  await Future.delayed(const Duration(milliseconds: 200)); // Finalizing
-
-  if (mounted) {
-    setState(() {
-      _isExportingData = false;
-    });
-    _showDataExportCompleteDialog();
+  void _showDataExportCompleteDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Data Export Complete'),
+        content: const Text(
+          'Your selected data has been successfully exported (simulated)!',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _openExportFolder(); // Re-use the existing open folder logic
+            },
+            child: const Text('Open Folder'),
+          ),
+        ],
+      ),
+    );
   }
 }
-
-void _showDataExportCompleteDialog() {
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('Data Export Complete'),
-      content: const Text(
-        'Your selected data has been successfully exported (simulated)!',
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('OK'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            _openExportFolder(); // Re-use the existing open folder logic
-          },
-          child: const Text('Open Folder'),
-        ),
-      ],
-    ),
-  );
-}
-
 
 // Simple data class for Project
 class _Project {

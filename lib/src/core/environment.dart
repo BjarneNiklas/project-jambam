@@ -16,11 +16,11 @@ class Environment {
         'OPENAI_API_KEY': '',
         'GEMINI_API_KEY': '',
         'ENVIRONMENT': 'development',
-        'SUPABASE_URL': 'YOUR_SUPABASE_URL_HERE', // Default/placeholder
-        'SUPABASE_ANON_KEY': 'YOUR_SUPABASE_ANON_KEY_HERE', // Default/placeholder
+        'SUPABASE_URL': 'https://nnneohqytsemmwpufwtv.supabase.co',
+        'SUPABASE_ANON_KEY': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ubmVvaHF5dHNlbW13cHVmd3R2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA1OTU3NzEsImV4cCI6MjA2NjE3MTc3MX0.PnojgXWf9n34CNTRy2tWTQFjeUqUfH-WGjvh8ygS82A',
       };
     } else {
-      // Mobile: Try to load from .env file
+      // Mobile: Try to load from .env file first, then fallback to defaults
       try {
         final envFile = File('.env');
         if (await envFile.exists()) {
@@ -36,9 +36,27 @@ class Environment {
               }
             }
           }
-        } else {
-          // If .env doesn't exist, still load defaults
-          _loadDefaults();
+        }
+        
+        // Always load defaults as fallback for missing values
+        _loadDefaults();
+        
+        // Override with .env values if they exist
+        if (await envFile.exists()) {
+          final contents = await envFile.readAsString();
+          for (final line in contents.split('\n')) {
+            final trimmedLine = line.trim();
+            if (trimmedLine.isNotEmpty && !trimmedLine.startsWith('#')) {
+              final parts = trimmedLine.split('=');
+              if (parts.length >= 2) {
+                final key = parts[0].trim();
+                final value = parts.sublist(1).join('=').trim();
+                if (value.isNotEmpty) {
+                  _envVars[key] = value;
+                }
+              }
+            }
+          }
         }
       } catch (e) {
         // Use defaults if .env file cannot be read or on any error
@@ -53,8 +71,8 @@ class Environment {
       'OPENAI_API_KEY': '',
       'GEMINI_API_KEY': '',
       'ENVIRONMENT': 'development',
-      'SUPABASE_URL': 'YOUR_SUPABASE_URL_HERE', // Default/placeholder
-      'SUPABASE_ANON_KEY': 'YOUR_SUPABASE_ANON_KEY_HERE', // Default/placeholder
+      'SUPABASE_URL': 'https://nnneohqytsemmwpufwtv.supabase.co',
+      'SUPABASE_ANON_KEY': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ubmVvaHF5dHNlbW13cHVmd3R2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA1OTU3NzEsImV4cCI6MjA2NjE3MTc3MX0.PnojgXWf9n34CNTRy2tWTQFjeUqUfH-WGjvh8ygS82A',
     };
   }
 
