@@ -15,17 +15,25 @@ const Footer: React.FC = () => {
             : theme.palette.grey[800],
       }}
     >
-      <Container maxWidth="lg">
-        <Typography variant="body1">
-          JambaM - Innovating Game Development.
+      <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
+        <Typography variant="body1" color="text.primary">
+          Aurav Technologies - Innovating Game Development.
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
           {'© '}
-          <Link color="inherit" href="https://jambam.com/"> {/* Replace with actual domain later */}
-            JambaM
+          <Link color="inherit" href="https://aurav.tech/">
+            Aurav Technologies
           </Link>{' '}
           {new Date().getFullYear()}
           {'.'}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          <Link color="inherit" href="/faq" sx={{mr: 2}}>
+            FAQ
+          </Link>
+          <Link color="inherit" href="https://luv-y.com/" target="_blank" rel="noopener noreferrer">
+            Creator Portfolio
+          </Link>
         </Typography>
       </Container>
     </Box>
