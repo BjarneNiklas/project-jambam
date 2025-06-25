@@ -5,8 +5,8 @@ Die LUVY Engine ist nach Clean Architecture, API-First, Mobile-First und Offline
 
 ### Hauptmodule (Optimiert)
 - **core/**: Orchestrierung, Plug-in-System, Dependency Injection, Engine-Registry, Security, Audit-Log
-- **engines/**: Adapter für Bevy, Godot, Unity, Broxel (Voxel), O3DE, Hot-Reload, Sandbox, CLI/FFI/HTTP/gRPC (Engine Adapter Layer)
-- **mindflow/**: KI-Module (KI-Bridge), Game Design Assistant, Prompt2World, ProcGen, lokale/Cloud-Modelle, Unified API, Offline-Queue
+- **engines/**: Adapter für Bevy, Godot, Unity, Broxel (Voxel), O3DE, Hot-Reload, Sandbox, CLI/FFI/HTTP/gRPC (Engine Adapter Layer). Siehe [Universal Engine Adapter Architecture](../features/engines/engine_adapter_architecture.md).
+- **mindflow/**: KI-Module (KI-Bridge), Game Design Assistant, Prompt2World, ProcGen, lokale/Cloud-Modelle, Unified API, Offline-Queue. Dies ist die Implementierung der [Mindflow Engine](#mindflow-engine-ki-optimiert).
 - **gamejam/**: Game Jam Features (Themen, Teams, Bewertung, Submission, Community, engine-unabhängig)
 - **gamelogic/**: Genres, Simulationen, Robotik, Bauwesen, etc. als modular erweiterbare Logik-Bausteine
 - **data/**: SQLite (offline), PostgreSQL/Supabase (Cloud, optional), Repository Pattern, Sync, Verschlüsselung, Versionierung (Asset Pool/Manager)
@@ -26,7 +26,7 @@ Das Game Jam Modul ist engine-unabhängig und konzentriert sich auf die Organisa
 - *Hinweis:* Jam-spezifische Konzepte (Jam-Herausforderung, Jam-Leitfaden) enthalten keine expliziten Genres, da Game Jams themen- und einschränkungsbasiert sind.
 
 ### Mindflow Engine (KI, Optimiert)
-Die Mindflow Engine ist das Herzstück des KI-Multi-Agenten-Systems und des **Ideen-Generators**.
+Die Mindflow Engine ist das Herzstück des KI-Multi-Agenten-Systems und des **Ideen-Generators**. Die technische Umsetzung dieser Engine ist im [AI Architecture Blueprint](../features/ai/ai_architecture_blueprint.md) detailliert beschrieben.
 - KI-Adapter (OpenAI, HuggingFace, eigene Modelle, Ollama, Stable Diffusion)
 - **Ideen-Generator:** Erzeugt **Spiel-Keime** aus dem Inspirations-Pool oder Jam-Blueprints. Hier werden Genres für die Spiel-Keime festgelegt, und die KI kann neue Genre-Kombinationen vorschlagen.
 - Prompt2World, Text2Asset, Game Design Assistant, Playtest-Analyse, Balancing

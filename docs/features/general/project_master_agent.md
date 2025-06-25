@@ -1,10 +1,12 @@
 # ProjectMasterAgent (Meta-Agent für Game Jams & Spielprojekte)
 
 ## Konzept
-Der **ProjectMasterAgent** ist der zentrale Meta-Agent, der alle relevanten Informationen, Prototypen, Playtests, Feedback, Forschung, Assets, Teammitglieder, Entscheidungen und Lessons Learned für ein individuelles Spielprojekt oder einen Game Jam aggregiert. Er ist das Gedächtnis, die Steuerzentrale und der Orchestrator für den gesamten Entwicklungsprozess.
+Der **ProjectMasterAgent** ist der zentrale Meta-Agent, der alle relevanten Informationen, Prototypen, Playtests, Feedback, Forschung, Assets, Teammitglieder, Entscheidungen und Lessons Learned für ein individuelles Spielprojekt oder einen Game Jam aggregiert. Er ist das Gedächtnis, die Steuerzentrale und der Orchestrator für den gesamten Entwicklungsprozess eines Projekts.
+
+Dieser Agent ist insbesondere dafür zuständig, die Lebenszyklen der Kernkonzepte wie [JamSeed, JamKit, GameSeed und GameKit](../../core/terminology_and_concepts.md) für ein Projekt zu verwalten und deren Zustand zu verfolgen. Seine Orchestrierungsrolle ist auf der Projektebene angesiedelt und unterscheidet sich von der KI-Modell-Orchestrierung, die innerhalb der [Mindflow Engine](../../features/ai/ai_architecture_blueprint.md) stattfindet, welche der ProjectMasterAgent als Werkzeug nutzen kann.
 
 ## Vorteile
-- **Single Source of Truth** für alle Projektdaten
+- **Single Source of Truth** für alle Projektdaten, inklusive der Verwaltung von JamSeeds, JamKits, GameSeeds und GameKits.
 - Kontext-Awareness für alle Agenten und Teammitglieder
 - Automatisierte Dokumentation und Nachvollziehbarkeit
 - Effiziente Orchestrierung von Multi-Agenten-Workflows

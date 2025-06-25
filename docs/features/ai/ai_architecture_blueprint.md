@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document outlines our next-generation AI architecture that combines Small Language Models (SLM), Large Language Models (LLM), and Retrieval-Augmented Generation (RAG) for optimal performance, efficiency, and scalability in game development and creative applications.
+This document outlines our next-generation AI architecture, referred to as the **Mindflow Engine** in other documents (e.g., [Project Overview](../../core/project_overview.md), [Architecture Overview](../../core/architecture_overview.md)). It also forms the technical foundation for the **KI-Multi-Agenten-System** ([Vision and Workflow](../../core/vision_and_workflow.md)).
+
+The architecture combines Small Language Models (SLM), Large Language Models (LLM), and Retrieval-Augmented Generation (RAG) for optimal performance, efficiency, and scalability in game development and creative applications.
 
 ## Architecture Philosophy
 
@@ -268,18 +270,20 @@ class EnhancedResearchAgent {
 
 ### 3. Project Master Agent
 
+Details about the ProjectMasterAgent can be found in its dedicated document: [ProjectMasterAgent Details](../general/project_master_agent.md).
+
 ```dart
 // Enhanced project management with AI
 class EnhancedProjectMasterAgent {
-  final ProjectAIService _aiService;
+  final ProjectAIService _aiService; // This service would utilize the SLM/LLM/RAG capabilities
   
   Future<String> analyzeProject(String projectData) async {
-    // LLM + RAG for project analysis
+    // LLM + RAG for project analysis, leveraging the orchestrator
     return await _aiService.analyzeProjectStatus(projectData);
   }
   
   Future<String> generateInsights(String context) async {
-    // LLM for creative insights
+    // LLM for creative insights, leveraging the orchestrator
     return await _aiService.generateProjectInsights(context);
   }
 }
