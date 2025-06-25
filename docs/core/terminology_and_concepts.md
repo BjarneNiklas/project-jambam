@@ -170,6 +170,9 @@ graph TD
 - **Game Seed Browser:** Für Game Seed Durchsuchung
 - **Development Blueprint Editor:** Für Game Kit Erstellung und Bearbeitung
 
+**Project Lifecycle Management:**
+The [ProjectMasterAgent](../../features/general/project_master_agent.md) is the central component responsible for managing the instances and lifecycle of these JamSeeds, JamKits, GameSeeds, and GameKits within a specific project or game jam. It would utilize the services mentioned above (e.g., `JamSeedGenerationService`, `ConceptGenerationService`) to create and evolve these entities.
+
 ---
 
 ## Best Practices

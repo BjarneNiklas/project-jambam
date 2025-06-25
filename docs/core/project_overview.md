@@ -34,10 +34,10 @@ Die LUVY Engine ist eine offene, modulare und mobile Plattform für die nächste
 
 ## Module & Features
 - **Broxel Engine:** Eigene Voxel-Engine für prozedurale Blockwelten (ProcGen), Game Jam Support.
-- **Mindflow Engine:** KI-Integration (OpenAI, HuggingFace, LegoGPT, eigene Modelle), **Ideen-Generator** (erzeugt **Spiel-Keime**), Game Design Assistant, Prompt2World.
+- **Mindflow Engine:** KI-Integration (OpenAI, HuggingFace, LegoGPT, eigene Modelle), **Ideen-Generator** (erzeugt **Spiel-Keime**), Game Design Assistant, Prompt2World. (Siehe auch [AI Architecture Blueprint](../features/ai/ai_architecture_blueprint.md) für Details zur technischen Umsetzung).
 - **Game Jam Modul:** Engine-unabhängige Features für Game Jams. Unterstützt die Erstellung von **Jam-Blueprints** und die Durchführung von **Jam-Events**.
-  - Siehe unseren aktuellen [Konzeptionellen Rahmen](./architecture/conceptual_framework.md) für die Definition von Jam-Herausforderungen und Jam-Leitfäden.
-- **Engines Adapter:** Unterstützung für Bevy, Godot, Unity, Broxel, ggf. Luanty (prev. Minetest).
+  - Siehe unseren aktuellen [Konzeptionellen Rahmen](./core/conceptual_framework.md) für die Definition von Jam-Herausforderungen und Jam-Leitfäden. *(Hinweis: Der Pfad zu conceptual_framework.md wurde korrigiert)*
+- **Engines Adapter:** Unterstützung für Bevy, Godot, Unity, Broxel, ggf. Luanty (prev. Minetest). (Siehe [Universal Engine Adapter Architecture](../features/engines/engine_adapter_architecture.md) für das detaillierte Konzept).
 - **Data Layer:** SQLite (offline), Supabase/PostgreSQL (Cloud), Repository Pattern, Sync, Security.
 - **UI Layer:** Flutter, Material 3 Expressive, modular, barrierefrei, Engine-Selector, KI-Chat, Tutorials.
 - **Plug-in-System:** Erweiterungen für Engines, KI, ProcGen, Exporter/Importer, Plug-in-Marktplatz.
