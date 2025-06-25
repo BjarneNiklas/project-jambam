@@ -1,0 +1,388 @@
+---
+// Hero component with animated text and modern design
+---
+
+<script type="module">
+  let currentLang = 'de'; // Use a different variable name to avoid confusion
+  function switchLang() {
+    currentLang = currentLang === 'de' ? 'en' : 'de';
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.style.display = el.getAttribute('data-lang') === currentLang ? '' : 'none';
+    });
+    // Update button text
+    const langButton = document.getElementById('lang-switcher-button');
+    if (langButton) {
+      langButton.textContent = currentLang === 'de' ? 'EN' : 'DE';
+    }
+  }
+
+  // Set initial button text on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const langButton = document.getElementById('lang-switcher-button');
+    if (langButton) {
+      langButton.textContent = currentLang === 'de' ? 'EN' : 'DE';
+    }
+  });
+
+// Navigation Drawer Logic
+const hamburgerButton = document.getElementById('hamburger-menu-button');
+const drawerCloseButton = document.getElementById('drawer-close-button');
+const navigationDrawer = document.getElementById('navigation-drawer');
+const drawerOverlay = document.getElementById('drawer-overlay');
+
+function toggleDrawer() {
+    const isOpen = navigationDrawer.classList.contains('translate-x-full') ? false : true;
+    if (isOpen) {
+        navigationDrawer.classList.remove('translate-x-full');
+        navigationDrawer.classList.add('translate-x-0');
+        drawerOverlay.classList.remove('hidden');
+        drawerOverlay.classList.add('block', 'opacity-100');
+    } else {
+        navigationDrawer.classList.remove('translate-x-0');
+        navigationDrawer.classList.add('translate-x-full');
+        drawerOverlay.classList.remove('block', 'opacity-100');
+        drawerOverlay.classList.add('hidden');
+    }
+}
+
+// Event listeners
+if (hamburgerButton) {
+    hamburgerButton.addEventListener('click', toggleDrawer);
+}
+if (drawerCloseButton) {
+    drawerCloseButton.addEventListener('click', toggleDrawer);
+}
+if (drawerOverlay) {
+    drawerOverlay.addEventListener('click', toggleDrawer);
+}
+
+// Close drawer if escape key is pressed
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !navigationDrawer.classList.contains('translate-x-full')) {
+        toggleDrawer();
+    }
+});
+
+// Initial state setup (drawer closed)
+if (navigationDrawer) {
+    navigationDrawer.classList.add('translate-x-full');
+}
+if (drawerOverlay) {
+    drawerOverlay.classList.add('hidden');
+}
+
+const claims = {
+  de: [
+    "Deine Vision? Realisiert!",
+    "Spitzentechnologie. Echte Ergebnisse.",
+    "Gemeinsam Zukunft gestalten."
+  ],
+  en: [
+    "Your vision? Realized!",
+    "Cutting-edge tech. Real results.",
+    "Shaping the future together."
+  ]
+};
+
+let currentLang = 'de';
+let claimIndex = 0;
+let claimEl = null;
+
+function showClaim() {
+  if (!claimEl) return;
+  claimEl.classList.add('fade-out');
+  setTimeout(() => {
+    claimEl.textContent = claims[currentLang][claimIndex];
+    claimEl.classList.remove('fade-out');
+  }, 500);
+}
+
+function nextClaim() {
+  claimIndex = (claimIndex + 1) % claims[currentLang].length;
+  showClaim();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  claimEl = document.getElementById('animated-claim');
+  console.log('claimEl:', claimEl);
+  showClaim();
+  setInterval(nextClaim, 3500);
+
+  // Sprachumschaltung
+  const langButton = document.getElementById('lang-switcher-button');
+  if (langButton) {
+    langButton.addEventListener('click', () => {
+      currentLang = currentLang === 'de' ? 'en' : 'de';
+      claimIndex = 0;
+      showClaim();
+    });
+  }
+});
+
+// Aura Background Click Logic
+  const auraBackground = document.getElementById('aura-background');
+  if (auraBackground) {
+      auraBackground.addEventListener('click', () => {
+          auraBackground.classList.toggle('aura-enlarged');
+      });
+  }
+});
+</script>
+
+<!-- Navigation Drawer -->
+<div id="navigation-drawer" class="fixed inset-y-0 right-0 transform translate-x-full bg-slate-800/95 text-white w-64 p-6 z-50 transition-transform duration-300 ease-in-out sm:hidden">
+    <div class="flex justify-between items-center mb-8">
+        <span class="text-xl font-bold text-teal-300">Navigation</span>
+        <button id="drawer-close-button" class="p-2 rounded-md text-teal-300 hover:bg-teal-500/20 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <!-- Close Icon SVG -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+    <nav>
+        <ul>
+            <li class="mb-4"><a href="#home" class="block py-2 px-4 rounded hover:bg-teal-500/20 transition">Home</a></li>
+            <li class="mb-4"><a href="#about" class="block py-2 px-4 rounded hover:bg-teal-500/20 transition">Über mich</a></li>
+            <li class="mb-4"><a href="#projects" class="block py-2 px-4 rounded hover:bg-teal-500/20 transition">Projekte</a></li>
+            <li class="mb-4"><a href="#skills" class="block py-2 px-4 rounded hover:bg-teal-500/20 transition">Skills</a></li>
+            <li class="mb-4"><a href="#contact" class="block py-2 px-4 rounded hover:bg-teal-500/20 transition">Kontakt</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Overlay -->
+<div id="drawer-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300 ease-in-out sm:hidden"></div>
+
+<section class="relative flex items-center justify-center min-h-screen">
+	<!-- Language Switcher -->
+	<div class="absolute top-8 right-24 z-20"> <!-- Adjusted right position to make space for hamburger -->
+		<button id="lang-switcher-button" onclick="switchLang()" class="px-4 py-2 bg-blue-500 text-white rounded-full shadow hover:bg-blue-600 transition">EN</button>
+	</div>
+
+	<!-- Hamburger Menu Button -->
+	<div class="absolute top-8 right-8 z-30 sm:hidden"> <!-- Positioned top-right, visible on small screens -->
+		<button id="hamburger-menu-button" class="p-2 rounded-md text-yellow-400 hover:bg-yellow-500/20 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+			<!-- Hamburger Icon SVG -->
+			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+			</svg>
+		</button>
+	</div>
+
+	<!-- Animated background with rotating light effects -->
+	<div class="absolute inset-0 overflow-hidden">
+		<div class="absolute inset-0 bg-slate-900"></div>
+		<!-- Hintergrund-Gradient als Lichteffekt von zentralem Punkt mit angepassten Farben und Schwarzanteil -->
+		<div id="aura-background" class="absolute inset-0 animate-aura-light"></div>
+		
+		<!-- Schwebende, leuchtende Kreise -->
+		<div class="absolute w-24 h-24 bg-white rounded-full opacity-10 blur-xl animate-float-1" style="top: 10%; left: 15%;"></div>
+		<div class="absolute w-32 h-32 bg-white rounded-full opacity-15 blur-xl animate-float-2" style="top: 30%; right: 20%;"></div>
+		<div class="absolute w-20 h-20 bg-white rounded-full opacity-12 blur-xl animate-float-3" style="bottom: 25%; left: 10%;"></div>
+		<div class="absolute w-28 h-28 bg-white rounded-full opacity-18 blur-xl animate-float-4" style="bottom: 15%; right: 15%;"></div>
+		<div class="absolute w-16 h-16 bg-white rounded-full opacity-8 blur-xl animate-float-5" style="top: 50%; left: 5%;"></div>
+		<div class="absolute w-24 h-24 bg-white rounded-full opacity-10 blur-xl animate-float-6" style="top: 20%; left: 40%;"></div>
+		<div class="absolute w-30 h-30 bg-white rounded-full opacity-15 blur-xl animate-float-7" style="bottom: 5%; left: 45%;"></div>
+	</div>
+
+	<!-- Main content -->
+	<div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+		<!-- Greeting -->
+		<div class="mb-6">
+			<span class="inline-block px-4 py-2 bg-teal-500/10 border border-teal-500/20 rounded-full text-teal-300 text-sm font-medium backdrop-blur-sm" data-lang="de">
+				Schön, dass du da bist!
+			</span>
+			<span class="inline-block px-4 py-2 bg-teal-500/10 border border-teal-500/20 rounded-full text-teal-300 text-sm font-medium backdrop-blur-sm" data-lang="en" style="display:none">
+				Welcome, glad to have you here!
+			</span>
+		</div>
+		
+		<!-- Animierter, professioneller Claim mit Fade -->
+		<style>
+		  #animated-claim {
+		    transition: opacity 0.7s;
+		    opacity: 1;
+		  }
+		  #animated-claim.fade-out {
+		    opacity: 0;
+		  }
+
+		  @keyframes gradient-rotate {
+		    0% { transform: rotate(0deg); }
+		    100% { transform: rotate(360deg); }
+		  }
+
+		  /* Keyframes für den Aura-Lichteffekt */
+		  @keyframes aura-light-effect {
+		    0% { background-size: 100% 100%; }
+		    25% { background-size: 105% 105%; } /* Weniger starke Bewegung */
+		    50% { background-size: 100% 100%; }
+		    75% { background-size: 102% 102%; } /* Weniger starke Bewegung */
+		    100% { background-size: 100% 100%; }
+		  }
+
+		  .animate-aura-light {
+		    animation: aura-light-effect 30s ease-in-out infinite alternate; /* Sanfter, pulsierender Lichteffekt */
+		    transition: background-size 0.5s ease-in-out; /* Sanfter Übergang für die Vergrößerung der Hintergrundgröße */
+		    background: radial-gradient(circle at center, rgba(0, 0, 0, 1.0) 0%, rgba(0, 0, 0, 1.0) 30%, rgba(255, 235, 59, 0.6) 40%, rgba(76, 175, 80, 0.5) 55%, rgba(33, 150, 243, 0.4) 75%, rgba(244, 67, 54, 0.3) 100%);
+		  }
+
+		  .aura-enlarged {
+		    background-size: 120% 120% !important; /* Vergrößert den Hintergrund um 20% relativ zur ursprünglichen Größe */
+		  }
+
+		  @keyframes color-shift-alt {
+		    0% { filter: hue-rotate(360deg); }
+		    25% { filter: hue-rotate(270deg); }
+		    50% { filter: hue-rotate(180deg); }
+		    75% { filter: hue-rotate(90deg); }
+		    100% { filter: hue-rotate(0deg); }
+		  }
+
+		  .animate-gradient-rotate {
+		    animation: gradient-rotate 30s linear infinite;
+		  }
+
+		  .animate-color-shift {
+		    animation: color-shift 20s linear infinite;
+		  }
+
+		  .animate-color-shift-alt {
+		    animation: color-shift-alt 25s linear infinite reverse;
+		  }
+
+		  /* Neue Keyframes für die Gradientenrotation */
+		  @keyframes gradient-rotate {
+		    0% { transform: rotate(0deg); }
+		    100% { transform: rotate(360deg); }
+		  }
+
+		  /* Die animate-gradient-rotate Klasse wird nicht mehr benötigt */
+
+		  /* Keyframes for floating circles */
+		  @keyframes float-1 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+		    33% { transform: translate(20px, 30px) scale(1.1); opacity: 0.15; }
+		    66% { transform: translate(-10px, -20px) scale(0.9); opacity: 0.12; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+		  }
+
+		  @keyframes float-2 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+		    33% { transform: translate(-25px, -15px) scale(0.95); opacity: 0.12; }
+		    66% { transform: translate(15px, 25px) scale(1.05); opacity: 0.18; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+		  }
+
+		  @keyframes float-3 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.12; }
+		    33% { transform: translate(10px, -20px) scale(1.05); opacity: 0.1; }
+		    66% { transform: translate(-5px, 10px) scale(0.98); opacity: 0.15; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.12; }
+		  }
+
+		  @keyframes float-4 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.18; }
+		    33% { transform: translate(-15px, 20px) scale(1.02); opacity: 0.16; }
+		    66% { transform: translate(20px, -10px) scale(0.97); opacity: 0.19; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.18; }
+		  }
+
+		  @keyframes float-5 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.08; }
+		    33% { transform: translate(5px, 15px) scale(1.03); opacity: 0.1; }
+		    66% { transform: translate(-10px, -5px) scale(0.96); opacity: 0.09; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.08; }
+		  }
+
+		  @keyframes float-6 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+		    33% { transform: translate(25px, -10px) scale(0.98); opacity: 0.13; }
+		    66% { transform: translate(-15px, 20px) scale(1.05); opacity: 0.11; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+		  }
+
+		  @keyframes float-7 {
+		    0% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+		    33% { transform: translate(-5px, 25px) scale(1.01); opacity: 0.17; }
+		    66% { transform: translate(10px, -15px) scale(0.99); opacity: 0.14; }
+		    100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+		  }
+
+		  .animate-float-1 { animation: float-1 20s ease-in-out infinite alternate; }
+		  .animate-float-2 { animation: float-2 22s ease-in-out infinite alternate-reverse; }
+		  .animate-float-3 { animation: float-3 18s ease-in-out infinite alternate; }
+		  .animate-float-4 { animation: float-4 25s ease-in-out infinite alternate-reverse; }
+		  .animate-float-5 { animation: float-5 19s ease-in-out infinite alternate; }
+		  .animate-float-6 { animation: float-6 21s ease-in-out infinite alternate-reverse; }
+		  .animate-float-7 { animation: float-7 23s ease-in-out infinite alternate; }
+		</style>
+		<div class="mb-4 h-10 flex items-center justify-center">
+		  <span id="animated-claim" class="text-2xl md:text-3xl font-semibold text-white">Deine Vision? Realisiert!</span>
+		</div>
+		
+		<!-- Main heading -->
+		<h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-white !important">
+			Bjarne Niklas
+			<br />
+			Luttermann
+		</h1>
+		
+		<!-- Subtitle -->
+		<p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed" data-lang="de">
+			Media Informatics Master Student & Full-Stack Developer
+			<br />
+			<span class="text-teal-400 font-medium">Spezialisiert auf Flutter, Unity & Next-Gen Media Platforms</span>
+		</p>
+		<p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed" data-lang="en" style="display:none">
+			Media Informatics Master Student & Full-Stack Developer
+			<br />
+			<span class="text-teal-400 font-medium">Specialized in Flutter, Unity & Next-Gen Media Platforms</span>
+		</p>
+		
+		<!-- Animated typing effect -->
+		<div class="mb-12 h-8 flex justify-center items-center" data-lang="de">
+			<span class="text-lg text-gray-400 mr-2">Ich entwickle</span>
+			<span class="text-lg font-mono text-teal-400 border-r-2 border-teal-400 animate-pulse">
+				interaktive Medienplattformen
+			</span>
+		</div>
+		<div class="mb-12 h-8 flex justify-center items-center" data-lang="en" style="display:none">
+			<span class="text-lg text-gray-400 mr-2">I build</span>
+			<span class="text-lg font-mono text-teal-400 border-r-2 border-teal-400 animate-pulse">
+				interactive media platforms
+			</span>
+		</div>
+		
+		<!-- CTA Buttons -->
+		<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+			<a href="#projects" class="group relative px-8 py-4 bg-gradient-to-r from-teal-600 to-teal-400 rounded-full text-white font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-teal-500/25">
+				<span class="relative z-10 flex items-center">
+					<i class="fas fa-rocket mr-2"></i>
+					<span data-lang="de">Projekte entdecken</span>
+					<span data-lang="en" style="display:none">Discover Projects</span>
+				</span>
+				<div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-teal-400 rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
+			</a>
+			
+			<a href="#contact" class="group px-8 py-4 border-2 border-teal-500/30 rounded-full text-teal-300 font-semibold text-lg transition-all duration-300 hover:bg-teal-500/10 hover:border-teal-500/50 hover:scale-105">
+				<i class="fas fa-envelope mr-2"></i>
+				<span data-lang="de">Kontakt aufnehmen</span>
+				<span data-lang="en" style="display:none">Contact me</span>
+			</a>
+		</div>
+		
+		<!-- Avatar -->
+		<div class="mt-16 mb-8 flex justify-center">
+			<img src="/assets/avatar.webp" alt="Avatar von Bjarne Niklas Luttermann" class="w-32 h-32 rounded-full border-4 border-teal-500 shadow-lg object-cover" />
+		</div>
+
+		<!-- Scroll indicator -->
+		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+			<div class="w-6 h-10 border-2 border-teal-400 rounded-full flex justify-center">
+				<div class="w-1 h-3 bg-teal-400 rounded-full mt-2 animate-pulse"></div>
+			</div>
+		</div>
+	</div>
+</section>

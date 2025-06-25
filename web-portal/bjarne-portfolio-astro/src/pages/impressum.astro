@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Impressum | Legal Notice">
+  <main class="max-w-3xl mx-auto py-16 px-4 text-gray-200">
+    <h1 class="text-3xl font-bold mb-6 text-teal-400" data-lang-legal="de">Impressum</h1>
+    <h1 class="text-3xl font-bold mb-6 text-teal-400" data-lang-legal="en" style="display:none">Legal Notice</h1>
+    <p class="mb-4" data-lang-legal="de">Angaben gemäß § 5 TMG</p>
+    <p class="mb-4" data-lang-legal="en" style="display:none">Information according to § 5 TMG (German law)</p>
+    <p class="mb-2" data-lang-legal="de">Bjarne Niklas Luttermann<br />Musterstraße 1<br />70173 Stuttgart<br />Deutschland</p>
+    <p class="mb-2" data-lang-legal="en" style="display:none">Bjarne Niklas Luttermann<br />Musterstraße 1<br />70173 Stuttgart<br />Germany</p>
+    <p class="mb-2">E-Mail: <a href="mailto:aurav.tech@gmail.com" class="text-teal-400 underline">aurav.tech@gmail.com</a></p>
+    <p class="mb-6" data-lang-legal="de">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br />Bjarne Niklas Luttermann, Adresse wie oben</p>
+    <p class="mb-6" data-lang-legal="en" style="display:none">Responsible for content according to § 55 Abs. 2 RStV:<br />Bjarne Niklas Luttermann, address as above</p>
+    <h2 class="text-xl font-semibold mt-8 mb-2 text-teal-300" data-lang-legal="de">Haftungsausschluss</h2>
+    <h2 class="text-xl font-semibold mt-8 mb-2 text-teal-300" data-lang-legal="en" style="display:none">Disclaimer</h2>
+    <p class="mb-4 text-sm" data-lang-legal="de">Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+    <p class="mb-4 text-sm" data-lang-legal="en" style="display:none">Despite careful content control, I assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content.</p>
+    <h2 class="text-xl font-semibold mt-8 mb-2 text-teal-300" data-lang-legal="de">Urheberrecht</h2>
+    <h2 class="text-xl font-semibold mt-8 mb-2 text-teal-300" data-lang-legal="en" style="display:none">Copyright</h2>
+    <p class="mb-4 text-sm" data-lang-legal="de">Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+    <p class="mb-4 text-sm" data-lang-legal="en" style="display:none">The content and works created by the site operator on these pages are subject to German copyright law. Contributions by third parties are marked as such.</p>
+    <p class="text-xs text-gray-500 mt-8" data-lang-legal="de">Dieses Impressum gilt auch für die Social-Media-Profile, sofern vorhanden.</p>
+    <p class="text-xs text-gray-500 mt-8" data-lang-legal="en" style="display:none">This legal notice also applies to social media profiles, if available.</p>
+    <script>
+      if (typeof window !== 'undefined') {
+        function switchLangLegal(lang) {
+          document.querySelectorAll('[data-lang-legal]').forEach(el => {
+            el.style.display = el.getAttribute('data-lang-legal') === lang ? '' : 'none';
+          });
+        }
+        window.switchLangLegal = switchLangLegal;
+        window.addEventListener('DOMContentLoaded', function() {
+          switchLangLegal(window.lang || 'de');
+        });
+        window.addEventListener('languagechange', function() {
+          switchLangLegal(window.lang || 'de');
+        });
+      }
+    </script>
+  </main>
+</Layout> 

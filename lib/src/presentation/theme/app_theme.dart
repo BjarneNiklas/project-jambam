@@ -25,8 +25,6 @@ class AppTheme {
         onTertiaryContainer: AppColors.textPrimary,
         error: AppColors.error,
         onError: AppColors.onError,
-        background: AppColors.background,
-        onBackground: AppColors.textPrimary,
         surface: AppColors.surface,
         onSurface: AppColors.textPrimary,
         outline: AppColors.textSecondary,
@@ -44,7 +42,7 @@ class AppTheme {
           color: AppColors.onPrimary,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0), // Style guide: 8-12px
@@ -137,23 +135,21 @@ class AppTheme {
         brightness: Brightness.dark,
         primary: AppColors.primary, // Could be a lighter variant for dark theme like Colors.deepPurple.shade300
         onPrimary: AppColors.onPrimaryDark,
-        primaryContainer: AppColors.primaryLight.withOpacity(0.1), // Darker container
+        primaryContainer: AppColors.primaryLight.withValues(alpha: 0.1), // Darker container
         onPrimaryContainer: AppColors.textPrimaryDark,
         secondary: AppColors.secondary, // Could be a lighter variant for dark theme like Colors.amber.shade300
         onSecondary: AppColors.onSecondaryDark,
-        secondaryContainer: AppColors.secondary.withOpacity(0.2),
+        secondaryContainer: AppColors.secondary.withValues(alpha: 0.2),
         onSecondaryContainer: AppColors.textPrimaryDark,
         tertiary: AppColors.accent, // Could be a lighter variant
         onTertiary: AppColors.onAccentDark,
-        tertiaryContainer: AppColors.accent.withOpacity(0.2),
+        tertiaryContainer: AppColors.accent.withValues(alpha: 0.2),
         onTertiaryContainer: AppColors.textPrimaryDark,
         error: AppColors.error, // Consider Colors.red.shade300 for dark theme
         onError: AppColors.onErrorDark,
-        background: AppColors.backgroundDark,
-        onBackground: AppColors.textPrimaryDark,
         surface: AppColors.surfaceDark,
         onSurface: AppColors.textPrimaryDark,
-        outline: AppColors.textSecondaryDark.withOpacity(0.5),
+        outline: AppColors.textSecondaryDark.withValues(alpha: 0.5),
       ),
       scaffoldBackgroundColor: AppColors.backgroundDark,
       appBarTheme: AppBarTheme(
@@ -168,7 +164,7 @@ class AppTheme {
           color: AppColors.textPrimaryDark,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -195,7 +191,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.accent, // Consider lighter accent for dark
-          side: BorderSide(color: AppColors.accent.withOpacity(0.7), width: 1.5),
+          side: BorderSide(color: AppColors.accent.withValues(alpha: 0.7), width: 1.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -220,19 +216,19 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.textSecondaryDark.withOpacity(0.5)),
+          borderSide: BorderSide(color: AppColors.textSecondaryDark.withValues(alpha: 0.5)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.textSecondaryDark.withOpacity(0.5)),
+          borderSide: BorderSide(color: AppColors.textSecondaryDark.withValues(alpha: 0.5)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.primary.withAlpha(200), width: 2.0), // Lighter primary focus
+          borderSide: BorderSide(color: AppColors.primary.withValues(alpha: 0.78), width: 2.0), // Lighter primary focus
         ),
         filled: true,
         fillColor: AppColors.surfaceDark,
-        hintStyle: TextStyle(color: AppColors.textSecondaryDark.withOpacity(0.7)),
+        hintStyle: TextStyle(color: AppColors.textSecondaryDark.withValues(alpha: 0.7)),
         labelStyle: TextStyle(color: AppColors.textPrimaryDark),
       ),
       textTheme: const TextTheme(
