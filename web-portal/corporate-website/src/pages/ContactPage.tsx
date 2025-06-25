@@ -4,7 +4,7 @@ import EmailIcon from '@mui/icons-material/Email';
 
 const ContactPage: React.FC = () => {
   // Replace with actual contact email
-  const contactEmail = "info@jambam.com";
+  const contactEmail = "contact@aurav.tech"; // Updated placeholder email
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
@@ -14,7 +14,7 @@ const ContactPage: React.FC = () => {
         </Typography>
         <Typography variant="body1" paragraph>
           We'd love to hear from you! Whether you're interested in investing, partnering,
-          or just want to learn more about JambaM, feel free to reach out.
+          or just want to learn more about Aurav Technologies, the AURAX platform, or the LUVY engine, feel free to reach out.
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 3 }}>
           <EmailIcon sx={{ mr: 1 }} />

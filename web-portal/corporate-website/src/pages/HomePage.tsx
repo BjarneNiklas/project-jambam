@@ -13,11 +13,14 @@ const HomePage: React.FC = () => {
           color="text.primary"
           gutterBottom
         >
-          JambaM
+          Aurav Technologies
         </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" paragraph>
-          Revolutionizing game development with AI-powered tools and a collaborative platform.
-          Our vision is to empower creators of all sizes to build innovative and engaging games faster and more efficiently.
+        <Typography variant="h4" component="h2" align="center" color="text.secondary" paragraph sx={{mb: 3}}>
+          AI-Driven Game Development &amp; Creator Platforms
+        </Typography>
+        <Typography variant="h6" align="center" color="text.secondary" paragraph>
+          Pioneering the future of interactive entertainment with the AURAX platform and LUVY engine. We empower creators with AI-powered tools, multi-engine support, and a vibrant community ecosystem for collaborative game creation and metaverse experiences.
+          {/* This text should be further expanded with details about the 5 core offerings */}
         </Typography>
         <Box sx={{ pt: 4, display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" component={RouterLink} to="/about" sx={{ mr: 2 }}>
