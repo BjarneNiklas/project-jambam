@@ -8,6 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'dart:async';
 // import 'package:project_jambam/src/features/b_admin_panel/admin_panel_screen.dart'; // Entfernt
 import 'src/features/b_authentication/data/auth_repository_provider.dart';
+import 'src/presentation/theme/app_theme.dart'; // Import the new AppTheme
 
 final environment = Environment();
 
@@ -150,72 +151,8 @@ class JambaMApp extends StatelessWidget {
     return MaterialApp(
       title: 'JambaM',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-        fontFamily: 'Roboto', // Changed to Roboto as per STYLE_GUIDE.md
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
-        cardTheme: const CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            elevation: 2,
-            shape: const RoundedRectangleBorder( // shape kann const sein
-              borderRadius: BorderRadius.all(Radius.circular(12.0)),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          ),
-          filled: true,
-        ),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-        fontFamily: 'Roboto', // Changed to Roboto as per STYLE_GUIDE.md
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
-        cardTheme: const CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            elevation: 2,
-            shape: const RoundedRectangleBorder( // shape kann const sein
-              borderRadius: BorderRadius.all(Radius.circular(12.0)),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          ),
-          filled: true,
-        ),
-      ),
+      theme: AppTheme.lightTheme, // Use new light theme
+      darkTheme: AppTheme.darkTheme, // Use new dark theme
       themeMode: ThemeMode.system,
       home: const AuthWrapper(),
     );
