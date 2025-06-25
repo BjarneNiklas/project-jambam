@@ -44,17 +44,22 @@ npm start
 
 ## 🚀 Geplante Projekte
 
-### 2. Unternehmenswebseite (Corporate Website)
-**Status**: Geplant
+### 2. Unternehmenswebseite (Corporate Website) ✅
+**Status**: MVP Implementiert
 
-- **Zweck**: Unternehmenspräsenz, Marketing, Kundenakquise
-- **Features**: 
+- **Zweck**: Unternehmenspräsenz, Marketing, Kundenakquise (MVP-Fokus: Investoren, Förderprogramme)
+- **Features (MVP)**:
   - Hero-Sektion mit JambaM Vision
-  - Über uns / Team
-  - Services / Produkte
-  - Kontakt / Support
-  - Blog / News
-- **Technologien**: React, TypeScript, Material-UI, SEO-optimiert
+  - Über uns / Team (Grundlegend)
+  - Kontaktinformationen
+- **Technologien**: React, TypeScript, Material-UI
+
+**Starten**:
+```bash
+cd corporate-website
+npm install
+npm start
+```
 
 ### 3. AI Agent Hub
 **Status**: Geplant
@@ -128,8 +133,10 @@ npm install @mui/material @emotion/react @emotion/styled
 # Tech Radar
 cd tech-radar && npm start
 
-# Weitere Projekte (wenn verfügbar)
+# Corporate Website
 cd corporate-website && npm start
+
+# Weitere Projekte (wenn verfügbar)
 cd ai-agent-hub && npm start
 cd documentation && npm start
 ```
