@@ -26,6 +26,9 @@ import HubIcon from '@mui/icons-material/Hub';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
+import LinkIcon from '@mui/icons-material/Link';
+import { BiCube } from 'react-icons/bi';
+import { useLanguage } from '../app/LanguageContext';
 
 // --- Konstanten (Flags, Links etc.) ---
 const GermanFlag: React.FC<{ size?: number }> = ({ size = 20 }) => (
@@ -53,6 +56,7 @@ const navLinks = [
 ];
 const projects = [
     { href: 'https://aurav.tech', label: 'AuraVention', icon: <img src="/av_logo.webp" alt="AuraVention" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
+    { href: '/projects/broxel-engine', label: 'Broxel Engine', icon: <BiCube size={24} style={{ color: '#a78bfa' }} />, external: false },
     { href: '#', label: 'Project Y', icon: <img src="/y_logo.webp" alt="Project Y" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
 ];
 const games = [
@@ -78,17 +82,20 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
     const [gamesOpen, setGamesOpen] = useState(false);
     const [aboutOpen, setAboutOpen] = useState(false);
 
-    const [language, setLanguage] = useState<'de' | 'en'>('de');
+    const { lang, setLang, t } = useLanguage();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleLangMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleLangMenuClose = () => setAnchorEl(null);
-    const handleLangChange = (lang: 'de' | 'en') => {
-        setLanguage(lang);
+    const handleLangChange = (language: 'de' | 'en') => {
+        setLang(language);
         setAnchorEl(null);
-        document.documentElement.lang = lang;
-        window.dispatchEvent(new Event('languagechange'));
+        // Only access DOM APIs on the client side
+        if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+            document.documentElement.lang = language;
+            window.dispatchEvent(new Event('languagechange'));
+        }
     };
-    const flagIcon = language === 'de' ? <GermanFlag /> : <UKFlag />;
+    const flagIcon = lang === 'de' ? <GermanFlag /> : <UKFlag />;
 
     // --- Wiederverwendbarer Sidebar-Inhalt ---
     const SidebarContent = ({ isOpen }: { isOpen: boolean }) => (
@@ -191,11 +198,13 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
             {/* Hauptnavigation */}
             <List sx={{ px: 1.5, py: 1 }}>
                 {/* About Me Dropdown */}
-                <Tooltip title={isOpen ? '' : 'About Me'} placement="right" arrow>
+                <Tooltip title={isOpen ? '' : t('sidebar.about')} placement="right" arrow>
                     <ListItemButton
                         onClick={() => {
                             if (!isOpen) {
-                                window.location.hash = '#about';
+                                if (typeof window !== 'undefined') {
+                                    window.location.hash = '#about';
+                                }
                             } else {
                                 setAboutOpen(!aboutOpen);
                             }
@@ -203,7 +212,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                         sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}
                     >
                         <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}><InfoIcon /></ListItemIcon>
-                        {isOpen && <ListItemText primary={language === 'de' ? 'About Me' : 'About Me'} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                        {isOpen && <ListItemText primary={t('sidebar.about')} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
                         {isOpen && <ExpandMoreIcon sx={{ transform: aboutOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.2s' }} />}
                     </ListItemButton>
                 </Tooltip>
@@ -211,29 +220,34 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                     <List component="div" disablePadding sx={{ pl: 4 }}>
                         <ListItemButton component="a" href="/#about" sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><PersonIcon /></ListItemIcon>
-                            <ListItemText primary={language === 'de' ? 'Profil' : 'Profile'} />
+                            <ListItemText primary={t('about.title')} />
                         </ListItemButton>
                         <ListItemButton component="a" href="/#experience-education" sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><SchoolIcon /></ListItemIcon>
-                            <ListItemText primary={language === 'de' ? 'Erfahrung & Ausbildung' : 'Experience & Education'} />
+                            <ListItemText primary={t('about.skills.title')} />
                         </ListItemButton>
                         <ListItemButton component="a" href="/#skills" sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><BuildIcon /></ListItemIcon>
-                            <ListItemText primary={language === 'de' ? 'Skills & Tech' : 'Skills & Tech'} />
+                            <ListItemText primary={t('about.skills.title')} />
                         </ListItemButton>
                     </List>
                 )}
                 {/* Restliche Links */}
                 {navLinks.slice(1).map((link) => (
-                    <Tooltip key={link.label[language]} title={!isOpen ? link.label[language] : ''} placement="right" arrow>
+                    <Tooltip key={link.label[lang]} title={!isOpen ? link.label[lang] : ''} placement="right" arrow>
                         <ListItemButton
                             component="a"
-                            href={link.label[language] === 'My Games' ? undefined : link.href}
-                            onClick={link.label[language] === 'My Games' ? (e) => { e.preventDefault(); window.location.hash = '#projects'; } : undefined}
+                            href={link.label[lang] === 'My Games' ? undefined : link.href}
+                            onClick={link.label[lang] === 'My Games' ? (e) => { 
+                                e.preventDefault(); 
+                                if (typeof window !== 'undefined') {
+                                    window.location.hash = '#projects'; 
+                                }
+                            } : undefined}
                             sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}
                         >
                             <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{link.icon}</ListItemIcon>
-                            {isOpen && <ListItemText primary={link.label[language]} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                            {isOpen && <ListItemText primary={link.label[lang]} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
                         </ListItemButton>
                     </Tooltip>
                 ))}
@@ -243,25 +257,31 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
             {/* Projekte & Socials etc. */}
             <Box sx={{ flexGrow: 1, py: 1 }}>
                 <Typography variant="caption" color="text.secondary" sx={{ display: isOpen ? 'block' : 'none', px: 3, mb: 1, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {language === 'de' ? 'Projekte' : 'Projects'}
+                    {t('sidebar.projects')}
                 </Typography>
                  <List sx={{ px: 1.5 }}>
                     {projects.map(proj => (
                         <Tooltip key={proj.label} title={!isOpen ? proj.label : ''} placement="right" arrow>
                             <ListItemButton component="a" href={proj.href} target={proj.external ? "_blank" : undefined} rel={proj.external ? "noopener" : undefined} sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}>
                                 <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{proj.icon}</ListItemIcon>
-                                {isOpen && <ListItemText primary={proj.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
-                                {isOpen && proj.external && <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 'auto' }} />}
+                                {isOpen && (
+                                  <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                                    <ListItemText primary={proj.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />
+                                    <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 1, mr: -1 }} />
+                                  </Box>
+                                )}
                             </ListItemButton>
                         </Tooltip>
                     ))}
                     
                     {/* Games within Projects */}
-                    <Tooltip title={!isOpen ? (language === 'de' ? 'Meine Spiele' : 'My Games') : ''} placement="right" arrow>
+                    <Tooltip title={!isOpen ? t('sidebar.games') : ''} placement="right" arrow>
                         <ListItemButton 
                             onClick={() => {
                                 if (!isOpen) {
-                                    window.location.hash = '#projects';
+                                    if (typeof window !== 'undefined') {
+                                        window.location.hash = '#projects';
+                                    }
                                 } else {
                                     setGamesOpen(!gamesOpen);
                                 }
@@ -271,7 +291,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                             <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>
                                 <SportsEsportsIcon />
                             </ListItemIcon>
-                            {isOpen && <ListItemText primary={language === 'de' ? 'Meine Spiele' : 'My Games'} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                            {isOpen && <ListItemText primary={t('sidebar.games')} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
                             {isOpen && (
                                 <IconButton size="small" sx={{ ml: 'auto', p: 0 }}>
                                     {gamesOpen ? <ChevronLeftIcon /> : <ArrowDropDownIcon />}
@@ -296,7 +316,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                 </List>
                 <Divider sx={{ mx: 2, my: 1 }} />
                 <Typography variant="caption" color="text.secondary" sx={{ display: isOpen ? 'block' : 'none', px: 3, mb: 1, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {language === 'de' ? 'Soziale Medien' : 'Socials'}
+                    {t('contact.title')}
                 </Typography>
                 <List sx={{ px: 1.5 }}>
                     {socials.map(soc => (
@@ -304,7 +324,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                             <ListItemButton component="a" href={soc.href} target="_blank" rel="noopener" sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}>
                                 <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{soc.icon}</ListItemIcon>
                                 {isOpen && <ListItemText primary={soc.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
-                                {isOpen && <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 'auto' }} />}
+                                {isOpen && <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 8, mr: -1 }} />}
                             </ListItemButton>
                         </Tooltip>
                     ))}
@@ -317,16 +337,16 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
             <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', position: 'relative' }}>
                  {isOpen ? (
                     <Button fullWidth variant="outlined" startIcon={flagIcon} onClick={handleLangMenuOpen} endIcon={<ArrowDropDownIcon />}>
-                        {language === 'de' ? 'Deutsch' : 'English'}
+                        {lang === 'de' ? 'Deutsch' : 'English'}
                     </Button>
                 ) : (
-                    <Tooltip title={language === 'de' ? 'Sprache' : 'Language'} placement="right" arrow>
+                    <Tooltip title={t('sidebar.language')} placement="right" arrow>
                         <IconButton onClick={handleLangMenuOpen}>{flagIcon}</IconButton>
                     </Tooltip>
                 )}
                 <Menu
                     anchorReference="anchorPosition"
-                    anchorPosition={{ top: window.innerHeight - 56, left: 0 }}
+                    anchorPosition={{ top: typeof window !== 'undefined' ? window.innerHeight - 56 : 0, left: 0 }}
                     open={Boolean(anchorEl)}
                     onClose={handleLangMenuClose}
                     PaperProps={{
@@ -364,7 +384,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                 component="aside"
                 sx={{
                     position: 'fixed', top: 0, left: 0, height: '100vh', width: 280,
-                    bgcolor: 'rgba(26, 26, 26, 0.95)', boxShadow: 3, zIndex: 1201,
+                    bgcolor: 'rgba(26, 26, 26, 0.70)', boxShadow: 3, zIndex: 1201,
                     display: { xs: 'block', md: 'none' },
                     transform: mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
                     transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -377,13 +397,18 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
             <Box
                 component="aside"
                 sx={{
-                    position: 'sticky', top: 0, left: 0, height: '100vh',
+                    position: 'sticky',
+                    top: 0,
+                    left: 0,
+                    height: '100vh',
                     width: desktopOpen ? (gamesOpen ? 280 : 220) : 80,
                     bgcolor: 'rgba(26, 26, 26, 0.70)',
                     borderRight: '1.5px solid #222',
                     zIndex: 1,
                     display: { xs: 'none', md: 'block' },
                     transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)',
                 }}
             >
                 <SidebarContent isOpen={desktopOpen} />
@@ -392,4 +417,4 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
     );
 };
 
-export default Sidebar; 
+export default Sidebar;

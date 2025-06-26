@@ -33,10 +33,11 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import StarIcon from '@mui/icons-material/Star';
 import LinkIcon from '@mui/icons-material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useLanguage } from '../app/LanguageContext';
 
 const skillGroups = [
   {
-    title: 'Programmiersprachen',
+    title: 'programmingLanguages',
     skills: [
       { label: 'Dart', icon: <CodeIcon /> },
       { label: 'C#', icon: <CSharpIcon /> },
@@ -53,7 +54,7 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Frameworks & SDKs',
+    title: 'frameworks',
     skills: [
       { label: 'Flutter', icon: <FlutterIcon /> },
       { label: 'React', icon: <CodeIcon /> },
@@ -61,7 +62,7 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Spieleentwicklung',
+    title: 'gameDev',
     skills: [
       { label: 'Unity Engine', icon: <UnityIcon /> },
       { label: 'Game Design', icon: <GamepadIcon /> },
@@ -69,7 +70,7 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Daten & KI',
+    title: 'dataAI',
     skills: [
       { label: 'Generative KI', icon: <AutoAwesomeIcon /> },
       { label: 'Prompt Engineering', icon: <EngineeringIcon /> },
@@ -82,7 +83,7 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Cloud & Backend',
+    title: 'cloudBackend',
     skills: [
       { label: 'Firebase', icon: <CloudIcon /> },
       { label: 'Google Cloud Platform (GCP)', icon: <CloudIcon /> },
@@ -96,7 +97,7 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Werkzeuge',
+    title: 'tools',
     skills: [
       { label: 'Slack', icon: <SlackIcon /> },
       { label: 'VS Code', icon: <CodeIcon /> },
@@ -110,7 +111,7 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Allgemein',
+    title: 'general',
     skills: [
       { label: 'UX Design', icon: <DesignServicesIcon /> },
       { label: 'Transparente Kommunikation', icon: <ForumIcon /> },
@@ -129,6 +130,8 @@ const topSkills = [
 ];
 
 const Skills: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <Box component="section" id="skills" sx={{ py: 8, bgcolor: 'background.default' }}>
       <Container maxWidth="md">
@@ -139,7 +142,7 @@ const Skills: React.FC = () => {
             gutterBottom 
             sx={{ fontWeight: 700, color: 'primary.main' }}
           >
-            Fähigkeiten & Technologien
+            {t('skills.title')}
           </Typography>
           <Divider 
             sx={{ width: 80, height: 4, mx: 'auto', bgcolor: 'primary.main', borderRadius: 2 }} 
@@ -151,7 +154,7 @@ const Skills: React.FC = () => {
               color="primary"
               startIcon={<TrackChangesIcon />}
               endIcon={<OpenInNewIcon />}
-              href="/tech-radar"
+              href="https://www.auravention.com/tech-radar"
               target="_blank"
               sx={{
                 fontWeight: 700,
@@ -170,14 +173,14 @@ const Skills: React.FC = () => {
               }}
               title="Interaktive Übersicht aller Technologien im Projekt"
             >
-              Tech Radar von AuraVention
+              {t('skills.techRadar')}
             </Button>
           </Box>
         </Box>
         {skillGroups.map((group) => (
           <Box key={group.title} mb={4}>
             <Typography variant="h5" component="h3" sx={{ mb: 2, fontWeight: 600, color: '#fff' }}>
-              {group.title}
+              {t(`skills.groups.${group.title}`)}
             </Typography>
             <Stack direction="row" flexWrap="wrap" gap={1.5}>
               {group.skills.map((skill) => {
@@ -200,8 +203,7 @@ const Skills: React.FC = () => {
                       p: 2,
                       cursor: 'pointer',
                       borderColor: 'primary.main',
-                      color: isTop ? 'primary.contrastText' : 'inherit',
-                      background: isTop ? undefined : 'rgba(179,157,219,0.07)',
+                      background: 'rgba(179,157,219,0.07)',
                       transition: 'all 0.2s',
                       '&:hover': {
                         transform: 'scale(1.05)',

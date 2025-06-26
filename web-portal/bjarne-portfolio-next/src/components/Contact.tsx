@@ -9,6 +9,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useLanguage } from '../app/LanguageContext';
 
 // contactInfo is not used directly in this component anymore, but might be used if the component were more dynamic.
 // const contactInfo = [
@@ -24,6 +25,7 @@ const socialLinks = [
 ];
 
 const Contact: React.FC = () => {
+    const { t } = useLanguage();
     // const [showDomainNotice, setShowDomainNotice] = useState(true); // Removed as banner is removed
 
     return (
@@ -31,7 +33,7 @@ const Contact: React.FC = () => {
             <Container maxWidth="lg">
                 <Box sx={{ textAlign: 'center', mb: 6 }}>
                     <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-                        Kontakt & Vernetzung
+                        {t('contact.title')} & {t('contact.networking')}
                     </Typography>
                     <Divider sx={{ width: 80, height: 4, mx: 'auto', bgcolor: 'primary.main', borderRadius: 2 }} />
                 </Box>
@@ -43,28 +45,28 @@ const Contact: React.FC = () => {
                             <Card sx={{ height: '100%', borderRadius: 4, boxShadow: 3, p: 2, transition: '0.2s', '&:hover': { boxShadow: 8 } }}>
                                 <CardHeader
                                     avatar={<MailIcon color="secondary" sx={{ fontSize: 32 }} />}
-                                    title={<Typography variant="h6" fontWeight={700}>Direkter Kontakt</Typography>}
+                                    title={<Typography variant="h6" fontWeight={700}>{t('contact.directContact')}</Typography>}
                                 />
                                 <CardContent>
                                     <List>
                                         <ListItem disablePadding>
                                             <ListItemIcon><MailIcon color="secondary" /></ListItemIcon>
                                             <ListItemText
-                                                primary={<Typography fontWeight={600}>E-Mail</Typography>}
+                                                primary={<Typography fontWeight={600}>{t('contact.email')}</Typography>}
                                                 secondary={<a href="mailto:aurav.tech@gmail.com" style={{ color: '#a78bfa', textDecoration: 'none', fontWeight: 500 }}>aurav.tech@gmail.com</a>}
                                             />
                                         </ListItem>
                                         <ListItem disablePadding>
                                             <ListItemIcon><LocationOnIcon color="primary" /></ListItemIcon>
                                             <ListItemText
-                                                primary={<Typography fontWeight={600}>Standort</Typography>}
+                                                primary={<Typography fontWeight={600}>{t('contact.location')}</Typography>}
                                                 secondary={<Typography color="text.secondary">Lübeck, Deutschland</Typography>}
                                             />
                                         </ListItem>
                                         <ListItem disablePadding>
                                             <ListItemIcon><SchoolIcon color="success" /></ListItemIcon>
                                             <ListItemText
-                                                primary={<Typography fontWeight={600}>Hochschule</Typography>}
+                                                primary={<Typography fontWeight={600}>{t('contact.university')}</Typography>}
                                                 secondary={<Typography color="text.secondary">Technische Hochschule Lübeck</Typography>}
                                             />
                                         </ListItem>
@@ -77,21 +79,21 @@ const Contact: React.FC = () => {
                             <Card sx={{ height: '100%', borderRadius: 4, boxShadow: 3, p: 2, transition: '0.2s', '&:hover': { boxShadow: 8 } }}>
                                 <CardHeader
                                     avatar={<AccessTimeIcon color="primary" sx={{ fontSize: 32 }} />}
-                                    title={<Typography variant="h6" fontWeight={700}>Verfügbarkeit</Typography>}
+                                    title={<Typography variant="h6" fontWeight={700}>{t('contact.availability')}</Typography>}
                                 />
                                 <CardContent>
                                     <List>
                                         <ListItem disablePadding sx={{ mb: 2 }}>
-                                            <ListItemText primary="Freelance Projekte" />
-                                            <Chip label="Verfügbar" color="success" size="small" sx={{ fontWeight: 600, ml: 2 }} />
+                                            <ListItemText primary={t('contact.freelance')} />
+                                            <Chip label={t('contact.available')} color="success" size="small" sx={{ fontWeight: 600, ml: 2 }} />
                                         </ListItem>
                                         <ListItem disablePadding sx={{ mb: 2 }}>
-                                            <ListItemText primary="Vollzeit Positionen" />
-                                            <Chip label="Ab 2026" color="warning" size="small" sx={{ fontWeight: 600, ml: 2 }} />
+                                            <ListItemText primary={t('contact.fulltime')} />
+                                            <Chip label={t('contact.from2026')} color="warning" size="small" sx={{ fontWeight: 600, ml: 2 }} />
                                         </ListItem>
                                         <ListItem disablePadding sx={{ mb: 2 }}>
-                                            <ListItemText primary="Beratung" />
-                                            <Chip label="Verfügbar" color="success" size="small" sx={{ fontWeight: 600, ml: 2 }} />
+                                            <ListItemText primary={t('contact.consulting')} />
+                                            <Chip label={t('contact.available')} color="success" size="small" sx={{ fontWeight: 600, ml: 2 }} />
                                         </ListItem>
                                     </List>
                                 </CardContent>
@@ -103,24 +105,24 @@ const Contact: React.FC = () => {
                         <Card sx={{ borderRadius: 4, boxShadow: 3, p: 2, transition: '0.2s', '&:hover': { boxShadow: 8 } }}>
                             <CardHeader
                                 avatar={<FaRocket style={{ color: '#38bdf8', fontSize: 32 }} />}
-                                title={<Typography variant="h6" fontWeight={700}>Lass uns zusammenarbeiten</Typography>}
+                                title={<Typography variant="h6" fontWeight={700}>{t('contact.letsWorkTogether')}</Typography>}
                             />
                             <CardContent>
                                 <Typography color="text.secondary" sx={{ mb: 2 }}>
-                                    Ich bin immer offen für spannende Projekte und neue Herausforderungen. Egal ob es um Flutter-Entwicklung, Unity-Projekte oder innovative Medienplattformen geht – lass uns gemeinsam etwas Großartiges schaffen!
+                                    {t('contact.workTogetherDesc')}
                                 </Typography>
                                 <List>
                                     <ListItem disablePadding>
                                         <ListItemIcon><CheckCircleIcon color="success" /></ListItemIcon>
-                                        <ListItemText primary="Schnelle Reaktionszeiten" />
+                                        <ListItemText primary={t('contact.quickResponse')} />
                                     </ListItem>
                                     <ListItem disablePadding>
                                         <ListItemIcon><CheckCircleIcon color="success" /></ListItemIcon>
-                                        <ListItemText primary="Moderne Technologien" />
+                                        <ListItemText primary={t('contact.modernTech')} />
                                     </ListItem>
                                     <ListItem disablePadding>
                                         <ListItemIcon><CheckCircleIcon color="success" /></ListItemIcon>
-                                        <ListItemText primary="Qualitätsorientierte Entwicklung" />
+                                        <ListItemText primary={t('contact.qualityDev')} />
                                     </ListItem>
                                 </List>
                                 <Box sx={{ mt: 3, textAlign: 'center' }}>
@@ -132,7 +134,7 @@ const Contact: React.FC = () => {
                                         sx={{ fontWeight: 700, borderRadius: 3, px: 4, boxShadow: 2, textTransform: 'none', transition: '0.2s', '&:hover': { boxShadow: 6, background: 'linear-gradient(90deg, #6366f1 0%, #a78bfa 100%)' } }}
                                         href="mailto:aurav.tech@gmail.com"
                                     >
-                                        Projekt besprechen
+                                        {t('contact.discussProject')}
                                     </Button>
                                 </Box>
                             </CardContent>
@@ -158,7 +160,7 @@ const Contact: React.FC = () => {
                     </Box>
                     
                     <Typography variant="body2" color="text.secondary" align="center">
-                        © {new Date().getFullYear()} Bjarne Niklas Luttermann. All rights reserved.
+                        {t('footer.copyright')}
                     </Typography>
                 </Box>
             </Container>

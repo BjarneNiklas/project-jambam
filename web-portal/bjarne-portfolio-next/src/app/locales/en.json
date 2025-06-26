@@ -1,0 +1,147 @@
+{
+  "hero": {
+    "title": "I develop interactive media solutions",
+    "subtitle": "Cross-Platform, 3D & AI"
+  },
+  "sidebar": {
+    "home": "Home",
+    "projects": "Projects",
+    "games": "Games",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "projects": {
+    "title": "Projects",
+    "mainProject": "Main Project",
+    "learnMore": "Learn More",
+    "broxelEngine": "Broxel Engine",
+    "broxelEngineDesc": "An innovative 3D engine for interactive media",
+    "homeCafe": "Home Cafe",
+    "homeCafeDesc": "An immersive café experience",
+    "blackForestAsylum": "Black Forest Asylum",
+    "blackForestAsylumDesc": "An atmospheric horror game",
+    "blockWorld": "Block World",
+    "blockWorldDesc": "A creative sandbox game",
+    "bubblezInterest": "Bubblez Interest",
+    "bubblezInterestDesc": "An entertaining minigame",
+    "mallOrca": "Mall Orca",
+    "mallOrcaDesc": "A unique shopping experience",
+    "moreDetails": "More Details",
+    "status": {
+      "inDevelopment": "In Development",
+      "planned": "Planned",
+      "prototype": "Finished Prototype",
+      "published": "Published (Google Play Store)",
+      "cancelled": "Cancelled"
+    },
+    "features": {
+      "crossPlatform": "Cross-Platform",
+      "gameDesignAssistant": "Game Design Assistant",
+      "aiContentGeneration": "AI Content Generation"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "description": "I am a passionate developer specializing in creating interactive media solutions. With a focus on cross-platform development, 3D technologies, and artificial intelligence, I create innovative digital experiences.",
+    "skills": {
+      "title": "Skills",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Mobile",
+      "gameDev": "Game Development",
+      "ai": "AI & ML",
+      "cloud": "Cloud & Backend",
+      "tools": "Tools"
+    },
+    "interests": "Interests & Hobbies"
+  },
+  "experience": {
+    "title": "Experience & Education",
+    "experience": "Experience",
+    "education": "Education",
+    "jobs": {
+      "itConsultant": "IT Consultant for System Implementation",
+      "dualStudent": "Dual Student Business Informatics",
+      "volunteerTutor": "Volunteer Learning Support",
+      "radioModerator": "Volunteer Radio Moderator"
+    },
+    "educationItems": {
+      "mscMedia": "M.Sc. Media Informatics",
+      "abroadSemester": "Study Abroad Semester Ireland",
+      "bscBusiness": "B.Sc. Business Informatics",
+      "abitur": "High School Diploma"
+    },
+    "companies": {
+      "machAG": "MACH AG",
+      "gemeinschaftsschuleMolln": "Gemeinschaftsschule Mölln",
+      "uniteFM": "Unite FM (formerly GTA-Radio)",
+      "thLubeck": "Technical University of Lübeck",
+      "griffithCollege": "Griffith College Dublin",
+      "nordakademie": "NORDAKADEMIE University of Applied Sciences",
+      "beruflichesGymnasium": "Vocational High School Mölln"
+    },
+    "locations": {
+      "lubeck": "Lübeck, Germany",
+      "molln": "Mölln, Germany",
+      "remote": "Remote (Germany)",
+      "dublin": "Dublin, Ireland"
+    },
+    "dates": {
+      "march2022August2023": "March 2022 - August 2023",
+      "october2018March2022": "October 2018 - March 2022",
+      "september2014July2015": "September 2014 - July 2015",
+      "december2012March2014": "December 2012 - March 2014",
+      "september2023March2026": "September 2023 - March 2026 (Grade ~1.4)",
+      "october2020February2021": "October 2020 - February 2021 (Grade 1.0, 5th Semester)",
+      "august2015June2018": "August 2015 - June 2018"
+    },
+    "details": {
+      "focusSoftwareDataAI": "Focus: Software, Data & AI + Interactive 3D (Game Dev)",
+      "thesisGamification": "Business Informatics (Thesis: Potentials of Gamification in Business Application Systems, Grade: 1.3)",
+      "performanceCourses": "Advanced Courses: Economics and Mathematics"
+    }
+  },
+  "skills": {
+    "title": "Skills & Technologies",
+    "techRadar": "Tech Radar from AuraVention",
+    "groups": {
+      "programmingLanguages": "Programming Languages",
+      "frameworks": "Frameworks & SDKs",
+      "gameDev": "Game Development",
+      "dataAI": "Data & AI",
+      "cloudBackend": "Cloud & Backend",
+      "tools": "Tools",
+      "general": "General"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Let's work together! I'm always open to new projects and exciting challenges.",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "directContact": "Direct Contact",
+    "availability": "Availability",
+    "location": "Location",
+    "university": "University",
+    "freelance": "Freelance Projects",
+    "fulltime": "Full-time Positions",
+    "consulting": "Consulting",
+    "available": "Available",
+    "from2026": "From 2026",
+    "letsWorkTogether": "Let's work together",
+    "workTogetherDesc": "I'm always open to exciting projects and new challenges. Whether it's Flutter development, Unity projects, or innovative media platforms - let's create something amazing together!",
+    "quickResponse": "Quick Response Times",
+    "modernTech": "Modern Technologies",
+    "qualityDev": "Quality-Oriented Development",
+    "discussProject": "Discuss Project",
+    "networking": "Networking"
+  },
+  "footer": {
+    "copyright": "© 2024 Bjarne Niklas Luttermann. All rights reserved."
+  },
+  "navigation": {
+    "back": "Back"
+  }
+} 

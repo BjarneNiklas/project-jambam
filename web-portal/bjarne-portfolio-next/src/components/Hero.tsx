@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography, Stack, useTheme } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { keyframes } from '@mui/system';
+import { useLanguage } from '../app/LanguageContext';
 
 const claims = {
   de: [
@@ -32,7 +33,7 @@ const bounce = keyframes`
 `;
 
 const Hero: React.FC = () => {
-  const [lang, setLang] = useState<'de' | 'en'>('de');
+  const { lang } = useLanguage();
   const [claimIndex, setClaimIndex] = useState(0);
   const claimRef = useRef<HTMLSpanElement>(null);
   const theme = useTheme();
@@ -49,14 +50,6 @@ const Hero: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    const btn = document.getElementById('lang-switch');
-    if (btn) {
-      btn.textContent = lang === 'de' ? 'EN' : 'DE';
-      btn.onclick = () => setLang((l) => (l === 'de' ? 'en' : 'de'));
-    }
-  }, [lang]);
 
   useEffect(() => {
     if (!claimRef.current) return;
@@ -293,26 +286,26 @@ const Hero: React.FC = () => {
         <Box sx={{ position: 'relative', zIndex: 4, textAlign: 'center', px: 2, maxWidth: 900, mx: 'auto', mt: { xs: 40, md: 60, lg: 80 } }}>
           {/* CTA Buttons entfernt - sind jetzt im About-Bereich */}
         </Box>
-      </Box>
-      {/* Scroll Down Indicator */}
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: 32,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 5,
-          opacity: showScrollIcon ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out',
-        }}
-      >
-        <KeyboardArrowDownIcon
+        {/* Scroll Down Indicator */}
+        <Box
           sx={{
-            fontSize: '3rem',
-            color: 'primary.main',
-            animation: `${bounce} 2s infinite`,
+            position: 'absolute',
+            bottom: 32,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 5,
+            opacity: showScrollIcon ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out',
           }}
-        />
+        >
+          <KeyboardArrowDownIcon
+            sx={{
+              fontSize: '3rem',
+              color: 'primary.main',
+              animation: `${bounce} 2s infinite`,
+            }}
+          />
+        </Box>
       </Box>
     </>
   );

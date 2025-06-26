@@ -4,19 +4,22 @@ import { Box, Card, Typography, Button, Stack, Chip, useTheme } from '@mui/mater
 import Image from 'next/image';
 import ProfilePic from '../../public/bjarne_profile1.webp';
 import cv from '../data/cv.json';
-import { FaPlane, FaMusic, FaDumbbell, FaUsers, FaWandMagicSparkles, FaNewspaper, FaStar, FaRocket, FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import { FaPlane, FaMusic, FaDumbbell, FaUsers, FaMagic, FaNewspaper, FaStar, FaRocket, FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import { useLanguage } from '../app/LanguageContext';
 
 const iconMap: Record<string, React.ElementType> = {
   'Reisen': FaPlane,
   'EDM/Pop Musik': FaMusic,
   'Sport': FaDumbbell,
   'Freunde & Familie': FaUsers,
-  'Generative KI': FaWandMagicSparkles,
+  'Generative KI': FaMagic,
   'Tech News': FaNewspaper,
 };
 
 const About: React.FC = () => {
   const theme = useTheme();
+  const { t } = useLanguage();
+  
   const interestsWithIcons = (cv.interests as string[]).map(label => ({
     icon: iconMap[label] || FaStar, // Use the component directly
     label
@@ -80,10 +83,12 @@ const About: React.FC = () => {
             />
           </Box>
           <Typography sx={{ fontSize: { xs: '1.2rem', md: '2rem' }, color: '#fff', mb: 2, maxWidth: 600, mx: 'auto', lineHeight: 1.4, fontWeight: 500 }}>
-            Cross-Platform, 3D & KI
+            {t('hero.subtitle')}
           </Typography>
           <Box className="mb-4 h-8 flex justify-center items-center">
-            <span style={{ fontSize: '1.125rem', color: '#9ca3af', marginRight: '0.5rem' }}>Ich entwickle</span>
+            <span style={{ fontSize: '1.125rem', color: '#9ca3af', marginRight: '0.5rem' }}>
+              {t('hero.title').split(' ')[0]} {t('hero.title').split(' ')[1]}
+            </span>
             <span className="typing-text" style={{ 
               fontSize: '1.125rem', 
               fontFamily: 'monospace', 
@@ -91,11 +96,11 @@ const About: React.FC = () => {
               borderRight: '2px solid #2dd4bf', 
               paddingRight: '2px'
             }}>
-              interaktive Medienlösungen
+              {t('hero.title').split(' ').slice(2).join(' ')}
             </span>
           </Box>
           <Typography variant="body1" sx={{ mb: 3, bgcolor: 'action.hover', p: 2, borderRadius: 2 }}>
-            {cv.about}
+            {t('about.description')}
           </Typography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" alignItems="center" sx={{ mb: 4 }}>
             <Button
@@ -111,7 +116,7 @@ const About: React.FC = () => {
                 }
               }}
             >
-              Projekte entdecken
+              {t('projects.moreDetails')}
             </Button>
             <Button
               href="mailto:aurav.tech@gmail.com"
@@ -128,7 +133,7 @@ const About: React.FC = () => {
                 }
               }}
             >
-              Kontakt aufnehmen
+              {t('contact.email')}
             </Button>
             <Button
               href={cv.linkedin}
@@ -145,11 +150,11 @@ const About: React.FC = () => {
                 }
               }}
             >
-              LinkedIn Profil
+              {t('contact.linkedin')}
             </Button>
           </Stack>
           <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 600 }}>
-            Interessen & Hobbys
+            {t('about.interests')}
           </Typography>
           <Stack direction="row" flexWrap="wrap" justifyContent="center" gap={1.5} sx={{ px: { xs: 0, sm: 2 } }}>
             {interestsWithIcons.map(Interest => (

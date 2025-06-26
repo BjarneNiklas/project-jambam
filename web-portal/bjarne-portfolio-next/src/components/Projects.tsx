@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Image from 'next/image';
 import AVLogoProject from '../../public/av_logo.webp'; // Assuming same logo as header, can be different
+import { useLanguage } from '../app/LanguageContext';
 // import BlackForestAsylumPic from '../../public/black_forest_asylum.webp'; // If it exists
 // import YLogoProject from '../../public/y_logo.webp'; // If it exists and is different from header
 
@@ -42,6 +43,7 @@ const otherProjects = [
     engines: ['Flutter', 'Python', 'Rust'],
     image: '/y_logo.webp',
     status: 'In Entwicklung',
+    detailUrl: '/projects/project-y',
   },
   {
     icon: <FaGamepad size={40} />, 
@@ -53,6 +55,7 @@ const otherProjects = [
     engines: ['Bevy Engine'],
     status: 'In Entwicklung',
     genres: ['ProcGen', 'Co-Creation'],
+    detailUrl: '/projects/broxel-engine',
   },
   {
     icon: <FaGamepad size={40} />, 
@@ -65,6 +68,7 @@ const otherProjects = [
     image: '/black_forest_asylum.webp',
     status: 'Geplant',
     genres: ['Psychological Horror', 'Exploration'],
+    detailUrl: '/projects/black-forest-asylum',
   },
   {
     icon: <FaGamepad size={40} />, 
@@ -77,6 +81,7 @@ const otherProjects = [
     youtubeId: '9-YuMGMfzrQ',
     status: 'Fertiger Prototyp',
     genres: ['Strategy', 'First-Person'],
+    detailUrl: '/projects/maze-of-space',
   },
   {
     icon: <FaGamepad size={40} />, 
@@ -89,6 +94,7 @@ const otherProjects = [
     youtubeId: '6dGx8h18Bds',
     status: 'Veröffentlicht (Google Play Store)',
     genres: ['Arcade', 'Action'],
+    detailUrl: '/projects/block-reversal',
   },
   {
     icon: <FaGamepad size={40} />, 
@@ -101,16 +107,19 @@ const otherProjects = [
     youtubeId: 'HK8O6oQchKw',
     status: 'Abgebrochen',
     genres: ['Survival', 'Physics'],
+    detailUrl: '/projects/slime',
   },
 ];
 
 const Projects: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <Box component="section" id="projects" sx={{ py: 8, bgcolor: 'background.default' }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-            Projekte
+            {t('projects.title')}
           </Typography>
           <Divider sx={{ width: 80, height: 4, mx: 'auto', bgcolor: 'primary.main', borderRadius: 2 }} />
         </Box>
@@ -126,22 +135,22 @@ const Projects: React.FC = () => {
             minHeight: { md: 260 },
           }}>
             <Box flex={1} sx={{ minWidth: 0 }}>
-              <Chip icon={<FaStar />} label="Hauptprojekt" color="primary" sx={{ mb: 2 }} />
+              <Chip icon={<FaStar />} label={t('projects.mainProject')} color="primary" sx={{ mb: 2 }} />
               <Typography variant="h4" component="h3" gutterBottom sx={{ fontWeight: 700 }}>{featuredProject.title}</Typography>
               <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>{featuredProject.description}</Typography>
               {/* Features as vertical list with green checkmarks and white text, no border or chip */}
               <Stack direction="column" spacing={2} my={2} alignItems="flex-start">
                 <Box display="flex" alignItems="center" gap={1}>
                   <FaCheckCircle style={{ color: checkmarkColor, fontSize: 28 }} />
-                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>Cross-Platform</Typography>
+                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>{t('projects.features.crossPlatform')}</Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
                   <FaCheckCircle style={{ color: checkmarkColor, fontSize: 28 }} />
-                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>Game Design Assistant</Typography>
+                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>{t('projects.features.gameDesignAssistant')}</Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
                   <FaCheckCircle style={{ color: checkmarkColor, fontSize: 28 }} />
-                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>AI Content Generation</Typography>
+                  <Typography variant="h6" sx={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>{t('projects.features.aiContentGeneration')}</Typography>
                 </Box>
               </Stack>
               {/* Chips for year and engines below features */}
@@ -178,7 +187,7 @@ const Projects: React.FC = () => {
                   }}
                 />
               </Box>
-              <Tooltip title="Mehr erfahren">
+              <Tooltip title={t('projects.learnMore')}>
                 <IconButton size="large" href={`/projects/${featuredProject.slug}`} sx={{ transition: 'all 0.2s', '&:hover': { color: 'primary.main', transform: 'translateX(4px) scale(1.15)' } }}>
                   <ChevronRightIcon fontSize="large" />
                 </IconButton>
@@ -197,11 +206,11 @@ const Projects: React.FC = () => {
               <Chip
                 label={p.status}
                 color={
-                  p.status === 'In Entwicklung' ? 'secondary'
-                  : p.status === 'Geplant' ? 'warning'
-                  : p.status === 'Fertiger Prototyp' ? 'success'
-                  : p.status === 'Veröffentlicht (Google Play Store)' ? 'primary'
-                  : p.status === 'Abgebrochen' ? 'error'
+                  p.status === t('projects.status.inDevelopment') ? 'secondary'
+                  : p.status === t('projects.status.planned') ? 'warning'
+                  : p.status === t('projects.status.prototype') ? 'success'
+                  : p.status === t('projects.status.published') ? 'primary'
+                  : p.status === t('projects.status.cancelled') ? 'error'
                   : 'secondary'
                 }
                 size="small"
@@ -215,11 +224,11 @@ const Projects: React.FC = () => {
                   letterSpacing: 0.2,
                   color: '#fff',
                   backgroundColor: (theme) =>
-                    p.status === 'In Entwicklung' ? '#9b59b6' :
-                    p.status === 'Geplant' ? theme.palette.warning.main :
-                    p.status === 'Fertiger Prototyp' ? theme.palette.success.main :
-                    p.status === 'Veröffentlicht (Google Play Store)' ? theme.palette.primary.main :
-                    p.status === 'Abgebrochen' ? theme.palette.error.main :
+                    p.status === t('projects.status.inDevelopment') ? '#9b59b6' :
+                    p.status === t('projects.status.planned') ? theme.palette.warning.main :
+                    p.status === t('projects.status.prototype') ? theme.palette.success.main :
+                    p.status === t('projects.status.published') ? theme.palette.primary.main :
+                    p.status === t('projects.status.cancelled') ? theme.palette.error.main :
                     theme.palette.grey[800],
                 }}
               />
@@ -280,11 +289,13 @@ const Projects: React.FC = () => {
                 </Stack>
               </CardContent>
               <CardActions sx={{ justifyContent: 'flex-end' }}>
-                <Tooltip title="Mehr erfahren">
-                  <IconButton size="large" href={`/projects/${p.slug}`}>
-                    <ChevronRightIcon />
-                  </IconButton>
-                </Tooltip>
+                {p.detailUrl && typeof p.detailUrl === 'string' && (
+                  <Tooltip title={t('projects.learnMore')}>
+                    <IconButton size="large" href={p.detailUrl}>
+                      <ChevronRightIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
               </CardActions>
             </Card>
           ))}

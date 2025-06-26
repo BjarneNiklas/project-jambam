@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 :root {
   /* --background: transparent;  Removed as background is now handled by MUI theme */
@@ -14,18 +12,6 @@
   */
 }
 
-/*
-  The @theme directive is for Tailwind's experimental theming feature.
-  If not actively used or if causing conflicts, it can be simplified or removed.
-  Assuming it might be used for Tailwind's own theme context:
-*/
-@theme inline {
-  /* --color-background: var(--background); */ /* Background is themed via MUI */
-  --color-foreground: var(--foreground);
-  /* Ensure these font variables match what next/font provides if Tailwind uses them directly */
-  /* --font-sans: var(--font-inter); */ /* Already globally available */
-  /* --font-mono: var(--font-jetbrains-mono); */ /* Already globally available */
-}
 
 
 /* body and html base styles are now primarily handled by MUI's CssBaseline and ThemeProvider.
@@ -35,8 +21,7 @@
 */
 body, html {
   color: var(--foreground);
-  /* font-family is now set by MUI theme using CSS variables from next/font */
-  /* background is now set by MUI theme */
+  background-color: #000; /* Setzt den globalen Hintergrund auf Schwarz */
 }
 
 /* AuraV Sonnen-/Aura-Effekt - angepasst für eingeschränkten Bereich */
@@ -162,4 +147,22 @@ body, html {
 .hex-corner-glow {
   animation: hexCornerPulse 2.8s ease-in-out infinite;
   transition: filter 0.4s, opacity 0.4s;
+}
+
+/* Custom Scrollbar in Primärfarbe */
+::-webkit-scrollbar {
+  width: 12px;
+  background: #18181b;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(120deg, #14b8a6 0%, #2dd4bf 100%);
+  border-radius: 8px;
+  border: 2px solid #18181b;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(120deg, #0ea5e9 0%, #14b8a6 100%);
+}
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #14b8a6 #18181b;
 }

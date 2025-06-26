@@ -7,7 +7,7 @@ import Contact from '../components/Contact';
 
 export default function Home() {
   return (
-    <main className="min-h-screen pt-[56px] sm:pt-[64px]">
+    <main className="min-h-screen">
       <Hero />
       <About />
       <ExperienceEducation />
