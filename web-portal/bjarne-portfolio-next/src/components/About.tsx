@@ -49,21 +49,25 @@ const About: React.FC = () => {
             boxShadow: 3,
           }}
         >
-          <Avatar
-            src="/bjarne_profile1.webp"
-            alt="Bjarne Niklas Luttermann"
-            sx={{
-              width: 120,
-              height: 120,
-              mt: -13,
-              mb: 2,
-              border: `4px solid ${theme.palette.background.paper}`,
-              boxShadow: 3,
-            }}
-          />
           <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 700, color: 'primary.main' }}>
             Bjarne Niklas Luttermann
           </Typography>
+          <Box
+            component="img"
+            src="/bjarne_profile1.webp"
+            alt="Bjarne Niklas Luttermann"
+            sx={{
+              width: 180,
+              height: 180,
+              mb: 2,
+              border: `4px solid ${theme.palette.background.paper}`,
+              boxShadow: 3,
+              objectFit: 'cover',
+              objectPosition: 'center 45%',
+              borderRadius: '50%',
+              display: 'block',
+            }}
+          />
           <Typography sx={{ fontSize: { xs: '1.2rem', md: '2rem' }, color: '#fff', mb: 2, maxWidth: 600, mx: 'auto', lineHeight: 1.4, fontWeight: 500 }}>
             Cross-Platform, 3D & KI
           </Typography>
@@ -99,7 +103,7 @@ const About: React.FC = () => {
               Projekte entdecken
             </Button>
             <Button
-              href="#contact"
+              href="mailto:aurav.tech@gmail.com"
               variant="outlined"
               size="large"
               startIcon={<i className="fas fa-envelope" />}

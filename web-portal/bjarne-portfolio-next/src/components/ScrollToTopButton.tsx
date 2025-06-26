@@ -9,7 +9,7 @@ const ScrollToTopButton: React.FC = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
+      if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -38,6 +38,7 @@ const ScrollToTopButton: React.FC = () => {
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'scale(1)' : 'scale(0)',
         transition: 'opacity 0.3s, transform 0.3s',
+        pointerEvents: isVisible ? 'auto' : 'none',
       }}
     >
       <Tooltip title="Nach oben scrollen" placement="top">
