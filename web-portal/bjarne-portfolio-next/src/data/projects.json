@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "aurax-media-platform",
+    "name": "Aurax Media Platform",
+    "shortDescription": "Next-Gen Medienplattform mit Gamification.",
+    "longDescription": "Eine detailliertere Beschreibung der Aurax Media Platform, ihrer Ziele, der verwendeten Technologien und der Herausforderungen während der Entwicklung. Diese Plattform zielt darauf ab, Content-Erstellern neue Wege zur Monetarisierung und Interaktion mit ihrem Publikum zu bieten.",
+    "imageUrl": "/images/projects/aurax.jpg",
+    "technologies": ["Next.js", "React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
+    "url": "https://aurav.tech",
+    "githubUrl": "https://github.com/user/aurax-platform"
+  },
+  {
+    "slug": "portfolio-website",
+    "name": "Personal Portfolio Website",
+    "shortDescription": "Meine persönliche Webseite zur Präsentation meiner Projekte und Fähigkeiten.",
+    "longDescription": "Diese Webseite dient als zentrale Anlaufstelle, um meine Arbeit im Bereich Softwareentwicklung und Gamedesign vorzustellen. Sie wurde mit Next.js erstellt und nutzt statische Seitengenerierung für optimale Performance. Das Design ist responsiv und modern.",
+    "imageUrl": "/images/projects/portfolio.jpg",
+    "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+    "url": "https://bjarne-luttermann.de",
+    "githubUrl": "https://github.com/user/portfolio-nextjs"
+  }
+]

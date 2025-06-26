@@ -1,0 +1,28 @@
+[
+  {
+    "slug": "block-world-adventure",
+    "name": "Block World Adventure",
+    "shortDescription": "A fun adventure game in a blocky world.",
+    "longDescription": "Block World Adventure is an exciting game where players explore vast landscapes, build structures, and embark on epic quests. Developed using Unity, this game features procedurally generated worlds and a unique crafting system. Players can gather resources, fight monsters, and collaborate with friends in multiplayer mode.",
+    "imageUrl": "/images/games/block-world.jpg",
+    "technologies": ["Unity", "C#", "Blender", "Photon Engine"],
+    "platform": ["PC", "Mobile"],
+    "genre": "Adventure, Sandbox, Multiplayer",
+    "releaseDate": "2023-10-15",
+    "trailerUrl": "https://youtube.com/trailer/blockworld",
+    "playUrl": "https://store.example.com/blockworld"
+  },
+  {
+    "slug": "space-shooter-infinity",
+    "name": "Space Shooter Infinity",
+    "shortDescription": "An endless arcade space shooter.",
+    "longDescription": "Pilot your starfighter through an infinite asteroid field, battling waves of alien enemies. Collect power-ups, upgrade your ship, and compete for the highest score in this classic arcade-style shooter. Built with Godot Engine for fast-paced action and retro visuals.",
+    "imageUrl": "/images/games/space-shooter.jpg",
+    "technologies": ["Godot Engine", "GDScript"],
+    "platform": ["PC", "Web"],
+    "genre": "Arcade, Space Shooter, Endless Runner",
+    "releaseDate": "2024-01-20",
+    "trailerUrl": null,
+    "playUrl": "https://user.itch.io/space-shooter-infinity"
+  }
+]
