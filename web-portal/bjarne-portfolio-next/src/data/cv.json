@@ -4,8 +4,9 @@
   "location": "Stuttgart, Deutschland",
   "email": "bjarne@example.com",
   "phone": "+49 123 456789",
-  "linkedin": "https://www.linkedin.com/in/bjarne-niklas-luttermann/",
-  "about": "Hallo, ich bin Bjarne Niklas, ein leidenschaftlicher Reisender und entwickle Apps mit Flutter, Dart und Unity. Mein Ziel ist es, die Spieleentwicklung für jeden zugänglich zu machen und kreative Aspekte durch den intelligenten Einsatz von KI in den Vordergrund zu rücken. Dabei liebe ich es, innovative und benutzerzentrierte digitale Erlebnisse zu schaffen.",
+  "linkedin": "https://www.linkedin.com/in/bjarne-luttermann/",
+  "about": "Hallo, ich bin Bjarne Niklas, ein leidenschaftlicher Reisender aus Norddeutschland. Mein Ziel ist es, die Spieleentwicklung für jeden zugänglich zu machen und die kreative Gemeinschaft durch Innovationen zu fördern. Für dich schaffe ich innovative und benutzerzentrierte digitale Erlebnisse.",
+  "about_en": "Hello, I'm Bjarne Niklas, a passionate traveler from Northern Germany. My goal is to make game development accessible to everyone and foster the creative community through innovation. For you, I create innovative and user-centered digital experiences.",
   "experience": [
     {
       "role": "Werkstudent App-Entwicklung",
@@ -42,7 +43,7 @@
     }
   ],
   "interests": [
-    "Reisen", "EDM/Pop Musik", "Sport", "Freunde & Familie", "Generative KI", "Tech News"
+    "Reisen", "EDM/Pop Musik", "Freunde & Familie", "Generative KI", "Tech News"
   ],
   "facts": [
     {"label": "Jahre Erfahrung", "value": "3+"},

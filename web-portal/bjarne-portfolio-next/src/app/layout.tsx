@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import ThemeRegistry from '../components/ThemeRegistry';
 import ProgressBar from '../components/ProgressBar';
 import MobileSidebarController from '../components/MobileSidebarController';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 export const metadata: Metadata = {
   title: 'Portfolio Bjarne Luttermann',
@@ -37,6 +38,7 @@ export default function RootLayout({
               {children}
             </div>
           </div>
+          <ScrollToTopButton />
         </ThemeRegistry>
       </body>
     </html>
