@@ -1,6 +1,5 @@
 'use client';
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -8,12 +7,25 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import PolicyIcon from '@mui/icons-material/Policy';
 import { useTheme } from '@mui/material/styles';
-import Footer from '@/components/Footer';
-import { useLanguage } from '../LanguageContext';
+import Footer from '../../../components/Footer';
+import { useLanguage } from '../../../app/LanguageContext';
 
-const Datenschutz: React.FC = () => {
+interface PageProps {
+  params: {
+    lang: string;
+  };
+}
+
+const DatenschutzPage: React.FC<PageProps> = ({ params }) => {
   const theme = useTheme();
-  const { t } = useLanguage();
+  const { t, setLang } = useLanguage();
+
+  useEffect(() => {
+    // Setze die Sprache basierend auf der URL
+    if (params.lang === 'en' || params.lang === 'de') {
+      setLang(params.lang);
+    }
+  }, [params.lang, setLang]);
 
   return (
     <>
@@ -69,4 +81,4 @@ const Datenschutz: React.FC = () => {
   );
 };
 
-export default Datenschutz; 
+export default DatenschutzPage; 

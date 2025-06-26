@@ -39,6 +39,15 @@
       "crossPlatform": "Cross-Platform",
       "gameDesignAssistant": "Game Design Assistant",
       "aiContentGeneration": "AI Content Generation"
+    },
+    "descriptions": {
+      "auravention": "Entfalte deine Kreativität überall mit der \"MindFlow Engine\" – der revolutionären, mobilen und engine-agnostischen Entwicklungsumgebung für die nächste Generation von Spielen und KI-gestützten Inhalten. Das Projekt wird im Rahmen einer Masterthesis erforscht und entwickelt. KI-gestützte Plattform zur automatischen Generierung von Medieninhalten mit Fokus auf Innovation, Automatisierung und Co-Creation. Entwickle, designe und teile flexibel – unterstützt durch einen integrierten Asset-Store und moderne Team-Workflows. Auraventionen sind innovative, KI-gestützte Medien- und Spieleprojekte, die Kreativität, Technologie und Community auf neuartige Weise verbinden.",
+      "projectY": "Innovative Plattform für KI-gestützte Medienproduktion und Community-Building. Verbindet modernste Technologien mit Gamification und Teamwork für ein einzigartiges Nutzererlebnis.",
+      "broxelEngine": "Modulare Open-Source-Voxel-Engine (geplant 2027) für Next-Gen-Games und kreative Tools. Fokus auf prozedurale Welten, Modding, Cross-Platform-Support und Community-Integration. Basierend auf Bevy Engine.",
+      "blackForestAsylum": "Atmosphärisches Horror-Adventure (2028) mit Fokus auf immersives Storytelling, Teamwork und Community-Events. Entwickelt in Unreal Engine für ein packendes Spielerlebnis.",
+      "mazeOfSpace": "Innovatives Maze-Game (2024, Prototyp in Unity) mit geplanter Erweiterung 2028: Neue Spielmodi, Multiplayer-Features und kreative Herausforderungen. Entwickelt in Godot.",
+      "blockReversal": "Casual-Game-Klassiker (2018, Prototyp in Unity) mit geplantem 3D-Nachfolger \"Universal Blox\" (2028): Neue Spielmodi, moderne Grafik, Multiplayer und Cross-Platform. Entwickelt in Unity und perspektivisch auf Broxel Engine.",
+      "slime": "Physikbasiertes Partyspiel (2017/2029, Prototyp in Unity): Steuere einen Schleim, sauge Items auf und meistere spaßige Herausforderungen. 2029 als Multiplayer-Partyspiel in Bevy Engine."
     }
   },
   "about": {
@@ -89,7 +98,7 @@
     },
     "dates": {
       "march2022August2023": "März 2022 - August 2023",
-      "october2018March2022": "Oktober 2018 - März 2022",
+      "october2018March2022": "Oktober 2018 - März 2022 (Note 2,0)",
       "september2014July2015": "September 2014 - Juli 2015",
       "december2012March2014": "Dezember 2012 - März 2014",
       "september2023March2026": "September 2023 - März 2026 (Note ~1,4)",
@@ -139,9 +148,55 @@
     "networking": "Vernetzung"
   },
   "footer": {
-    "copyright": "© 2024 Bjarne Niklas Luttermann. Alle Rechte vorbehalten."
+    "copyright": "© 2025 Bjarne Niklas Luttermann. Alle Rechte vorbehalten.",
+    "datenschutz": "Datenschutz",
+    "impressum": "Impressum"
   },
   "navigation": {
     "back": "Zurück"
+  },
+  "legal": {
+    "datenschutz": {
+      "title": "Datenschutzerklärung",
+      "content": "Diese Website erhebt und speichert keine personenbezogenen Daten. Es werden keine Cookies gesetzt und kein Tracking eingesetzt.",
+      "contact": {
+        "title": "Kontaktaufnahme",
+        "content": "Wenn Sie mir per E-Mail Anfragen zukommen lassen, werden Ihre Angaben aus der E-Mail inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen gespeichert. Diese Daten gebe ich nicht ohne Ihre Einwilligung weiter.",
+        "caption": "Für Fragen zum Datenschutz wenden Sie sich bitte an: aurav.tech@gmail.com"
+      },
+      "serverlog": {
+        "title": "Server-Log-Files",
+        "content": "Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log Files, die Ihr Browser automatisch übermittelt. Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen."
+      },
+      "rights": {
+        "title": "Rechte",
+        "content": "Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten."
+      }
+    },
+    "impressum": {
+      "title": "Impressum",
+      "content": "Angaben gemäß § 5 TMG (Telemediengesetz)",
+      "info": {
+        "title": "Angaben gemäß § 5 TMG",
+        "content": "Bjarne Niklas Luttermann<br />Julius-Brecht-Str. 9a<br />23560 Lübeck<br />Deutschland"
+      },
+      "contact": {
+        "title": "Kontakt",
+        "content": "E-Mail: aurav.tech@gmail.com<br />Website: https://bjarne-luttermann.de"
+      },
+      "responsible": {
+        "title": "Verantwortlich für den Inhalt",
+        "content": "Bjarne Niklas Luttermann, Adresse wie oben"
+      },
+      "disclaimer": {
+        "title": "Haftungsausschluss",
+        "content": "Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+      },
+      "copyright": {
+        "title": "Urheberrecht",
+        "content": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers."
+      },
+      "note": "Hinweis: AuraV Technologies ist kein eingetragenes Unternehmen, sondern ein privates Projekt von Bjarne Niklas Luttermann."
+    }
   }
 } 

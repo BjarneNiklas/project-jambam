@@ -1,6 +1,5 @@
 'use client';
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -8,12 +7,25 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import PolicyIcon from '@mui/icons-material/Policy';
 import { useTheme } from '@mui/material/styles';
-import Footer from '@/components/Footer';
-import { useLanguage } from '../LanguageContext';
+import Footer from '../../../components/Footer';
+import { useLanguage } from '../../../app/LanguageContext';
 
-const ImpressumPage: React.FC = () => {
+interface PageProps {
+  params: {
+    lang: string;
+  };
+}
+
+const ImpressumPage: React.FC<PageProps> = ({ params }) => {
   const theme = useTheme();
-  const { t } = useLanguage();
+  const { t, setLang } = useLanguage();
+
+  useEffect(() => {
+    // Setze die Sprache basierend auf der URL
+    if (params.lang === 'en' || params.lang === 'de') {
+      setLang(params.lang);
+    }
+  }, [params.lang, setLang]);
 
   return (
     <>
@@ -73,7 +85,7 @@ const ImpressumPage: React.FC = () => {
             </Typography>
             <Divider sx={{ my: 3 }} />
             <Typography variant="body2" sx={{ mb: 2 }}>
-              Für Informationen zum Datenschutz siehe unsere <Box component="a" href="/datenschutz" sx={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>Datenschutzerklärung</Box>.
+              Für Informationen zum Datenschutz siehe unsere <Box component="a" href={`/${params.lang}/datenschutz`} sx={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>Datenschutzerklärung</Box>.
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
               Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <Box component="a" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener" sx={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>https://ec.europa.eu/consumers/odr/</Box>.<br />

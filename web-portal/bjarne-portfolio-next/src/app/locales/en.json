@@ -39,6 +39,15 @@
       "crossPlatform": "Cross-Platform",
       "gameDesignAssistant": "Game Design Assistant",
       "aiContentGeneration": "AI Content Generation"
+    },
+    "descriptions": {
+      "auravention": "Unleash your creativity everywhere with the \"MindFlow Engine\" – the revolutionary, mobile and engine-agnostic development environment for the next generation of games and AI-powered content. The project is researched and developed as part of a master's thesis. AI-powered platform for automatic generation of media content with focus on innovation, automation and co-creation. Develop, design and share flexibly – supported by an integrated asset store and modern team workflows. Auraventions are innovative, AI-powered media and game projects that connect creativity, technology and community in novel ways.",
+      "projectY": "Innovative platform for AI-powered media production and community building. Connects cutting-edge technologies with gamification and teamwork for a unique user experience.",
+      "broxelEngine": "Modular open-source voxel engine (planned 2027) for next-gen games and creative tools. Focus on procedural worlds, modding, cross-platform support and community integration. Based on Bevy Engine.",
+      "blackForestAsylum": "Atmospheric horror adventure (2028) with focus on immersive storytelling, teamwork and community events. Developed in Unreal Engine for an engaging gaming experience.",
+      "mazeOfSpace": "Innovative maze game (2024, prototype in Unity) with planned expansion 2028: New game modes, multiplayer features and creative challenges. Developed in Godot.",
+      "blockReversal": "Casual game classic (2018, prototype in Unity) with planned 3D sequel \"Universal Blox\" (2028): New game modes, modern graphics, multiplayer and cross-platform. Developed in Unity and prospectively on Broxel Engine.",
+      "slime": "Physics-based party game (2017/2029, prototype in Unity): Control a slime, suck up items and master fun challenges. 2029 as multiplayer party game in Bevy Engine."
     }
   },
   "about": {
@@ -89,7 +98,7 @@
     },
     "dates": {
       "march2022August2023": "March 2022 - August 2023",
-      "october2018March2022": "October 2018 - March 2022",
+      "october2018March2022": "October 2018 - March 2022 (Grade 2.0)",
       "september2014July2015": "September 2014 - July 2015",
       "december2012March2014": "December 2012 - March 2014",
       "september2023March2026": "September 2023 - March 2026 (Grade ~1.4)",
@@ -139,9 +148,55 @@
     "networking": "Networking"
   },
   "footer": {
-    "copyright": "© 2024 Bjarne Niklas Luttermann. All rights reserved."
+    "copyright": "© 2025 Bjarne Niklas Luttermann. All rights reserved.",
+    "datenschutz": "Privacy Policy",
+    "impressum": "Legal Notice"
   },
   "navigation": {
     "back": "Back"
+  },
+  "legal": {
+    "datenschutz": {
+      "title": "Privacy Policy",
+      "content": "This website does not collect or store any personal data. No cookies are set and no tracking is used.",
+      "contact": {
+        "title": "Contact",
+        "content": "If you send me inquiries by e-mail, your details from the e-mail, including the contact details you provide there, will be stored for the purpose of processing the inquiry and in case of follow-up questions. I will not pass on this data without your consent.",
+        "caption": "For questions about data protection, please contact: aurav.tech@gmail.com"
+      },
+      "serverlog": {
+        "title": "Server Log Files",
+        "content": "The provider of these pages automatically collects and stores information in so-called server log files, which your browser automatically transmits. This data cannot be assigned to specific persons. This data is not merged with other data sources."
+      },
+      "rights": {
+        "title": "Your Rights",
+        "content": "You have the right at any time to free information about your stored personal data, its origin and recipient and the purpose of data processing as well as a right to correction, blocking or deletion of this data."
+      }
+    },
+    "impressum": {
+      "title": "Legal Notice",
+      "content": "Information according to § 5 TMG (Telemedia Act)",
+      "info": {
+        "title": "Information according to § 5 TMG",
+        "content": "Bjarne Niklas Luttermann<br />Julius-Brecht-Str. 9a<br />23560 Lübeck<br />Germany"
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "Email: aurav.tech@gmail.com<br />Website: https://bjarne-luttermann.de"
+      },
+      "responsible": {
+        "title": "Responsible for content",
+        "content": "Bjarne Niklas Luttermann, address as above"
+      },
+      "disclaimer": {
+        "title": "Disclaimer",
+        "content": "Despite careful content control, I assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content."
+      },
+      "copyright": {
+        "title": "Copyright",
+        "content": "The content and works created by the site operator on these pages are subject to German copyright law. Third-party contributions are marked as such."
+      },
+      "note": "Note: AuraV Technologies is not a registered company, but a private project by Bjarne Niklas Luttermann."
+    }
   }
 } 

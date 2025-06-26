@@ -29,6 +29,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import LinkIcon from '@mui/icons-material/Link';
 import { BiCube } from 'react-icons/bi';
 import { useLanguage } from '../app/LanguageContext';
+import { createLocalizedUrl, createLocalizedHashUrl } from '../utils/urlHelpers';
 
 // --- Konstanten (Flags, Links etc.) ---
 const GermanFlag: React.FC<{ size?: number }> = ({ size = 20 }) => (
@@ -41,35 +42,6 @@ const UKFlag: React.FC<{ size?: number }> = ({ size = 20 }) => (
         <rect width="60" height="36" fill="#012169"/><path d="M0,0 L60,36 M60,0 L0,36" stroke="#FFFFFF" strokeWidth="6"/><path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" strokeWidth="4"/><path d="M30,0 V36 M0,18 H60" stroke="#FFFFFF" strokeWidth="10"/><path d="M30,0 V36 M0,18 H60" stroke="#C8102E" strokeWidth="6"/>
     </svg>
 );
-const navLinks = [
-    {
-        label: { de: 'About Me', en: 'About Me' },
-        icon: <InfoIcon />,
-        subLinks: [
-            { href: '/#about', label: { de: 'Profil', en: 'Profile' }, icon: <PersonIcon /> },
-            { href: '/#experience-education', label: { de: 'Erfahrung & Ausbildung', en: 'Experience & Education' }, icon: <SchoolIcon /> },
-            { href: '/#skills', label: { de: 'Skills & Tech', en: 'Skills & Tech' }, icon: <BuildIcon /> },
-        ],
-    },
-    { href: '/#projects', label: { de: 'Projekte', en: 'Projects' }, icon: <WorkIcon /> },
-    { href: '/#contact', label: { de: 'Kontakt', en: 'Contact' }, icon: <MailIcon /> },
-];
-const projects = [
-    { href: 'https://aurav.tech', label: 'AuraVention', icon: <img src="/av_logo.webp" alt="AuraVention" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
-    { href: '/projects/broxel-engine', label: 'Broxel Engine', icon: <BiCube size={24} style={{ color: '#a78bfa' }} />, external: false },
-    { href: '#', label: 'Project Y', icon: <img src="/y_logo.webp" alt="Project Y" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
-];
-const games = [
-    { href: '#black-forest-asylum', label: 'Black Forest Asylum', icon: <ScienceIcon /> },
-    { href: '#maze-of-space', label: 'Maze of Space', icon: <HubIcon /> },
-    { href: '#slime', label: 'SLIME', icon: <BubbleChartIcon /> },
-    { href: '#block-reversal', label: 'Block Reversal', icon: <Grid4x4Icon /> },
-];
-const socials = [
-    { href: 'https://www.linkedin.com/in/bjarne-luttermann/', label: 'LinkedIn', icon: <LinkedInIcon /> },
-    { href: 'https://www.youtube.com/@bjarnik_interactive', label: 'YouTube', icon: <YouTubeIcon /> },
-    { href: 'https://github.com/BjarneNiklas', label: 'GitHub', icon: <GitHubIcon /> },
-];
 
 // --- Hauptkomponente ---
 interface SidebarProps {
@@ -96,6 +68,40 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
         }
     };
     const flagIcon = lang === 'de' ? <GermanFlag /> : <UKFlag />;
+
+    // Dynamische Links basierend auf Sprache
+    const navLinks = [
+        {
+            label: { de: 'About Me', en: 'About Me' },
+            icon: <InfoIcon />,
+            subLinks: [
+                { href: createLocalizedHashUrl('about', lang), label: { de: 'Profil', en: 'Profile' }, icon: <PersonIcon /> },
+                { href: createLocalizedHashUrl('experience-education', lang), label: { de: 'Erfahrung & Ausbildung', en: 'Experience & Education' }, icon: <SchoolIcon /> },
+                { href: createLocalizedHashUrl('skills', lang), label: { de: 'Skills & Tech', en: 'Skills & Tech' }, icon: <BuildIcon /> },
+            ],
+        },
+        { href: createLocalizedHashUrl('projects', lang), label: { de: 'Projekte', en: 'Projects' }, icon: <WorkIcon /> },
+        { href: createLocalizedHashUrl('contact', lang), label: { de: 'Kontakt', en: 'Contact' }, icon: <MailIcon /> },
+    ];
+    
+    const projects = [
+        { href: 'https://aurav.tech', label: 'AuraVention', icon: <img src="/av_logo.webp" alt="AuraVention" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
+        { href: createLocalizedUrl('projects/broxel-engine', lang), label: 'Broxel Engine', icon: <BiCube size={24} style={{ color: '#a78bfa' }} />, external: false },
+        { href: '#', label: 'Project Y', icon: <img src="/y_logo.webp" alt="Project Y" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
+    ];
+    
+    const games = [
+        { href: createLocalizedHashUrl('black-forest-asylum', lang), label: 'Black Forest Asylum', icon: <ScienceIcon /> },
+        { href: createLocalizedHashUrl('maze-of-space', lang), label: 'Maze of Space', icon: <HubIcon /> },
+        { href: createLocalizedHashUrl('slime', lang), label: 'SLIME', icon: <BubbleChartIcon /> },
+        { href: createLocalizedHashUrl('block-reversal', lang), label: 'Block Reversal', icon: <Grid4x4Icon /> },
+    ];
+    
+    const socials = [
+        { href: 'https://www.linkedin.com/in/bjarne-luttermann/', label: 'LinkedIn', icon: <LinkedInIcon /> },
+        { href: 'https://www.youtube.com/@bjarnik_interactive', label: 'YouTube', icon: <YouTubeIcon /> },
+        { href: 'https://github.com/BjarneNiklas', label: 'GitHub', icon: <GitHubIcon /> },
+    ];
 
     // --- Wiederverwendbarer Sidebar-Inhalt ---
     const SidebarContent = ({ isOpen }: { isOpen: boolean }) => (
@@ -126,7 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                         variant="body1" 
                         fontWeight={600} 
                         component="a"
-                        href="/"
+                        href={`/${lang}`}
                         sx={{ 
                             whiteSpace: 'nowrap',
                             transition: 'all 0.2s ease-in-out',
@@ -218,17 +224,17 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                 </Tooltip>
                 {aboutOpen && isOpen && (
                     <List component="div" disablePadding sx={{ pl: 4 }}>
-                        <ListItemButton component="a" href="/#about" sx={{ borderRadius: 2, mb: 0.5 }}>
+                        <ListItemButton component="a" href={createLocalizedHashUrl('about', lang)} sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><PersonIcon /></ListItemIcon>
                             <ListItemText primary={t('about.title')} />
                         </ListItemButton>
-                        <ListItemButton component="a" href="/#experience-education" sx={{ borderRadius: 2, mb: 0.5 }}>
+                        <ListItemButton component="a" href={createLocalizedHashUrl('experience-education', lang)} sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><SchoolIcon /></ListItemIcon>
-                            <ListItemText primary={t('about.skills.title')} />
+                            <ListItemText primary={t('experience.title')} />
                         </ListItemButton>
-                        <ListItemButton component="a" href="/#skills" sx={{ borderRadius: 2, mb: 0.5 }}>
+                        <ListItemButton component="a" href={createLocalizedHashUrl('skills', lang)} sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><BuildIcon /></ListItemIcon>
-                            <ListItemText primary={t('about.skills.title')} />
+                            <ListItemText primary={t('skills.title')} />
                         </ListItemButton>
                     </List>
                 )}

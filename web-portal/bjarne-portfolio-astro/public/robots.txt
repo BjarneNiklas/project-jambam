@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://bjarne-portfolio-astro.vercel.app/sitemap.xml 
