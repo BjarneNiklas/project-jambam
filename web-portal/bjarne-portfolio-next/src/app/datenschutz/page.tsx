@@ -26,7 +26,13 @@ const Datenschutz: React.FC = () => {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', py: { xs: 4, md: 8 } }}>
+    <Box sx={{ 
+      background: '#0a0a0a',
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      py: { xs: 4, md: 8 }
+    }}>
       <Card elevation={4} sx={{ maxWidth: 700, width: '100%', borderRadius: 6, mx: 2, p: { xs: 2, sm: 4 }, background: theme.palette.background.paper }}>
         <CardContent>
           <Box display="flex" alignItems="center" justifyContent="center" mb={2}>

@@ -29,12 +29,8 @@ export default function RootLayout({
         <ThemeRegistry>
           <ProgressBar />
           <MobileSidebarController />
-          <div style={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
-            <div style={{ 
-              flex: 1, 
-              minWidth: 0, 
-              background: 'none'
-            }}>
+          <div style={{ width: '100%' }}>
+            <div style={{ minWidth: 0, background: 'none' }}>
               {children}
             </div>
           </div>

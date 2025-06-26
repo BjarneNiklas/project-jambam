@@ -241,7 +241,6 @@ const AppHeader: React.FC = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Toolbar /> 
         </>
     );
 };

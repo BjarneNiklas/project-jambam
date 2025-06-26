@@ -26,7 +26,7 @@ const Contact: React.FC = () => {
     const [showDomainNotice, setShowDomainNotice] = useState(true);
 
     return (
-        <Box component="section" id="contact" sx={{ py: 8, bgcolor: 'background.paper', position: 'relative' }}>
+        <Box component="section" id="contact" sx={{ py: 8, bgcolor: '#0a0a0a', position: 'relative' }}>
             <Container maxWidth="lg">
                 <Box sx={{ textAlign: 'center', mb: 6 }}>
                     <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
