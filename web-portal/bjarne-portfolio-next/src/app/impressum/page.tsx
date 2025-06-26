@@ -17,7 +17,8 @@ const Imprint: React.FC = () => {
       display: 'flex',
       alignItems: 'flex-start',
       justifyContent: 'center',
-      py: { xs: 4, md: 8 }
+      pt: { xs: 2, md: 4 }, // Reduced top padding
+      pb: { xs: 4, md: 8 }  // Kept bottom padding
     }}>
       <Card elevation={4} sx={{ maxWidth: 700, width: '100%', borderRadius: 6, mx: 2, p: { xs: 2, sm: 4 }, background: theme.palette.background.paper }}>
         <CardContent>

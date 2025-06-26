@@ -38,7 +38,7 @@ const Contact: React.FC = () => {
                 <Box sx={{ width: '100%', mt: 6 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, maxWidth: 800, mx: 'auto', flexWrap: 'wrap' }}>
                         {/* Direkter Kontakt */}
-                        <Box sx={{ flex: 1, minWidth: 300, maxWidth: 400, display: 'flex', justifyContent: 'center' }}>
+                        <Box sx={{ flex: 1, minWidth: 300, maxWidth: 400 }}> {/* Removed display:flex and justifyContent:center */}
                             <Card sx={{ height: '100%', borderRadius: 4, boxShadow: 3, p: 2, transition: '0.2s', '&:hover': { boxShadow: 8 } }}>
                                 <CardHeader
                                     avatar={<MailIcon color="secondary" sx={{ fontSize: 32 }} />}
@@ -72,7 +72,7 @@ const Contact: React.FC = () => {
                             </Card>
                         </Box>
                         {/* Verfügbarkeit */}
-                        <Box sx={{ flex: 1, minWidth: 300, maxWidth: 400, display: 'flex', justifyContent: 'center' }}>
+                        <Box sx={{ flex: 1, minWidth: 300, maxWidth: 400 }}> {/* Removed display:flex and justifyContent:center */}
                             <Card sx={{ height: '100%', borderRadius: 4, boxShadow: 3, p: 2, transition: '0.2s', '&:hover': { boxShadow: 8 } }}>
                                 <CardHeader
                                     avatar={<AccessTimeIcon color="primary" sx={{ fontSize: 32 }} />}
