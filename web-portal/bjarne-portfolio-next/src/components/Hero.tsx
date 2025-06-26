@@ -239,113 +239,33 @@ const Hero: React.FC = () => {
               />
               {/* Leuchtender Mittelpunkt */}
               <ellipse cx="500" cy="580" rx="125" ry="48" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 64px #fff700)' }} />
-              
-              {/* Bubble Keywords - Text IN den Bubbles mit perfekten Rainbow-Farben */}
-              {/* 1. Zentrale Bubble - Design Thinking */}
-              <text
-                x="500"
-                y="580"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#FFD60A"
-                fontSize="30"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="500" dy="-18">Design</tspan>
-                <tspan x="500" dy="36">Thinking</tspan>
-              </text>
-              
-              {/* 2. Oben Links - AI Development */}
-              <text
-                x="150"
-                y="325"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#FF3B30"
-                fontSize="27"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="150" dy="-14">AI</tspan>
-                <tspan x="150" dy="28">Development</tspan>
-              </text>
-              
-              {/* 3. Oben Rechts - API Integration */}
-              <text
-                x="850"
-                y="325"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#007AFF"
-                fontSize="27"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="850" dy="-14">API</tspan>
-                <tspan x="850" dy="28">Integration</tspan>
-              </text>
-              
-              {/* 4. Unten - Innovation Research */}
-              <text
-                x="500"
-                y="850"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#34C759"
-                fontSize="27"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="500" dy="-14">Innovation</tspan>
-                <tspan x="500" dy="28">Research</tspan>
-              </text>
-              
-              {/* 5. Oben - Game Engineering */}
-              <text
-                x="500"
-                y="150"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#AF52DE"
-                fontSize="27"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="500" dy="-14">Game</tspan>
-                <tspan x="500" dy="28">Engineering</tspan>
-              </text>
-              
-              {/* 6. Links Unten - Mobile Co-Creation */}
-              <text
-                x="150"
-                y="675"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#FF9500"
-                fontSize="24"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="150" dy="-12">Mobile</tspan>
-                <tspan x="150" dy="24">Co-Creation</tspan>
-              </text>
-              
-              {/* 7. Rechts Unten - Social Learning */}
-              <text
-                x="850"
-                y="675"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#32D6FF"
-                fontSize="24"
-                fontWeight="700"
-                opacity="0.95"
-              >
-                <tspan x="850" dy="-12">Social</tspan>
-                <tspan x="850" dy="24">Learning</tspan>
-              </text>
+              {/* Keyword texts removed from SVG for a11y and SEO. Will be added as HTML elements. */}
             </svg>
+            {/* HTML Keyword Texts - Position these absolutely over the SVG */}
+            {/* Example for one keyword, others would follow a similar pattern */}
+            {/* Positioning requires careful adjustment based on the SVG's viewbox and rendered size */}
+            <Box sx={{
+              position: 'absolute',
+              top: 0, left: 0, width: '100%', height: '100%', // Container for positioning
+              pointerEvents: 'none', // So they don't interfere with SVG interactions if any
+              zIndex: 3, // Ensure they are above the main SVG elements but below interactive UI like claim
+            }}>
+              {/* Design Thinking - Center */}
+              <Typography sx={{ position: 'absolute', top: '58%', left: '50%', transform: 'translate(-50%, -50%)', color: '#FFD60A', fontSize: {xs: 12, sm: 16, md: 18}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Design<br/>Thinking</Typography>
+              {/* AI Development - Top Left */}
+              <Typography sx={{ position: 'absolute', top: '32.5%', left: '15%', transform: 'translate(-50%, -50%)', color: '#FF3B30', fontSize: {xs: 10, sm: 14, md: 16}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>AI<br/>Development</Typography>
+              {/* API Integration - Top Right */}
+              <Typography sx={{ position: 'absolute', top: '32.5%', left: '85%', transform: 'translate(-50%, -50%)', color: '#007AFF', fontSize: {xs: 10, sm: 14, md: 16}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>API<br/>Integration</Typography>
+              {/* Innovation Research - Bottom */}
+              <Typography sx={{ position: 'absolute', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', color: '#34C759', fontSize: {xs: 10, sm: 14, md: 16}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Innovation<br/>Research</Typography>
+              {/* Game Engineering - Top */}
+              <Typography sx={{ position: 'absolute', top: '15%', left: '50%', transform: 'translate(-50%, -50%)', color: '#AF52DE', fontSize: {xs: 10, sm: 14, md: 16}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Game<br/>Engineering</Typography>
+              {/* Mobile Co-Creation - Bottom Left */}
+              <Typography sx={{ position: 'absolute', top: '67.5%', left: '15%', transform: 'translate(-50%, -50%)', color: '#FF9500', fontSize: {xs: 9, sm: 12, md: 14}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Mobile<br/>Co-Creation</Typography>
+              {/* Social Learning - Bottom Right */}
+              <Typography sx={{ position: 'absolute', top: '67.5%', left: '85%', transform: 'translate(-50%, -50%)', color: '#32D6FF', fontSize: {xs: 9, sm: 12, md: 14}, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Social<br/>Learning</Typography>
+            </Box>
+
             {/* Slogan/Claim auf 75% Höhe des Hexagons */}
             <Box sx={{
               position: 'absolute',

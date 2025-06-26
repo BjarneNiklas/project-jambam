@@ -5,6 +5,10 @@ import { FaStar, FaCheckCircle, FaGithub, FaExternalLinkAlt, FaMobileAlt, FaGame
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Image from 'next/image';
+import AVLogoProject from '../../public/av_logo.webp'; // Assuming same logo as header, can be different
+// import BlackForestAsylumPic from '../../public/black_forest_asylum.webp'; // If it exists
+// import YLogoProject from '../../public/y_logo.webp'; // If it exists and is different from header
 
 // Helper for chip colors
 const chipColors: Array<'primary' | 'success' | 'warning' | 'error' | 'default' | 'secondary' | 'info'> = ['primary', 'success', 'warning', 'error'];
@@ -148,22 +152,32 @@ const Projects: React.FC = () => {
               </Stack>
             </Box>
             <Box flexShrink={0} p={2} display="flex" flexDirection="column" alignItems="center">
-              <Box
-                component="img"
-                src={featuredProject.image}
-                alt={featuredProject.title}
-                sx={{
-                  width: { xs: 120, md: 180 },
-                  height: { xs: 120, md: 180 },
-                  objectFit: 'contain',
-                  borderRadius: 3,
-                  boxShadow: 4,
-                  bgcolor: 'background.default',
-                  border: '2px solid',
-                  borderColor: 'divider',
-                  mb: 2,
-                }}
-              />
+              <Box sx={{
+                width: { xs: 120, md: 180 },
+                height: { xs: 120, md: 180 },
+                borderRadius: 3,
+                boxShadow: 4,
+                bgcolor: 'background.default',
+                border: '2px solid',
+                borderColor: 'divider',
+                mb: 2,
+                overflow: 'hidden', // For next/image with borderRadius
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                <Image
+                  src={AVLogoProject} // Use imported image
+                  alt={featuredProject.title}
+                  width={180} // Provide base width, will be scaled down by sx if container is smaller
+                  height={180} // Provide base height
+                  style={{
+                    objectFit: 'contain',
+                    maxWidth: '100%', // Ensure image scales down if container is smaller
+                    height: 'auto',    // Maintain aspect ratio
+                  }}
+                />
+              </Box>
               <Tooltip title="Mehr erfahren">
                 <IconButton size="large" href={`/projects/${featuredProject.slug}`} sx={{ transition: 'all 0.2s', '&:hover': { color: 'primary.main', transform: 'translateX(4px) scale(1.15)' } }}>
                   <ChevronRightIcon fontSize="large" />
@@ -222,6 +236,7 @@ const Projects: React.FC = () => {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
                       style={{ display: 'block', width: '100%', height: '100%' }}
+                      loading="lazy"
                     />
                   </Box>
                 )}

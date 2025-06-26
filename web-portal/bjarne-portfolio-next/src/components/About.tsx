@@ -1,21 +1,24 @@
 'use client';
 import React from 'react';
-import { Box, Card, Typography, Button, Avatar, Stack, Chip, useTheme, Icon } from '@mui/material';
+import { Box, Card, Typography, Button, Stack, Chip, useTheme } from '@mui/material';
+import Image from 'next/image';
+import ProfilePic from '../../public/bjarne_profile1.webp';
 import cv from '../data/cv.json';
+import { FaPlane, FaMusic, FaDumbbell, FaUsers, FaWandMagicSparkles, FaNewspaper, FaStar, FaRocket, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 
-const iconMap: Record<string, string> = {
-  'Reisen': 'fa-solid fa-plane',
-  'EDM/Pop Musik': 'fa-solid fa-music',
-  'Sport': 'fa-solid fa-dumbbell',
-  'Freunde & Familie': 'fa-solid fa-users',
-  'Generative KI': 'fa-solid fa-wand-magic-sparkles',
-  'Tech News': 'fa-solid fa-newspaper',
+const iconMap: Record<string, React.ElementType> = {
+  'Reisen': FaPlane,
+  'EDM/Pop Musik': FaMusic,
+  'Sport': FaDumbbell,
+  'Freunde & Familie': FaUsers,
+  'Generative KI': FaWandMagicSparkles,
+  'Tech News': FaNewspaper,
 };
 
 const About: React.FC = () => {
   const theme = useTheme();
   const interestsWithIcons = (cv.interests as string[]).map(label => ({
-    icon: iconMap[label] || 'fa-solid fa-star',
+    icon: iconMap[label] || FaStar, // Use the component directly
     label
   }));
 
@@ -52,22 +55,30 @@ const About: React.FC = () => {
           <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 700, color: 'primary.main' }}>
             Bjarne Niklas Luttermann
           </Typography>
-          <Box
-            component="img"
-            src="/bjarne_profile1.webp"
-            alt="Bjarne Niklas Luttermann"
-            sx={{
-              width: 180,
-              height: 180,
-              mb: 2,
-              border: `4px solid ${theme.palette.background.paper}`,
-              boxShadow: 3,
-              objectFit: 'cover',
-              objectPosition: 'center 45%',
-              borderRadius: '50%',
-              display: 'block',
-            }}
-          />
+          <Box sx={{
+            width: 180,
+            height: 180,
+            mb: 2,
+            border: `4px solid ${theme.palette.background.paper}`,
+            boxShadow: 3,
+            borderRadius: '50%',
+            overflow: 'hidden', // Important for next/image with borderRadius
+            display: 'flex', // Ensure the image is centered if it's smaller
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Image
+              src={ProfilePic}
+              alt="Bjarne Niklas Luttermann"
+              width={180}
+              height={180}
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center 45%',
+              }}
+              priority // Load this image eagerly as it's likely above the fold
+            />
+          </Box>
           <Typography sx={{ fontSize: { xs: '1.2rem', md: '2rem' }, color: '#fff', mb: 2, maxWidth: 600, mx: 'auto', lineHeight: 1.4, fontWeight: 500 }}>
             Cross-Platform, 3D & KI
           </Typography>
@@ -91,7 +102,7 @@ const About: React.FC = () => {
               href="#projects"
               variant="contained"
               size="large"
-              startIcon={<i className="fas fa-rocket" />}
+              startIcon={<FaRocket />}
               sx={{ 
                 fontWeight: 600,
                 background: 'linear-gradient(90deg, #14b8a6 0%, #2dd4bf 100%)',
@@ -106,7 +117,7 @@ const About: React.FC = () => {
               href="mailto:aurav.tech@gmail.com"
               variant="outlined"
               size="large"
-              startIcon={<i className="fas fa-envelope" />}
+              startIcon={<FaEnvelope />}
               sx={{ 
                 fontWeight: 600,
                 borderColor: '#2dd4bf',
@@ -125,7 +136,7 @@ const About: React.FC = () => {
               rel="noopener"
               variant="contained"
               size="large"
-              startIcon={<i className="fab fa-linkedin" />}
+              startIcon={<FaLinkedin />}
               sx={{ 
                 fontWeight: 600,
                 backgroundColor: '#0077b5',
@@ -140,57 +151,30 @@ const About: React.FC = () => {
           <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 600 }}>
             Interessen & Hobbys
           </Typography>
-          <Stack direction="column" alignItems="center" gap={1.5}>
-            <Stack direction="row" flexWrap="wrap" justifyContent="center" gap={1.5}>
-              {firstLineInterests.map(i => (
-                <Chip
-                  key={i.label}
-                  icon={<i className={`${i.icon} fa-fw`} style={{ fontSize: '1.2rem' }} />}
-                  label={i.label}
-                  variant="outlined"
-                  sx={{ 
-                    p: 2, 
-                    fontSize: '1rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    borderColor: 'primary.main',
-                    background: 'rgba(179,157,219,0.07)',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      bgcolor: 'primary.main',
-                      color: 'primary.contrastText',
-                      boxShadow: 3,
-                    },
-                  }}
-                />
-              ))}
-            </Stack>
-            <Stack direction="row" flexWrap="wrap" justifyContent="center" gap={1.5}>
-              {secondLineInterests.map(i => (
-                <Chip
-                  key={i.label}
-                  icon={<i className={`${i.icon} fa-fw`} style={{ fontSize: '1.2rem' }} />}
-                  label={i.label}
-                  variant="outlined"
-                  sx={{ 
-                    p: 2, 
-                    fontSize: '1rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    borderColor: 'primary.main',
-                    background: 'rgba(179,157,219,0.07)',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      bgcolor: 'primary.main',
-                      color: 'primary.contrastText',
-                      boxShadow: 3,
-                    },
-                  }}
-                />
-              ))}
-            </Stack>
+          <Stack direction="row" flexWrap="wrap" justifyContent="center" gap={1.5} sx={{ px: { xs: 0, sm: 2 } }}>
+            {interestsWithIcons.map(Interest => (
+              <Chip
+                key={Interest.label}
+                icon={Interest.icon ? <Interest.icon style={{ fontSize: '1.2rem' }} /> : undefined}
+                label={Interest.label}
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  fontSize: '1rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  borderColor: 'primary.main',
+                  background: 'rgba(179,157,219,0.07)',
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    bgcolor: 'primary.main',
+                    color: 'primary.contrastText',
+                    boxShadow: 3,
+                  },
+                }}
+              />
+            ))}
           </Stack>
         </Card>
       </Box>

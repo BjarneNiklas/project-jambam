@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Box, IconButton, Link, useTheme, LinearProgress, Button, Tooltip, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import Image from 'next/image';
+import AVLogo from '../../public/av_logo.webp';
+import YLogo from '../../public/y_logo.webp';
 
 const navLinks = [
   // { href: '#home', label: 'Home' }, // entfernt
@@ -163,7 +166,7 @@ const AppHeader: React.FC = () => {
                             href="https://aurav.tech"
                             target="_blank"
                             rel="noopener"
-                            startIcon={<img src="/av_logo.webp" alt="AuraV Logo" style={{ width: 22, height: 22, borderRadius: 4, background: '#fff' }} />}
+                            startIcon={<Image src={AVLogo} alt="AuraV Logo" width={22} height={22} style={{ borderRadius: 4, background: '#fff' }} />}
                             endIcon={<OpenInNewIcon />}
                             sx={{
                                 ml: 3,
@@ -187,7 +190,7 @@ const AppHeader: React.FC = () => {
                             variant="outlined"
                             color="primary"
                             href="#"
-                            startIcon={<img src="/y_logo.webp" alt="Project Y Logo" style={{ width: 22, height: 22, borderRadius: 4, background: '#fff' }} />}
+                            startIcon={<Image src={YLogo} alt="Project Y Logo" width={22} height={22} style={{ borderRadius: 4, background: '#fff' }} />}
                             sx={{
                                 ml: 2,
                                 fontWeight: 700,

@@ -10,11 +10,12 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const contactInfo = [
-    { icon: <FaEnvelope />, text: 'aurav.tech@gmail.com', subtext: 'mailto:aurav.tech@gmail.com' },
-    { icon: <FaMapMarkerAlt />, text: 'Lübeck, Deutschland' },
-    { icon: <FaGraduationCap />, text: 'Technische Hochschule Lübeck' },
-];
+// contactInfo is not used directly in this component anymore, but might be used if the component were more dynamic.
+// const contactInfo = [
+//     { icon: <FaEnvelope />, text: 'aurav.tech@gmail.com', subtext: 'mailto:aurav.tech@gmail.com' },
+//     { icon: <FaMapMarkerAlt />, text: 'Lübeck, Deutschland' },
+//     { icon: <FaGraduationCap />, text: 'Technische Hochschule Lübeck' },
+// ];
 
 const socialLinks = [
     { href: 'https://www.linkedin.com/in/bjarne-luttermann/', label: 'LinkedIn', icon: <FaLinkedin /> },
@@ -23,7 +24,7 @@ const socialLinks = [
 ];
 
 const Contact: React.FC = () => {
-    const [showDomainNotice, setShowDomainNotice] = useState(true);
+    // const [showDomainNotice, setShowDomainNotice] = useState(true); // Removed as banner is removed
 
     return (
         <Box component="section" id="contact" sx={{ py: 8, bgcolor: '#0a0a0a', position: 'relative' }}>
@@ -161,31 +162,7 @@ const Contact: React.FC = () => {
                     </Typography>
                 </Box>
             </Container>
-
-            {showDomainNotice && (
-                <Box sx={{
-                    position: 'fixed',
-                    top: { xs: 16, md: 24 },
-                    right: { xs: 16, md: 24 },
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    bgcolor: 'rgba(0,150,136,0.8)',
-                    color: 'primary.contrastText',
-                    py: 1,
-                    px: 1.5,
-                    borderRadius: 2,
-                    zIndex: 2000,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
-                    backdropFilter: 'blur(8px)',
-                }}>
-                    <Link href="mailto:aurav.tech@gmail.com" color="inherit" underline="hover">
-                        Diese Domain ist ggf. erwerbbar. Kontaktieren Sie mich bei Interesse.
-                    </Link>
-                    <IconButton size="small" onClick={() => setShowDomainNotice(false)} sx={{ ml: 1, color: 'inherit' }}>
-                        <CloseIcon fontSize="small" />
-                    </IconButton>
-                </Box>
-            )}
+            {/* Domain Notice Banner wurde entfernt für klareren Fokus auf Portfolio-Inhalte */}
         </Box>
     );
 };
