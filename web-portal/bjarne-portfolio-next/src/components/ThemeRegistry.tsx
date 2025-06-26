@@ -5,6 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useServerInsertedHTML } from 'next/navigation';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+// Import font variables if you need to access them directly in the theme,
+// otherwise, they are globally available via CSS variables defined in layout.tsx
+// import { inter, roboto, jetbrains_mono } from '../app/fonts';
 
 // Main ThemeRegistry component
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
@@ -64,7 +67,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
         contrastText: '#ffffff',
       },
       background: {
-        default: 'transparent',
+        default: '#0a0a0a', // Set the global background color here
         paper: '#1a1a1a',
       },
       text: {
@@ -73,7 +76,9 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
       },
     },
     typography: {
-      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      // Use the CSS variable for Inter as the primary font.
+      // Roboto and JetBrains Mono can be used specifically where needed by applying their CSS variables.
+      fontFamily: 'var(--font-inter), var(--font-roboto), Roboto, Helvetica, Arial, sans-serif',
       h1: {
         fontWeight: 700,
       },
@@ -92,6 +97,10 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
       h6: {
         fontWeight: 500,
       },
+      // Example for using JetBrains Mono for specific elements if needed via MUI components
+      // caption: {
+      //   fontFamily: 'var(--font-jetbrains-mono), monospace',
+      // },
     },
     components: {
       MuiButton: {
@@ -107,11 +116,18 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
         styleOverrides: {
           root: {
             borderRadius: 12,
-            background: 'rgba(26, 26, 26, 0.8)',
+            background: 'rgba(26, 26, 26, 0.8)', // Slightly transparent paper
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(0, 150, 136, 0.1)',
           },
         },
+      },
+      MuiCssBaseline: {
+        styleOverrides: `
+          body {
+            background-color: #0a0a0a; /* Ensure body background is set */
+          }
+        `,
       },
     },
   });

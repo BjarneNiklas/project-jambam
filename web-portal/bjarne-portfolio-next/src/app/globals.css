@@ -3,28 +3,40 @@
 @tailwind utilities;
 
 :root {
-  --background: transparent; /* Kein schwarzer Hintergrund mehr */
+  /* --background: transparent;  Removed as background is now handled by MUI theme */
   --foreground: #ededed;
+  /* It's good practice to define font variables here if Tailwind needs to use them directly,
+     but next/font already makes them available globally.
+     If you have specific Tailwind text utilities that need these, you can uncomment and map them.
+     --font-inter: Inter, sans-serif; // Example, actual var name is --font-inter from next/font
+     --font-roboto: Roboto, sans-serif; // Example, actual var name is --font-roboto
+     --font-jetbrains-mono: "JetBrains Mono", monospace; // Example, actual var name is --font-jetbrains-mono
+  */
 }
 
+/*
+  The @theme directive is for Tailwind's experimental theming feature.
+  If not actively used or if causing conflicts, it can be simplified or removed.
+  Assuming it might be used for Tailwind's own theme context:
+*/
 @theme inline {
-  --color-background: var(--background);
+  /* --color-background: var(--background); */ /* Background is themed via MUI */
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Ensure these font variables match what next/font provides if Tailwind uses them directly */
+  /* --font-sans: var(--font-inter); */ /* Already globally available */
+  /* --font-mono: var(--font-jetbrains-mono); */ /* Already globally available */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: transparent;
-    --foreground: #ededed;
-  }
-}
 
+/* body and html base styles are now primarily handled by MUI's CssBaseline and ThemeProvider.
+   Custom global styles not covered by MUI or Tailwind utilities can remain here.
+   The global font-family is set in the MUI theme.
+   The background color is also set in the MUI theme.
+*/
 body, html {
-  background: #0a0a0a !important;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family is now set by MUI theme using CSS variables from next/font */
+  /* background is now set by MUI theme */
 }
 
 /* AuraV Sonnen-/Aura-Effekt - angepasst für eingeschränkten Bereich */
@@ -107,27 +119,27 @@ body, html {
   animation: auraVHalo 22s linear infinite;
 }
 
-/* Hexagon Animation */
-@keyframes hexagonPulseRotate {
+/* Hexagon Animation - Subtler Pulse */
+@keyframes hexagonPulse {
   0% {
-    transform: scale(1) rotate(0deg);
+    transform: scale(1);
     opacity: 0.95;
     filter: drop-shadow(0 0 32px #ffe066);
   }
   50% {
-    transform: scale(1.04) rotate(6deg);
+    transform: scale(1.02); /* Reduced scaling */
     opacity: 1;
-    filter: drop-shadow(0 0 48px #ffe066);
+    filter: drop-shadow(0 0 40px #ffe066); /* Slightly reduced shadow pulse */
   }
   100% {
-    transform: scale(1) rotate(0deg);
+    transform: scale(1);
     opacity: 0.95;
     filter: drop-shadow(0 0 32px #ffe066);
   }
 }
 .hexagon-hero-anim {
-  animation: hexagonPulseRotate 12s ease-in-out infinite;
-  transition: filter 0.5s;
+  animation: hexagonPulse 12s ease-in-out infinite; /* Changed animation name */
+  transition: filter 0.5s, transform 0.5s; /* Added transform transition */
 }
 
 @keyframes hexCornerPulse {
