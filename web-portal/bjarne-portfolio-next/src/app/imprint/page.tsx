@@ -1,3 +1,4 @@
+// This is the ENGLISH-ONLY version for /imprint
 'use client';
 
 import React from 'react';

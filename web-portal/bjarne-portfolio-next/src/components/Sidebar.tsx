@@ -14,6 +14,18 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import BiotechIcon from '@mui/icons-material/Biotech';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import Grid4x4Icon from '@mui/icons-material/Grid4x4';
+import ScienceIcon from '@mui/icons-material/Science';
+import ExploreIcon from '@mui/icons-material/Explore';
+import LanIcon from '@mui/icons-material/Lan';
+import HubIcon from '@mui/icons-material/Hub';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PersonIcon from '@mui/icons-material/Person';
+import SchoolIcon from '@mui/icons-material/School';
 
 // --- Konstanten (Flags, Links etc.) ---
 const GermanFlag: React.FC<{ size?: number }> = ({ size = 20 }) => (
@@ -27,14 +39,27 @@ const UKFlag: React.FC<{ size?: number }> = ({ size = 20 }) => (
     </svg>
 );
 const navLinks = [
-    { href: '#about', label: 'About', icon: <InfoIcon /> },
-    { href: '#skills', label: 'Skills', icon: <BuildIcon /> },
-    { href: '#projects', label: 'Projects', icon: <WorkIcon /> },
-    { href: '#contact', label: 'Contact', icon: <MailIcon /> },
+    {
+        label: { de: 'About Me', en: 'About Me' },
+        icon: <InfoIcon />,
+        subLinks: [
+            { href: '/#about', label: { de: 'Profil', en: 'Profile' }, icon: <PersonIcon /> },
+            { href: '/#experience-education', label: { de: 'Erfahrung & Ausbildung', en: 'Experience & Education' }, icon: <SchoolIcon /> },
+            { href: '/#skills', label: { de: 'Skills & Tech', en: 'Skills & Tech' }, icon: <BuildIcon /> },
+        ],
+    },
+    { href: '/#projects', label: { de: 'Projekte', en: 'Projects' }, icon: <WorkIcon /> },
+    { href: '/#contact', label: { de: 'Kontakt', en: 'Contact' }, icon: <MailIcon /> },
 ];
 const projects = [
     { href: 'https://aurav.tech', label: 'AuraVention', icon: <img src="/av_logo.webp" alt="AuraVention" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
     { href: '#', label: 'Project Y', icon: <img src="/y_logo.webp" alt="Project Y" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
+];
+const games = [
+    { href: '#black-forest-asylum', label: 'Black Forest Asylum', icon: <ScienceIcon /> },
+    { href: '#maze-of-space', label: 'Maze of Space', icon: <HubIcon /> },
+    { href: '#slime', label: 'SLIME', icon: <BubbleChartIcon /> },
+    { href: '#block-reversal', label: 'Block Reversal', icon: <Grid4x4Icon /> },
 ];
 const socials = [
     { href: 'https://www.linkedin.com/in/bjarne-luttermann/', label: 'LinkedIn', icon: <LinkedInIcon /> },
@@ -43,16 +68,26 @@ const socials = [
 ];
 
 // --- Hauptkomponente ---
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+    mobileOpen?: boolean;
+    setMobileOpen?: (open: boolean) => void;
+}
+const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) => {
     // State für Mobile (Drawer) und Desktop (collapsible)
-    const [mobileOpen, setMobileOpen] = useState(false);
     const [desktopOpen, setDesktopOpen] = useState(true);
+    const [gamesOpen, setGamesOpen] = useState(false);
+    const [aboutOpen, setAboutOpen] = useState(false);
 
     const [language, setLanguage] = useState<'de' | 'en'>('de');
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleLangMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleLangMenuClose = () => setAnchorEl(null);
-    const handleLangChange = (lang: 'de' | 'en') => { setLanguage(lang); setAnchorEl(null); };
+    const handleLangChange = (lang: 'de' | 'en') => {
+        setLanguage(lang);
+        setAnchorEl(null);
+        document.documentElement.lang = lang;
+        window.dispatchEvent(new Event('languagechange'));
+    };
     const flagIcon = language === 'de' ? <GermanFlag /> : <UKFlag />;
 
     // --- Wiederverwendbarer Sidebar-Inhalt ---
@@ -69,23 +104,136 @@ const Sidebar: React.FC = () => {
             }}
         >
             {/* Header */}
-            <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: isOpen ? 'space-between' : 'center' }}>
-                <Typography variant="h6" fontWeight={700} sx={{ whiteSpace: 'nowrap', opacity: isOpen ? 1 : 0, transition: 'opacity 0.2s' }}>
-                    Bjarne Luttermann
-                </Typography>
-                <IconButton onClick={() => setDesktopOpen(!desktopOpen)} sx={{ display: { xs: 'none', md: 'inline-flex' } }}>
-                    {desktopOpen ? <ChevronLeftIcon /> : <MenuIcon />}
+            <Box sx={{ 
+                p: 2.5, 
+                pr: isOpen ? 3.5 : 2.5,
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: isOpen ? 'space-between' : 'center',
+                minHeight: 72,
+                position: 'relative',
+                borderBottom: '1px solid rgba(255,255,255,0.1)',
+            }}>
+                {isOpen ? (
+                    <Typography 
+                        variant="body1" 
+                        fontWeight={600} 
+                        component="a"
+                        href="/"
+                        sx={{ 
+                            whiteSpace: 'nowrap',
+                            transition: 'all 0.2s ease-in-out',
+                            fontSize: '1.05rem',
+                            lineHeight: 1.3,
+                            color: 'rgba(255,255,255,0.95)',
+                            letterSpacing: '0.02em',
+                            cursor: 'pointer',
+                            textDecoration: 'none',
+                            '&:hover': {
+                                color: 'primary.main',
+                            },
+                        }}
+                    >
+                        Bjarne Niklas<br />
+                        Luttermann
+                    </Typography>
+                ) : null}
+                {/* Mobile Close Icon - positioned to the right */}
+                <IconButton
+                    onClick={() => setMobileOpen?.(false)}
+                    sx={{
+                        display: { xs: 'inline-flex', md: 'none' },
+                        position: 'absolute',
+                        right: 8,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        color: 'white',
+                        zIndex: 2,
+                    }}
+                >
+                    <CloseIcon />
                 </IconButton>
+                <Tooltip title={isOpen ? 'Sidebar einklappen' : 'Sidebar ausklappen'} placement="right" arrow>
+                    <IconButton 
+                        onClick={() => setDesktopOpen(!desktopOpen)} 
+                        sx={{ 
+                            display: { xs: 'none', md: 'inline-flex' },
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255,255,255,0.15)',
+                                color: 'white',
+                                transform: 'scale(1.05)',
+                            },
+                            transition: 'all 0.2s ease-in-out',
+                            ...(isOpen ? { 
+                                mr: -0.5,
+                                p: 1,
+                            } : { 
+                                position: 'static',
+                                backgroundColor: 'transparent',
+                                boxShadow: 'none',
+                                p: 1.5,
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255,255,255,0.1)',
+                                    color: 'white',
+                                    boxShadow: 'none',
+                                    transform: 'scale(1.05)',
+                                }
+                            })
+                        }}
+                    >
+                        {desktopOpen ? <ChevronLeftIcon /> : <MenuIcon />}
+                    </IconButton>
+                </Tooltip>
             </Box>
             <Divider />
 
             {/* Hauptnavigation */}
             <List sx={{ px: 1.5, py: 1 }}>
-                {navLinks.map((link) => (
-                    <Tooltip key={link.label} title={!isOpen ? link.label : ''} placement="right" arrow>
-                        <ListItemButton component="a" href={link.href} sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}>
+                {/* About Me Dropdown */}
+                <Tooltip title={isOpen ? '' : 'About Me'} placement="right" arrow>
+                    <ListItemButton
+                        onClick={() => {
+                            if (!isOpen) {
+                                window.location.hash = '#about';
+                            } else {
+                                setAboutOpen(!aboutOpen);
+                            }
+                        }}
+                        sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}
+                    >
+                        <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}><InfoIcon /></ListItemIcon>
+                        {isOpen && <ListItemText primary={language === 'de' ? 'About Me' : 'About Me'} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                        {isOpen && <ExpandMoreIcon sx={{ transform: aboutOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.2s' }} />}
+                    </ListItemButton>
+                </Tooltip>
+                {aboutOpen && isOpen && (
+                    <List component="div" disablePadding sx={{ pl: 4 }}>
+                        <ListItemButton component="a" href="/#about" sx={{ borderRadius: 2, mb: 0.5 }}>
+                            <ListItemIcon><PersonIcon /></ListItemIcon>
+                            <ListItemText primary={language === 'de' ? 'Profil' : 'Profile'} />
+                        </ListItemButton>
+                        <ListItemButton component="a" href="/#experience-education" sx={{ borderRadius: 2, mb: 0.5 }}>
+                            <ListItemIcon><SchoolIcon /></ListItemIcon>
+                            <ListItemText primary={language === 'de' ? 'Erfahrung & Ausbildung' : 'Experience & Education'} />
+                        </ListItemButton>
+                        <ListItemButton component="a" href="/#skills" sx={{ borderRadius: 2, mb: 0.5 }}>
+                            <ListItemIcon><BuildIcon /></ListItemIcon>
+                            <ListItemText primary={language === 'de' ? 'Skills & Tech' : 'Skills & Tech'} />
+                        </ListItemButton>
+                    </List>
+                )}
+                {/* Restliche Links */}
+                {navLinks.slice(1).map((link) => (
+                    <Tooltip key={link.label[language]} title={!isOpen ? link.label[language] : ''} placement="right" arrow>
+                        <ListItemButton
+                            component="a"
+                            href={link.label[language] === 'My Games' ? undefined : link.href}
+                            onClick={link.label[language] === 'My Games' ? (e) => { e.preventDefault(); window.location.hash = '#projects'; } : undefined}
+                            sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}
+                        >
                             <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{link.icon}</ListItemIcon>
-                            {isOpen && <ListItemText primary={link.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                            {isOpen && <ListItemText primary={link.label[language]} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
                         </ListItemButton>
                     </Tooltip>
                 ))}
@@ -95,22 +243,60 @@ const Sidebar: React.FC = () => {
             {/* Projekte & Socials etc. */}
             <Box sx={{ flexGrow: 1, py: 1 }}>
                 <Typography variant="caption" color="text.secondary" sx={{ display: isOpen ? 'block' : 'none', px: 3, mb: 1, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    Projects
+                    {language === 'de' ? 'Projekte' : 'Projects'}
                 </Typography>
                  <List sx={{ px: 1.5 }}>
                     {projects.map(proj => (
                         <Tooltip key={proj.label} title={!isOpen ? proj.label : ''} placement="right" arrow>
-                            <ListItemButton component="a" href={proj.href} target="_blank" rel="noopener" sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}>
+                            <ListItemButton component="a" href={proj.href} target={proj.external ? "_blank" : undefined} rel={proj.external ? "noopener" : undefined} sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}>
                                 <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{proj.icon}</ListItemIcon>
                                 {isOpen && <ListItemText primary={proj.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
-                                {isOpen && <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 'auto' }} />}
+                                {isOpen && proj.external && <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 'auto' }} />}
                             </ListItemButton>
                         </Tooltip>
                     ))}
+                    
+                    {/* Games within Projects */}
+                    <Tooltip title={!isOpen ? (language === 'de' ? 'Meine Spiele' : 'My Games') : ''} placement="right" arrow>
+                        <ListItemButton 
+                            onClick={() => {
+                                if (!isOpen) {
+                                    window.location.hash = '#projects';
+                                } else {
+                                    setGamesOpen(!gamesOpen);
+                                }
+                            }}
+                            sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}
+                        >
+                            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>
+                                <SportsEsportsIcon />
+                            </ListItemIcon>
+                            {isOpen && <ListItemText primary={language === 'de' ? 'Meine Spiele' : 'My Games'} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                            {isOpen && (
+                                <IconButton size="small" sx={{ ml: 'auto', p: 0 }}>
+                                    {gamesOpen ? <ChevronLeftIcon /> : <ArrowDropDownIcon />}
+                                </IconButton>
+                            )}
+                        </ListItemButton>
+                    </Tooltip>
+                    
+                    {/* Games Submenu */}
+                    {gamesOpen && isOpen && (
+                        <List sx={{ pl: 2 }}>
+                            {games.map(game => (
+                                <Tooltip key={game.label} title={!isOpen ? game.label : ''} placement="right" arrow>
+                                    <ListItemButton component="a" href={game.href} sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'flex-start', pl: 3 }}>
+                                        <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{game.icon}</ListItemIcon>
+                                        <ListItemText primary={game.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />
+                                    </ListItemButton>
+                                </Tooltip>
+                            ))}
+                        </List>
+                    )}
                 </List>
                 <Divider sx={{ mx: 2, my: 1 }} />
                 <Typography variant="caption" color="text.secondary" sx={{ display: isOpen ? 'block' : 'none', px: 3, mb: 1, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    Socials
+                    {language === 'de' ? 'Soziale Medien' : 'Socials'}
                 </Typography>
                 <List sx={{ px: 1.5 }}>
                     {socials.map(soc => (
@@ -118,15 +304,17 @@ const Sidebar: React.FC = () => {
                             <ListItemButton component="a" href={soc.href} target="_blank" rel="noopener" sx={{ borderRadius: 2, mb: 0.5, justifyContent: isOpen ? 'flex-start' : 'center' }}>
                                 <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{soc.icon}</ListItemIcon>
                                 {isOpen && <ListItemText primary={soc.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />}
+                                {isOpen && <OpenInNewIcon fontSize="small" sx={{ color: 'text.secondary', ml: 'auto' }} />}
                             </ListItemButton>
                         </Tooltip>
                     ))}
                 </List>
+                
             </Box>
 
             {/* Footer mit Sprachumschalter */}
             <Divider />
-            <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', position: 'relative' }}>
                  {isOpen ? (
                     <Button fullWidth variant="outlined" startIcon={flagIcon} onClick={handleLangMenuOpen} endIcon={<ArrowDropDownIcon />}>
                         {language === 'de' ? 'Deutsch' : 'English'}
@@ -137,12 +325,21 @@ const Sidebar: React.FC = () => {
                     </Tooltip>
                 )}
                 <Menu
-                    anchorEl={anchorEl}
+                    anchorReference="anchorPosition"
+                    anchorPosition={{ top: window.innerHeight - 56, left: 0 }}
                     open={Boolean(anchorEl)}
                     onClose={handleLangMenuClose}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
+                    PaperProps={{
+                        sx: {
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: 180,
+                            minWidth: 120,
+                            position: 'fixed',
+                            bottom: 56,
+                            m: 0,
+                            boxShadow: 6,
+                        }
                     }}
                     transformOrigin={{
                         vertical: 'bottom',
@@ -158,22 +355,16 @@ const Sidebar: React.FC = () => {
 
     return (
         <>
-            {/* --- Mobile: Floating Button + Drawer --- */}
-            <IconButton
-                onClick={() => setMobileOpen(!mobileOpen)}
-                sx={{ position: 'fixed', top: 16, left: 16, zIndex: 1301, display: { xs: 'inline-flex', md: 'none' }, bgcolor: 'background.paper', boxShadow: 3 }}
-            >
-                {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-            </IconButton>
+            {/* --- Mobile: Drawer --- */}
             <Box
-                onClick={() => setMobileOpen(false)}
-                sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.4)', zIndex: 1200, display: { xs: mobileOpen ? 'block' : 'none', md: 'none' }, backdropFilter: 'blur(2px)' }}
+                onClick={() => setMobileOpen?.(false)}
+                sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.6)', zIndex: 1200, display: { xs: mobileOpen ? 'block' : 'none', md: 'none' }, backdropFilter: 'blur(4px)' }}
             />
             <Box
                 component="aside"
                 sx={{
                     position: 'fixed', top: 0, left: 0, height: '100vh', width: 280,
-                    bgcolor: 'background.paper', boxShadow: 3, zIndex: 1201,
+                    bgcolor: 'rgba(26, 26, 26, 0.95)', boxShadow: 3, zIndex: 1201,
                     display: { xs: 'block', md: 'none' },
                     transform: mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
                     transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -187,8 +378,8 @@ const Sidebar: React.FC = () => {
                 component="aside"
                 sx={{
                     position: 'sticky', top: 0, left: 0, height: '100vh',
-                    width: desktopOpen ? 220 : 80,
-                    bgcolor: 'background.paper',
+                    width: desktopOpen ? (gamesOpen ? 280 : 220) : 80,
+                    bgcolor: 'rgba(26, 26, 26, 0.70)',
                     borderRight: '1.5px solid #222',
                     zIndex: 1,
                     display: { xs: 'none', md: 'block' },

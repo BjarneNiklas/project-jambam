@@ -64,7 +64,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
         contrastText: '#ffffff',
       },
       background: {
-        default: '#0a0a0a',
+        default: 'transparent',
         paper: '#1a1a1a',
       },
       text: {

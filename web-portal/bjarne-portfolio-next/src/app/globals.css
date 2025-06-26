@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: transparent; /* Kein schwarzer Hintergrund mehr */
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -16,13 +16,138 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: transparent;
     --foreground: #ededed;
   }
 }
 
-body {
-  background: var(--background);
+body, html {
+  background: #0a0a0a !important;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* AuraV Sonnen-/Aura-Effekt - angepasst für eingeschränkten Bereich */
+@keyframes auraVCore {
+  0% {
+    filter: blur(0px);
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  50% {
+    filter: blur(10px);
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 0.95;
+    transform: scale(1);
+  }
+}
+.animate-aurav-core {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 30%, #FFD60A 0%, #FFD60A 33%, #FF9500 48%, #FF3B30 68%, #007AFF 83%, transparent 93%);
+  animation: auraVCore 10s ease-in-out infinite;
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+@keyframes auraVOuter {
+  0% {
+    filter: blur(24px);
+    opacity: 0.35;
+    transform: scale(1.12);
+  }
+  50% {
+    filter: blur(40px);
+    opacity: 0.45;
+    transform: scale(1.18);
+  }
+  100% {
+    filter: blur(24px);
+    opacity: 0.35;
+    transform: scale(1.12);
+  }
+}
+.animate-aurav-outer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 30%, #FFFBE0 0%, #FFD60A 17%, #FFD60A 43%, #FF9500 58%, #FF3B30 73%, #007AFF 88%, transparent 98%);
+  animation: auraVOuter 18s ease-in-out infinite;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+/* Optional: Lichtstrahlen/Halo */
+@keyframes auraVHalo {
+  0% { opacity: 0.12; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.22; transform: scale(1.04) rotate(8deg); }
+  100% { opacity: 0.12; transform: scale(1) rotate(0deg); }
+}
+.animate-aurav-halo {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: repeating-conic-gradient(from 0deg, #FFD60A 0deg 21deg, #FF9500 21deg 31deg, #FF3B30 31deg 41deg, #007AFF 41deg 51deg, transparent 51deg 61deg);
+  mix-blend-mode: lighten;
+  opacity: 0.12;
+  pointer-events: none;
+  animation: auraVHalo 22s linear infinite;
+}
+
+/* Hexagon Animation */
+@keyframes hexagonPulseRotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 32px #ffe066);
+  }
+  50% {
+    transform: scale(1.04) rotate(6deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 48px #ffe066);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 32px #ffe066);
+  }
+}
+.hexagon-hero-anim {
+  animation: hexagonPulseRotate 12s ease-in-out infinite;
+  transition: filter 0.5s;
+}
+
+@keyframes hexCornerPulse {
+  0% {
+    filter: drop-shadow(0 0 0px #ffe066) drop-shadow(0 0 16px #ffe066);
+    opacity: 0.92;
+    r: 32;
+  }
+  50% {
+    filter: drop-shadow(0 0 32px #ffe066) drop-shadow(0 0 64px #ffe066);
+    opacity: 1;
+    r: 38;
+  }
+  100% {
+    filter: drop-shadow(0 0 0px #ffe066) drop-shadow(0 0 16px #ffe066);
+    opacity: 0.92;
+    r: 32;
+  }
+}
+.hex-corner-glow {
+  animation: hexCornerPulse 2.8s ease-in-out infinite;
+  transition: filter 0.4s, opacity 0.4s;
 }

@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -9,6 +11,20 @@ import { useTheme } from '@mui/material/styles';
 
 const Datenschutz: React.FC = () => {
   const theme = useTheme();
+
+  useEffect(() => {
+    const updateLang = () => {
+      const lang = document.documentElement.lang || 'de';
+      document.querySelectorAll('[data-lang-legal]').forEach(el => {
+        const show = el.getAttribute('data-lang-legal') === lang;
+        (el as HTMLElement).style.display = show ? '' : 'none';
+      });
+    };
+    updateLang();
+    window.addEventListener('languagechange', updateLang);
+    return () => window.removeEventListener('languagechange', updateLang);
+  }, []);
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', py: { xs: 4, md: 8 } }}>
       <Card elevation={4} sx={{ maxWidth: 700, width: '100%', borderRadius: 6, mx: 2, p: { xs: 2, sm: 4 }, background: theme.palette.background.paper }}>
