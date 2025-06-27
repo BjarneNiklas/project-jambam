@@ -3,6 +3,8 @@ import React from 'react';
 import { Box } from '@mui/material';
 import Hero from '../../components/Hero';
 import About from '../../components/About';
+import Skills from '../../components/Skills';
+import ExperienceEducation from '../../components/ExperienceEducation';
 import Projects from '../../components/Projects';
 import Contact from '../../components/Contact';
 import Footer from '../../components/Footer';
@@ -30,6 +32,8 @@ const HomePage: React.FC<PageProps> = ({ params }) => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <Hero />
       <About />
+      <Skills />
+      <ExperienceEducation />
       <Projects />
       <Contact />
       <Footer />

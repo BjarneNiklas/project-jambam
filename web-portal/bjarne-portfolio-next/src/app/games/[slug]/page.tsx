@@ -1,9 +1,10 @@
-// src/app/games/[slug]/page.tsx
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import games from '@/data/games.json';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 
+// Define the Game type based on your data structure
 interface Game {
   slug: string;
   name: string;
@@ -14,27 +15,47 @@ interface Game {
   platform: string[];
   genre: string;
   releaseDate?: string;
-  trailerUrl?: string;
+  trailerUrl?: string | null;
   playUrl?: string;
 }
 
-interface GamePageProps {
-  params: {
-    slug: string;
+// Define the props for the page component, including params and searchParams
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// Helper function to fetch game data
+const getGameData = (slug: string): Game | undefined => {
+  // The type assertion is necessary because `find` can return a different type from the json
+  return games.find((g) => g.slug === slug) as Game | undefined;
+};
+
+// Generate metadata for the page
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const game = getGameData(params.slug);
+
+  if (!game) {
+    return {
+      title: 'Game Not Found',
+    };
+  }
+
+  return {
+    title: `${game.name} | Game Details`,
+    description: game.shortDescription,
   };
 }
 
+// Generate static paths for all games
 export async function generateStaticParams() {
   return games.map((game) => ({
     slug: game.slug,
   }));
 }
 
-const getGameData = (slug: string): Game | undefined => {
-  return games.find((g) => g.slug === slug);
-};
-
-export default function GamePage({ params }: GamePageProps) {
+// The page component
+export default function GamePage({ params }: Props) {
   const game = getGameData(params.slug);
 
   if (!game) {
@@ -97,17 +118,4 @@ export default function GamePage({ params }: GamePageProps) {
       </div>
     </div>
   );
-}
-
-export async function generateMetadata({ params }: GamePageProps) {
-  const game = getGameData(params.slug);
-  if (!game) {
-    return {
-      title: 'Game Not Found',
-    };
-  }
-  return {
-    title: `${game.name} | Game Details`,
-    description: game.shortDescription,
-  };
 }

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import { Box, Typography, Chip, Stack, Divider, Container, Card, CardContent, CardActions, Button, Paper } from '@mui/material';
-import { FaStar, FaCheckCircle, FaGithub, FaExternalLinkAlt, FaMobileAlt, FaGamepad, FaBrain, FaChartLine, FaUsers, FaPlayCircle } from 'react-icons/fa';
+import { Box, Typography, Chip, Stack, Divider, Container, Card, CardContent, CardActions, Paper } from '@mui/material';
+import { FaStar, FaCheckCircle, FaGamepad } from 'react-icons/fa';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -37,7 +37,7 @@ const Projects: React.FC = () => {
 
   const otherProjects = [
     {
-      icon: <img src="/y_logo.webp" alt="Project Y" style={{ width: 40, height: 40, borderRadius: 4 }} />, 
+      icon: <Image src="/y_logo.webp" alt="Project Y" width={40} height={40} style={{ borderRadius: 4 }} />,
       title: 'Project Y', 
       description: t('projects.descriptions.projectY'),
       tags: ['Flutter, Python, Rust'],

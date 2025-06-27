@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
-import { Box, Typography, Divider, Container, Card, CardContent, Button, List, ListItem, ListItemIcon, ListItemText, Link, Chip } from '@mui/material';
-import { FaEnvelope, FaMapMarkerAlt, FaGraduationCap, FaRocket, FaGithub, FaLinkedin, FaYoutube } from 'react-icons/fa';
+import { Box, Typography, Divider, Container, Card, CardContent, Button, List, ListItem, ListItemIcon, ListItemText, Chip } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SchoolIcon from '@mui/icons-material/School';
@@ -9,6 +8,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useLanguage } from '../app/LanguageContext';
+import CardHeader from '@mui/material/CardHeader';
+import { FaRocket } from 'react-icons/fa';
 
 // contactInfo is not used directly in this component anymore, but might be used if the component were more dynamic.
 // const contactInfo = [

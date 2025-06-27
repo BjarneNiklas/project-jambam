@@ -1,8 +1,9 @@
-// src/app/projects/[slug]/page.tsx
-import projects from '@/data/projects.json';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import projects from '@/data/projects.json';
 import ProjectPageClient from './ProjectPageClient';
 
+// Define the Project type based on your data structure
 interface Project {
   slug: string;
   name: string;
@@ -14,44 +15,47 @@ interface Project {
   githubUrl?: string;
 }
 
-interface ProjectPageProps {
-  params: {
-    slug: string;
+// Define the props for the page component, including params and searchParams
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// Helper function to fetch project data
+const getProjectData = (slug: string): Project | undefined => {
+  return projects.find((p) => p.slug === slug);
+};
+
+// Generate metadata for the page
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const project = getProjectData(params.slug);
+
+  if (!project) {
+    return {
+      title: 'Project Not Found',
+    };
+  }
+
+  return {
+    title: `${project.name} | Project Details`,
+    description: project.shortDescription,
   };
 }
 
-// This function tells Next.js which slugs are available
-// and should be pre-rendered at build time.
+// Generate static paths for all projects
 export async function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
   }));
 }
 
-const getProjectData = (slug: string): Project | undefined => {
-  return projects.find((p) => p.slug === slug);
-};
-
-export default function ProjectPage({ params }: ProjectPageProps) {
+// The page component
+export default function ProjectPage({ params }: Props) {
   const project = getProjectData(params.slug);
 
   if (!project) {
-    notFound(); // Triggers a 404 page if project not found
+    notFound();
   }
 
   return <ProjectPageClient project={project} />;
-}
-
-// Optional: Add metadata for SEO
-export async function generateMetadata({ params }: ProjectPageProps) {
-  const project = getProjectData(params.slug);
-  if (!project) {
-    return {
-      title: 'Project Not Found',
-    };
-  }
-  return {
-    title: `${project.name} | Project Details`,
-    description: project.shortDescription,
-  };
 }

@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../../LanguageContext';
@@ -49,8 +48,8 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   // Lightbox-Handler
   const openLightbox = (idx: number) => setLightboxIdx(idx);
   const closeLightbox = () => setLightboxIdx(null);
-  const nextImg = () => setLightboxIdx(i => (i !== null ? (i+1)%bfaImages.length : null));
-  const prevImg = () => setLightboxIdx(i => (i !== null ? (i-1+bfaImages.length)%bfaImages.length : null));
+  const nextImg = useCallback(() => setLightboxIdx(i => (i !== null ? (i+1)%bfaImages.length : null)), [bfaImages.length]);
+  const prevImg = useCallback(() => setLightboxIdx(i => (i !== null ? (i-1+bfaImages.length)%bfaImages.length : null)), [bfaImages.length]);
 
   // Share handler
   const handleShare = async () => {

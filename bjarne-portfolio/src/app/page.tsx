@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
+import { Typography, Link } from "@mui/material";
 import { useLanguage } from "./LanguageContext";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -115,17 +116,37 @@ export default function Home() {
             letterSpacing: "0.02em",
           }}
         >
-          {t("domainForSale", [
-            <a
-              key="contact"
-              href="mailto:aurav.tech@gmail.com"
-              style={{
-                color: "#fff",
-                textDecoration: "underline",
-                fontWeight: 600,
-              }}
-            />
-          ])}
+          {lang === "de" ? (
+            <span>
+              Diese Domain ist zu erwerben – einfach{" "}
+              <a
+                href="mailto:aurav.tech@gmail.com"
+                style={{
+                  color: "#fff",
+                  textDecoration: "underline",
+                  fontWeight: 600,
+                }}
+              >
+                kontaktieren
+              </a>
+              !
+            </span>
+          ) : (
+            <span>
+              This domain is for sale – simply{" "}
+              <a
+                href="mailto:aurav.tech@gmail.com"
+                style={{
+                  color: "#fff",
+                  textDecoration: "underline",
+                  fontWeight: 600,
+                }}
+              >
+                contact me
+              </a>
+              !
+            </span>
+          )}
         </div>
       </footer>
     </div>

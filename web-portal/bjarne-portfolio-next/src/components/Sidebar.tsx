@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Box, Typography, IconButton, List, ListItemIcon, ListItemText, Divider, Tooltip, ListItemButton, Button, Menu, MenuItem } from '@mui/material';
+import Image from 'next/image';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -80,9 +81,9 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
     ];
     
     const projects = [
-        { href: 'https://aurav.tech', label: 'AuraVention', icon: <img src="/av_logo.webp" alt="AuraVention" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
+        { href: 'https://aurav.tech', label: 'AuraVention', icon: <Image src="/av_logo.webp" alt="AuraVention" width={24} height={24} style={{ borderRadius: 4 }} />, external: true },
         { href: createLocalizedUrl('projects/broxel-engine', lang), label: 'Broxel Engine', icon: <BiCube size={24} style={{ color: '#a78bfa' }} />, external: false },
-        { href: '#', label: 'Project Y', icon: <img src="/y_logo.webp" alt="Project Y" style={{ width: 24, height: 24, borderRadius: 4 }} />, external: true },
+        { href: '#', label: 'Project Y', icon: <Image src="/y_logo.webp" alt="Project Y" width={24} height={24} style={{ borderRadius: 4 }} />, external: true },
     ];
     
     const games = [

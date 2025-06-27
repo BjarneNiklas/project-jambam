@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useLanguage } from "./LanguageContext";
 
 const LanguageToggle: React.FC = () => {
-  const { lang, setLang, i18n } = useLanguage();
+  const { lang, setLang } = useLanguage();
 
   const toggleLanguage = () => {
     setLang(lang === 'de' ? 'en' : 'de');
