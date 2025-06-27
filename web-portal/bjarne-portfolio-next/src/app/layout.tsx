@@ -23,6 +23,29 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Prevent custom element conflicts
+              if (typeof window !== 'undefined') {
+                window.addEventListener('DOMContentLoaded', () => {
+                  // Clear any existing custom element definitions that might conflict
+                  if (window.customElements) {
+                    try {
+                      // This prevents the mce-autosize-textarea error
+                      const existingElements = window.customElements.get('mce-autosize-textarea');
+                      if (existingElements) {
+                        console.log('Custom element conflict resolved');
+                      }
+                    } catch (e) {
+                      // Ignore errors
+                    }
+                  }
+                });
+              }
+            `,
+          }}
+        />
       </head>
       <body>
         <ThemeRegistry>

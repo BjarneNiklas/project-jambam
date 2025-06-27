@@ -48,7 +48,10 @@
       "mazeOfSpace": "Innovative maze game (2024, prototype in Unity) with planned expansion 2028: New game modes, multiplayer features and creative challenges. Developed in Godot.",
       "blockReversal": "Casual game classic (2018, prototype in Unity) with planned 3D sequel \"Universal Blox\" (2028): New game modes, modern graphics, multiplayer and cross-platform. Developed in Unity and prospectively on Broxel Engine.",
       "slime": "Physics-based party game (2017/2029, prototype in Unity): Control a slime, suck up items and master fun challenges. 2029 as multiplayer party game in Bevy Engine."
-    }
+    },
+    "conceptImagesLabel": "Concept Images",
+    "descriptionLabel": "Project Description",
+    "tagsLabel": "Tags"
   },
   "about": {
     "title": "About Me",

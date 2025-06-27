@@ -11,21 +11,22 @@ import Footer from '../../../components/Footer';
 import { useLanguage } from '../../../app/LanguageContext';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
 const ImpressumPage: React.FC<PageProps> = ({ params }) => {
   const theme = useTheme();
   const { t, setLang } = useLanguage();
+  const resolvedParams = React.use(params);
 
   useEffect(() => {
     // Setze die Sprache basierend auf der URL
-    if (params.lang === 'en' || params.lang === 'de') {
-      setLang(params.lang);
+    if (resolvedParams.lang === 'en' || resolvedParams.lang === 'de') {
+      setLang(resolvedParams.lang);
     }
-  }, [params.lang, setLang]);
+  }, [resolvedParams.lang, setLang]);
 
   return (
     <>
@@ -85,7 +86,7 @@ const ImpressumPage: React.FC<PageProps> = ({ params }) => {
             </Typography>
             <Divider sx={{ my: 3 }} />
             <Typography variant="body2" sx={{ mb: 2 }}>
-              Für Informationen zum Datenschutz siehe unsere <Box component="a" href={`/${params.lang}/datenschutz`} sx={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>Datenschutzerklärung</Box>.
+              Für Informationen zum Datenschutz siehe unsere <Box component="a" href={`/${resolvedParams.lang}/datenschutz`} sx={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>Datenschutzerklärung</Box>.
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
               Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <Box component="a" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener" sx={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>https://ec.europa.eu/consumers/odr/</Box>.<br />

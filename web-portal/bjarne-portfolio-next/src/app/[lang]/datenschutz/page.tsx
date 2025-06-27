@@ -11,21 +11,22 @@ import Footer from '../../../components/Footer';
 import { useLanguage } from '../../../app/LanguageContext';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
 const DatenschutzPage: React.FC<PageProps> = ({ params }) => {
   const theme = useTheme();
   const { t, setLang } = useLanguage();
+  const resolvedParams = React.use(params);
 
   useEffect(() => {
     // Setze die Sprache basierend auf der URL
-    if (params.lang === 'en' || params.lang === 'de') {
-      setLang(params.lang);
+    if (resolvedParams.lang === 'en' || resolvedParams.lang === 'de') {
+      setLang(resolvedParams.lang);
     }
-  }, [params.lang, setLang]);
+  }, [resolvedParams.lang, setLang]);
 
   return (
     <>

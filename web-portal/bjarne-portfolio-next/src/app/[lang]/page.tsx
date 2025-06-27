@@ -10,20 +10,21 @@ import { useLanguage } from '../../app/LanguageContext';
 import { useEffect } from 'react';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
 const HomePage: React.FC<PageProps> = ({ params }) => {
   const { setLang } = useLanguage();
+  const resolvedParams = React.use(params);
 
   useEffect(() => {
     // Setze die Sprache basierend auf der URL
-    if (params.lang === 'en' || params.lang === 'de') {
-      setLang(params.lang);
+    if (resolvedParams.lang === 'en' || resolvedParams.lang === 'de') {
+      setLang(resolvedParams.lang);
     }
-  }, [params.lang, setLang]);
+  }, [resolvedParams.lang, setLang]);
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>

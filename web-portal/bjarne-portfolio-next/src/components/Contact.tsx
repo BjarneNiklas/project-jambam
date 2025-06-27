@@ -142,27 +142,7 @@ const Contact: React.FC = () => {
                     </Box>
                 </Box>
 
-                {/* Footer */}
-                <Box sx={{ mt: 8, pt: 4, borderTop: 1, borderColor: 'divider' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                        <Stack direction="row" spacing={1} divider={<Divider orientation="vertical" flexItem />}>
-                            <Link href="/impressum" underline="hover" color="text.secondary">Impressum</Link>
-                            <Link href="/datenschutz" underline="hover" color="text.secondary">Datenschutz</Link>
-                        </Stack>
-                        
-                        <Stack direction="row" spacing={1}>
-                            {socialLinks.map((link) => (
-                                <IconButton key={link.label} component="a" href={link.href} target="_blank" rel="noopener" aria-label={link.label} sx={{ color: 'text.secondary' }}>
-                                    {link.icon}
-                                </IconButton>
-                            ))}
-                        </Stack>
-                    </Box>
-                    
-                    <Typography variant="body2" color="text.secondary" align="center">
-                        {t('footer.copyright')}
-                    </Typography>
-                </Box>
+                {/* Footer entfernt */}
             </Container>
             {/* Domain Notice Banner wurde entfernt für klareren Fokus auf Portfolio-Inhalte */}
         </Box>

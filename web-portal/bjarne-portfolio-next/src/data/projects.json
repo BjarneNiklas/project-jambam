@@ -44,7 +44,7 @@
     "name": "Black Forest Asylum",
     "shortDescription": "Atmosphärisches Horror-Adventure mit immersivem Storytelling.",
     "longDescription": "Black Forest Asylum ist ein geplantes atmosphärisches Horror-Adventure, das sich auf immersives Storytelling, Teamwork und Community-Events konzentriert. Das Spiel wird in der Unreal Engine entwickelt und verspricht ein packendes Spielerlebnis mit psychologischen Horror-Elementen und Exploration.",
-    "imageUrl": "/black_forest_asylum.webp",
+    "imageUrl": "/bfa1.webp",
     "technologies": ["Unreal Engine", "C++", "Blueprints", "Horror Design"],
     "url": "#",
     "githubUrl": "#"

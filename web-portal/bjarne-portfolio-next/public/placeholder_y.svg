@@ -1,0 +1,21 @@
+<svg width="400" height="180" viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="180" rx="24" fill="#23232a"/>
+  <g filter="url(#glow)">
+    <path d="M200 50 L250 120 Q200 140 150 120 Z" fill="url(#yGradient)" stroke="#fff" stroke-width="4"/>
+    <rect x="190" y="90" width="20" height="40" rx="8" fill="#fff" opacity="0.8"/>
+  </g>
+  <text x="200" y="160" text-anchor="middle" fill="#fff" font-size="32" font-family="Inter, Arial, sans-serif" font-weight="bold" opacity="0.9">Project Y</text>
+  <defs>
+    <linearGradient id="yGradient" x1="200" y1="50" x2="200" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow" x="0" y="0" width="400" height="180" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg> 

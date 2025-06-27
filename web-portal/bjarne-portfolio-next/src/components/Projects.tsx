@@ -44,7 +44,7 @@ const Projects: React.FC = () => {
       slug: 'project-y',
       year: '2027',
       engines: ['Flutter', 'Python', 'Rust'],
-      image: '/y_logo.webp',
+      image: '/placeholder_generic.svg',
       status: t('projects.status.inDevelopment'),
       detailUrl: '/projects/project-y',
     },
@@ -56,6 +56,7 @@ const Projects: React.FC = () => {
       slug: 'broxel-engine',
       year: '2027',
       engines: ['Bevy Engine'],
+      image: '/placeholder_generic.svg',
       status: t('projects.status.inDevelopment'),
       genres: ['ProcGen', 'Co-Creation'],
       detailUrl: '/projects/broxel-engine',
@@ -68,7 +69,7 @@ const Projects: React.FC = () => {
       slug: 'black-forest-asylum',
       year: '2028',
       engines: ['Unreal Engine'],
-      image: '/black_forest_asylum.webp',
+      image: '/bfa1.webp',
       status: t('projects.status.planned'),
       genres: ['Psychological Horror', 'Exploration'],
       detailUrl: '/projects/black-forest-asylum',
@@ -232,6 +233,16 @@ const Projects: React.FC = () => {
                     theme.palette.grey[800],
                 }}
               />
+              {p.image && (
+                <Box sx={{ width: '100%', aspectRatio: '16/7', position: 'relative', borderRadius: 3, overflow: 'hidden', mb: 2, boxShadow: 2 }}>
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    style={{ objectFit: 'cover', transform: p.slug === 'black-forest-asylum' ? 'scale(1.15)' : undefined, transition: 'transform 0.3s' }}
+                  />
+                </Box>
+              )}
               <CardContent sx={{ flexGrow: 1 }}>
                 <Box sx={{ color: 'primary.main', mb: 2 }}>{p.icon}</Box>
                 {p.youtubeId && (
