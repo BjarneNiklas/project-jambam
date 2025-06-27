@@ -6,7 +6,7 @@ import ProgressBar from '../components/ProgressBar';
 import MobileSidebarController from '../components/MobileSidebarController';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import { LanguageProvider } from './LanguageContext';
-import { inter, roboto, jetbrains_mono } from './fonts';
+import { inter, roboto, jetbrains_mono, creepster } from './fonts'; // Import creepster
 
 export const metadata: Metadata = {
   title: 'Portfolio Bjarne Luttermann',
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="de" className={`${inter.variable} ${roboto.variable} ${jetbrains_mono.variable} scroll-smooth`}>
+    <html lang="de" className={`${inter.variable} ${roboto.variable} ${jetbrains_mono.variable} ${creepster.variable} scroll-smooth`}>
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
