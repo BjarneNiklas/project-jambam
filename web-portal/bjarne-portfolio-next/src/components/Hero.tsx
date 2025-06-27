@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Typography, Stack, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { keyframes } from '@mui/system';
 import { useLanguage } from '../app/LanguageContext';
@@ -36,7 +36,6 @@ const Hero: React.FC = () => {
   const { lang } = useLanguage();
   const [claimIndex, setClaimIndex] = useState(0);
   const claimRef = useRef<HTMLSpanElement>(null);
-  const theme = useTheme();
   const [showScrollIcon, setShowScrollIcon] = useState(true);
 
   useEffect(() => {
@@ -61,7 +60,6 @@ const Hero: React.FC = () => {
       }
     }, 500);
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line
   }, [claimIndex, lang]);
 
   useEffect(() => {
@@ -69,7 +67,6 @@ const Hero: React.FC = () => {
       setClaimIndex((prev) => (prev + 1) % claims[lang].length);
     }, 3500);
     return () => clearInterval(interval);
-    // eslint-disable-next-line
   }, [lang]);
 
   return (

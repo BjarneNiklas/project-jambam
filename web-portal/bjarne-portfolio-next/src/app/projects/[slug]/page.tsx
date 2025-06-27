@@ -1,12 +1,6 @@
 // src/app/projects/[slug]/page.tsx
 import projects from '@/data/projects.json';
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import clsx from 'clsx';
-import Contact from '@/components/Contact';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Footer from '@/components/Footer';
 import ProjectPageClient from './ProjectPageClient';
 
 interface Project {

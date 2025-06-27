@@ -7,8 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../../LanguageContext';
 import { Box, Chip, IconButton, Modal } from '@mui/material';
-import { FaCogs, FaCode, FaPuzzlePiece, FaGamepad, FaRobot, FaCube, FaSearch, FaBrain, FaShareAlt } from 'react-icons/fa';
-import { FiZoomIn } from 'react-icons/fi';
+import { FaCogs, FaCode, FaGamepad, FaRobot, FaCube, FaSearch, FaBrain, FaShareAlt } from 'react-icons/fa';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -70,6 +69,13 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
     setSnackbarOpen(true);
   };
 
+  const techs = (() => {
+    const arr = project.technologies.filter(t => t !== 'Blueprints');
+    if (!arr.includes('Exploration')) arr.push('Exploration');
+    if (!arr.includes('Psychological Horror')) arr.push('Psychological Horror');
+    return arr;
+  })();
+
   React.useEffect(() => {
     if (lightboxIdx !== null) {
       const handler = (e: KeyboardEvent) => {
@@ -80,12 +86,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
       window.addEventListener('keydown', handler);
       return () => window.removeEventListener('keydown', handler);
     }
-  }, [lightboxIdx]);
-
-  // Filter technologies: remove Blueprints, add Exploration & Psychological Horror if not present
-  let techs = project.technologies.filter(t => t !== 'Blueprints');
-  if (!techs.includes('Exploration')) techs.push('Exploration');
-  if (!techs.includes('Psychological Horror')) techs.push('Psychological Horror');
+  }, [lightboxIdx, nextImg, prevImg]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
@@ -196,7 +197,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           {/* Projektbeschreibung - mehr Abstand, bessere Lesbarkeit, zentriert */}
           <h2 className="text-2xl font-bold mb-4 text-white mt-16 text-center w-full">{t('projects.descriptionLabel')}</h2>
           <p className="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto text-center" style={{ lineHeight: 1.7 }}>
-            Step into the unsettling world of "Black Forest Asylum," a psychological horror/exploration game focusing on deeply intelligent NPC interactions and a narrative rooted in the semi-real experiences of psychosis patients. Brace yourself for a chillingly atmospheric journey where nights are filled with dread and disturbing encounters, contrasting sharply with the deceptive calm of daylight. Uncover the secrets of mysterious experiments conducted within an old, isolated hospital nestled deep in the woods, blurring the lines between historical events from the WWII era to the present and unsettling fiction.
+            Step into the unsettling world of &quot;Black Forest Asylum,&quot; a psychological horror/exploration game focusing on deeply intelligent NPC interactions and a narrative rooted in the semi-real experiences of psychosis patients. Brace yourself for a chillingly atmospheric journey where nights are filled with dread and disturbing encounters, contrasting sharply with the deceptive calm of daylight. Uncover the secrets of mysterious experiments conducted within an old, isolated hospital nestled deep in the woods, blurring the lines between historical events from the WWII era to the present and unsettling fiction.
           </p>
 
           {/* Tags (Technologies) - kompakt, ruhig, modern */}

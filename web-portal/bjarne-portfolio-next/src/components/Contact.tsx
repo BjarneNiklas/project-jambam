@@ -1,8 +1,7 @@
 'use client';
-import React, { useState } from 'react';
-import { Box, Typography, Divider, Container, Card, CardContent, Button, List, ListItem, ListItemIcon, ListItemText, Link, IconButton, Stack, Grid, CardHeader, Chip } from '@mui/material';
-import { FaEnvelope, FaMapMarkerAlt, FaGraduationCap, FaRocket, FaPaperPlane, FaGithub, FaLinkedin, FaYoutube } from 'react-icons/fa';
-import CloseIcon from '@mui/icons-material/Close';
+import React from 'react';
+import { Box, Typography, Divider, Container, Card, CardContent, Button, List, ListItem, ListItemIcon, ListItemText, Link, Chip } from '@mui/material';
+import { FaEnvelope, FaMapMarkerAlt, FaGraduationCap, FaRocket, FaGithub, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import MailIcon from '@mui/icons-material/Mail';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SchoolIcon from '@mui/icons-material/School';
@@ -17,12 +16,6 @@ import { useLanguage } from '../app/LanguageContext';
 //     { icon: <FaMapMarkerAlt />, text: 'Lübeck, Deutschland' },
 //     { icon: <FaGraduationCap />, text: 'Technische Hochschule Lübeck' },
 // ];
-
-const socialLinks = [
-    { href: 'https://www.linkedin.com/in/bjarne-luttermann/', label: 'LinkedIn', icon: <FaLinkedin /> },
-    { href: 'https://www.youtube.com/@bjarnik_interactive', label: 'YouTube', icon: <FaYoutube /> },
-    { href: 'https://github.com/BjarneNiklas', label: 'GitHub', icon: <FaGithub /> },
-];
 
 const Contact: React.FC = () => {
     const { t } = useLanguage();

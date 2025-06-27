@@ -25,10 +25,6 @@ const About: React.FC = () => {
     label
   }));
 
-  const breakIndex = interestsWithIcons.findIndex(i => i.label === 'Generative KI');
-  const firstLineInterests = breakIndex !== -1 ? interestsWithIcons.slice(0, breakIndex) : interestsWithIcons;
-  const secondLineInterests = breakIndex !== -1 ? interestsWithIcons.slice(breakIndex) : [];
-
   return (
     <>
       <style jsx>{`

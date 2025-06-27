@@ -31,7 +31,6 @@ import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import StarIcon from '@mui/icons-material/Star';
-import LinkIcon from '@mui/icons-material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useLanguage } from '../app/LanguageContext';
 
