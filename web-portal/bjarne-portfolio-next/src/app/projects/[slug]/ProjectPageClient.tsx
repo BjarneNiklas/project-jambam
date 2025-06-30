@@ -15,7 +15,7 @@ interface Project {
   name: string;
   shortDescription: string;
   longDescription: string;
-  imageUrl?: string;
+  imageUrls?: string[];
   technologies: string[];
   url?: string;
   githubUrl?: string;
@@ -38,9 +38,7 @@ const techIcons: Record<string, React.ReactElement> = {
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const { t } = useLanguage();
-  const bfaImages = project.slug === 'black-forest-asylum'
-    ? ['/bfa1.webp','/bfa2.webp','/bfa3.webp','/bfa4.webp','/bfa5.webp','/bfa6.webp']
-    : [];
+  const projectImages = project.imageUrls && project.imageUrls.length > 0 ? project.imageUrls : [];
   const [lightboxIdx, setLightboxIdx] = useState<number|null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState('');
@@ -48,8 +46,8 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   // Lightbox-Handler
   const openLightbox = (idx: number) => setLightboxIdx(idx);
   const closeLightbox = () => setLightboxIdx(null);
-  const nextImg = useCallback(() => setLightboxIdx(i => (i !== null ? (i+1)%bfaImages.length : null)), [bfaImages.length]);
-  const prevImg = useCallback(() => setLightboxIdx(i => (i !== null ? (i-1+bfaImages.length)%bfaImages.length : null)), [bfaImages.length]);
+  const nextImg = useCallback(() => setLightboxIdx(i => (i !== null ? (i + 1) % projectImages.length : null)), [projectImages.length]);
+  const prevImg = useCallback(() => setLightboxIdx(i => (i !== null ? (i - 1 + projectImages.length) % projectImages.length : null)), [projectImages.length]);
 
   // Share handler
   const handleShare = async () => {
@@ -120,12 +118,14 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           </div>
 
           {/* Konzeptbilder-Label dezent, kleiner, mit Abstand */}
-          <div className="mb-6 mt-2 w-full flex justify-center">
-            <span className="text-base font-semibold text-gray-300 tracking-wide">{t('projects.conceptImagesLabel')}</span>
-          </div>
+          {projectImages.length > 0 && (
+            <div className="mb-6 mt-2 w-full flex justify-center">
+              <span className="text-base font-semibold text-gray-300 tracking-wide">{t('projects.conceptImagesLabel')}</span>
+            </div>
+          )}
 
           {/* Galerie - Top Niveau: Immer nebeneinander, echtes Karussell, niemals untereinander */}
-          {bfaImages.length > 0 && (
+          {projectImages.length > 0 && (
             <div className="w-full flex justify-center">
               <div
                 className="flex flex-row flex-nowrap items-center mb-14 overflow-x-auto px-2"
@@ -136,7 +136,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                   scrollbarWidth: 'thin',
                 }}
               >
-                {bfaImages.map((src, idx) => (
+                {projectImages.map((src, idx) => (
                   <div
                     key={src}
                     className="flex-shrink-0"
@@ -148,13 +148,13 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                       alignItems: 'center',
                       justifyContent: 'center',
                       background: 'rgba(30,30,40,0.7)',
-                      marginRight: idx !== bfaImages.length - 1 ? '3rem' : 0
+                      marginRight: idx !== projectImages.length - 1 ? '3rem' : 0
                     }}
                     onClick={() => openLightbox(idx)}
                   >
                     <Image
                       src={src}
-                      alt={`Black Forest Asylum Screenshot ${idx+1}`}
+                      alt={`${project.name} Screenshot ${idx + 1}`}
                       width={220}
                       height={220}
                       style={{ objectFit: 'cover', width: '100%', height: '100%', borderRadius: 18, boxShadow: '0 4px 24px 0 #18181b55' }}
@@ -170,18 +170,18 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           <Modal open={lightboxIdx !== null} onClose={closeLightbox} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
             <Box sx={{ position: 'relative', outline: 'none', maxWidth: '90vw', maxHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Nummerierung oben links im Modal */}
-              {lightboxIdx !== null && (
+              {lightboxIdx !== null && projectImages.length > 0 && (
                 <div style={{ position: 'absolute', top: 16, left: 24, color: '#fff', fontWeight: 600, fontSize: '1.1rem', background: 'rgba(30,30,40,0.7)', borderRadius: 8, padding: '4px 14px', zIndex: 20 }}>
-                  Bild {lightboxIdx+1}/{bfaImages.length}
+                  Bild {lightboxIdx + 1}/{projectImages.length}
                 </div>
               )}
               <IconButton onClick={prevImg} sx={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 10, bgcolor: 'rgba(30,30,40,0.8)', color: 'white', '&:hover': { bgcolor: 'primary.main' } }}>
                 <ArrowBackIcon fontSize="large" />
               </IconButton>
-              {lightboxIdx !== null && (
+              {lightboxIdx !== null && projectImages.length > 0 && (
                 <Image
-                  src={bfaImages[lightboxIdx]}
-                  alt={`Black Forest Asylum Screenshot ${lightboxIdx+1}`}
+                  src={projectImages[lightboxIdx]}
+                  alt={`${project.name} Screenshot ${lightboxIdx + 1}`}
                   width={900}
                   height={600}
                   style={{ objectFit: 'contain', borderRadius: 16, background: '#18181b', maxHeight: '80vh', maxWidth: '80vw' }}
@@ -196,7 +196,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           {/* Projektbeschreibung - mehr Abstand, bessere Lesbarkeit, zentriert */}
           <h2 className="text-2xl font-bold mb-4 text-white mt-16 text-center w-full">{t('projects.descriptionLabel')}</h2>
           <p className="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto text-center" style={{ lineHeight: 1.7 }}>
-            Step into the unsettling world of &quot;Black Forest Asylum,&quot; a psychological horror/exploration game focusing on deeply intelligent NPC interactions and a narrative rooted in the semi-real experiences of psychosis patients. Brace yourself for a chillingly atmospheric journey where nights are filled with dread and disturbing encounters, contrasting sharply with the deceptive calm of daylight. Uncover the secrets of mysterious experiments conducted within an old, isolated hospital nestled deep in the woods, blurring the lines between historical events from the WWII era to the present and unsettling fiction.
+            {project.longDescription}
           </p>
 
           {/* Tags (Technologies) - kompakt, ruhig, modern */}
