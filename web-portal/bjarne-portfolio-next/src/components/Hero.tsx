@@ -115,8 +115,8 @@ const Hero: React.FC = () => {
             left: '50%',
             transform: 'translate(-50%, -50%)',
             zIndex: 2,
-            width: { xs: 360, sm: 700, lg: 950 },
-            height: { xs: 360, sm: 700, lg: 950 },
+            width: { xs: 400, sm: 700, lg: 950 },
+            height: { xs: 400, sm: 700, lg: 950 },
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -241,19 +241,19 @@ const Hero: React.FC = () => {
               zIndex: 3, // Ensure they are above the main SVG elements but below interactive UI like claim
             }}>
               {/* Design Thinking - Center */}
-              <Typography sx={{ position: 'absolute', top: '58%', left: '50%', transform: 'translate(-50%, -50%)', color: '#FFD60A', fontSize: { xs: 10, sm: 12, md: 16, lg: 18 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Design<br/>Thinking</Typography>
+              <Typography sx={{ position: 'absolute', top: '58%', left: '50%', transform: 'translate(-50%, -50%)', color: '#FFD60A', fontSize: { xs: 9, sm: 12, md: 16, lg: 18 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Design<br/>Thinking</Typography>
               {/* AI Development - Top Left */}
-              <Typography sx={{ position: 'absolute', top: '32.5%', left: '15%', transform: 'translate(-50%, -50%)', color: '#FF3B30', fontSize: { xs: 8, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>AI<br/>Development</Typography>
+              <Typography sx={{ position: 'absolute', top: '32.5%', left: '15%', transform: 'translate(-50%, -50%)', color: '#FF3B30', fontSize: { xs: 7, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>AI<br/>Development</Typography>
               {/* API Integration - Top Right */}
-              <Typography sx={{ position: 'absolute', top: '32.5%', left: '85%', transform: 'translate(-50%, -50%)', color: '#007AFF', fontSize: { xs: 8, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>API<br/>Integration</Typography>
+              <Typography sx={{ position: 'absolute', top: '32.5%', left: '85%', transform: 'translate(-50%, -50%)', color: '#007AFF', fontSize: { xs: 7, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>API<br/>Integration</Typography>
               {/* Innovation Research - Bottom */}
-              <Typography sx={{ position: 'absolute', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', color: '#34C759', fontSize: { xs: 8, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Innovation<br/>Research</Typography>
+              <Typography sx={{ position: 'absolute', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', color: '#34C759', fontSize: { xs: 7, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Innovation<br/>Research</Typography>
               {/* Game Engineering - Top */}
-              <Typography sx={{ position: 'absolute', top: '15%', left: '50%', transform: 'translate(-50%, -50%)', color: '#AF52DE', fontSize: { xs: 8, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Game<br/>Engineering</Typography>
+              <Typography sx={{ position: 'absolute', top: '15%', left: '50%', transform: 'translate(-50%, -50%)', color: '#AF52DE', fontSize: { xs: 7, sm: 10, md: 14, lg: 16 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Game<br/>Engineering</Typography>
               {/* Mobile Co-Creation - Bottom Left */}
-              <Typography sx={{ position: 'absolute', top: '67.5%', left: '15%', transform: 'translate(-50%, -50%)', color: '#FF9500', fontSize: { xs: 7, sm: 9, md: 12, lg: 14 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Mobile<br/>Co-Creation</Typography>
+              <Typography sx={{ position: 'absolute', top: '67.5%', left: '15%', transform: 'translate(-50%, -50%)', color: '#FF9500', fontSize: { xs: 6, sm: 9, md: 12, lg: 14 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Mobile<br/>Co-Creation</Typography>
               {/* Social Learning - Bottom Right */}
-              <Typography sx={{ position: 'absolute', top: '67.5%', left: '85%', transform: 'translate(-50%, -50%)', color: '#32D6FF', fontSize: { xs: 7, sm: 9, md: 12, lg: 14 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Social<br/>Learning</Typography>
+              <Typography sx={{ position: 'absolute', top: '67.5%', left: '85%', transform: 'translate(-50%, -50%)', color: '#32D6FF', fontSize: { xs: 6, sm: 9, md: 12, lg: 14 }, fontWeight: 700, textAlign: 'center', textShadow: '1px 1px 2px black' }}>Social<br/>Learning</Typography>
             </Box>
 
             {/* Slogan/Claim auf 75% Höhe des Hexagons */}
@@ -271,8 +271,14 @@ const Hero: React.FC = () => {
             }}>
               <span
                 ref={claimRef}
-                className="text-2xl md:text-3xl font-semibold text-white"
+                // className="text-2xl md:text-3xl font-semibold text-white" // Replaced by sx prop
                 style={{ transition: 'opacity 0.7s', opacity: 1, textShadow: '0 2px 16px #000, 0 0 32px #FFD60A' }}
+                // Added sx prop for responsive font size
+                sx={{
+                  fontSize: { xs: '1.25rem', md: '1.875rem' }, // Equivalent to text-xl and text-3xl
+                  fontWeight: 600, // font-semibold
+                  color: 'white',
+                }}
               >
                 {claims[lang][claimIndex]}
               </span>
