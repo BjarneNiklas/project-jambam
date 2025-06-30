@@ -4,7 +4,7 @@
     "name": "Aurax Media Platform",
     "shortDescription": "Next-Gen Medienplattform mit Gamification.",
     "longDescription": "Eine detailliertere Beschreibung der Aurax Media Platform, ihrer Ziele, der verwendeten Technologien und der Herausforderungen während der Entwicklung. Diese Plattform zielt darauf ab, Content-Erstellern neue Wege zur Monetarisierung und Interaktion mit ihrem Publikum zu bieten.",
-    "imageUrl": "/images/projects/aurax.jpg",
+    "imageUrls": ["/images/projects/aurax.jpg"],
     "technologies": ["Next.js", "React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
     "url": "https://aurav.tech",
     "githubUrl": "https://github.com/user/aurax-platform"
@@ -14,7 +14,7 @@
     "name": "Personal Portfolio Website",
     "shortDescription": "Meine persönliche Webseite zur Präsentation meiner Projekte und Fähigkeiten.",
     "longDescription": "Diese Webseite dient als zentrale Anlaufstelle, um meine Arbeit im Bereich Softwareentwicklung und Gamedesign vorzustellen. Sie wurde mit Next.js erstellt und nutzt statische Seitengenerierung für optimale Performance. Das Design ist responsiv und modern.",
-    "imageUrl": "/images/projects/portfolio.jpg",
+    "imageUrls": ["/images/projects/portfolio.jpg"],
     "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
     "url": "https://bjarne-luttermann.de",
     "githubUrl": "https://github.com/user/portfolio-nextjs"
@@ -24,7 +24,7 @@
     "name": "Project Y",
     "shortDescription": "Innovative Plattform für KI-gestützte Medienproduktion und Community-Building.",
     "longDescription": "Project Y ist eine zukunftsweisende Plattform, die modernste Technologien mit Gamification und Teamwork verbindet. Das Projekt zielt darauf ab, eine einzigartige Nutzererfahrung zu schaffen, die KI-gestützte Medienproduktion und Community-Building in einem innovativen Ökosystem vereint.",
-    "imageUrl": "/y_logo.webp",
+    "imageUrls": ["/y_logo.webp"],
     "technologies": ["Flutter", "Python", "Rust", "AI", "Machine Learning"],
     "url": "#",
     "githubUrl": "#"
@@ -34,7 +34,7 @@
     "name": "Broxel Engine",
     "shortDescription": "Modulare Open-Source-Voxel-Engine für Next-Gen-Games und kreative Tools.",
     "longDescription": "Die Broxel Engine ist eine geplante modulare Open-Source-Voxel-Engine, die sich auf prozedurale Welten, Modding, Cross-Platform-Support und Community-Integration konzentriert. Basierend auf der Bevy Engine, wird sie 2027 entwickelt und soll die nächste Generation von Spielen und kreativen Tools ermöglichen.",
-    "imageUrl": "/images/projects/broxel.jpg",
+    "imageUrls": ["/images/projects/broxel.jpg"],
     "technologies": ["Bevy Engine", "Rust", "Voxel Graphics", "ProcGen", "Modding"],
     "url": "#",
     "githubUrl": "#"
@@ -44,7 +44,7 @@
     "name": "Black Forest Asylum",
     "shortDescription": "Atmosphärisches Horror-Adventure mit immersivem Storytelling.",
     "longDescription": "Black Forest Asylum ist ein geplantes atmosphärisches Horror-Adventure, das sich auf immersives Storytelling, Teamwork und Community-Events konzentriert. Das Spiel wird in der Unreal Engine entwickelt und verspricht ein packendes Spielerlebnis mit psychologischen Horror-Elementen und Exploration.",
-    "imageUrl": "/bfa1.webp",
+    "imageUrls": ["/bfa1.webp", "/bfa2.webp", "/bfa3.webp", "/bfa4.webp", "/bfa5.webp", "/bfa6.webp"],
     "technologies": ["Unreal Engine", "C++", "Blueprints", "Horror Design"],
     "url": "#",
     "githubUrl": "#"
@@ -54,7 +54,7 @@
     "name": "Maze of Space",
     "shortDescription": "Innovatives Maze-Game mit geplanten Multiplayer-Features.",
     "longDescription": "Maze of Space ist ein innovatives Maze-Game, das 2024 als Prototyp in Unity entwickelt wurde. Für 2028 sind neue Spielmodi, Multiplayer-Features und kreative Herausforderungen geplant. Das Spiel wird in Godot entwickelt und bietet strategische First-Person-Herausforderungen.",
-    "imageUrl": "/images/projects/maze.jpg",
+    "imageUrls": ["/images/projects/maze.jpg"],
     "technologies": ["Godot", "GDScript", "Multiplayer", "Strategy"],
     "url": "#",
     "githubUrl": "#"
@@ -64,7 +64,7 @@
     "name": "Block Reversal",
     "shortDescription": "Casual-Game-Klassiker mit geplantem 3D-Nachfolger.",
     "longDescription": "Block Reversal ist ein Casual-Game-Klassiker aus dem Jahr 2018, der als Prototyp in Unity entwickelt wurde. Ein 3D-Nachfolger namens 'Universal Blox' ist für 2028 geplant mit neuen Spielmodi, moderner Grafik, Multiplayer und Cross-Platform-Support.",
-    "imageUrl": "/images/projects/block.jpg",
+    "imageUrls": ["/images/projects/block.jpg"],
     "technologies": ["Unity", "C#", "3D Graphics", "Multiplayer"],
     "url": "#",
     "githubUrl": "#"
@@ -74,7 +74,7 @@
     "name": "SLIME",
     "shortDescription": "Physikbasiertes Partyspiel mit Schleim-Steuerung.",
     "longDescription": "SLIME ist ein physikbasiertes Partyspiel aus den Jahren 2017/2029, das als Prototyp in Unity entwickelt wurde. Das Spiel ermöglicht es Spielern, einen Schleim zu steuern, Items aufzusaugen und spaßige Herausforderungen zu meistern. 2029 soll es als Multiplayer-Partyspiel in der Bevy Engine neu entwickelt werden.",
-    "imageUrl": "/images/projects/slime.jpg",
+    "imageUrls": ["/images/projects/slime.jpg"],
     "technologies": ["Bevy Engine", "Rust", "Physics", "Multiplayer"],
     "url": "#",
     "githubUrl": "#"
