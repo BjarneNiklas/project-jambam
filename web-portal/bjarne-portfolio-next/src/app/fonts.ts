@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono, Roboto } from 'next/font/google';
+import { Inter, JetBrains_Mono, Roboto, Creepster } from 'next/font/google';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -18,4 +18,11 @@ export const jetbrains_mono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-jetbrains-mono',
+});
+
+export const creepster = Creepster({
+  weight: ['400'], // Creepster typically only has a 400 weight
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-creepster',
 });
