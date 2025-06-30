@@ -19,9 +19,9 @@ interface Game {
   playUrl?: string;
 }
 
-// Definiere die Props für die Page-Komponente (nur params, searchParams wird nicht genutzt)
+// Definiere die Props für die Page-Komponente (params ist jetzt ein Promise)
 type PageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Helper function to fetch game data
@@ -30,9 +30,10 @@ const getGameData = (slug: string): Game | undefined => {
   return games.find((g) => g.slug === slug) as Game | undefined;
 };
 
-// Passe generateMetadata an die empfohlene Typisierung an
+// Passe generateMetadata an das Promise-Pattern an
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const game = getGameData(params.slug);
+  const { slug } = await params;
+  const game = getGameData(slug);
 
   if (!game) {
     return {
@@ -53,9 +54,10 @@ export async function generateStaticParams() {
   }));
 }
 
-// Die Page-Komponente erhält nur params als Props
-export default function GamePage({ params }: PageProps) {
-  const game = getGameData(params.slug);
+// Die Page-Komponente erhält params als Promise
+export default async function GamePage({ params }: PageProps) {
+  const { slug } = await params;
+  const game = getGameData(slug);
 
   if (!game) {
     notFound();
