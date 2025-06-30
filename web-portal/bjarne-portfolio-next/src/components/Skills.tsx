@@ -194,15 +194,18 @@ const Skills: React.FC = () => {
                         {isTop && <StarIcon sx={{ fontSize: 18, color: 'gold', ml: 0.5 }} />}
                       </Box>
                     }
-                    color={isTop ? 'primary' : undefined}
-                    variant={isTop ? 'filled' : 'outlined'}
+                    // Swapped styles:
+                    color={isTop ? undefined : 'primary'}
+                    variant={isTop ? 'outlined' : 'filled'}
                     sx={{
                       fontSize: '1rem',
                       fontWeight: 500,
                       p: 2,
                       cursor: 'pointer',
-                      borderColor: 'primary.main',
-                      background: 'rgba(179,157,219,0.07)',
+                      // Apply specific styles to isTop (formerly non-favorite)
+                      borderColor: isTop ? 'primary.main' : undefined,
+                      background: isTop ? 'rgba(179,157,219,0.07)' : undefined,
+                      // Non-isTop (formerly favorite) will get its background from 'primary' color & 'filled' variant
                       transition: 'all 0.2s',
                       '&:hover': {
                         transform: 'scale(1.05)',
