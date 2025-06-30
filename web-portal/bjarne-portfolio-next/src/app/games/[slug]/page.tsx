@@ -19,10 +19,9 @@ interface Game {
   playUrl?: string;
 }
 
-// Define the props for the page component, including params and searchParams
-type Props = {
+// Definiere die Props für die Page-Komponente (nur params, searchParams wird nicht genutzt)
+type PageProps = {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 // Helper function to fetch game data
@@ -31,8 +30,8 @@ const getGameData = (slug: string): Game | undefined => {
   return games.find((g) => g.slug === slug) as Game | undefined;
 };
 
-// Generate metadata for the page
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// Passe generateMetadata an die empfohlene Typisierung an
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const game = getGameData(params.slug);
 
   if (!game) {
@@ -54,8 +53,8 @@ export async function generateStaticParams() {
   }));
 }
 
-// The page component
-export default function GamePage({ params }: Props) {
+// Die Page-Komponente erhält nur params als Props
+export default function GamePage({ params }: PageProps) {
   const game = getGameData(params.slug);
 
   if (!game) {

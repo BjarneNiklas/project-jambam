@@ -1,358 +1,136 @@
-# JamBam Platform - 9-Phase Development Roadmap
+# JamBam Master-Roadmap (2024–2026) – Solo Edition
 
-## Overview
+## Strategischer Rahmen: Spiralmodell & Kanban
 
-This document outlines the complete 9-phase development roadmap for the JamBam platform, from initial kickoff to future vision. Each phase has specific goals, deliverables, and success metrics designed to build a next-generation, interactive, secure, open-source media platform for the European and German market.
-
-## Phase Structure
-
-### 🚀 Phase 1: Project Kickoff (Q1 2024)
-**Duration**: 3 months  
-**Focus**: Foundation & Team Formation
-
-#### Goals
-- Establish project foundation and team structure
-- Define core architecture and technology stack
-- Set up development environment and CI/CD pipeline
-- Create initial project documentation and governance
-
-#### Key Deliverables
-- [ ] Project charter and governance framework
-- [ ] Technical architecture documentation
-- [ ] Development environment setup (Flutter, Unity, Backend)
-- [ ] CI/CD pipeline configuration
-- [ ] Initial team formation and role definitions
-- [ ] Project management tools setup (GitHub Projects, Jira)
-- [ ] Security and compliance framework outline
-
-#### Success Metrics
-- [ ] Development environment fully operational
-- [ ] CI/CD pipeline successfully deployed
-- [ ] Team collaboration tools established
-- [ ] Initial architecture approved by stakeholders
-- [ ] Security framework documented
-
-#### Labels
-- `phase-1-kickoff`
-- `priority-high`
-- `type-documentation`
+Diese Roadmap kombiniert das Spiralmodell (für Phasen, Risiko, Innovation, Forschung) mit Kanban (für operative Umsetzung, Transparenz und kontinuierlichen Fortschritt). Jede Phase entspricht einem Spiralzyklus und wird operativ über ein Kanban-Board gesteuert.
 
 ---
 
-### 💡 Phase 2: Ideation & Research (Q2 2024)
-**Duration**: 3 months  
-**Focus**: Research & Concept Development
+## Zeitliche Struktur & Phasen
 
-#### Goals
-- Conduct comprehensive market research for European/German market
-- Develop detailed user personas and use cases
-- Research competitive landscape and differentiation opportunities
-- Define core platform features and user experience
-
-#### Key Deliverables
-- [ ] Market research report (European/German focus)
-- [ ] User personas and journey maps
-- [ ] Competitive analysis and positioning strategy
-- [ ] Core feature specification document
-- [ ] UX/UI design system foundation
-- [ ] Technical feasibility studies
-- [ ] Risk assessment and mitigation strategies
-
-#### Success Metrics
-- [ ] Market research completed and documented
-- [ ] User personas validated with target audience
-- [ ] Competitive positioning clearly defined
-- [ ] Core features prioritized and specified
-- [ ] Technical feasibility confirmed
-
-#### Labels
-- `phase-2-ideation`
-- `type-research`
-- `german-market`
-- `european-market`
+### Pre-Phase: Foundations & Setup  
+**Zeitraum:** bis Anfang August 2025  
+**Ziele:**
+- Technische Infrastruktur, CI/CD, Security-Standards
+- Markt- und Nutzerforschung, Personas, Use Cases
+- Fördermittel, Seed-Finanzierung
+- Initiale Community- und Marketing-Aktivitäten (minimal)
+- Detaillierte Roadmap und Governance finalisieren
+- Automatisierung von Build, Test und Deployment
 
 ---
 
-### ⚡ Phase 3: MVP Development (Q3 2024)
-**Duration**: 3 months  
-**Focus**: Core Platform Development
-
-#### Goals
-- Develop minimum viable product with core features
-- Implement basic authentication and user management
-- Create foundational AI and content generation capabilities
-- Establish basic community and squad features
-
-#### Key Deliverables
-- [ ] MVP platform with core functionality
-- [ ] User authentication and profile system
-- [ ] Basic AI content generation pipeline
-- [ ] Community and squad management features
-- [ ] Asset generation and management system
-- [ ] Basic battle/competition mechanics
-- [ ] Mobile app (Flutter) with core features
-
-#### Success Metrics
-- [ ] MVP successfully deployed and accessible
-- [ ] Core authentication system operational
-- [ ] Basic AI content generation functional
-- [ ] Community features working
-- [ ] Mobile app available for testing
-
-#### Labels
-- `phase-3-mvp`
-- `priority-critical`
-- `type-feature`
-- `module-ai`
-- `module-community`
+### Phase 1: MVP & Core Platform  
+**Zeitraum:** bis 10. September 2025  
+**Ziele:**
+- MVP-Entwicklung (Backend, Flutter-Frontend, erste KI-Services)
+- User-Auth, Asset-Upload, Basis-Community-Features
+- Erste Game Jam-Integration, Asset-Generator (BrickGPT, DreamFusion)
+- Masterthesis: Grundlegende Architektur, erste Forschungsergebnisse
+- Interne Alpha-Tests, Feedbackschleifen (ggf. mit externem Feedback)
+- Fokus auf Automatisierung und Selbstmanagement
 
 ---
 
-### 🎓 Phase 4: Masterthesis Implementation (Q4 2024)
-**Duration**: 3 months  
-**Focus**: Academic Research & Advanced Features
-
-#### Goals
-- Implement advanced AI and multi-agent systems for research
-- Develop sophisticated content generation algorithms
-- Create comprehensive analytics and research tools
-- Document findings for academic thesis
-
-#### Key Deliverables
-- [ ] Advanced multi-agent AI system
-- [ ] Sophisticated content generation algorithms
-- [ ] Comprehensive analytics dashboard
-- [ ] Research data collection and analysis tools
-- [ ] Academic documentation and thesis materials
-- [ ] Performance evaluation frameworks
-- [ ] Research publication materials
-
-#### Success Metrics
-- [ ] Multi-agent system operational and documented
-- [ ] Content generation quality meets research standards
-- [ ] Analytics providing meaningful insights
-- [ ] Thesis documentation complete
-- [ ] Research findings validated
-
-#### Labels
-- `phase-4-masterthesis`
-- `masterthesis`
-- `type-research`
-- `type-thesis`
-- `module-ai`
+### Phase 2: Community & Marketplace  
+**Zeitraum:** bis 10. November 2025  
+**Ziele:**
+- Community-Hub, Asset-Bewertung, Remixing, Social Features (minimal)
+- Marketplace (Freemium, Lizenzsystem, Monetarisierung)
+- Erweiterte KI-Generierung, Postprocessing, Animation
+- Masterthesis: Abschluss der zentralen Forschungsarbeit
+- Beta-Tests mit ausgewählten Usern (ggf. externes Feedback einholen)
 
 ---
 
-### 🧪 Phase 5: Alpha Testing (Q1 2025)
-**Duration**: 3 months  
-**Focus**: Internal Testing & Refinement
-
-#### Goals
-- Conduct comprehensive internal testing
-- Refine features based on testing feedback
-- Optimize performance and user experience
-- Prepare for external beta testing
-
-#### Key Deliverables
-- [ ] Comprehensive testing suite and procedures
-- [ ] Performance optimization and bug fixes
-- [ ] UX/UI improvements based on feedback
-- [ ] Security audit and vulnerability fixes
-- [ ] Documentation updates and user guides
-- [ ] Beta testing preparation and planning
-
-#### Success Metrics
-- [ ] All critical bugs resolved
-- [ ] Performance targets met
-- [ ] Security audit passed
-- [ ] User experience validated internally
-- [ ] Beta testing plan approved
-
-#### Labels
-- `phase-5-alpha`
-- `type-enhancement`
-- `type-bug`
-- `module-security`
+### Phase 3: Launch & Academic Milestone  
+**Zeitraum:** bis 10. Januar 2026  
+**Ziele:**
+- Offizieller Launch (Öffentliche Beta, Soft Launch)
+- Masterthesis: Abgabe und Verteidigung
+- Öffentlichkeitsarbeit, Marketing-Offensive (Solo-geeignet)
+- Onboarding von ersten Partnern/API-Integrationen (optional, nach Kapazität)
+- Community-Wachstum, Feedback-Integration (fokussiert)
 
 ---
 
-### 🔍 Phase 6: Beta Testing (Q2 2025)
-**Duration**: 3 months  
-**Focus**: External Testing & User Feedback
-
-#### Goals
-- Conduct external beta testing with target users
-- Gather and integrate user feedback
-- Finalize features and prepare for launch
-- Establish support and community management processes
-
-#### Key Deliverables
-- [ ] Beta testing program with external users
-- [ ] User feedback collection and analysis system
-- [ ] Feature finalization based on feedback
-- [ ] Support system and community management tools
-- [ ] Launch preparation and marketing materials
-- [ ] Legal and compliance finalization
-
-#### Success Metrics
-- [ ] Beta testing successfully completed
-- [ ] User feedback integrated into platform
-- [ ] Support system operational
-- [ ] Launch materials prepared
-- [ ] Compliance requirements met
-
-#### Labels
-- `phase-6-beta`
-- `type-enhancement`
-- `module-community`
-- `module-security`
+### Phase 4: Expansion & Advanced Features  
+**Zeitraum:** bis 10. April 2026  
+**Ziele:**
+- Unity/Godot/Unreal-Integration, Engine-Adapter (nur, wenn Kapazität)
+- Erweiterte 3D- und KI-Features (z.B. Gaussian Splatting, Auto-Rigging)
+- Wettbewerbsfunktionen, Gamification (minimal, MVP)
+- Skalierung der Plattform (Performance, Security, DevOps)
+- Internationale Expansion vorbereiten (nur vorbereiten, nicht umsetzen)
 
 ---
 
-### 🎉 Phase 7: Public Launch (Q3 2025)
-**Duration**: 3 months  
-**Focus**: Public Release & Initial Growth
-
-#### Goals
-- Launch platform to public with full feature set
-- Implement marketing and user acquisition strategies
-- Monitor platform performance and user engagement
-- Establish partnerships and community building
-
-#### Key Deliverables
-- [ ] Public platform launch with full features
-- [ ] Marketing campaign and user acquisition strategy
-- [ ] Performance monitoring and analytics
-- [ ] Community building and engagement programs
-- [ ] Partnership development and business development
-- [ ] Customer support and success programs
-
-#### Success Metrics
-- [ ] Platform successfully launched to public
-- [ ] Initial user acquisition targets met
-- [ ] Platform performance stable and reliable
-- [ ] Community engagement growing
-- [ ] Support system handling user needs
-
-#### Labels
-- `phase-7-launch`
-- `priority-high`
-- `type-feature`
-- `product`
+### Phase 5: Growth & Scaling  
+**Zeitraum:** bis 10. Juni 2026  
+**Ziele:**
+- Monitoring, Analytics, kontinuierliche Optimierung
+- Erweiterung des Marktplatzes, neue Monetarisierungsmodelle (nach Kapazität)
+- Community-Events, Wettbewerbe, Creator-Programme (optional, minimal)
+- Fokus auf nachhaltige Solo-Entwicklung und Automatisierung
+- **Aktive Partnerschaftssuche und Netzwerkaufbau (ab Ende 2025):** Gezielte Suche nach Kooperationspartnern, potenziellen Teammitgliedern oder strategischen Allianzen zur Skalierung und Weiterentwicklung.
 
 ---
 
-### 📈 Phase 8: Growth & Scaling (Q4 2025)
-**Duration**: 6 months  
-**Focus**: User Growth & Platform Expansion
-
-#### Goals
-- Scale platform to support growing user base
-- Implement advanced features and premium offerings
-- Expand market presence in European markets
-- Optimize business model and revenue streams
-
-#### Key Deliverables
-- [ ] Platform scaling and performance optimization
-- [ ] Advanced features and premium offerings
-- [ ] European market expansion strategy
-- [ ] Business model optimization and revenue streams
-- [ ] Advanced analytics and business intelligence
-- [ ] Partnership expansion and ecosystem development
-
-#### Success Metrics
-- [ ] Platform scales to support target user base
-- [ ] Premium features generating revenue
-- [ ] European market presence established
-- [ ] Business model sustainable and profitable
-- [ ] Partnerships driving growth
-
-#### Labels
-- `phase-8-growth`
-- `module-business`
-- `european-market`
-- `product`
+### Phase 6: Ecosystem & Open Innovation  
+**Zeitraum:** bis 10. August 2026  
+**Ziele:**
+- Öffnung der Plattform für externe Entwickler (Open API, SDKs, Plugins) – nur vorbereiten
+- Förderung von Community-Plugins und KI-Agenten (optional, nach Kapazität)
+- Open-Source-Initiativen, Developer-Portal (nur vorbereiten)
+- Innovationsförderung (z.B. Hackathons, Forschungsprojekte, falls möglich)
+- Nachhaltigkeit, Diversity, Inklusion (Solo-geeignete Maßnahmen)
+- **Partnerschaften und Kooperationen ausbauen:** Aufbau und Pflege von Partnerschaften, um das Ökosystem zu stärken und neue Innovationspotenziale zu erschließen.
 
 ---
 
-### 🔮 Phase 9: Future Vision (2026+)
-**Duration**: Ongoing  
-**Focus**: Innovation & Market Leadership
+### Phase 7: Future Vision & Continuous Improvement  
+**Zeitraum:** ab August 2026 (laufend)  
+**Ziele:**
+- Kontinuierliche Weiterentwicklung (AI, XR, neue Engines, neue Märkte)
+- Forschungspartnerschaften, EU-Projekte (nur bei Kapazität)
+- Visionäre Features (z.B. Quantum-Ready, Metaverse-Integration, nach Kapazität)
+- Starke Community, Thought Leadership, europäische Marktführerschaft (langfristig, nach Team-Erweiterung)
 
-#### Goals
-- Establish market leadership in European interactive media
-- Implement cutting-edge AI and technology innovations
-- Expand to new markets and use cases
-- Create industry standards and thought leadership
+---
 
-#### Key Deliverables
-- [ ] Advanced AI and technology innovations
-- [ ] Market expansion to new regions and verticals
-- [ ] Industry partnerships and standards development
-- [ ] Thought leadership and community influence
-- [ ] Platform evolution and feature expansion
-- [ ] Strategic acquisitions and partnerships
+## Operative Umsetzung: Kanban-Boards pro Phase (Solo)
 
-#### Success Metrics
-- [ ] Market leadership position established
-- [ ] Technology innovations recognized industry-wide
-- [ ] Platform used as industry standard
-- [ ] Thought leadership influence measurable
-- [ ] Sustainable competitive advantage maintained
+- Einfache Kanban-Boards pro Phase (z.B. GitHub Projects, Trello)
+- Spalten: Backlog, In Arbeit, Review/Test, Done
+- WIP-Limit = 1 (immer nur eine Aufgabe gleichzeitig)
+- Karten: User Stories, Tasks, Bugs, Research, Prototypen, Dokumentation
+- Wöchentliche Mini-Ziele (Sprint light)
+- Am Ende jeder Phase: Review, Lessons Learned, Übergabe an nächste Phase
 
-#### Labels
-- `phase-9-future`
-- `module-ai`
-- `research`
-- `product`
+---
 
-## Implementation Guidelines
+## Visualisierung: Spiralmodell & Kanban
 
-### Phase Transitions
-- Each phase should have clear entry and exit criteria
-- Phase transitions should include comprehensive reviews and approvals
-- Lessons learned should be documented and applied to subsequent phases
+```mermaid
+flowchart TD
+    A["Spiral Phase 1: Ziel & Risiko"] --> B["Kanban-Board: Aufgabenplanung"]
+    B --> C["Prototyping & Umsetzung"]
+    C --> D["Test & Validierung"]
+    D --> E["Review & Lessons Learned"]
+    E --> F["Spiral Phase 2: Ziel & Risiko"]
+    F --> G["Neues Kanban-Board"]
+```
 
-### Resource Allocation
-- Phase 1-4: Focus on development and research team
-- Phase 5-6: Include testing and quality assurance resources
-- Phase 7-9: Expand to include marketing, business development, and support teams
+---
 
-### Risk Management
-- Each phase should have identified risks and mitigation strategies
-- Regular risk assessments should be conducted throughout each phase
-- Contingency plans should be prepared for critical dependencies
+## Hinweise zur Anwendung (Solo)
 
-### Success Measurement
-- Each phase should have quantifiable success metrics
-- Regular progress reviews should be conducted
-- Adjustments should be made based on progress and feedback
+- Die Roadmap ist flexibel und wird regelmäßig an neue Erkenntnisse und Marktanforderungen angepasst.
+- Jede Phase endet mit einem Review, Lessons Learned und klaren Übergabekriterien zur nächsten Phase.
+- Kanban-Boards werden kontinuierlich gepflegt und dienen als zentrales Tool für Transparenz und Selbstmanagement.
+- Automatisierung (z.B. GitHub Actions) kann Status, Tests und Deployments mit dem Board verknüpfen.
+- Fokus auf Priorisierung, Automatisierung und nachhaltige Solo-Entwicklung.
 
-## Automation and Tools
+---
 
-### GitHub Integration
-- Use GitHub Projects v2 for phase management
-- Automate issue creation and labeling by phase
-- Implement automated progress tracking and reporting
-
-### CI/CD Pipeline
-- Automated testing and deployment for each phase
-- Performance monitoring and alerting
-- Security scanning and compliance checking
-
-### Documentation
-- Automated documentation generation
-- Version control for all project artifacts
-- Knowledge base maintenance and updates
-
-## Conclusion
-
-This 9-phase roadmap provides a comprehensive path from project inception to market leadership. Each phase builds upon the previous one, ensuring steady progress toward the vision of a next-generation, interactive, secure, open-source media platform for the European and German market.
-
-The roadmap emphasizes:
-- **Innovation**: Cutting-edge AI and technology development
-- **Perfection**: High-quality, reliable platform development
-- **Future-proofing**: Scalable architecture and sustainable growth
-- **Continuous Improvement**: Ongoing optimization and enhancement
-
-Success in each phase will be measured by both technical achievements and business outcomes, ensuring the platform meets both academic research requirements and commercial success criteria. 
+**Mit dieser Solo-Kombination erreichst du maximale Effizienz, Risikokontrolle und nachhaltigen Fortschritt – ideal für ambitionierte Einzelentwickler!** 
