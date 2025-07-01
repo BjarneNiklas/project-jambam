@@ -1,5 +1,5 @@
 # JamBam Master-Roadmap (2024–2026) – Solo Edition
-
+-----------
 ## Strategischer Rahmen: Spiralmodell & Kanban
 
 Diese Roadmap kombiniert das Spiralmodell (für Phasen, Risiko, Innovation, Forschung) mit Kanban (für operative Umsetzung, Transparenz und kontinuierlichen Fortschritt). Jede Phase entspricht einem Spiralzyklus und wird operativ über ein Kanban-Board gesteuert.
@@ -20,33 +20,34 @@ Diese Roadmap kombiniert das Spiralmodell (für Phasen, Risiko, Innovation, Fors
 
 ---
 
-### Phase 1: MVP & Core Platform  
+### Phase 1: MindFlow Engine – MVP & Core Platform  
 **Zeitraum:** bis 10. September 2025  
 **Ziele:**
-- MVP-Entwicklung (Backend, Flutter-Frontend, erste KI-Services)
-- User-Auth, Asset-Upload, Basis-Community-Features
-- Erste Game Jam-Integration, Asset-Generator (BrickGPT, DreamFusion)
+- MVP-Entwicklung der MindFlow Engine (AuraVention)
+- KI-gestützte Ideation, Asset-Generierung, Automatisierung
+- Erste Game Jam-Integration (Solo/kleine Teams)
 - Masterthesis: Grundlegende Architektur, erste Forschungsergebnisse
 - Interne Alpha-Tests, Feedbackschleifen (ggf. mit externem Feedback)
 - Fokus auf Automatisierung und Selbstmanagement
 
 ---
 
-### Phase 2: Community & Marketplace  
+### Phase 2: MindFlow Engine – Advanced Features  
 **Zeitraum:** bis 10. November 2025  
 **Ziele:**
-- Community-Hub, Asset-Bewertung, Remixing, Social Features (minimal)
-- Marketplace (Freemium, Lizenzsystem, Monetarisierung)
-- Erweiterte KI-Generierung, Postprocessing, Animation
+- Erweiterung der MindFlow Engine (AuraVention) um fortgeschrittene KI- und Automatisierungsfunktionen
+- Verbesserte Asset-Generierung, Postprocessing, Animation
+- Integration in weitere Workflows (z.B. Game Jam, Prototyping)
 - Masterthesis: Abschluss der zentralen Forschungsarbeit
 - Beta-Tests mit ausgewählten Usern (ggf. externes Feedback einholen)
 
 ---
 
-### Phase 3: Launch & Academic Milestone  
+### Phase 3: MindFlow Engine – Integration & Launch  
 **Zeitraum:** bis 10. Januar 2026  
 **Ziele:**
-- Offizieller Launch (Öffentliche Beta, Soft Launch)
+- Integration der MindFlow Engine in verschiedene Entwicklungsumgebungen
+- Offizieller Launch (Öffentliche Beta, Soft Launch) der MindFlow Engine (AuraVention)
 - Masterthesis: Abgabe und Verteidigung
 - Öffentlichkeitsarbeit, Marketing-Offensive (Solo-geeignet)
 - Onboarding von ersten Partnern/API-Integrationen (optional, nach Kapazität)
@@ -54,37 +55,42 @@ Diese Roadmap kombiniert das Spiralmodell (für Phasen, Risiko, Innovation, Fors
 
 ---
 
-### Phase 4: Expansion & Advanced Features  
+### Phase 4: MindFlow Engine – Continuous Improvement & Ecosystem Preparation  
 **Zeitraum:** bis 10. April 2026  
 **Ziele:**
-- Unity/Godot/Unreal-Integration, Engine-Adapter (nur, wenn Kapazität)
-- Erweiterte 3D- und KI-Features (z.B. Gaussian Splatting, Auto-Rigging)
-- Wettbewerbsfunktionen, Gamification (minimal, MVP)
-- Skalierung der Plattform (Performance, Security, DevOps)
-- Internationale Expansion vorbereiten (nur vorbereiten, nicht umsetzen)
+- Kontinuierliche Weiterentwicklung der MindFlow Engine (Features, Performance, KI-Modelle)
+- Vorbereitung auf Ökosystem-Integration (API, SDK, Plugins)
+- Dokumentation, Developer-Experience, Open-Source-Vorbereitung
+- Partnerschaftssuche, Netzwerkaufbau
 
 ---
 
-### Phase 5: Growth & Scaling  
+### Phase 5: Project Y & Ecosystem – Community & Social Platform  
 **Zeitraum:** bis 10. Juni 2026  
 **Ziele:**
+- Aufbau der Community- und Social-Plattform (Project Y)
+- Integration der MindFlow Engine als zentrales KI-Feature
+- Teamwork, Gamification, User-Profile, Community-Hub
+- Beta-Tests mit Fokus auf Kollaboration und Social Features
+- Wettbewerbsfunktionen, Creator-Programme (umfangreich, MVP)
+- Engine-Adapter, Unity/Godot/Unreal-Integration (nach Kapazität)
+- Erweiterte 3D- und KI-Features (z.B. Gaussian Splatting, Auto-Rigging)
+- Skalierung der Plattform (Performance, Security, DevOps)
 - Monitoring, Analytics, kontinuierliche Optimierung
-- Erweiterung des Marktplatzes, neue Monetarisierungsmodelle (nach Kapazität)
-- Community-Events, Wettbewerbe, Creator-Programme (optional, minimal)
-- Fokus auf nachhaltige Solo-Entwicklung und Automatisierung
-- **Aktive Partnerschaftssuche und Netzwerkaufbau (ab Ende 2025):** Gezielte Suche nach Kooperationspartnern, potenziellen Teammitgliedern oder strategischen Allianzen zur Skalierung und Weiterentwicklung.
+- Erweiterung des Marktplatzes, neue Monetarisierungsmodelle
 
 ---
 
-### Phase 6: Ecosystem & Open Innovation  
+### Phase 6: Open Innovation & Global Ecosystem  
 **Zeitraum:** bis 10. August 2026  
 **Ziele:**
-- Öffnung der Plattform für externe Entwickler (Open API, SDKs, Plugins) – nur vorbereiten
-- Förderung von Community-Plugins und KI-Agenten (optional, nach Kapazität)
-- Open-Source-Initiativen, Developer-Portal (nur vorbereiten)
-- Innovationsförderung (z.B. Hackathons, Forschungsprojekte, falls möglich)
-- Nachhaltigkeit, Diversity, Inklusion (Solo-geeignete Maßnahmen)
-- **Partnerschaften und Kooperationen ausbauen:** Aufbau und Pflege von Partnerschaften, um das Ökosystem zu stärken und neue Innovationspotenziale zu erschließen.
+- Öffnung der Plattform für externe Entwickler (Open API, SDKs, Plugins)
+- Förderung von Community-Plugins und KI-Agenten
+- Open-Source-Initiativen, Developer-Portal
+- Innovationsförderung (z.B. Hackathons, Forschungsprojekte)
+- Nachhaltigkeit, Diversity, Inklusion
+- Partnerschaften und Kooperationen ausbauen
+- Internationale Expansion vorbereiten
 
 ---
 
@@ -92,9 +98,9 @@ Diese Roadmap kombiniert das Spiralmodell (für Phasen, Risiko, Innovation, Fors
 **Zeitraum:** ab August 2026 (laufend)  
 **Ziele:**
 - Kontinuierliche Weiterentwicklung (AI, XR, neue Engines, neue Märkte)
-- Forschungspartnerschaften, EU-Projekte (nur bei Kapazität)
-- Visionäre Features (z.B. Quantum-Ready, Metaverse-Integration, nach Kapazität)
-- Starke Community, Thought Leadership, europäische Marktführerschaft (langfristig, nach Team-Erweiterung)
+- Forschungspartnerschaften, EU-Projekte
+- Visionäre Features (z.B. Quantum-Ready, Metaverse-Integration)
+- Starke Community, Thought Leadership, europäische Marktführerschaft
 
 ---
 

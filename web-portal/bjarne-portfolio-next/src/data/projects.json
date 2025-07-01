@@ -22,10 +22,20 @@
   {
     "slug": "project-y",
     "name": "Project Y",
-    "shortDescription": "Innovative Plattform für KI-gestützte Medienproduktion und Community-Building.",
-    "longDescription": "Project Y ist eine zukunftsweisende Plattform, die modernste Technologien mit Gamification und Teamwork verbindet. Das Projekt zielt darauf ab, eine einzigartige Nutzererfahrung zu schaffen, die KI-gestützte Medienproduktion und Community-Building in einem innovativen Ökosystem vereint.",
+    "shortDescription": "Das kreative Social-Universum für kollaborative, KI-gestützte Medienprojekte.",
+    "longDescription": "Project Y ist das pulsierende Social- und Community-Universum für die Medienmacher von morgen. Im Herzen schlägt die MindFlow Engine (AuraVention): Hier verschmelzen KI-Kreativität, Teamwork, Gamification und Community zu einer einzigartigen Plattform. Werde Teil einer kreativen Bewegung, teile Ideen, entwickle gemeinsam mit anderen und erlebe, wie KI und Menschen zusammen Großes schaffen – alles in einem inspirierenden, digitalen Ökosystem.",
     "imageUrls": ["/y_logo.webp"],
     "technologies": ["Flutter", "Python", "Rust", "AI", "Machine Learning"],
+    "url": "#",
+    "githubUrl": "#"
+  },
+  {
+    "slug": "auravention",
+    "name": "AuraVention (MindFlow Engine)",
+    "shortDescription": "Visionäre KI-Engine für grenzenlose kreative Medienentwicklung.",
+    "longDescription": "Tauche ein in die Zukunft der kreativen Medienentwicklung: Die MindFlow Engine (AuraVention) ist eine visionäre KI-Engine und Multi-Agenten-Plattform, die deine Ideen in interaktive Welten verwandelt. Ob Solo-Entwickler oder kleines Team – erlebe KI-gestützte Inspiration, automatische Asset-Generierung und smarte Workflows. Entwickelt als Masterthesis, ist sie das Sprungbrett für Game Jams, Prototyping und kreative Experimente – pure Innovation, ganz ohne Grenzen.",
+    "imageUrls": ["/av_logo.webp"],
+    "technologies": ["Flutter", "Python", "AI", "Multi-Agent Systems"],
     "url": "#",
     "githubUrl": "#"
   },
