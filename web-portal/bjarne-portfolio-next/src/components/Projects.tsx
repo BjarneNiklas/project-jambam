@@ -8,9 +8,6 @@ import Tooltip from '@mui/material/Tooltip';
 import Image from 'next/image';
 import AVLogoProject from '../../public/av_logo.webp'; // Assuming same logo as header, can be different
 import { useLanguage } from '../app/LanguageContext';
-import { useTheme } from '@mui/material/styles';
-// import BlackForestAsylumPic from '../../public/black_forest_asylum.webp'; // If it exists
-// import YLogoProject from '../../public/y_logo.webp'; // If it exists and is different from header
 
 // Helper for chip colors
 const chipColors: Array<'primary' | 'success' | 'warning' | 'error' | 'default' | 'secondary' | 'info'> = ['primary', 'success', 'warning', 'error'];
@@ -20,7 +17,6 @@ const checkmarkColor = '#3DF58C';
 
 const Projects: React.FC = () => {
   const { t } = useLanguage();
-  const theme = useTheme();
 
   const featuredProject = {
     title: 'AuraVention (MindFlow Engine)',

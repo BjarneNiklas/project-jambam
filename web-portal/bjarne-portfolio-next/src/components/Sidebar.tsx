@@ -86,13 +86,6 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
         { href: '#', label: 'Project Y', icon: <Image src="/y_logo.webp" alt="Project Y" width={24} height={24} style={{ borderRadius: 4 }} />, external: true },
     ];
     
-    const games = [
-        { href: createLocalizedHashUrl('black-forest-asylum', lang), label: 'Black Forest Asylum', icon: <ScienceIcon /> },
-        { href: createLocalizedHashUrl('maze-of-space', lang), label: 'Maze of Space', icon: <HubIcon /> },
-        { href: createLocalizedHashUrl('slime', lang), label: 'SLIME', icon: <BubbleChartIcon /> },
-        { href: createLocalizedHashUrl('block-reversal', lang), label: 'Block Reversal', icon: <Grid4x4Icon /> },
-    ];
-    
     const socials = [
         { href: 'https://www.linkedin.com/in/bjarne-luttermann/', label: 'LinkedIn', icon: <LinkedInIcon /> },
         { href: 'https://www.youtube.com/@bjarnik_interactive', label: 'YouTube', icon: <YouTubeIcon /> },

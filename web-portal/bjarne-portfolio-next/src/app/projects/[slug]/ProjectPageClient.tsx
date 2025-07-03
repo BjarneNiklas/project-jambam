@@ -3,11 +3,9 @@
 import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import LaunchIcon from '@mui/icons-material/Launch';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../../LanguageContext';
-import { Box, Chip, IconButton, Modal, Button, Grid } from '@mui/material';
+import { Box, Chip, IconButton, Modal } from '@mui/material';
 import { FaCogs, FaCode, FaGamepad, FaRobot, FaCube, FaSearch, FaBrain, FaShareAlt } from 'react-icons/fa';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
@@ -79,29 +77,30 @@ function getTechIcon(tech: string) {
   const icon = techIcons[tech];
   if (!icon) return <FaCogs style={{ color: PRIMARY_COLOR_LIGHT, fontSize: '1.25rem', filter: 'drop-shadow(0 0 8px #14b8a6cc)' }} />;
   if (!icon.type) return icon;
+  const iconType = icon.type as unknown;
   // MUI-Icons
-  if (typeof icon.type === 'object' && 'muiName' in icon.type) {
+  if (typeof iconType === 'object' && iconType !== null && 'muiName' in iconType) {
     const baseStyle = {
       color: PRIMARY_COLOR_LIGHT,
       fontSize: '1.25rem',
       filter: 'drop-shadow(0 0 8px #14b8a6cc)'
     };
-    let props: Record<string, any> = {};
-    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props;
-    const style = props.style ? { ...props.style, ...baseStyle } : baseStyle;
-    return React.createElement(icon.type, { ...props, style });
+    let props = {};
+    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props as Record<string, unknown>;
+    const style = (props as { style?: unknown }).style ? { ...(props as { style?: object }).style, ...baseStyle } : baseStyle;
+    return React.createElement(iconType as React.ComponentType<Record<string, unknown>>, { ...(props as object), style });
   }
   // React-Icons
-  if (typeof icon.type === 'function' && !('muiName' in icon.type)) {
+  if (typeof iconType === 'function' && !('muiName' in iconType)) {
     const baseStyle = {
       color: PRIMARY_COLOR_LIGHT,
       fontSize: '1.25rem',
       filter: 'drop-shadow(0 0 8px #14b8a6cc)'
     };
-    let props: Record<string, any> = {};
-    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props;
-    const style = props.style ? { ...props.style, ...baseStyle } : baseStyle;
-    return React.createElement(icon.type, { ...props, style });
+    let props = {};
+    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props as Record<string, unknown>;
+    const style = (props as { style?: unknown }).style ? { ...(props as { style?: object }).style, ...baseStyle } : baseStyle;
+    return React.createElement(iconType as React.ComponentType<Record<string, unknown>>, { ...(props as object), style });
   }
   // Fallback: rendere das Icon direkt
   return icon;
@@ -109,7 +108,7 @@ function getTechIcon(tech: string) {
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const { t } = useLanguage();
-  let demoProject = { ...project };
+  const demoProject = { ...project };
   if (demoProject.slug === 'maze-of-space') {
     demoProject.year = demoProject.year || '2024';
     demoProject.genres = demoProject.genres || ['Maze', 'Strategy', 'First-Person'];

@@ -1,13 +1,10 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { keyframes } from '@mui/system';
 import { useLanguage } from '../app/LanguageContext';
-import IconButton from '@mui/material/IconButton';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const claims = {
   de: [
@@ -87,11 +84,6 @@ const Hero: React.FC = () => {
   const labelFontSize = isMobile ? 36 : 32;
   const ellipseRy = isMobile ? 28 : 36;
   const labelFont = `bold ${labelFontSize}px Inter, Arial, sans-serif`;
-  const leftX = isMobile ? 220 : 100;
-  const rightX = isMobile ? 780 : 900;
-  const topY = isMobile ? 220 : 100;
-  const bottomY = isMobile ? 780 : 900;
-  const midY = isMobile ? 540 : 580;
 
   // Hexagon-Ecken zentral definieren (wiederhergestellt):
   const hexCoords = [
