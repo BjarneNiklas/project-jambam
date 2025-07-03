@@ -1,5 +1,3 @@
-
-
 :root {
   /* --background: transparent;  Removed as background is now handled by MUI theme */
   --foreground: #ededed;
@@ -165,4 +163,8 @@ body, html {
 html {
   scrollbar-width: thin;
   scrollbar-color: #14b8a6 #18181b;
+}
+
+.bfa-thumb:hover {
+  transform: scale(1.7) !important;
 }

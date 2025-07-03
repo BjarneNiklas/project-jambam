@@ -5,6 +5,9 @@ import { Box, Typography } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { keyframes } from '@mui/system';
 import { useLanguage } from '../app/LanguageContext';
+import IconButton from '@mui/material/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const claims = {
   de: [
@@ -31,6 +34,15 @@ const bounce = keyframes`
     transform: translateY(-10px);
   }
 `;
+
+// Hilfsfunktion für Textbreite
+function getTextWidth(text, font) {
+  if (typeof window === 'undefined') return 80;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.font = font;
+  return ctx.measureText(text).width;
+}
 
 const Hero: React.FC = () => {
   const { lang } = useLanguage();
@@ -68,6 +80,28 @@ const Hero: React.FC = () => {
     }, 3500);
     return () => clearInterval(interval);
   }, [lang]);
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+  const svgMaxWidth = isMobile ? '90vw' : '95vw';
+  const svgMaxHeight = isMobile ? '70vh' : '80vh';
+  const labelFontSize = isMobile ? 36 : 32;
+  const ellipseRy = isMobile ? 28 : 36;
+  const labelFont = `bold ${labelFontSize}px Inter, Arial, sans-serif`;
+  const leftX = isMobile ? 220 : 100;
+  const rightX = isMobile ? 780 : 900;
+  const topY = isMobile ? 220 : 100;
+  const bottomY = isMobile ? 780 : 900;
+  const midY = isMobile ? 540 : 580;
+
+  // Hexagon-Ecken zentral definieren (wiederhergestellt):
+  const hexCoords = [
+    { cx: 500, cy: 120, label: 'Game Engineering', color: '#AF52DE' },
+    { cx: 870, cy: 300, label: 'API Integration', color: '#007AFF' },
+    { cx: 870, cy: 700, label: 'Social Learning', color: '#32D6FF' },
+    { cx: 500, cy: 880, label: 'Innovation Research', color: '#34C759' },
+    { cx: 130, cy: 700, label: 'Mobile Co-Creation', color: '#FF3B30' },
+    { cx: 130, cy: 300, label: 'AI Development', color: '#FF9500' },
+  ];
 
   return (
     <>
@@ -137,6 +171,8 @@ const Hero: React.FC = () => {
                 filter: 'drop-shadow(0 0 80px #ffe066)',
                 transform: 'perspective(1200px) rotateX(18deg) rotateY(-12deg)',
                 transition: 'filter 0.5s, transform 1.2s cubic-bezier(.4,2,.6,1)',
+                maxWidth: svgMaxWidth,
+                maxHeight: svgMaxHeight,
               }}
             >
               <defs>
@@ -191,67 +227,35 @@ const Hero: React.FC = () => {
               </defs>
               {/* Schwarzes Hexagon als Füllung */}
               <polygon
-                points="500,100 900,300 900,700 500,900 100,700 100,300"
+                points={hexCoords.map(pt => `${pt.cx},${pt.cy}`).join(' ')}
                 fill="#111"
               />
               {/* Hexagon-Linien mit korrektem Farbverlauf (jetzt garantiert vor dem Hexagon) */}
               {/* Oben rechts nach unten: blau → grün (jetzt blau → blau) */}
-              <line x1="900" y1="300" x2="500" y2="900" stroke="url(#hex-blau-gruen)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
+              <line x1={hexCoords[1].cx} y1={hexCoords[1].cy} x2={hexCoords[3].cx} y2={hexCoords[3].cy} stroke="url(#hex-blau-gruen)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
               {/* Unten nach oben links: blau → rot */}
-              <line x1="500" y1="900" x2="100" y2="300" stroke="url(#hex-gruen-rot)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
+              <line x1={hexCoords[3].cx} y1={hexCoords[3].cy} x2={hexCoords[5].cx} y2={hexCoords[5].cy} stroke="url(#hex-gruen-rot)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
               {/* Die anderen drei Linien entfernt - nur noch die Y-Linien sichtbar */}
               {/* Y-Linien (dünn, mit Glow und Farbverlauf, jetzt garantiert über dem Hexagon) */}
-              <line x1="500" y1="580" x2="850" y2="300" stroke="url(#y-gelb-blau)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
-              <line x1="500" y1="580" x2="100" y2="300" stroke="url(#y-gelb-rot)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
-              <line x1="500" y1="580" x2="500" y2="900" stroke="url(#y-gelb-gruen)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
-              {/* 5 glowy Eckpunkte VOR dem Hexagon */}
-              {[
-                [900,300], [900,700], [500,900], [100,700], [100,300]
-              ].map(([x, y], i) => (
-                <ellipse
-                  key={i}
-                  cx={x}
-                  cy={y}
-                  rx="110"
-                  ry="44"
-                  fill="#fff"
-                  opacity="0.95"
-                  style={{ filter: 'drop-shadow(0 0 48px #00eaff)' }}
-                  className="hex-corner-glow"
-                />
-              ))}
+              <line x1="500" y1="580" x2={hexCoords[1].cx} y2={hexCoords[1].cy} stroke="url(#y-gelb-blau)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
+              <line x1="500" y1="580" x2={hexCoords[5].cx} y2={hexCoords[5].cy} stroke="url(#y-gelb-rot)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
+              <line x1="500" y1="580" x2={hexCoords[3].cx} y2={hexCoords[3].cy} stroke="url(#y-gelb-gruen)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
               {/* Glowy oberer Eckpunkt HINTER dem Hexagon */}
-              <ellipse
-                cx={500}
-                cy={100}
-                rx="110"
-                ry="44"
-                fill="#fff"
-                opacity="0.95"
-                style={{ filter: 'drop-shadow(0 0 48px #00eaff)' }}
-                className="hex-corner-glow"
-              />
               {/* Keyword texts removed from SVG for a11y and SEO. Will be added as HTML elements. */}
-              <ellipse cx="500" cy="100" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="500" y="100" textAnchor="middle" dominantBaseline="middle" fill="#AF52DE" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Game Engineering</text>
-
-              <ellipse cx="900" cy="300" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="900" y="300" textAnchor="middle" dominantBaseline="middle" fill="#007AFF" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>API Integration</text>
-
-              <ellipse cx="900" cy="700" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="900" y="700" textAnchor="middle" dominantBaseline="middle" fill="#32D6FF" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Social Learning</text>
-
-              <ellipse cx="500" cy="900" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="500" y="900" textAnchor="middle" dominantBaseline="middle" fill="#34C759" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Innovation Research</text>
-
-              <ellipse cx="100" cy="700" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="100" y="700" textAnchor="middle" dominantBaseline="middle" fill="#FF3B30" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Mobile Co-Creation</text>
-
-              <ellipse cx="100" cy="300" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="100" y="300" textAnchor="middle" dominantBaseline="middle" fill="#FF9500" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>AI Development</text>
-
-              <ellipse cx="500" cy="500" rx="110" ry="44" fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-              <text x="500" y="500" textAnchor="middle" dominantBaseline="middle" fill="#FFD60A" fontWeight="800" fontSize="32" style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Design Thinking</text>
+              {hexCoords.map((pt, i) => {
+                const rx = getTextWidth(pt.label, labelFont) / 2 + 36;
+                return (
+                  <g key={i}>
+                    <ellipse cx={pt.cx} cy={pt.cy} rx={rx} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
+                    <text x={pt.cx} y={pt.cy} textAnchor="middle" dominantBaseline="middle" fill={pt.color} fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>{pt.label}</text>
+                  </g>
+                );
+              })}
+              {/* Mittleres Oval wieder einfügen */}
+              <>
+                <ellipse cx={500} cy={580} rx={getTextWidth('Design Thinking', labelFont) / 2 + 36} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
+                <text x={500} y={580} textAnchor="middle" dominantBaseline="middle" fill="#FFD60A" fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Design Thinking</text>
+              </>
             </svg>
             {/* HTML Keyword Texts - Position these absolutely over the SVG */}
             {/* Example for one keyword, others would follow a similar pattern */}
@@ -267,12 +271,12 @@ const Hero: React.FC = () => {
             {/* Slogan/Claim auf 75% Höhe des Hexagons */}
             <Box sx={{
               position: 'absolute',
-              top: '50%',
+              top: { xs: '48%', sm: '40%', md: '42%' },
               left: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: 3,
               width: '80%',
-              maxWidth: '90%',
+              maxWidth: { xs: '98%', sm: '90%' },
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -284,7 +288,7 @@ const Hero: React.FC = () => {
                   transition: 'opacity 0.7s',
                   opacity: 1,
                   textShadow: '0 2px 16px #000, 0 0 32px #FFD60A',
-                  fontSize: '1.1rem',
+                  fontSize: isMobile ? '0.9rem' : '1.1rem',
                   fontWeight: 600,
                   color: 'white',
                 }}

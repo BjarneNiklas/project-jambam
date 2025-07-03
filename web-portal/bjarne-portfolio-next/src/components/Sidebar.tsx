@@ -224,13 +224,13 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                             <ListItemIcon><PersonIcon /></ListItemIcon>
                             <ListItemText primary={t('about.title')} />
                         </ListItemButton>
-                        <ListItemButton component="a" href={createLocalizedHashUrl('experience-education', lang)} sx={{ borderRadius: 2, mb: 0.5 }}>
-                            <ListItemIcon><SchoolIcon /></ListItemIcon>
-                            <ListItemText primary={t('experience.title')} />
-                        </ListItemButton>
                         <ListItemButton component="a" href={createLocalizedHashUrl('skills', lang)} sx={{ borderRadius: 2, mb: 0.5 }}>
                             <ListItemIcon><BuildIcon /></ListItemIcon>
                             <ListItemText primary={t('skills.title')} />
+                        </ListItemButton>
+                        <ListItemButton component="a" href={createLocalizedHashUrl('experience-education', lang)} sx={{ borderRadius: 2, mb: 0.5 }}>
+                            <ListItemIcon><SchoolIcon /></ListItemIcon>
+                            <ListItemText primary={t('experience.title')} />
                         </ListItemButton>
                     </List>
                 )}
@@ -305,14 +305,30 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
                     {/* Games Submenu */}
                     {gamesOpen && isOpen && (
                         <List sx={{ pl: 2 }}>
-                            {games.map(game => (
-                                <Tooltip key={game.label} title={!isOpen ? game.label : ''} placement="right" arrow>
-                                    <ListItemButton component="a" href={game.href} sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'flex-start', pl: 3 }}>
-                                        <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>{game.icon}</ListItemIcon>
-                                        <ListItemText primary={game.label} sx={{ ml: 2, whiteSpace: 'nowrap' }} />
-                                    </ListItemButton>
-                                </Tooltip>
-                            ))}
+                            <Tooltip title={!isOpen ? 'Black Forest Asylum' : ''} placement="right" arrow>
+                                <ListItemButton component="a" href="/projects/black-forest-asylum" sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'flex-start', pl: 3 }}>
+                                    <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}><ScienceIcon /></ListItemIcon>
+                                    <ListItemText primary="Black Forest Asylum" sx={{ ml: 2, whiteSpace: 'nowrap' }} />
+                                </ListItemButton>
+                            </Tooltip>
+                            <Tooltip title={!isOpen ? 'Maze of Space' : ''} placement="right" arrow>
+                                <ListItemButton component="a" href="/projects/maze-of-space" sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'flex-start', pl: 3 }}>
+                                    <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}><HubIcon /></ListItemIcon>
+                                    <ListItemText primary="Maze of Space" sx={{ ml: 2, whiteSpace: 'nowrap' }} />
+                                </ListItemButton>
+                            </Tooltip>
+                            <Tooltip title={!isOpen ? 'SLIME' : ''} placement="right" arrow>
+                                <ListItemButton component="a" href="/projects/slime" sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'flex-start', pl: 3 }}>
+                                    <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}><BubbleChartIcon /></ListItemIcon>
+                                    <ListItemText primary="SLIME" sx={{ ml: 2, whiteSpace: 'nowrap' }} />
+                                </ListItemButton>
+                            </Tooltip>
+                            <Tooltip title={!isOpen ? 'Block Reversal' : ''} placement="right" arrow>
+                                <ListItemButton component="a" href="/projects/block-reversal" sx={{ borderRadius: 2, mb: 0.5, justifyContent: 'flex-start', pl: 3 }}>
+                                    <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}><Grid4x4Icon /></ListItemIcon>
+                                    <ListItemText primary="Block Reversal" sx={{ ml: 2, whiteSpace: 'nowrap' }} />
+                                </ListItemButton>
+                            </Tooltip>
                         </List>
                     )}
                 </List>

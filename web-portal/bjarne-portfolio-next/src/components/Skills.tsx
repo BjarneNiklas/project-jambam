@@ -144,7 +144,7 @@ const Skills: React.FC = () => {
             {t('skills.title')}
           </Typography>
           <Divider 
-            sx={{ width: 80, height: 4, mx: 'auto', bgcolor: 'primary.main', borderRadius: 2 }} 
+            sx={{ width: 80, height: 4, mx: 'auto', bgcolor: 'primary.main', borderRadius: 2, mb: 4 }} 
           />
           {/* Tech Radar Button */}
           <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
@@ -194,24 +194,25 @@ const Skills: React.FC = () => {
                         {isTop && <StarIcon sx={{ fontSize: 18, color: 'gold', ml: 0.5 }} />}
                       </Box>
                     }
-                    // Swapped styles:
                     color={isTop ? undefined : 'primary'}
-                    variant={isTop ? 'outlined' : 'filled'}
+                    variant="outlined"
                     sx={{
-                      fontSize: '1rem',
-                      fontWeight: 500,
-                      p: 2,
-                      cursor: 'pointer',
-                      // Apply specific styles to isTop (formerly non-favorite)
-                      borderColor: isTop ? 'primary.main' : undefined,
-                      background: isTop ? 'rgba(179,157,219,0.07)' : undefined,
-                      // Non-isTop (formerly favorite) will get its background from 'primary' color & 'filled' variant
-                      transition: 'all 0.2s',
+                      fontSize: '1.08rem',
+                      fontWeight: 600,
+                      p: '10px 18px',
+                      borderRadius: 2.5,
+                      letterSpacing: 0.1,
+                      color: 'text.primary',
+                      borderColor: 'primary.main',
+                      background: isTop ? 'rgba(179,157,219,0.07)' : 'background.paper',
+                      boxShadow: 'none',
+                      transition: 'all 0.18s cubic-bezier(.4,2,.6,1)',
                       '&:hover': {
-                        transform: 'scale(1.05)',
+                        transform: 'scale(1.07)',
                         bgcolor: 'primary.main',
                         color: 'primary.contrastText',
-                        boxShadow: 3,
+                        boxShadow: 4,
+                        borderColor: 'primary.main',
                       },
                     }}
                   />

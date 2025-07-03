@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Image from 'next/image';
 import AVLogoProject from '../../public/av_logo.webp'; // Assuming same logo as header, can be different
 import { useLanguage } from '../app/LanguageContext';
+import { useTheme } from '@mui/material/styles';
 // import BlackForestAsylumPic from '../../public/black_forest_asylum.webp'; // If it exists
 // import YLogoProject from '../../public/y_logo.webp'; // If it exists and is different from header
 
@@ -19,6 +20,7 @@ const checkmarkColor = '#3DF58C';
 
 const Projects: React.FC = () => {
   const { t } = useLanguage();
+  const theme = useTheme();
 
   const featuredProject = {
     title: 'AuraVention (MindFlow Engine)',
@@ -44,7 +46,7 @@ const Projects: React.FC = () => {
       slug: 'project-y',
       year: '2027',
       engines: ['Flutter', 'Python', 'Rust'],
-      image: '/placeholder_cube.svg',
+      image: '/y_logo.webp',
       status: t('projects.status.inDevelopment'),
       detailUrl: '/projects/project-y',
     },
@@ -126,7 +128,19 @@ const Projects: React.FC = () => {
         </Box>
 
         {/* Featured Project */}
-        <Paper elevation={4} sx={{ p: { xs: 2, md: 4 }, borderRadius: 4, mb: 8, bgcolor: 'background.paper', boxShadow: 6 }}>
+        <Paper elevation={4} sx={{
+          p: { xs: 2, md: 4 },
+          borderRadius: 4,
+          mb: 8,
+          bgcolor: 'background.paper',
+          boxShadow: 6,
+          transition: 'all 0.28s cubic-bezier(.4,1.2,.6,1)',
+          '&:hover': {
+            transform: 'scale(1.015) translateY(-2px)',
+            boxShadow: '0 4px 18px rgba(0,0,0,0.13)',
+            zIndex: 2,
+          },
+        }}>
           <Box sx={{
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' },
@@ -157,7 +171,19 @@ const Projects: React.FC = () => {
               {/* Chips for year and engines below features */}
               <Stack direction="row" flexWrap="wrap" gap={1} mb={2}>
                 {[featuredProject.year, ...featuredProject.engines].map((label, idx) => (
-                  <Chip key={label} label={label} color={chipColors[idx % chipColors.length]} sx={{ fontWeight: 600, fontSize: '1rem', color: '#fff' }} />
+                  <Chip
+                    key={label}
+                    label={label}
+                    color={chipColors[idx % chipColors.length]}
+                    sx={{
+                      fontSize: '1.08rem',
+                      fontWeight: 600,
+                      p: '10px 18px',
+                      borderRadius: 2.5,
+                      letterSpacing: 0.1,
+                      color: '#fff',
+                    }}
+                  />
                 ))}
               </Stack>
             </Box>
@@ -166,12 +192,9 @@ const Projects: React.FC = () => {
                 width: { xs: 120, md: 180 },
                 height: { xs: 120, md: 180 },
                 borderRadius: 3,
-                boxShadow: 4,
-                bgcolor: 'background.default',
-                border: '2px solid',
-                borderColor: 'divider',
+                bgcolor: 'transparent',
                 mb: 2,
-                overflow: 'hidden', // For next/image with borderRadius
+                overflow: 'hidden',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -202,7 +225,17 @@ const Projects: React.FC = () => {
           {otherProjects.map(p => (
             <Card
               key={p.title}
-              sx={{ height: '100%', display: 'flex', flexDirection: 'column', transition: '0.3s', position: 'relative', '&:hover': { transform: 'scale(1.03)', boxShadow: 6 } }}
+              sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 0.28s cubic-bezier(.4,1.2,.6,1)',
+                '&:hover': {
+                  transform: 'scale(1.015) translateY(-2px)',
+                  boxShadow: '0 4px 18px rgba(0,0,0,0.13)',
+                  zIndex: 2,
+                },
+              }}
             >
               <Chip
                 label={p.status}
@@ -233,33 +266,66 @@ const Projects: React.FC = () => {
                     theme.palette.grey[800],
                 }}
               />
-              {p.image && (
-                <Box sx={{ width: '100%', aspectRatio: '16/7', position: 'relative', borderRadius: 3, overflow: 'hidden', mb: 2, boxShadow: 2 }}>
-                  <Image
-                    src={p.image}
-                    alt={p.title}
-                    fill
-                    style={{ objectFit: 'cover', transform: p.slug === 'black-forest-asylum' ? 'scale(1.15)' : undefined, transition: 'transform 0.3s' }}
+              {p.youtubeId ? (
+                <Box sx={{ borderRadius: 2, overflow: 'hidden', aspectRatio: '16/9', bgcolor: 'grey.900', boxShadow: 2 }}>
+                  <iframe
+                    width="100%"
+                    height="180"
+                    src={`https://www.youtube.com/embed/${p.youtubeId}`}
+                    title={p.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    style={{ display: 'block', width: '100%', height: '100%' }}
+                    loading="lazy"
                   />
                 </Box>
-              )}
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box sx={{ color: 'primary.main', mb: 2 }}>{p.icon}</Box>
-                {p.youtubeId && (
-                  <Box sx={{ mb: 2, borderRadius: 2, overflow: 'hidden', aspectRatio: '16/9', bgcolor: 'grey.900', boxShadow: 2 }}>
-                    <iframe
-                      width="100%"
-                      height="180"
-                      src={`https://www.youtube.com/embed/${p.youtubeId}`}
-                      title={p.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      style={{ display: 'block', width: '100%', height: '100%' }}
-                      loading="lazy"
+              ) : p.image && (
+                <Box 
+                  sx={{
+                    width: '100%',
+                    aspectRatio: '16/9',
+                    maxHeight: { xs: 140, md: 220 },
+                    position: 'relative',
+                    boxShadow: 2,
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    p: 0,
+                    m: 0,
+                    bgcolor: 'transparent',
+                  }}
+                >
+                  {p.slug === 'broxel-engine' ? (
+                    <svg width="60%" height="60%" viewBox="0 0 100 100" style={{ display: 'block', margin: 'auto' }}>
+                      <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="#7c4dff" stroke="#fff" strokeWidth="4" filter="drop-shadow(0 0 16px #7c4dff)" />
+                      <polygon points="50,10 90,30 50,50 10,30" fill="#b388ff" opacity="0.7" />
+                      <polygon points="10,30 50,50 50,90 10,70" fill="#9575cd" opacity="0.7" />
+                      <polygon points="90,30 50,50 50,90 90,70" fill="#9575cd" opacity="0.5" />
+                    </svg>
+                  ) : (
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      fill
+                      style={{
+                        objectFit: p.slug === 'project-y' ? 'contain' : 'cover',
+                        width: '100%',
+                        height: '100%',
+                        margin: 'auto',
+                        borderRadius: 8,
+                        maxHeight: p.slug === 'project-y' ? '70%' : undefined,
+                        transition: p.slug === 'black-forest-asylum' ? 'transform 0.38s cubic-bezier(.4,1.2,.6,1)' : undefined,
+                        transform: p.slug === 'black-forest-asylum' ? 'scale(1.5)' : undefined,
+                      }}
+                      className={p.slug === 'black-forest-asylum' ? 'bfa-thumb' : undefined}
                     />
-                  </Box>
-                )}
+                  )}
+                </Box>
+              )}
+              <CardContent sx={{ flexGrow: 1, pt: 0 }}>
                 <Typography
                   variant="h6"
                   sx={{
@@ -273,6 +339,7 @@ const Projects: React.FC = () => {
                     },
                     mb: 1,
                     display: 'block',
+                    mt: 2.5,
                   }}
                 >
                   {p.title}
@@ -295,7 +362,19 @@ const Projects: React.FC = () => {
                 </Typography>
                 <Stack direction="row" flexWrap="wrap" gap={1}>
                   {[p.year, ...p.engines, ...(p.genres || [])].map((label, idx) => (
-                    <Chip key={label} label={label} color={chipColors[idx % chipColors.length]} sx={{ color: '#fff' }} />
+                    <Chip
+                      key={label}
+                      label={label}
+                      color={chipColors[idx % chipColors.length]}
+                      sx={{
+                        fontSize: '1.08rem',
+                        fontWeight: 600,
+                        p: '10px 18px',
+                        borderRadius: 2.5,
+                        letterSpacing: 0.1,
+                        color: '#fff',
+                      }}
+                    />
                   ))}
                 </Stack>
               </CardContent>

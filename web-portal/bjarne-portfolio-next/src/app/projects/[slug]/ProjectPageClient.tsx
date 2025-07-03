@@ -11,6 +11,11 @@ import { Box, Chip, IconButton, Modal, Button, Grid } from '@mui/material';
 import { FaCogs, FaCode, FaGamepad, FaRobot, FaCube, FaSearch, FaBrain, FaShareAlt } from 'react-icons/fa';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import ScienceIcon from '@mui/icons-material/Science'; // Added import
+import HubIcon from '@mui/icons-material/Hub'; // Added import
+import Grid4x4Icon from '@mui/icons-material/Grid4x4'; // Added import
+import { BiCube } from 'react-icons/bi'; // Added import
 
 interface Project {
   slug: string;
@@ -35,7 +40,32 @@ const techIcons: Record<string, React.ReactElement> = {
   'Horror Design': <FaRobot />,
   'Voxel Graphics': <FaCube />,
   'Exploration': <FaSearch />,
-  'Psychological Horror': <FaBrain />
+  'Psychological Horror': <FaBrain />,
+  'Bevy Engine': <BubbleChartIcon />,
+  'SLIME': <BubbleChartIcon />,
+  'Godot': <HubIcon />,
+  'GDScript': <FaCode />,
+  'Multiplayer': <FaShareAlt />,
+  'Strategy': <FaBrain />,
+  'Unity': <FaGamepad />,
+  'C#': <FaCode />,
+  '3D Graphics': <FaCube />,
+  'Rust': <FaCode />,
+  'ProcGen': <FaCogs />,
+  'Modding': <FaCogs />,
+  'Next.js': <FaCode />,
+  'React': <FaCode />,
+  'TypeScript': <FaCode />,
+  'Node.js': <FaCode />,
+  'MongoDB': <FaCogs />,
+  'Tailwind CSS': <FaCogs />,
+  'Vercel': <FaCogs />,
+  'Flutter': <BubbleChartIcon />,
+  'Python': <FaCode />,
+  'AI': <FaRobot />,
+  'Machine Learning': <FaBrain />,
+  'Multi-Agent Systems': <FaRobot />,
+  'Block Reversal': <Grid4x4Icon />,
   // Add more icons as needed
 };
 
@@ -44,9 +74,51 @@ const PRIMARY_COLOR = '#14b8a6'; // Teal shade from scrollbar
 const PRIMARY_COLOR_LIGHT = '#2dd4bf';
 const PRIMARY_COLOR_DARK = '#0f766e'; // A darker shade for hover or borders
 
+// Hilfsfunktion für Icon-Rendering
+function getTechIcon(tech: string) {
+  const icon = techIcons[tech];
+  if (!icon) return <FaCogs style={{ color: PRIMARY_COLOR_LIGHT, fontSize: '1.25rem', filter: 'drop-shadow(0 0 8px #14b8a6cc)' }} />;
+  if (!icon.type) return icon;
+  // MUI-Icons
+  if (typeof icon.type === 'object' && 'muiName' in icon.type) {
+    const baseStyle = {
+      color: PRIMARY_COLOR_LIGHT,
+      fontSize: '1.25rem',
+      filter: 'drop-shadow(0 0 8px #14b8a6cc)'
+    };
+    let props: Record<string, any> = {};
+    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props;
+    const style = props.style ? { ...props.style, ...baseStyle } : baseStyle;
+    return React.createElement(icon.type, { ...props, style });
+  }
+  // React-Icons
+  if (typeof icon.type === 'function' && !('muiName' in icon.type)) {
+    const baseStyle = {
+      color: PRIMARY_COLOR_LIGHT,
+      fontSize: '1.25rem',
+      filter: 'drop-shadow(0 0 8px #14b8a6cc)'
+    };
+    let props: Record<string, any> = {};
+    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props;
+    const style = props.style ? { ...props.style, ...baseStyle } : baseStyle;
+    return React.createElement(icon.type, { ...props, style });
+  }
+  // Fallback: rendere das Icon direkt
+  return icon;
+}
+
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const { t } = useLanguage();
-  const projectImages = project.imageUrls && project.imageUrls.length > 0 ? project.imageUrls : [];
+  let demoProject = { ...project };
+  if (demoProject.slug === 'maze-of-space') {
+    demoProject.year = demoProject.year || '2024';
+    demoProject.genres = demoProject.genres || ['Maze', 'Strategy', 'First-Person'];
+  }
+  if (demoProject.slug === 'block-reversal') {
+    demoProject.year = demoProject.year || '2028';
+    demoProject.genres = demoProject.genres || ['Casual', 'Puzzle'];
+  }
+  const projectImages = demoProject.imageUrls && demoProject.imageUrls.length > 0 ? demoProject.imageUrls : [];
   const [lightboxIdx, setLightboxIdx] = useState<number|null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState('');
@@ -60,7 +132,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
     const shareUrl = window.location.href;
     if (navigator.share) {
       try {
-        await navigator.share({ title: project.name, url: shareUrl });
+        await navigator.share({ title: demoProject.name, url: shareUrl });
         setSnackbarMsg(t('projects.sharedSuccess') || 'Page shared!');
       } catch {
         setSnackbarMsg(t('projects.sharedCancelled') || 'Sharing cancelled.');
@@ -73,14 +145,20 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   };
 
   const techs = (() => {
-    const arr = project.technologies.filter(t => t !== 'Blueprints');
+    const arr = demoProject.technologies.filter(t => t !== 'Blueprints');
     // Ensure specific tags are present if not already
-    if (project.slug === 'black-forest-asylum') { // Example: add specific tags only for BFA
+    if (demoProject.slug === 'black-forest-asylum') { // Example: add specific tags only for BFA
         if (!arr.includes('Exploration')) arr.push('Exploration');
         if (!arr.includes('Psychological Horror')) arr.push('Psychological Horror');
     }
     return arr;
   })();
+
+  // Fallback-Icon-Logik (wird jetzt direkt in der Hero-Sektion behandelt)
+  // const fallbackIcon = project.slug === 'slime' ? <BubbleChartIcon sx={{ fontSize: 120, color: PRIMARY_COLOR, filter: 'drop-shadow(0 0 32px #14b8a6cc)' }} /> : <FaCogs size={120} color={PRIMARY_COLOR} style={{ filter: 'drop-shadow(0 0 32px #14b8a6cc)' }} />;
+
+  // 2. Fallback-Icon robust: Bild muss ein nicht-leerer String sein
+  const hasValidImage = projectImages.length > 0 && typeof projectImages[0] === 'string' && projectImages[0].trim() !== '';
 
   React.useEffect(() => {
     if (lightboxIdx !== null) {
@@ -98,237 +176,196 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
     <div className="min-h-screen flex flex-col bg-[#0a0a0a]">
       <div className="flex flex-1 w-full">
         <div className="hidden md:block" style={{ width: 220, flexShrink: 0 }} /> {/* Sidebar spacer */}
-        <main className="flex-1 max-w-5xl mx-auto my-8 md:my-12 bg-gradient-to-br from-[#18181b] to-[#23232a] rounded-3xl shadow-2xl p-6 md:p-10 border border-[#2a2a30] min-h-[70vh] flex flex-col relative items-center">
-
-          <div className="absolute top-6 right-6 md:top-8 md:right-8">
-            <Tooltip title={t('projects.shareTooltip') || 'Share Page'} arrow>
-              <IconButton
-                onClick={handleShare}
-                size="medium"
-                sx={{
-                  bgcolor: 'rgba(30,30,40,0.7)',
-                  color: 'white',
-                  '&:hover': { bgcolor: PRIMARY_COLOR, color: 'white' },
-                  transition: 'all 0.2s ease-in-out',
-                  width: { xs: 36, md: 40 },
-                  height: { xs: 36, md: 40 }
-                }}
-              >
-                <FaShareAlt size={18} />
-              </IconButton>
-            </Tooltip>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg mb-3 mt-4 md:mt-2 text-center w-full">{project.name}</h1>
-
-          <div className="flex flex-wrap gap-x-4 gap-y-2 items-center justify-center mb-6 mt-1 w-full">
-            {project.year && (
-              <Chip
-                label={project.year}
-                sx={{
-                  bgcolor: PRIMARY_COLOR_DARK, // Using a darker shade of primary for year
-                  color: '#fff',
-                  fontWeight: 700,
-                  fontSize: { xs: '0.9rem', md: '1rem' },
-                  px: 1.5, py: 0.5,
-                  borderRadius: 2,
-                  boxShadow: 1
-                }}
-              />
-            )}
-            {project.genres && project.genres.map((genre) => (
-              <Chip
-                key={genre}
-                label={genre}
-                sx={{
-                  bgcolor: '#2c2c34', // Slightly different background for genres
-                  color: PRIMARY_COLOR_LIGHT, // Lighter primary for text
-                  fontWeight: 600,
-                  fontSize: { xs: '0.85rem', md: '0.95rem' },
-                  px: 1.5, py: 0.5,
-                  borderRadius: 2,
-                  border: `1px solid ${PRIMARY_COLOR_DARK}`
-                }}
-              />
-            ))}
-          </div>
-
-          {projectImages.length > 0 && (
-            <div className="mb-4 mt-4 w-full flex justify-center">
-              <span className="text-sm font-semibold text-gray-400 tracking-wide uppercase">{t('projects.conceptImagesLabel') || 'Concept Images'}</span>
+        <div className="w-full px-8 md:px-24 lg:px-40 xl:px-64">
+          <main className="flex-1 max-w-5xl mx-auto my-24 md:my-40 bg-gradient-to-br from-[#18181b] to-[#23232a] rounded-3xl shadow-2xl p-16 md:p-32 border border-[#2a2a30] min-h-[70vh] flex flex-col relative items-center">
+            {/* Share Button - Positioned for visibility */}
+            <div className="absolute top-6 right-6 md:top-8 md:right-8 z-10">
+              <Tooltip title={t('projects.shareTooltip') || 'Share Page'} arrow>
+                <IconButton
+                  onClick={handleShare}
+                  size="medium"
+                  sx={{
+                    bgcolor: 'rgba(30,30,40,0.7)',
+                    color: 'white',
+                    '&:hover': { bgcolor: PRIMARY_COLOR, color: 'white' },
+                    transition: 'all 0.2s ease-in-out',
+                    width: { xs: 36, md: 40 },
+                    height: { xs: 36, md: 40 }
+                  }}
+                >
+                  <FaShareAlt size={18} />
+                </IconButton>
+              </Tooltip>
             </div>
-          )}
 
-          {/* Image Gallery: Responsive layout */}
-          {projectImages.length > 0 && (
-            <div className="w-full flex justify-center mb-10 md:mb-12">
-              {/* On mobile: Stack vertically. On md and up: Scroll horizontally */}
-              <div className="grid grid-cols-1 md:flex md:flex-row md:flex-nowrap gap-4 md:gap-6 md:overflow-x-auto md:px-2 py-2 w-full md:max-w-3xl lg:max-w-4xl items-center justify-items-center"
-                style={{
-                  // scrollbarColor: `${PRIMARY_COLOR} #23232a`, // For Firefox
-                  // scrollbarWidth: 'thin', // For Firefox
-                }}
-              >
-                {projectImages.map((src, idx) => (
-                  <div
-                    key={src}
-                    className="flex-shrink-0 w-full max-w-xs md:w-auto cursor-pointer group" // Added group for hover effects
-                    style={{
-                      // Mobile: images take more width, Desktop: fixed size
-                      width: '100%', // Default full width for stacked mobile
-                      maxWidth: '300px', // Max width for mobile images
-                      '@media (min-width: 768px)': { // md breakpoint
-                        width: 200, // Desktop width
-                        height: 200, // Desktop height
-                        marginRight: idx !== projectImages.length - 1 ? '1.5rem' : 0, // Desktop margin
-                        maxWidth: 'none',
-                      },
-                      height: 200, // Common height
-                      borderRadius: 16, // Rounded corners
-                      overflow: 'hidden', // Clip image to rounded corners
-                      background: 'rgba(30,30,40,0.6)', // Placeholder background
-                      boxShadow: '0 6px 12px rgba(0,0,0,0.3)',
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    }}
-                    onClick={() => openLightbox(idx)}
-                    // Apply Tailwind classes for responsive sizing where possible
-                    // Overriding with style prop for fine-tuning and media queries not easily done in Tailwind JIT for dynamic elements
-                  >
-                    <Image
-                      src={src}
-                      alt={`${project.name} Screenshot ${idx + 1}`}
-                      width={250} // Base width for Next/Image optimization
-                      height={250} // Base height
-                      style={{
-                        objectFit: 'cover',
-                        width: '100%',
-                        height: '100%',
-                        transition: 'transform 0.3s ease',
-                      }}
-                      className="group-hover:scale-105" // Scale image on hover
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <Modal open={lightboxIdx !== null} onClose={closeLightbox} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, backdropFilter: 'blur(5px)' }}>
-            <Box sx={{ position: 'relative', outline: 'none', maxWidth: '90vw', maxHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {lightboxIdx !== null && projectImages.length > 0 && (
-                <div style={{ position: 'absolute', top: 12, left: 18, color: '#fff', fontWeight: 600, fontSize: '1rem', background: 'rgba(0,0,0,0.6)', borderRadius: 8, padding: '4px 12px', zIndex: 20 }}>
-                  {t('projects.image')} {lightboxIdx + 1}/{projectImages.length}
+            {/* Hero Section: Image or Fallback Icon */}
+            <div className="w-full mb-8 md:mb-12 relative overflow-hidden rounded-2xl shadow-xl border border-[#2a2a30] bg-[#101013] flex items-center justify-center" style={{ minHeight: '300px', maxHeight: '500px' }}>
+              {hasValidImage ? (
+                <Image
+                  src={projectImages[0]}
+                  alt={`${demoProject.name} Hero Image`}
+                  width={1200}
+                  height={600}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  className="transition-transform duration-500 ease-in-out hover:scale-105"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center p-8 text-center">
+                  {/* Fallback Icon mit Glow und Animation */}
+                  {demoProject.slug === 'slime' && <BubbleChartIcon style={{ fontSize: 'clamp(100px, 15vw, 180px)', color: PRIMARY_COLOR, filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'broxel-engine' && <BiCube size={180} color={PRIMARY_COLOR} style={{ filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'black-forest-asylum' && <ScienceIcon style={{ fontSize: 'clamp(100px, 15vw, 180px)', color: PRIMARY_COLOR, filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'maze-of-space' && <HubIcon style={{ fontSize: 'clamp(100px, 15vw, 180px)', color: PRIMARY_COLOR, filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'block-reversal' && <Grid4x4Icon style={{ fontSize: 'clamp(100px, 15vw, 180px)', color: PRIMARY_COLOR, filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'auravention' && <Image src="/av_logo.webp" alt="AuraVention" width={180} height={180} style={{ filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'project-y' && <Image src="/y_logo.webp" alt="Project Y" width={180} height={180} style={{ filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'aurax-media-platform' && <FaCogs size={180} color={PRIMARY_COLOR} style={{ filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {demoProject.slug === 'portfolio-website' && <FaCogs size={180} color={PRIMARY_COLOR} style={{ filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />}
+                  {/* Generic Fallback */}
+                  {!['slime', 'broxel-engine', 'black-forest-asylum', 'maze-of-space', 'block-reversal', 'auravention', 'project-y', 'aurax-media-platform', 'portfolio-website'].includes(demoProject.slug) && (
+                    <FaCogs size={180} color={PRIMARY_COLOR} style={{ filter: 'drop-shadow(0 0 40px #14b8a6cc)', animation: 'pulse 2s infinite ease-in-out' }} />
+                  )}
+                  <span className="mt-6 text-xl font-bold text-gray-400 tracking-wide uppercase drop-shadow-lg">{t('projects.noImageFallback') || 'Kein Bild vorhanden'}</span>
                 </div>
               )}
-              <IconButton onClick={prevImg} sx={{ position: 'absolute', left: { xs: 8, md: 16 }, top: '50%', transform: 'translateY(-50%)', zIndex: 10, bgcolor: 'rgba(0,0,0,0.5)', color: 'white', '&:hover': { bgcolor: PRIMARY_COLOR } }}>
-                <ArrowBackIcon fontSize="medium" />
-              </IconButton>
-              {lightboxIdx !== null && projectImages.length > 0 && (
-                <Image
-                  src={projectImages[lightboxIdx]}
-                  alt={`${project.name} Screenshot ${lightboxIdx + 1}`}
-                  width={1000} // Larger base for better quality
-                  height={700}
-                  style={{ objectFit: 'contain', borderRadius: 12, background: '#101013', maxHeight: '85vh', maxWidth: '85vw', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg mb-3 mt-4 md:mt-2 text-center w-full">{demoProject.name}</h1>
+
+            <div className="flex flex-wrap gap-x-14 gap-y-8 items-center justify-center mb-14 mt-6 w-full">
+              {demoProject.year && (
+                <Chip
+                  label={demoProject.year}
+                  sx={{
+                    bgcolor: PRIMARY_COLOR_DARK, // Using a darker shade of primary for year
+                    color: '#fff',
+                    fontWeight: 700,
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    px: 1.5, py: 0.5,
+                    borderRadius: 2,
+                    boxShadow: 1
+                  }}
                 />
               )}
-              <IconButton onClick={nextImg} sx={{ position: 'absolute', right: { xs: 8, md: 16 }, top: '50%', transform: 'translateY(-50%)', zIndex: 10, bgcolor: 'rgba(0,0,0,0.5)', color: 'white', '&:hover': { bgcolor: PRIMARY_COLOR } }}>
-                <ArrowBackIcon fontSize="medium" sx={{ transform: 'scaleX(-1)' }} />
-              </IconButton>
-            </Box>
-          </Modal>
-
-          <h2 className="text-xl sm:text-2xl font-bold mb-3 text-white mt-8 md:mt-10 text-center w-full">{t('projects.descriptionLabel') || 'Project Description'}</h2>
-          <p className="text-base md:text-lg text-gray-300 mb-10 md:mb-12 leading-relaxed max-w-3xl mx-auto text-center px-2" style={{ lineHeight: 1.75 }}>
-            {project.longDescription}
-          </p>
-
-          {/* Call to Action Buttons */}
-          {(project.url || project.githubUrl) && (
-            <Box sx={{ my: 4, width: '100%', display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
-              {project.url && (
-                <Button
-                  variant="contained"
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  startIcon={<LaunchIcon />}
+              {demoProject.genres && demoProject.genres.map((genre) => (
+                <Chip
+                  key={genre}
+                  label={genre}
                   sx={{
-                    bgcolor: PRIMARY_COLOR,
-                    color: 'white',
+                    bgcolor: '#2c2c34', // Slightly different background for genres
+                    color: PRIMARY_COLOR_LIGHT, // Lighter primary for text
                     fontWeight: 600,
                     fontSize: { xs: '0.85rem', md: '0.95rem' },
-                    px: { xs: 2, md: 3 }, py: { xs: 1, md: 1.5 },
-                    '&:hover': { bgcolor: PRIMARY_COLOR_DARK },
+                    px: 1.5, py: 0.5,
                     borderRadius: 2,
-                    boxShadow: 2,
+                    border: `1px solid ${PRIMARY_COLOR_DARK}`
                   }}
-                >
-                  {t('projects.liveProject') || 'View Live Project'}
-                </Button>
-              )}
-              {project.githubUrl && (
-                <Button
-                  variant="outlined"
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  startIcon={<GitHubIcon />}
-                  sx={{
-                    borderColor: PRIMARY_COLOR,
-                    color: PRIMARY_COLOR_LIGHT,
-                    fontWeight: 600,
-                    fontSize: { xs: '0.85rem', md: '0.95rem' },
-                    px: { xs: 2, md: 3 }, py: { xs: 1, md: 1.5 },
-                    '&:hover': {
-                      borderColor: PRIMARY_COLOR_LIGHT,
-                      bgcolor: 'rgba(20, 184, 166, 0.1)', // Primary color with low opacity
-                      color: PRIMARY_COLOR_LIGHT
-                    },
-                    borderRadius: 2,
-                    boxShadow: 1,
-                  }}
-                >
-                  {t('projects.githubRepo') || 'View on GitHub'}
-                </Button>
-              )}
-            </Box>
-          )}
+                />
+              ))}
+            </div>
 
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-white mt-8 md:mt-10 text-center w-full">{t('projects.tagsLabel') || 'Technologies & Tags'}</h2>
-          <div className="flex flex-wrap gap-2 md:gap-3 mb-8 justify-center w-full max-w-3xl mx-auto px-2">
-            {techs.map((tech) => (
-              <Chip
-                key={tech}
-                icon={techIcons[tech] ? React.cloneElement(techIcons[tech], { style: { color: PRIMARY_COLOR_LIGHT, fontSize: '1.1rem', transition: 'transform 0.2s' } }) : <FaCogs style={{ color: PRIMARY_COLOR_LIGHT, fontSize: '1.1rem' }} />}
-                label={tech}
-                sx={{ 
-                  bgcolor: 'rgba(20, 184, 166, 0.15)', // Primary color with low opacity
-                  color: '#e0e0e0', // Lighter text color for contrast
-                  fontWeight: 600, 
-                  fontSize: { xs: '0.85rem', md: '0.9rem' },
-                  px: 1.5, 
-                  py: 0.5,
-                  borderRadius: '12px', // Softer border radius
-                  border: `1px solid ${PRIMARY_COLOR_DARK}`,
-                  boxShadow: '0 0 0 0 transparent',
-                  transition: 'all 0.25s ease-in-out',
-                  '& .MuiChip-icon': { transition: 'transform 0.2s' }, // Ensure icon transition is applied
-                  '&:hover': { 
-                    bgcolor: 'rgba(20, 184, 166, 0.25)',
-                    boxShadow: `0 0 10px 2px rgba(20, 184, 166, 0.3)`, // Softer glow effect
-                    transform: 'translateY(-2px) scale(1.03)',
+            {/* Image Gallery */}
+            {projectImages.length > 1 && ( // Only show gallery if more than one image
+              <>
+                <div className="mb-4 mt-4 w-full flex justify-center">
+                  <span className="text-sm font-semibold text-gray-400 tracking-wide uppercase">{t('projects.conceptImagesLabel') || 'Concept Images'}</span>
+                </div>
+                <Box display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' }} gap={{ xs: 2, md: 3 }} className="w-full max-w-4xl mb-10 md:mb-12">
+                  {projectImages.slice(1).map((src, idx) => ( // Skip the first image as it's used in hero
+                    <Box key={src} className="cursor-pointer group" sx={{
+                      width: '100%',
+                      paddingTop: '66.66%', // 3:2 Aspect Ratio (height / width * 100)
+                      position: 'relative',
+                      borderRadius: 3,
+                      overflow: 'hidden',
+                      background: 'rgba(30,30,40,0.7)',
+                      boxShadow: '0 8px 32px rgba(20,184,166,0.18)',
+                      transition: 'transform 0.3s, box-shadow 0.3s',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: `0 12px 40px rgba(20,184,166,0.25)`,
+                      }
+                    }} onClick={() => openLightbox(idx + 1)}>
+                      <Image
+                        src={src}
+                        alt={`${demoProject.name} Screenshot ${idx + 2}`} // Adjust alt text
+                        fill
+                        style={{
+                          objectFit: 'cover',
+                          transition: 'transform 0.3s',
+                        }}
+                        className="group-hover:scale-105"
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              </>
+            )}
+
+            <Modal open={lightboxIdx !== null} onClose={closeLightbox} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, backdropFilter: 'blur(5px)' }}>
+              <Box sx={{ position: 'relative', outline: 'none', maxWidth: '90vw', maxHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {lightboxIdx !== null && projectImages.length > 0 && (
+                  <div style={{ position: 'absolute', top: 12, left: 18, color: '#fff', fontWeight: 600, fontSize: '1rem', background: 'rgba(0,0,0,0.6)', borderRadius: 8, padding: '4px 12px', zIndex: 20 }}>
+                    {t('projects.image')} {lightboxIdx + 1}/{projectImages.length}
+                  </div>
+                )}
+                <IconButton onClick={prevImg} sx={{ position: 'absolute', left: { xs: 8, md: 16 }, top: '50%', transform: 'translateY(-50%)', zIndex: 10, bgcolor: 'rgba(0,0,0,0.5)', color: 'white', '&:hover': { bgcolor: PRIMARY_COLOR } }}>
+                  <ArrowBackIcon fontSize="medium" />
+                </IconButton>
+                {lightboxIdx !== null && projectImages.length > 0 && (
+                  <Image
+                    src={projectImages[lightboxIdx]}
+                    alt={`${demoProject.name} Screenshot ${lightboxIdx + 1}`}
+                    width={1000} // Larger base for better quality
+                    height={700}
+                    style={{ objectFit: 'contain', borderRadius: 12, background: '#101013', maxHeight: '85vh', maxWidth: '85vw', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
+                  />
+                )}
+                <IconButton onClick={nextImg} sx={{ position: 'absolute', right: { xs: 8, md: 16 }, top: '50%', transform: 'translateY(-50%)', zIndex: 10, bgcolor: 'rgba(0,0,0,0.5)', color: 'white', '&:hover': { bgcolor: PRIMARY_COLOR } }}>
+                  <ArrowBackIcon fontSize="medium" sx={{ transform: 'scaleX(-1)' }} />
+                </IconButton>
+              </Box>
+            </Modal>
+
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 text-white mt-12 md:mt-16 text-center w-full" style={{ letterSpacing: 0.2 }}> {t('projects.descriptionLabel') || 'Project Description'} </h2>
+            <p className="text-base md:text-lg text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto text-center px-2" style={{ lineHeight: 1.8, fontWeight: 500, fontSize: '1.13rem', letterSpacing: 0.1 }}> {demoProject.longDescription} </p>
+
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-white mt-12 md:mt-16 text-center w-full" style={{ letterSpacing: 0.2 }}>{t('projects.tagsLabel') || 'Technologies & Tags'}</h2>
+            <div className="flex flex-wrap gap-10 md:gap-14 mb-24 justify-center w-full max-w-3xl mx-auto px-2">
+              {techs.map((tech) => (
+                <Chip
+                  key={tech}
+                  icon={getTechIcon(tech)}
+                  label={tech}
+                  sx={{
+                    bgcolor: 'rgba(20, 184, 166, 0.18)',
                     color: '#fff',
-                    '& .MuiChip-icon': {
-                        transform: 'scale(1.12)',
-                        color: '#fff', // Icon color change on hover
-                     }
-                  }
-                }}
-              />
-            ))}
-          </div>
-        </main>
+                    fontWeight: 700,
+                    fontSize: { xs: '1.02rem', md: '1.09rem' },
+                    px: 2.2,
+                    py: 1.1,
+                    borderRadius: '16px',
+                    border: `1.5px solid ${PRIMARY_COLOR_LIGHT}`,
+                    boxShadow: '0 2px 16px 0 rgba(20,184,166,0.10)',
+                    letterSpacing: 0.13,
+                    transition: 'all 0.25s',
+                    '& .MuiChip-icon': { transition: 'transform 0.2s', fontSize: '1.25rem' },
+                    '&:hover': {
+                      bgcolor: 'rgba(20, 184, 166, 0.32)',
+                      boxShadow: `0 0 18px 2px rgba(20, 184, 166, 0.22)`,
+                      transform: 'translateY(-2px) scale(1.06)',
+                      color: '#fff',
+                      '& .MuiChip-icon': {
+                        transform: 'scale(1.18)',
+                        color: '#fff',
+                      }
+                    }
+                  }}
+                />
+              ))}
+            </div>
+          </main>
+        </div>
         <div className="hidden md:block flex-1" /> {/* Sidebar spacer */}
       </div>
       <Footer />
