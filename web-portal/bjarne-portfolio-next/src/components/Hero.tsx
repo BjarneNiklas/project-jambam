@@ -243,7 +243,7 @@ const Hero: React.FC = () => {
               {/* Glowy oberer Eckpunkt HINTER dem Hexagon */}
               {/* Keyword texts removed from SVG for a11y and SEO. Will be added as HTML elements. */}
               {hexCoords.map((pt, i) => {
-                const rx = getTextWidth(pt.label, labelFont) / 2 + 36;
+                const rx = getTextWidth(pt.label, labelFont) / 2 + 70;
                 return (
                   <g key={i}>
                     <ellipse cx={pt.cx} cy={pt.cy} rx={rx} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
@@ -253,7 +253,7 @@ const Hero: React.FC = () => {
               })}
               {/* Mittleres Oval wieder einfügen */}
               <>
-                <ellipse cx={500} cy={580} rx={getTextWidth('Design Thinking', labelFont) / 2 + 36} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
+                <ellipse cx={500} cy={580} rx={getTextWidth('Design Thinking', labelFont) / 2 + 70} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
                 <text x={500} y={580} textAnchor="middle" dominantBaseline="middle" fill="#FFD60A" fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Design Thinking</text>
               </>
             </svg>
