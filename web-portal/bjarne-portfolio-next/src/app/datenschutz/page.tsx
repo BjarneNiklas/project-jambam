@@ -10,6 +10,7 @@ import PolicyIcon from '@mui/icons-material/Policy';
 import { useTheme } from '@mui/material/styles';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../LanguageContext';
+import { Metadata } from 'next';
 
 const Datenschutz: React.FC = () => {
   const theme = useTheme();
@@ -18,49 +19,141 @@ const Datenschutz: React.FC = () => {
   return (
     <>
     <Box sx={{ 
-      background: '#0a0a0a',
+      background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
+      minHeight: '100vh',
       display: 'flex',
       alignItems: 'flex-start',
       justifyContent: 'center',
-        pt: { xs: 2, md: 4 },
-        pb: { xs: 4, md: 8 }
+      pt: { xs: 4, md: 6 },
+      pb: { xs: 6, md: 10 }
     }}>
-      <Card elevation={4} sx={{ maxWidth: 700, width: '100%', borderRadius: 6, mx: 2, p: { xs: 2, sm: 4 }, background: theme.palette.background.paper }}>
+      <Card elevation={0} sx={{ 
+        maxWidth: 800, 
+        width: '100%', 
+        borderRadius: 4, 
+        mx: 2, 
+        p: { xs: 3, sm: 5 }, 
+        background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.05) 0%, rgba(20, 184, 166, 0.02) 100%)',
+        border: '1px solid rgba(20, 184, 166, 0.2)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+      }}>
         <CardContent>
-          <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-            <PolicyIcon sx={{ color: theme.palette.primary.main, fontSize: 40, mr: 1 }} />
-              <Typography variant="h3" component="h1" fontWeight={800} color="primary" sx={{ fontSize: { xs: 24, sm: 32 } }}>
-                {t('legal.datenschutz.title')}
-              </Typography>
+          <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
+            <Box sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 80,
+              height: 80,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(20, 184, 166, 0.1) 100%)',
+              border: '2px solid rgba(20, 184, 166, 0.3)',
+              mr: 3
+            }}>
+              <PolicyIcon sx={{ color: '#14b8a6', fontSize: 40 }} />
+            </Box>
+            <Typography variant="h3" component="h1" fontWeight={800} color="primary" sx={{ fontSize: { xs: 28, sm: 36 }, background: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              Datenschutz
+            </Typography>
           </Box>
-          <Divider sx={{ mb: 3 }} />
-            <Typography variant="body1" sx={{ mb: 2 }}>
+          
+          <Divider sx={{ mb: 4, background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.3) 50%, transparent 100%)' }} />
+          
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="body1" sx={{ 
+              mb: 2, 
+              lineHeight: 1.8,
+              color: '#e5e7eb',
+              fontSize: '1.1rem'
+            }}>
               {t('legal.datenschutz.content')}
             </Typography>
-          <Divider sx={{ my: 3 }} />
-            <Typography variant="h5" fontWeight={700} color="primary" sx={{ mt: 2, mb: 1 }}>
+          </Box>
+          
+          <Divider sx={{ my: 4, background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.3) 50%, transparent 100%)' }} />
+          
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="h5" fontWeight={700} color="primary" sx={{ 
+              mt: 2, 
+              mb: 2,
+              background: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
               {t('legal.datenschutz.contact.title')}
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ 
+              mb: 2, 
+              lineHeight: 1.7,
+              color: '#d1d5db'
+            }}>
               {t('legal.datenschutz.contact.content')}
             </Typography>
-          <Divider sx={{ my: 3 }} />
-            <Typography variant="h5" fontWeight={700} color="primary" sx={{ mt: 2, mb: 1 }}>
+          </Box>
+          
+          <Divider sx={{ my: 4, background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.3) 50%, transparent 100%)' }} />
+          
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="h5" fontWeight={700} color="primary" sx={{ 
+              mt: 2, 
+              mb: 2,
+              background: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
               {t('legal.datenschutz.serverlog.title')}
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ 
+              mb: 2, 
+              lineHeight: 1.7,
+              color: '#d1d5db'
+            }}>
               {t('legal.datenschutz.serverlog.content')}
             </Typography>
-          <Divider sx={{ my: 3 }} />
-            <Typography variant="h5" fontWeight={700} color="primary" sx={{ mt: 2, mb: 1 }}>
+          </Box>
+          
+          <Divider sx={{ my: 4, background: 'linear-gradient(90deg, transparent 0%, rgba(20, 184, 166, 0.3) 50%, transparent 100%)' }} />
+          
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="h5" fontWeight={700} color="primary" sx={{ 
+              mt: 2, 
+              mb: 2,
+              background: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
               {t('legal.datenschutz.rights.title')}
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ 
+              mb: 2, 
+              lineHeight: 1.7,
+              color: '#d1d5db'
+            }}>
               {t('legal.datenschutz.rights.content')}
             </Typography>
-            <Typography variant="caption" sx={{ color: theme.palette.text.secondary, mt: 4 }}>
+          </Box>
+          
+          <Box sx={{ 
+            mt: 6, 
+            p: 3, 
+            borderRadius: 2, 
+            background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%)',
+            border: '1px solid rgba(20, 184, 166, 0.2)'
+          }}>
+            <Typography variant="caption" sx={{ 
+              color: '#9ca3af', 
+              mt: 4,
+              display: 'block',
+              textAlign: 'center',
+              fontSize: '0.9rem'
+            }}>
               {t('legal.datenschutz.contact.caption')}
             </Typography>
+          </Box>
         </CardContent>
       </Card>
     </Box>
@@ -69,4 +162,8 @@ const Datenschutz: React.FC = () => {
   );
 };
 
-export default Datenschutz; 
+export default Datenschutz;
+
+export const metadata: Metadata = {
+  title: 'Datenschutz',
+}; 

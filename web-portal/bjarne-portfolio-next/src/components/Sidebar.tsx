@@ -81,9 +81,9 @@ const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, setMobileOpen }) 
     ];
     
     const projects = [
-        { href: 'https://aurav.tech', label: 'AuraVention', icon: <Image src="/av_logo.webp" alt="AuraVention" width={24} height={24} style={{ borderRadius: 4 }} />, external: true },
-        { href: createLocalizedUrl('projects/broxel-engine', lang), label: 'Broxel Engine', icon: <BiCube size={24} style={{ color: '#a78bfa' }} />, external: false },
-        { href: '#', label: 'Project Y', icon: <Image src="/y_logo.webp" alt="Project Y" width={24} height={24} style={{ borderRadius: 4 }} />, external: true },
+        { href: '#projects', label: 'AuraVention', icon: <Image src="/av_logo.webp" alt="AuraVention" width={24} height={24} style={{ borderRadius: 4 }} />, external: false },
+        { href: '#projects', label: 'Broxel Engine', icon: <BiCube size={24} style={{ color: '#14b8a6' }} />, external: false },
+        { href: '#projects', label: 'Project Y', icon: <Image src="/y_logo.webp" alt="Project Y" width={24} height={24} style={{ borderRadius: 4 }} />, external: false },
     ];
     
     const socials = [

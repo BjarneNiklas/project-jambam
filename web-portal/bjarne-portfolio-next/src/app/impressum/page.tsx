@@ -10,6 +10,7 @@ import PolicyIcon from '@mui/icons-material/Policy';
 import { useTheme } from '@mui/material/styles';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../LanguageContext';
+import { Metadata } from 'next';
 
 const ImpressumPage: React.FC = () => {
   const theme = useTheme();
@@ -30,7 +31,7 @@ const ImpressumPage: React.FC = () => {
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
               <PolicyIcon sx={{ color: theme.palette.primary.main, fontSize: 40, mr: 1 }} />
               <Typography variant="h3" component="h1" fontWeight={800} color="primary" sx={{ fontSize: { xs: 24, sm: 32 } }}>
-                {t('legal.impressum.title')}
+                Impressum
               </Typography>
             </Box>
             <Divider sx={{ mb: 3 }} />
@@ -101,4 +102,8 @@ const ImpressumPage: React.FC = () => {
   );
 };
 
-export default ImpressumPage; 
+export default ImpressumPage;
+
+export const metadata: Metadata = {
+  title: 'Impressum',
+}; 

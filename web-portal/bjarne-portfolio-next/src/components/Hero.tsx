@@ -46,6 +46,11 @@ const Hero: React.FC = () => {
   const [claimIndex, setClaimIndex] = useState(0);
   const claimRef = useRef<HTMLSpanElement>(null);
   const [showScrollIcon, setShowScrollIcon] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -152,103 +157,105 @@ const Hero: React.FC = () => {
             justifyContent: 'center',
             pointerEvents: 'none',
           }}>
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 1000 1000"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="hexagon-hero-anim"
-              style={{
-                filter: 'drop-shadow(0 0 80px #ffe066)',
-                transform: 'perspective(1200px) rotateX(18deg) rotateY(-12deg)',
-                transition: 'filter 0.5s, transform 1.2s cubic-bezier(.4,2,.6,1)',
-                maxWidth: svgMaxWidth,
-                maxHeight: svgMaxHeight,
-              }}
-            >
-              <defs>
-                <linearGradient id="hex-rot-blau" x1="150" y1="325" x2="850" y2="325" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#ff3b3b" />
-                  <stop offset="100%" stopColor="#00eaff" />
-                </linearGradient>
-                <linearGradient id="hex-blau-gruen" x1="850" y1="325" x2="500" y2="850" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#007AFF" />
-                  <stop offset="100%" stopColor="#34C759" />
-                </linearGradient>
-                <linearGradient id="hex-gruen-rot" x1="500" y1="850" x2="150" y2="325" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#34C759" />
-                  <stop offset="100%" stopColor="#FF3B30" />
-                </linearGradient>
-                <linearGradient id="hex-rot-blau2" x1="150" y1="325" x2="150" y2="675" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#ff3b3b" />
-                  <stop offset="100%" stopColor="#00eaff" />
-                </linearGradient>
-                <linearGradient id="hex-blau-gruen2" x1="500" y1="150" x2="850" y2="325" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#00eaff" />
-                  <stop offset="100%" stopColor="#00ff99" />
-                </linearGradient>
-                <linearGradient id="hex-gruen-rot2" x1="850" y1="675" x2="500" y2="850" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#00ff99" />
-                  <stop offset="100%" stopColor="#ff3b3b" />
-                </linearGradient>
-                <linearGradient id="y-gelb-blau" x1="500" y1="580" x2="850" y2="325" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#FFD60A" />
-                  <stop offset="100%" stopColor="#007AFF" />
-                </linearGradient>
-                <linearGradient id="y-gelb-rot" x1="500" y1="580" x2="150" y2="325" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#FF9500" />
-                  <stop offset="100%" stopColor="#FF3B30" />
-                </linearGradient>
-                <linearGradient id="y-gelb-gruen" x1="500" y1="580" x2="500" y2="850" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#FFD60A" />
-                  <stop offset="100%" stopColor="#34C759" />
-                </linearGradient>
-                <linearGradient id="hex-gelb-orange" x1="150" y1="675" x2="500" y2="580" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#FFD60A" />
-                  <stop offset="100%" stopColor="#FF9500" />
-                </linearGradient>
-                <linearGradient id="hex-tuerkis-blau" x1="850" y1="675" x2="500" y2="580" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#32D6FF" />
-                  <stop offset="100%" stopColor="#007AFF" />
-                </linearGradient>
-                <linearGradient id="hex-violett-blau" x1="500" y1="150" x2="850" y2="325" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#AF52DE" />
-                  <stop offset="100%" stopColor="#007AFF" />
-                </linearGradient>
-              </defs>
-              {/* Schwarzes Hexagon als Füllung */}
-              <polygon
-                points={hexCoords.map(pt => `${pt.cx},${pt.cy}`).join(' ')}
-                fill="#111"
-              />
-              {/* Hexagon-Linien mit korrektem Farbverlauf (jetzt garantiert vor dem Hexagon) */}
-              {/* Oben rechts nach unten: blau → grün (jetzt blau → blau) */}
-              <line x1={hexCoords[1].cx} y1={hexCoords[1].cy} x2={hexCoords[3].cx} y2={hexCoords[3].cy} stroke="url(#hex-blau-gruen)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
-              {/* Unten nach oben links: blau → rot */}
-              <line x1={hexCoords[3].cx} y1={hexCoords[3].cy} x2={hexCoords[5].cx} y2={hexCoords[5].cy} stroke="url(#hex-gruen-rot)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
-              {/* Die anderen drei Linien entfernt - nur noch die Y-Linien sichtbar */}
-              {/* Y-Linien (dünn, mit Glow und Farbverlauf, jetzt garantiert über dem Hexagon) */}
-              <line x1="500" y1="580" x2={hexCoords[1].cx} y2={hexCoords[1].cy} stroke="url(#y-gelb-blau)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
-              <line x1="500" y1="580" x2={hexCoords[5].cx} y2={hexCoords[5].cy} stroke="url(#y-gelb-rot)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
-              <line x1="500" y1="580" x2={hexCoords[3].cx} y2={hexCoords[3].cy} stroke="url(#y-gelb-gruen)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
-              {/* Glowy oberer Eckpunkt HINTER dem Hexagon */}
-              {/* Keyword texts removed from SVG for a11y and SEO. Will be added as HTML elements. */}
-              {hexCoords.map((pt, i) => {
-                const rx = getTextWidth(pt.label, labelFont) / 2 + 70;
-                return (
-                  <g key={i}>
-                    <ellipse cx={pt.cx} cy={pt.cy} rx={rx} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-                    <text x={pt.cx} y={pt.cy} textAnchor="middle" dominantBaseline="middle" fill={pt.color} fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>{pt.label}</text>
-                  </g>
-                );
-              })}
-              {/* Mittleres Oval wieder einfügen */}
-              <>
-                <ellipse cx={500} cy={580} rx={getTextWidth('Design Thinking', labelFont) / 2 + 70} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
-                <text x={500} y={580} textAnchor="middle" dominantBaseline="middle" fill="#FFD60A" fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Design Thinking</text>
-              </>
-            </svg>
+            {isClient && (
+              <svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 1000 1000"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="hexagon-hero-anim"
+                style={{
+                  filter: 'drop-shadow(0 0 80px #ffe066)',
+                  transform: 'perspective(1200px) rotateX(18deg) rotateY(-12deg)',
+                  transition: 'filter 0.5s, transform 1.2s cubic-bezier(.4,2,.6,1)',
+                  maxWidth: svgMaxWidth,
+                  maxHeight: svgMaxHeight,
+                }}
+              >
+                <defs>
+                  <linearGradient id="hex-rot-blau" x1="150" y1="325" x2="850" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#ff3b3b" />
+                    <stop offset="100%" stopColor="#00eaff" />
+                  </linearGradient>
+                  <linearGradient id="hex-blau-gruen" x1="850" y1="325" x2="500" y2="850" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#007AFF" />
+                    <stop offset="100%" stopColor="#34C759" />
+                  </linearGradient>
+                  <linearGradient id="hex-gruen-rot" x1="500" y1="850" x2="150" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#34C759" />
+                    <stop offset="100%" stopColor="#FF3B30" />
+                  </linearGradient>
+                  <linearGradient id="hex-rot-blau2" x1="150" y1="325" x2="150" y2="675" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#ff3b3b" />
+                    <stop offset="100%" stopColor="#00eaff" />
+                  </linearGradient>
+                  <linearGradient id="hex-blau-gruen2" x1="500" y1="150" x2="850" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#00eaff" />
+                    <stop offset="100%" stopColor="#00ff99" />
+                  </linearGradient>
+                  <linearGradient id="hex-gruen-rot2" x1="850" y1="675" x2="500" y2="850" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#00ff99" />
+                    <stop offset="100%" stopColor="#ff3b3b" />
+                  </linearGradient>
+                  <linearGradient id="y-gelb-blau" x1="500" y1="580" x2="850" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#FFD60A" />
+                    <stop offset="100%" stopColor="#007AFF" />
+                  </linearGradient>
+                  <linearGradient id="y-gelb-rot" x1="500" y1="580" x2="150" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#FF9500" />
+                    <stop offset="100%" stopColor="#FF3B30" />
+                  </linearGradient>
+                  <linearGradient id="y-gelb-gruen" x1="500" y1="580" x2="500" y2="850" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#FFD60A" />
+                    <stop offset="100%" stopColor="#34C759" />
+                  </linearGradient>
+                  <linearGradient id="hex-gelb-orange" x1="150" y1="675" x2="500" y2="580" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#FFD60A" />
+                    <stop offset="100%" stopColor="#FF9500" />
+                  </linearGradient>
+                  <linearGradient id="hex-tuerkis-blau" x1="850" y1="675" x2="500" y2="580" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#32D6FF" />
+                    <stop offset="100%" stopColor="#007AFF" />
+                  </linearGradient>
+                  <linearGradient id="hex-violett-blau" x1="500" y1="150" x2="850" y2="325" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#AF52DE" />
+                    <stop offset="100%" stopColor="#007AFF" />
+                  </linearGradient>
+                </defs>
+                {/* Schwarzes Hexagon als Füllung */}
+                <polygon
+                  points={hexCoords.map(pt => `${pt.cx},${pt.cy}`).join(' ')}
+                  fill="#111"
+                />
+                {/* Hexagon-Linien mit korrektem Farbverlauf (jetzt garantiert vor dem Hexagon) */}
+                {/* Oben rechts nach unten: blau → grün (jetzt blau → blau) */}
+                <line x1={hexCoords[1].cx} y1={hexCoords[1].cy} x2={hexCoords[3].cx} y2={hexCoords[3].cy} stroke="url(#hex-blau-gruen)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
+                {/* Unten nach oben links: blau → rot */}
+                <line x1={hexCoords[3].cx} y1={hexCoords[3].cy} x2={hexCoords[5].cx} y2={hexCoords[5].cy} stroke="url(#hex-gruen-rot)" strokeWidth="11" opacity="0.95" strokeLinecap="round" />
+                {/* Die anderen drei Linien entfernt - nur noch die Y-Linien sichtbar */}
+                {/* Y-Linien (dünn, mit Glow und Farbverlauf, jetzt garantiert über dem Hexagon) */}
+                <line x1="500" y1="580" x2={hexCoords[1].cx} y2={hexCoords[1].cy} stroke="url(#y-gelb-blau)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
+                <line x1="500" y1="580" x2={hexCoords[5].cx} y2={hexCoords[5].cy} stroke="url(#y-gelb-rot)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
+                <line x1="500" y1="580" x2={hexCoords[3].cx} y2={hexCoords[3].cy} stroke="url(#y-gelb-gruen)" strokeWidth="7" opacity="0.98" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 16px #fff700)' }} />
+                {/* Glowy oberer Eckpunkt HINTER dem Hexagon */}
+                {/* Keyword texts removed from SVG for a11y and SEO. Will be added as HTML elements. */}
+                {hexCoords.map((pt, i) => {
+                  const rx = getTextWidth(pt.label, labelFont) / 2 + 50;
+                  return (
+                    <g key={i}>
+                      <ellipse cx={pt.cx} cy={pt.cy} rx={rx} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
+                      <text x={pt.cx} y={pt.cy} textAnchor="middle" dominantBaseline="middle" fill={pt.color} fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>{pt.label}</text>
+                    </g>
+                  );
+                })}
+                {/* Mittleres Oval wieder einfügen */}
+                <>
+                  <ellipse cx={500} cy={580} rx={getTextWidth('Design Thinking', labelFont) / 2 + 50} ry={ellipseRy} fill="#fff" opacity="0.98" style={{ filter: 'drop-shadow(0 0 24px #fff)' }} />
+                  <text x={500} y={580} textAnchor="middle" dominantBaseline="middle" fill="#FFD60A" fontWeight="800" fontSize={labelFontSize} style={{ textShadow: '0 2px 8px #fff, 0 0 2px #000' }}>Design Thinking</text>
+                </>
+              </svg>
+            )}
             {/* HTML Keyword Texts - Position these absolutely over the SVG */}
             {/* Example for one keyword, others would follow a similar pattern */}
             {/* Positioning requires careful adjustment based on the SVG's viewbox and rendered size */}

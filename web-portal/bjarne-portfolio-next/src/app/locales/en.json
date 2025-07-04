@@ -51,7 +51,54 @@
     },
     "conceptImagesLabel": "Concept Images",
     "descriptionLabel": "Project Description",
-    "tagsLabel": "Tags"
+    "tagsLabel": "Tags",
+    "details": {
+      "aurax-media-platform": {
+        "name": "Aurax Media Platform",
+        "shortDescription": "Next-gen media platform with gamification.",
+        "longDescription": "A more detailed description of the Aurax Media Platform, its goals, the technologies used, and the challenges during development. This platform aims to provide content creators with new ways to monetize and interact with their audience."
+      },
+      "portfolio-website": {
+        "name": "Personal Portfolio Website",
+        "shortDescription": "My personal website to showcase my projects and skills.",
+        "longDescription": "This website serves as a central hub to present my work in software development and game design. It was built with Next.js and uses static site generation for optimal performance. The design is responsive and modern."
+      },
+      "project-y": {
+        "name": "Project Y",
+        "shortDescription": "The creative social universe for collaborative, AI-powered media projects.",
+        "longDescription": "Project Y is the vibrant social and community universe for tomorrow's media creators. At its core beats the MindFlow Engine (AuraVention): Here, AI creativity, teamwork, gamification, and community merge into a one-of-a-kind platform. Join a creative movement, share ideas, build together, and experience how AI and people achieve greatness – all within an inspiring digital ecosystem."
+      },
+      "auravention": {
+        "name": "AuraVention (MindFlow Engine)",
+        "shortDescription": "Visionary AI engine for limitless creative media development.",
+        "longDescription": "Step into the future of creative media: The MindFlow Engine (AuraVention) is a visionary AI engine and multi-agent platform that transforms your ideas into interactive worlds. Whether you're a solo creator or a small team, experience AI-powered inspiration, automatic asset generation, and smart workflows. Developed as a master's thesis, it's your launchpad for game jams, prototyping, and creative experiments – pure innovation, without limits."
+      },
+      "broxel-engine": {
+        "name": "Broxel Engine",
+        "shortDescription": "Modular open-source voxel engine for next-gen games and creative tools.",
+        "longDescription": "Broxel Engine is a planned modular open-source voxel engine focused on procedural worlds, modding, cross-platform support, and community integration. Based on the Bevy Engine, it will be developed in 2027 to enable the next generation of games and creative tools."
+      },
+      "black-forest-asylum": {
+        "name": "Black Forest Asylum",
+        "shortDescription": "Atmospheric horror adventure with immersive storytelling.",
+        "longDescription": "Black Forest Asylum is a planned atmospheric horror adventure focused on immersive storytelling, teamwork, and community events. The game will be developed in Unreal Engine and promises an engaging gaming experience with psychological horror elements and exploration."
+      },
+      "maze-of-space": {
+        "name": "Maze of Space",
+        "shortDescription": "Innovative maze game with planned multiplayer features.",
+        "longDescription": "Maze of Space is an innovative maze game prototyped in Unity in 2024. New game modes, multiplayer features, and creative challenges are planned for 2028. The game is being developed in Godot and offers strategic first-person challenges."
+      },
+      "block-reversal": {
+        "name": "Block Reversal",
+        "shortDescription": "Casual game classic with a planned 3D sequel.",
+        "longDescription": "Block Reversal is a casual game classic from 2018, prototyped in Unity. A 3D sequel called 'Universal Blox' is planned for 2028 with new game modes, modern graphics, multiplayer, and cross-platform support."
+      },
+      "slime": {
+        "name": "SLIME",
+        "shortDescription": "Physics-based party game with slime control.",
+        "longDescription": "SLIME is a physics-based party game from 2017/2029, prototyped in Unity. The game lets players control a slime, suck up items, and master fun challenges. In 2029, it will be redeveloped as a multiplayer party game in the Bevy Engine."
+      }
+    }
   },
   "about": {
     "title": "About Me",
@@ -200,6 +247,13 @@
         "content": "The content and works created by the site operator on these pages are subject to German copyright law. Third-party contributions are marked as such."
       },
       "note": "Note: AuraV Technologies is not a registered company, but a private project by Bjarne Niklas Luttermann."
+    }
+  },
+  "error": {
+    "404": {
+      "title": "Page not found",
+      "description": "The requested page does not exist or has been moved. Please check the URL or return to the homepage.",
+      "button": "Back to homepage"
     }
   }
 } 

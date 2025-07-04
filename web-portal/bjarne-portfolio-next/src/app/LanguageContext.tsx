@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import deTranslations from './locales/de.json';
 import enTranslations from './locales/en.json';
 
@@ -44,7 +44,24 @@ const getNestedValue = (obj: unknown, path: string): string => {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLang] = useState<Language>('de');
+  const [lang, setLangState] = useState<Language>('de');
+
+  // Setze Sprache aus localStorage beim Initialisieren
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedLang = localStorage.getItem('lang');
+      if (storedLang === 'de' || storedLang === 'en') {
+        setLangState(storedLang);
+      }
+    }
+  }, []);
+
+  const setLang = (newLang: Language) => {
+    setLangState(newLang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('lang', newLang);
+    }
+  };
 
   const t = (key: string): string => {
     const message = getNestedValue(translations[lang], key) || getNestedValue(translations['en'], key) || key;

@@ -51,7 +51,54 @@
     },
     "conceptImagesLabel": "Konzeptbilder",
     "descriptionLabel": "Projektbeschreibung",
-    "tagsLabel": "Tags"
+    "tagsLabel": "Tags",
+    "details": {
+      "aurax-media-platform": {
+        "name": "Aurax Media Platform",
+        "shortDescription": "Next-Gen Medienplattform mit Gamification.",
+        "longDescription": "Eine detailliertere Beschreibung der Aurax Media Platform, ihrer Ziele, der verwendeten Technologien und der Herausforderungen während der Entwicklung. Diese Plattform zielt darauf ab, Content-Erstellern neue Wege zur Monetarisierung und Interaktion mit ihrem Publikum zu bieten."
+      },
+      "portfolio-website": {
+        "name": "Personal Portfolio Website",
+        "shortDescription": "Meine persönliche Webseite zur Präsentation meiner Projekte und Fähigkeiten.",
+        "longDescription": "Diese Webseite dient als zentrale Anlaufstelle, um meine Arbeit im Bereich Softwareentwicklung und Gamedesign vorzustellen. Sie wurde mit Next.js erstellt und nutzt statische Seitengenerierung für optimale Performance. Das Design ist responsiv und modern."
+      },
+      "project-y": {
+        "name": "Project Y",
+        "shortDescription": "Das kreative Social-Universum für kollaborative, KI-gestützte Medienprojekte.",
+        "longDescription": "Project Y ist das pulsierende Social- und Community-Universum für die Medienmacher von morgen. Im Herzen schlägt die MindFlow Engine (AuraVention): Hier verschmelzen KI-Kreativität, Teamwork, Gamification und Community zu einer einzigartigen Plattform. Werde Teil einer kreativen Bewegung, teile Ideen, entwickle gemeinsam mit anderen und erlebe, wie KI und Menschen zusammen Großes schaffen – alles in einem inspirierenden, digitalen Ökosystem."
+      },
+      "auravention": {
+        "name": "AuraVention (MindFlow Engine)",
+        "shortDescription": "Visionäre KI-Engine für grenzenlose kreative Medienentwicklung.",
+        "longDescription": "Tauche ein in die Zukunft der kreativen Medienentwicklung: Die MindFlow Engine (AuraVention) ist eine visionäre KI-Engine und Multi-Agenten-Plattform, die deine Ideen in interaktive Welten verwandelt. Ob Solo-Entwickler oder kleines Team – erlebe KI-gestützte Inspiration, automatische Asset-Generierung und smarte Workflows. Entwickelt als Masterthesis, ist sie das Sprungbrett für Game Jams, Prototyping und kreative Experimente – pure Innovation, ganz ohne Grenzen."
+      },
+      "broxel-engine": {
+        "name": "Broxel Engine",
+        "shortDescription": "Modulare Open-Source-Voxel-Engine für Next-Gen-Games und kreative Tools.",
+        "longDescription": "Die Broxel Engine ist eine geplante modulare Open-Source-Voxel-Engine, die sich auf prozedurale Welten, Modding, Cross-Platform-Support und Community-Integration konzentriert. Basierend auf der Bevy Engine, wird sie 2027 entwickelt und soll die nächste Generation von Spielen und kreativen Tools ermöglichen."
+      },
+      "black-forest-asylum": {
+        "name": "Black Forest Asylum",
+        "shortDescription": "Atmosphärisches Horror-Adventure mit immersivem Storytelling.",
+        "longDescription": "Black Forest Asylum ist ein geplantes atmosphärisches Horror-Adventure, das sich auf immersives Storytelling, Teamwork und Community-Events konzentriert. Das Spiel wird in der Unreal Engine entwickelt und verspricht ein packendes Spielerlebnis mit psychologischen Horror-Elementen und Exploration."
+      },
+      "maze-of-space": {
+        "name": "Maze of Space",
+        "shortDescription": "Innovatives Maze-Game mit geplanten Multiplayer-Features.",
+        "longDescription": "Maze of Space ist ein innovatives Maze-Game, das 2024 als Prototyp in Unity entwickelt wurde. Für 2028 sind neue Spielmodi, Multiplayer-Features und kreative Herausforderungen geplant. Das Spiel wird in Godot entwickelt und bietet strategische First-Person-Herausforderungen."
+      },
+      "block-reversal": {
+        "name": "Block Reversal",
+        "shortDescription": "Casual-Game-Klassiker mit geplantem 3D-Nachfolger.",
+        "longDescription": "Block Reversal ist ein Casual-Game-Klassiker aus dem Jahr 2018, der als Prototyp in Unity entwickelt wurde. Ein 3D-Nachfolger namens 'Universal Blox' ist für 2028 geplant mit neuen Spielmodi, moderner Grafik, Multiplayer und Cross-Platform-Support."
+      },
+      "slime": {
+        "name": "SLIME",
+        "shortDescription": "Physikbasiertes Partyspiel mit Schleim-Steuerung.",
+        "longDescription": "SLIME ist ein physikbasiertes Partyspiel aus den Jahren 2017/2029, das als Prototyp in Unity entwickelt wurde. Das Spiel ermöglicht es Spielern, einen Schleim zu steuern, Items aufzusaugen und spaßige Herausforderungen zu meistern. 2029 soll es als Multiplayer-Partyspiel in der Bevy Engine neu entwickelt werden."
+      }
+    }
   },
   "about": {
     "title": "Über mich",
@@ -152,8 +199,8 @@
   },
   "footer": {
     "copyright": "© 2025 Bjarne Niklas Luttermann. Alle Rechte vorbehalten.",
-    "datenschutz": "Datenschutz",
-    "impressum": "Impressum"
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz"
   },
   "navigation": {
     "back": "Zurück"
@@ -200,6 +247,13 @@
         "content": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers."
       },
       "note": "Hinweis: AuraV Technologies ist kein eingetragenes Unternehmen, sondern ein privates Projekt von Bjarne Niklas Luttermann."
+    }
+  },
+  "error": {
+    "404": {
+      "title": "Seite nicht gefunden",
+      "description": "Die angeforderte Seite existiert nicht oder wurde verschoben. Bitte prüfe die URL oder kehre zur Startseite zurück.",
+      "button": "Zur Startseite"
     }
   }
 } 

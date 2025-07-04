@@ -25,8 +25,8 @@ const Footer: React.FC = () => {
             <Container maxWidth="lg">
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 2 }}>
                     <Stack direction="row" spacing={1} divider={<Divider orientation="vertical" flexItem />}>
-                        <Link href={`/${lang}/impressum`} underline="hover" color="text.secondary">{t('footer.impressum')}</Link>
-                        <Link href={`/${lang}/datenschutz`} underline="hover" color="text.secondary">{t('footer.datenschutz')}</Link>
+                        <Link href={`/${lang}/impressum`} underline="hover" color="text.secondary">Impressum</Link>
+                        <Link href={`/${lang}/datenschutz`} underline="hover" color="text.secondary">Datenschutz</Link>
                     </Stack>
                     <Stack direction="row" spacing={1}>
                         {socialLinks.map((link) => (
