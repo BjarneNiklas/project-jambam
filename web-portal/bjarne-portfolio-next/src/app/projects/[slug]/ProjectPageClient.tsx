@@ -6,14 +6,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LaunchIcon from '@mui/icons-material/Launch';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../../LanguageContext';
-import { Box, Chip, IconButton, Modal, Typography, Fade, Stack, Paper, Grid } from '@mui/material';
-import { FaCogs, FaCode, FaGamepad, FaRobot, FaCube, FaSearch, FaBrain, FaShareAlt, FaExternalLinkAlt } from 'react-icons/fa';
+import { Box, Chip, IconButton, Modal, Typography, Fade, Stack, Paper, Button } from '@mui/material';
+import { FaCogs, FaCode, FaGamepad, FaRobot, FaCube, FaSearch, FaBrain, FaShareAlt, FaCalendarAlt, FaTag, FaCheckCircle, FaMicrochip, FaPlayCircle } from 'react-icons/fa';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
-import ScienceIcon from '@mui/icons-material/Science';
 import HubIcon from '@mui/icons-material/Hub';
 import Grid4x4Icon from '@mui/icons-material/Grid4x4';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { BiCube } from 'react-icons/bi';
 
 interface Project {
@@ -28,6 +28,7 @@ interface Project {
   year?: string;
   genres?: string[];
   status?: string;
+  youtubeId?: string;
 }
 
 interface ProjectPageClientProps {
@@ -86,89 +87,15 @@ const techIcons: Record<string, React.ReactElement> = {
   'Block Reversal': <Grid4x4Icon />,
 };
 
-// Premium Project Fallback Icons
-const getProjectFallbackIcon = (slug: string): React.ReactElement => {
-  const iconSize = 240; // Vergrößert für bessere Sichtbarkeit
-  const iconStyle = {
-    filter: 'drop-shadow(0 0 40px rgba(20, 184, 166, 0.4))',
-    animation: 'pulse 3s infinite ease-in-out'
-  };
-
-  switch (slug) {
-    case 'auravention':
-      return (
-        <Image 
-          src="/av_logo.webp" 
-          alt="AuraVention" 
-          width={iconSize} 
-          height={iconSize} 
-          style={{ ...iconStyle, borderRadius: 12 }}
-        />
-      );
-    case 'project-y':
-      return (
-        <Image 
-          src="/y_logo.webp" 
-          alt="Project Y" 
-          width={iconSize} 
-          height={iconSize} 
-          style={{ ...iconStyle, borderRadius: 12 }}
-        />
-      );
-    case 'broxel-engine':
-      return <BiCube size={iconSize} color={COLORS.primary} style={iconStyle} />;
-    case 'black-forest-asylum':
-      return <FaGamepad size={iconSize} color={COLORS.primary} style={iconStyle} />;
-    case 'maze-of-space':
-      return <Grid4x4Icon sx={{ fontSize: iconSize, color: COLORS.primary, ...iconStyle }} />;
-    case 'block-reversal':
-      return <Grid4x4Icon sx={{ fontSize: iconSize, color: COLORS.accent, ...iconStyle }} />;
-    case 'slime':
-      return <BubbleChartIcon sx={{ fontSize: iconSize, color: COLORS.primary, ...iconStyle }} />;
-    case 'bubblez-interest-minigame':
-      return <BubbleChartIcon sx={{ fontSize: iconSize, color: COLORS.success, ...iconStyle }} />;
-    case 'home-cafe-module':
-      return <HubIcon sx={{ fontSize: iconSize, color: COLORS.warning, ...iconStyle }} />;
-    case 'mall-orca':
-      return <FaGamepad size={iconSize} color={COLORS.accent} style={iconStyle} />;
-    default:
-      return <FaCogs size={iconSize} color={COLORS.primary} style={iconStyle} />;
-  }
+// Sidebar-Icon-Map (wie in Sidebar.tsx, inkl. MUI-Icons und Images)
+const projectMediaIcons: Record<string, React.ReactElement> = {
+  'auravention': <Image src="/av_logo.webp" alt="AuraVention" width={180} height={180} style={{ borderRadius: 8, boxShadow: '0 0 40px #14b8a6' }} />,
+  'broxel-engine': <BiCube size={180} style={{ color: '#14b8a6', filter: 'drop-shadow(0 0 40px #14b8a6)' }} />,
+  'project-y': <Image src="/y_logo.webp" alt="Project Y" width={180} height={180} style={{ borderRadius: 8, boxShadow: '0 0 40px #14b8a6' }} />,
+  'maze-of-space': <SportsEsportsIcon sx={{ fontSize: 180, color: '#14b8a6', filter: 'drop-shadow(0 0 40px #14b8a6)' }} />,
+  'block-reversal': <Grid4x4Icon sx={{ fontSize: 180, color: '#8b5cf6', filter: 'drop-shadow(0 0 40px #8b5cf6)' }} />,
+  'slime': <BubbleChartIcon sx={{ fontSize: 180, color: '#14b8a6', filter: 'drop-shadow(0 0 40px #14b8a6)' }} />,
 };
-
-// Premium Icon Rendering
-function getTechIcon(tech: string) {
-  const icon = techIcons[tech];
-  if (!icon) return <FaCogs style={{ color: COLORS.primaryLight, fontSize: '1.3rem', filter: 'drop-shadow(0 0 8px rgba(20, 184, 166, 0.4))' }} />;
-  if (!icon.type) return icon;
-  const iconType = icon.type as unknown;
-  
-  if (typeof iconType === 'object' && iconType !== null && 'muiName' in iconType) {
-    const baseStyle = {
-      color: COLORS.primaryLight,
-      fontSize: '1.3rem',
-      filter: 'drop-shadow(0 0 8px rgba(20, 184, 166, 0.4))'
-    };
-    let props = {};
-    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props as Record<string, unknown>;
-    const style = (props as { style?: unknown }).style ? { ...(props as { style?: object }).style, ...baseStyle } : baseStyle;
-    return React.createElement(iconType as React.ComponentType<Record<string, unknown>>, { ...(props as object), style });
-  }
-  
-  if (typeof iconType === 'function' && !('muiName' in iconType)) {
-    const baseStyle = {
-      color: COLORS.primaryLight,
-      fontSize: '1.3rem',
-      filter: 'drop-shadow(0 0 8px rgba(20, 184, 166, 0.4))'
-    };
-    let props = {};
-    if (typeof icon.props === 'object' && icon.props !== null) props = icon.props as Record<string, unknown>;
-    const style = (props as { style?: unknown }).style ? { ...(props as { style?: object }).style, ...baseStyle } : baseStyle;
-    return React.createElement(iconType as React.ComponentType<Record<string, unknown>>, { ...(props as object), style });
-  }
-  
-  return icon;
-}
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const { t, lang } = useLanguage();
@@ -195,6 +122,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
   const [lightboxIdx, setLightboxIdx] = useState<number|null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState('');
+  const [showVideo, setShowVideo] = useState(false);
 
   const openLightbox = (idx: number) => setLightboxIdx(idx);
   const closeLightbox = () => setLightboxIdx(null);
@@ -225,8 +153,6 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
     }
     return arr;
   })();
-
-  const hasValidImage = projectImages.length > 0 && typeof projectImages[0] === 'string' && projectImages[0].trim() !== '';
 
   // Individuelle Quickfacts je nach Projekt
   const quickfacts = (() => {
@@ -316,6 +242,30 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
     }
   }, [lightboxIdx, nextImg, prevImg]);
 
+  // Robust image path logic
+  let mainImage = '/placeholder_generic.svg';
+  if (projectImages[0] && projectImages[0].trim() !== '') {
+    if (projectImages[0].startsWith('/images/projects/')) {
+      mainImage = '/' + projectImages[0].split('/').pop();
+    } else {
+      mainImage = projectImages[0];
+    }
+  } else if (slug === 'black-forest-asylum') {
+    mainImage = '/bfa1.webp';
+  }
+
+  // Add support for YouTube video if available
+  const youtubeId = project.youtubeId || demoProject.youtubeId;
+
+  // Tag/Chip-Logik: Sammle alle relevanten Tags, unique, sinnvoll sortiert
+  const allTags = Array.from(new Set([
+    quickfacts.engine,
+    quickfacts.genre,
+    quickfacts.status,
+    quickfacts.year,
+    ...techs
+  ].filter(Boolean)));
+
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: COLORS.background }}>
       <div className="flex flex-1 w-full">
@@ -324,169 +274,194 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
         {/* Premium Container with Maximal White Space */}
         <div className="w-full" style={{ padding: '0 48px' }}>
           <main className="flex-1 max-w-7xl mx-auto my-0 bg-transparent rounded-3xl shadow-none border-none min-h-[70vh] flex flex-col relative items-center" style={{ padding: '48px 32px' }}>
-            
-            {/* Premium Hero Section */}
-            <div className="relative w-full h-[45vh] md:h-[60vh] flex items-end justify-center overflow-hidden rounded-3xl shadow-2xl border border-gray-800 mb-12" style={{ background: COLORS.background }}>
-              {/* Kein Hintergrundbild mehr, nur dunkler Hintergrund */}
-              <div className="flex flex-col items-center justify-center w-full h-full">
-                {getProjectFallbackIcon(slug)}
-              </div>
-              {/* Premium Animated Headline */}
-              <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-full px-8 flex flex-col items-center">
-                <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight drop-shadow-2xl animate-fade-in-up text-center" style={{ letterSpacing: 2, textShadow: '0 8px 48px rgba(20, 184, 166, 0.6)' }}>
-                  {name}
-                </h1>
-                <p className="text-xl md:text-2xl text-gray-300 font-medium mt-4 animate-fade-in-up-slow text-center max-w-4xl" style={{ textShadow: '0 4px 24px rgba(20, 184, 166, 0.4)', lineHeight: 1.4 }}>
-                  {shortDescription}
-                </p>
-                {/* Professional Year Badge - Game Shop Style */}
-                {demoProject.year && (
-                  <div className="mt-6">
+            {/* Breadcrumbs and Back Button */}
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, width: '100%' }}>
+              <Button href="/" startIcon={<ArrowBackIcon />} sx={{ color: '#14b8a6', fontWeight: 700, textTransform: 'none', fontSize: 18, mr: 2 }}>
+                Zurück
+              </Button>
+              <Typography sx={{ color: '#a1a1aa', fontWeight: 500, fontSize: 16 }}>
+                <span style={{ cursor: 'pointer', color: '#14b8a6' }} onClick={() => window.location.href = '/'}>Home</span>
+                <span style={{ margin: '0 8px' }}>/</span>
+                <span style={{ cursor: 'pointer', color: '#14b8a6' }} onClick={() => window.location.href = '/projects'}>Projekte</span>
+                <span style={{ margin: '0 8px' }}>/</span>
+                <span style={{ color: '#fff', fontWeight: 700 }}>{name}</span>
+              </Typography>
+            </Box>
+            {/* Modern Shop-like Hero Section */}
+            <Box sx={{ 
+              display: 'grid', 
+              gridTemplateColumns: { xs: '1fr', md: 'minmax(320px,400px) 1fr' }, 
+              gap: 1.2, 
+              alignItems: 'center', 
+              mb: 6, 
+              mt: 2 
+            }}>
+              {/* Image Column */}
+              <Box sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' }, alignItems: 'center', position: 'relative' }}>
+                <Box sx={{
+                  width: { xs: 240, sm: 320, md: 400 },
+                  height: { xs: 240, sm: 320, md: 400 },
+                  position: 'relative',
+                  zIndex: 2,
+                  mt: { xs: 1, md: 0 },
+                  mb: { xs: 1, md: 0 },
+                  borderRadius: 4,
+                  overflow: 'hidden',
+                  boxShadow: '0 8px 48px rgba(20,184,166,0.18)',
+                  background: '#000',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  {youtubeId ? (
+                    showVideo ? (
+                      <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+                        <iframe
+                          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+                          title={name}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          style={{
+                            border: 0,
+                            width: '100%',
+                            height: '100%',
+                            aspectRatio: '16/9',
+                            borderRadius: 4,
+                            background: '#000',
+                            display: 'block',
+                          }}
+                        />
+                      </Box>
+                    ) : (
+                      <Box sx={{ position: 'relative', width: '100%', height: '100%', cursor: 'pointer' }} onClick={() => setShowVideo(true)}>
+                        <Image
+                          src={`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
+                          alt={name}
+                          fill
+                          style={{ objectFit: 'cover', borderRadius: 4, filter: 'brightness(0.85)' }}
+                          sizes="(max-width: 600px) 100vw, 400px"
+                          priority
+                        />
+                        <Box sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          zIndex: 2,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                          <FaPlayCircle style={{ fontSize: 80, color: '#fff', filter: 'drop-shadow(0 4px 24px #000)' }} />
+                        </Box>
+                      </Box>
+                    )
+                  ) : (
+                    slug === 'black-forest-asylum' ? (
+                      <Image
+                        src={mainImage}
+                        alt={name}
+                        fill
+                        style={{ objectFit: 'cover', borderRadius: 4 }}
+                        sizes="(max-width: 600px) 100vw, 400px"
+                        priority
+                      />
+                    ) : (
+                      projectMediaIcons[slug] || <FaGamepad size={180} color="#14b8a6" style={{ filter: 'drop-shadow(0 0 40px #14b8a6)' }} />
+                    )
+                  )}
+                </Box>
+              </Box>
+              {/* Content Column */}
+              <Box>
+                <Paper elevation={0} sx={{
+                  background: 'none',
+                  borderRadius: 0,
+                  p: { xs: 1, md: 3 },
+                  boxShadow: 'none',
+                  position: 'relative',
+                  zIndex: 3,
+                  mt: { xs: -8, md: 0 },
+                }}>
+                  {/* Title */}
+                  <Typography variant="h2" sx={{
+                    fontWeight: 900,
+                    fontSize: { xs: 36, md: 56 },
+                    mb: 1.2,
+                    letterSpacing: 2,
+                    background: 'linear-gradient(90deg, #14b8a6 0%, #0d9488 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    textShadow: '0 8px 48px rgba(20,184,166,0.3)',
+                    lineHeight: 1.1,
+                  }}>{name}</Typography>
+                  {/* Alle Tags/Chips (unique, gesammelt, sinnvoll sortiert) */}
+                  <Stack direction="row" spacing={0.7} sx={{ mb: 1.2, flexWrap: 'wrap' }}>
+                    {allTags.map((tag) => (
                     <Chip 
-                      label={demoProject.year} 
+                        key={tag}
+                        label={tag}
+                        size="medium"
                       sx={{ 
-                        background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(20, 184, 166, 0.7) 100%)',
+                          background: 'linear-gradient(135deg, rgba(20,184,166,0.15) 0%, rgba(20,184,166,0.25) 100%)',
                         color: COLORS.text, 
-                        fontWeight: 700, 
-                        fontSize: '1.2rem', 
-                        px: 4, 
-                        py: 1.5, 
-                        borderRadius: '16px',
-                        border: `2px solid rgba(20, 184, 166, 0.8)`,
-                        boxShadow: '0 8px 32px rgba(20, 184, 166, 0.4)',
-                        letterSpacing: 0.5,
-                        textTransform: 'uppercase',
+                          fontWeight: 500,
+                          fontSize: '1rem',
+                          px: 2,
+                          py: 1,
+                          borderRadius: '12px',
+                          border: `1px solid rgba(20,184,166,0.3)`,
                         backdropFilter: 'blur(10px)',
+                          mb: 1,
+                          mr: 1,
                         '&:hover': {
-                          background: 'linear-gradient(135deg, rgba(20, 184, 166, 1) 0%, rgba(20, 184, 166, 0.8) 100%)',
-                          boxShadow: '0 12px 48px rgba(20, 184, 166, 0.6)',
+                            background: 'linear-gradient(135deg, rgba(20,184,166,0.25) 0%, rgba(20,184,166,0.35) 100%)',
+                            borderColor: 'rgba(20,184,166,0.6)',
                           transform: 'scale(1.05)',
                         }
                       }} 
                     />
-                  </div>
-                )}
-              </div>
-              
-              {/* Premium Back Button */}
-              <Tooltip title="Back to Projects" arrow>
-                <IconButton 
-                  onClick={() => window.history.back()} 
-                  sx={{ 
-                    position: 'absolute', 
-                    top: 32, 
-                    left: 32, 
-                    bgcolor: 'rgba(20, 184, 166, 0.15)', 
-                    color: COLORS.text,
-                    border: `1px solid ${COLORS.border}`,
-                    backdropFilter: 'blur(10px)',
-                    '&:hover': { 
-                      bgcolor: 'rgba(20, 184, 166, 0.25)',
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 8px 32px rgba(20, 184, 166, 0.3)'
-                    },
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                  }}
-                >
-                  <ArrowBackIcon fontSize="large" />
-                </IconButton>
-              </Tooltip>
-              
-              {/* Premium Status Badge */}
-              {demoProject.status && (
-                <Chip 
-                  label={demoProject.status} 
-                  sx={{ 
-                    position: 'absolute', 
-                    top: 32, 
-                    right: 32, 
-                    bgcolor: COLORS.primary, 
-                    color: COLORS.text, 
-                    fontWeight: 700, 
-                    fontSize: '1rem', 
-                    px: 3, 
-                    py: 1.5, 
-                    borderRadius: 3, 
-                    boxShadow: '0 8px 32px rgba(20, 184, 166, 0.3)',
-                    textTransform: 'uppercase', 
-                    letterSpacing: 0.3,
-                    border: `1px solid ${COLORS.primaryLight}`,
-                    backdropFilter: 'blur(10px)'
-                  }} 
-                />
-              )}
-            </div>
-
-            {/* Premium Call-to-Action Buttons */}
-            <div className="flex flex-wrap gap-6 justify-center mb-12 mt-8">
+                    ))}
+                  </Stack>
+                  {/* Description */}
+                  <Typography variant="h6" sx={{
+                    color: COLORS.textSecondary,
+                    fontWeight: 500,
+                    fontSize: { xs: 18, md: 22 },
+                    mb: 1.2,
+                    lineHeight: 1.4,
+                  }}>{shortDescription}</Typography>
+                  {/* Meta Badges */}
+                  <Stack direction="row" spacing={1.2} sx={{ mb: 1.2, flexWrap: 'wrap' }}>
+                    <Chip icon={<FaMicrochip />} label={quickfacts.engine} sx={{ bgcolor: '#14b8a6', color: '#fff', fontWeight: 700, fontSize: 16 }} />
+                    <Chip icon={<FaTag />} label={quickfacts.genre} sx={{ bgcolor: '#0d9488', color: '#fff', fontWeight: 700, fontSize: 16 }} />
+                    <Chip icon={<FaCheckCircle />} label={quickfacts.status} sx={{ bgcolor: '#27272a', color: '#14b8a6', fontWeight: 700, fontSize: 16 }} />
+                    <Chip icon={<FaCalendarAlt />} label={quickfacts.year} sx={{ bgcolor: '#18181b', color: '#14b8a6', fontWeight: 700, fontSize: 16 }} />
+                  </Stack>
+                  {/* CTA and Share Buttons */}
+                  <Stack direction="row" spacing={1.2} sx={{ mb: 1.2 }}>
+                    {youtubeId && !showVideo && (
+                      <Button variant="outlined" color="primary" size="large" onClick={() => setShowVideo(true)} sx={{ fontWeight: 700, fontSize: 18, borderRadius: 3, px: 3, borderColor: '#14b8a6', color: '#14b8a6', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <FaPlayCircle style={{ marginRight: 8, fontSize: 20 }} />
+                        {lang === 'de' ? 'Video abspielen' : 'Show Video'}
+                      </Button>
+                    )}
+                    <Button variant="outlined" color="primary" size="large" href={demoProject.url && demoProject.url !== '#' ? demoProject.url : (lang === 'de' ? '/de#projects' : '/en#projects')} target="_blank" sx={{ fontWeight: 700, fontSize: 18, borderRadius: 3, px: 3, borderColor: '#14b8a6', color: '#14b8a6', display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <LaunchIcon style={{ marginRight: 8, fontSize: 20 }} />
+                      {lang === 'de' ? 'Zur Webseite' : 'Visit Website'}
+                    </Button>
               {demoProject.url && demoProject.url !== '#' && (
-                <Tooltip title="View Live Demo" arrow>
-                  <a href={demoProject.url} target="_blank" rel="noopener" className="no-underline">
-                    <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-xl transition-all duration-300 flex items-center gap-3 animate-fade-in-up hover:scale-105 hover:shadow-2xl">
-                      <LaunchIcon /> Live Demo
-                    </button>
-                  </a>
-                </Tooltip>
-              )}
-              {demoProject.githubUrl && demoProject.githubUrl !== '#' && (
-                <Tooltip title="View Source Code" arrow>
-                  <a href={demoProject.githubUrl} target="_blank" rel="noopener" className="no-underline">
-                    <button className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-xl transition-all duration-300 flex items-center gap-3 animate-fade-in-up hover:scale-105 hover:shadow-2xl">
-                      <FaCode /> Source Code
-                    </button>
-                  </a>
-                </Tooltip>
-              )}
-            </div>
-
-            {/* Premium Quickfacts Bar */}
-            <Paper elevation={0} sx={{ 
-              background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%)',
-              border: `1px solid ${COLORS.border}`,
-              borderRadius: 4,
-              p: 4,
-              mb: 8,
-              backdropFilter: 'blur(10px)'
-            }}>
-              <Stack direction={{ xs: 'column', md: 'row' }} spacing={4} alignItems="center" justifyContent="space-around">
-                {/* Engine */}
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-                    {lang === 'de' ? 'Engine' : 'Engine'}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: COLORS.text }}>
-                    {quickfacts.engine}
-                  </Typography>
-                </Box>
-                {/* Genre */}
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-                    {lang === 'de' ? 'Genre' : 'Genre'}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: COLORS.text }}>
-                    {quickfacts.genre}
-                  </Typography>
-                </Box>
-                {/* Status */}
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-                    {lang === 'de' ? 'Status' : 'Status'}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: COLORS.text }}>
-                    {quickfacts.status}
-                  </Typography>
-                </Box>
-                {/* Jahr */}
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-                    {lang === 'de' ? 'Jahr' : 'Year'}
-                  </Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: COLORS.text }}>
-                    {quickfacts.year}
-                  </Typography>
-                </Box>
+                      <Button variant="contained" color="primary" size="large" href={demoProject.url} target="_blank" sx={{ fontWeight: 700, fontSize: 18, borderRadius: 3, px: 4, boxShadow: '0 8px 32px rgba(20,184,166,0.3)' }}>Mehr erfahren</Button>
+                    )}
+                    <Button variant="outlined" color="primary" size="large" onClick={handleShare} sx={{ fontWeight: 700, fontSize: 18, borderRadius: 3, px: 4, borderColor: '#14b8a6', color: '#14b8a6', display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <FaShareAlt style={{ marginRight: 8, fontSize: 20 }} />
+                      Teilen
+                    </Button>
               </Stack>
             </Paper>
+              </Box>
+            </Box>
 
             {/* Premium Feature Highlights */}
             <Box sx={{ mb: 8 }}>
@@ -500,11 +475,62 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                 Key Features
               </Typography>
               <Stack direction={{ xs: 'column', md: 'row' }} spacing={4}>
-                {[
+                {(() => {
+                  // Project-specific key features
+                  const features = (() => {
+                    switch (slug) {
+                      case 'black-forest-asylum':
+                        return [
+                          { icon: <FaBrain />, title: 'Psychological Horror', desc: 'Deep psychological terror elements' },
+                          { icon: <FaSearch />, title: 'Atmospheric Exploration', desc: 'Immersive environmental storytelling' },
+                          { icon: <FaGamepad />, title: 'Community Events', desc: 'Collaborative horror experiences' }
+                        ];
+                      case 'maze-of-space':
+                        return [
+                          { icon: <Grid4x4Icon />, title: 'Strategic Maze', desc: 'Complex puzzle-solving mechanics' },
+                          { icon: <FaShareAlt />, title: 'Multiplayer', desc: 'Competitive maze challenges' },
+                          { icon: <FaBrain />, title: 'First-Person', desc: 'Immersive 3D navigation' }
+                        ];
+                      case 'block-reversal':
+                        return [
+                          { icon: <Grid4x4Icon />, title: 'Block Mechanics', desc: 'Innovative block manipulation' },
+                          { icon: <FaGamepad />, title: 'Casual Gameplay', desc: 'Accessible puzzle design' },
+                          { icon: <FaCube />, title: '3D Evolution', desc: 'Modern 3D graphics planned' }
+                        ];
+                      case 'slime':
+                        return [
+                          { icon: <BubbleChartIcon />, title: 'Physics Engine', desc: 'Realistic slime physics' },
+                          { icon: <FaShareAlt />, title: 'Party Game', desc: 'Multiplayer fun mechanics' },
+                          { icon: <FaCogs />, title: 'Item Collection', desc: 'Strategic item absorption' }
+                        ];
+                      case 'broxel-engine':
+                        return [
+                          { icon: <BiCube />, title: 'Voxel Graphics', desc: 'Advanced voxel rendering' },
+                          { icon: <FaCogs />, title: 'Procedural Generation', desc: 'Dynamic world creation' },
+                          { icon: <FaCogs />, title: 'Modding Support', desc: 'Extensive modding tools' }
+                        ];
+                      case 'auravention':
+                        return [
+                          { icon: <FaRobot />, title: 'AI Engine', desc: 'Multi-agent AI systems' },
+                          { icon: <FaBrain />, title: 'Creative AI', desc: 'AI-powered content generation' },
+                          { icon: <FaShareAlt />, title: 'Collaboration', desc: 'Team-based creative workflows' }
+                        ];
+                      case 'project-y':
+                        return [
+                          { icon: <FaRobot />, title: 'Social AI', desc: 'AI-enhanced social features' },
+                          { icon: <FaShareAlt />, title: 'Community', desc: 'Collaborative creative space' },
+                          { icon: <FaBrain />, title: 'Gamification', desc: 'Engaging reward systems' }
+                        ];
+                      default:
+                        return [
                   { icon: <FaGamepad />, title: 'Advanced AI', desc: 'Sophisticated AI behavior patterns' },
                   { icon: <FaSearch />, title: 'Exploration', desc: 'Non-linear exploration mechanics' },
                   { icon: <FaBrain />, title: 'Psychology', desc: 'Psychological horror elements' }
-                ].map((feature, idx) => (
+                        ];
+                    }
+                  })();
+                  
+                  return features.map((feature, idx) => (
                   <Box key={idx} sx={{ flex: 1 }}>
                     <Paper elevation={0} sx={{
                       background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%)',
@@ -556,9 +582,31 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
                       </Box>
                     </Paper>
                   </Box>
-                ))}
+                  ));
+                })()}
               </Stack>
             </Box>
+
+            {/* Video Section below Key Features */}
+            {youtubeId && (
+              <Box sx={{ width: '100%', maxWidth: 800, mx: 'auto', my: 6, borderRadius: 4, overflow: 'hidden', boxShadow: '0 8px 48px rgba(20,184,166,0.18)' }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${youtubeId}`}
+                  title={name}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    border: 0,
+                    width: '100%',
+                    height: 'min(45vw, 450px)',
+                    aspectRatio: '16/9',
+                    borderRadius: 4,
+                    background: '#000',
+                    display: 'block',
+                  }}
+                />
+              </Box>
+            )}
 
             {/* Premium Project Info Chips */}
             <Stack direction="row" flexWrap="wrap" justifyContent="center" gap={4} sx={{ mb: 10, mt: 8 }}>

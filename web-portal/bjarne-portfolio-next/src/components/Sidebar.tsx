@@ -25,7 +25,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import { BiCube } from 'react-icons/bi';
 import { useLanguage } from '../app/LanguageContext';
-import { createLocalizedUrl, createLocalizedHashUrl } from '../utils/urlHelpers';
+import { createLocalizedHashUrl } from '../utils/urlHelpers';
 
 // --- Konstanten (Flags, Links etc.) ---
 const GermanFlag: React.FC<{ size?: number }> = ({ size = 20 }) => (

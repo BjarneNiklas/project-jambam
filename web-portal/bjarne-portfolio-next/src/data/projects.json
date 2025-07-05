@@ -70,7 +70,8 @@
     "imageUrls": ["/images/projects/maze.jpg"],
     "technologies": ["Godot", "GDScript", "Multiplayer", "Strategy"],
     "url": "#",
-    "githubUrl": "#"
+    "githubUrl": "#",
+    "youtubeId": "9-YuMGMfzrQ"
   },
   {
     "slug": "block-reversal",
@@ -80,7 +81,8 @@
     "imageUrls": ["/images/projects/block.jpg"],
     "technologies": ["Unity", "C#", "3D Graphics", "Multiplayer"],
     "url": "#",
-    "githubUrl": "#"
+    "githubUrl": "#",
+    "youtubeId": "6dGx8h18Bds"
   },
   {
     "slug": "slime",
@@ -90,6 +92,7 @@
     "imageUrls": ["/images/projects/slime.jpg"],
     "technologies": ["Bevy Engine", "Rust", "Physics", "Multiplayer"],
     "url": "#",
-    "githubUrl": "#"
+    "githubUrl": "#",
+    "youtubeId": "HK8O6oQchKw"
   }
 ]

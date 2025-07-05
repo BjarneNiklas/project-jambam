@@ -1,6 +1,6 @@
 // app/(routes)/games/black-forest-asylum/page.tsx
 import React from 'react';
-import { Mail, Users, GitFork, Zap, Puzzle, Mic, Palette, Lightbulb, Eye, Drama } from 'lucide-react'; // Example icons
+import { FaEnvelope, FaUsers, FaCodeBranch, FaBolt, FaPuzzlePiece, FaMicrophone, FaPalette, FaLightbulb, FaEye, FaTheaterMasks } from 'react-icons/fa'; // Replace lucide-react with react-icons
 
 // --- Reusable Components (can be moved to a components/ folder later) ---
 
@@ -108,22 +108,22 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
 const BlackForestAsylumPage = () => {
   const gameFeatures = [
     {
-      icon: <Eye size={32} />,
+      icon: <FaEye size={32} />,
       title: 'Immersive Exploration',
       description: "Discover the asylum's secrets by navigating its decaying halls, wards, and hidden areas.",
     },
     {
-      icon: <Drama size={32} />, // Using Drama icon for storytelling
+      icon: <FaTheaterMasks size={32} />, // Using Drama icon for storytelling
       title: 'Environmental Storytelling',
       description: 'Piece together the narrative through scattered notes, patient diaries, staff logs, and environmental clues.',
     },
     {
-      icon: <Puzzle size={32} />,
+      icon: <FaPuzzlePiece size={32} />,
       title: 'Challenging Puzzles',
       description: "Solve puzzles that often require understanding the asylum's history or the tormented minds of its former inhabitants.",
     },
     {
-      icon: <Zap size={32} />, // Using Zap for limited resources/vulnerability
+      icon: <FaBolt size={32} />, // Using Zap for limited resources/vulnerability
       title: 'Limited Resources & Vulnerability',
       description: 'Rely on limited light sources like flashlights or candles, enhancing the sense of vulnerability.',
     },
@@ -214,19 +214,19 @@ const BlackForestAsylumPage = () => {
           </p>
           <div className="grid sm:grid-cols-2 gap-6 my-8 text-left">
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><GitFork size={24} className="mr-2" /> Narrative & Design</h3>
+              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><FaCodeBranch size={24} className="mr-2" /> Narrative & Design</h3>
               <p className="text-sm text-gray-400">Craft unique stories, puzzles, case files, journals, and environmental riddles.</p>
             </div>
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><Palette size={24} className="mr-2" /> Art & Assets</h3>
+              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><FaPalette size={24} className="mr-2" /> Art & Assets</h3>
               <p className="text-sm text-gray-400">Create 2D and 3D assets, from environmental details to character concepts.</p>
             </div>
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><Mic size={24} className="mr-2" /> Sound & Music</h3>
+              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><FaMicrophone size={24} className="mr-2" /> Sound & Music</h3>
               <p className="text-sm text-gray-400">Contribute ambient soundscapes, musical pieces, or voice acting.</p>
             </div>
             <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><Lightbulb size={24} className="mr-2" /> Development & Puzzles</h3>
+              <h3 className="text-xl font-semibold text-red-500 mb-2 flex items-center"><FaLightbulb size={24} className="mr-2" /> Development & Puzzles</h3>
               <p className="text-sm text-gray-400">Develop game mechanics, logic puzzles, and optional side narratives.</p>
             </div>
           </div>
@@ -252,13 +252,13 @@ const BlackForestAsylumPage = () => {
               rel="noopener noreferrer"
               className="bg-gray-900 hover:bg-black text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg flex items-center justify-center"
             >
-              <Users size={20} className="mr-2" /> Join our Discord
-            להאזנה למוסיקה שלכם, השתמשו בטלפון שלכם.
+              <FaUsers size={20} className="mr-2" /> Join our Discord
+            </a>
             <a
               href="mailto:contact@example.com" // Replace with actual contact email
               className="border-2 border-gray-900 hover:bg-gray-900 hover:text-white text-gray-900 font-semibold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg flex items-center justify-center"
             >
-              <Mail size={20} className="mr-2" /> Email Us
+              <FaEnvelope size={20} className="mr-2" /> Email Us
             </a>
           </div>
         </div>

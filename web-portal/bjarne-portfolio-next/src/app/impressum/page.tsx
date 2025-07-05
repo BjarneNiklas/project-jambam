@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,7 +8,6 @@ import PolicyIcon from '@mui/icons-material/Policy';
 import { useTheme } from '@mui/material/styles';
 import Footer from '@/components/Footer';
 import { useLanguage } from '../LanguageContext';
-import { Metadata } from 'next';
 
 const ImpressumPage: React.FC = () => {
   const theme = useTheme();
@@ -103,7 +100,3 @@ const ImpressumPage: React.FC = () => {
 };
 
 export default ImpressumPage;
-
-export const metadata: Metadata = {
-  title: 'Impressum',
-}; 

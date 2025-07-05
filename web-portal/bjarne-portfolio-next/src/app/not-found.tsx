@@ -2,7 +2,7 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useLanguage } from '../app/LanguageContext';
 
 const NotFound = () => {
@@ -24,48 +24,14 @@ const NotFound = () => {
       overflow: 'hidden'
     }}>
       {/* Animated Background Elements */}
-      <Box sx={{
-        position: 'absolute',
-        top: '20%',
-        left: '10%',
-        width: 200,
-        height: 200,
-        borderRadius: '50%',
-        background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%)',
-        animation: 'float 6s ease-in-out infinite',
-        zIndex: 0
-      }} />
-      <Box sx={{
-        position: 'absolute',
-        bottom: '20%',
-        right: '10%',
-        width: 150,
-        height: 150,
-        borderRadius: '50%',
-        background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.08) 0%, rgba(20, 184, 166, 0.03) 100%)',
-        animation: 'float 8s ease-in-out infinite reverse',
-        zIndex: 0
-      }} />
       
       <Box sx={{ position: 'relative', zIndex: 1 }}>
-        <Box sx={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 120,
-          height: 120,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(20, 184, 166, 0.1) 100%)',
-          border: '3px solid rgba(20, 184, 166, 0.3)',
-          mb: 4,
-          animation: 'pulse 2s infinite'
-        }}>
-          <SentimentVeryDissatisfiedIcon sx={{ 
-            fontSize: 60, 
-            color: '#14b8a6',
-            animation: 'shake 1.2s infinite alternate'
-          }} />
-        </Box>
+        <SentimentVeryDissatisfiedIcon sx={{ 
+          fontSize: 100, 
+          color: '#14b8a6',
+          animation: 'shake 1.2s infinite alternate',
+          mb: 4
+        }} />
         
         <Typography variant="h1" sx={{ 
           fontWeight: 900, 
