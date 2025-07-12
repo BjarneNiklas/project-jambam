@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:project_jambam/src/features/b_authentication/data/auth_repository_provider.dart';
 import 'package:project_jambam/src/features/b_authentication_invite/invite_code_controller.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as sb; // Import for OAuthProvider
 
 part 'login_screen_controller.g.dart';
 
@@ -122,6 +123,101 @@ class LoginScreenController extends _$LoginScreenController {
       await authState.signInAnonymously();
       
       // Check if there was an error
+      final currentState = ref.read(authStateProvider);
+      if (currentState.error != null) {
+        state = state.copyWith(
+          isLoading: false,
+          error: currentState.error,
+        );
+      } else {
+        state = state.copyWith(isLoading: false);
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
+  /// Sign in as a guest
+  Future<void> signInAsGuest() async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final authState = ref.read(authStateProvider.notifier);
+      await authState.signInAsGuest();
+      
+      // Check if there was an error
+      final currentState = ref.read(authStateProvider);
+      if (currentState.error != null) {
+        state = state.copyWith(
+          isLoading: false,
+          error: currentState.error,
+        );
+      } else {
+        state = state.copyWith(isLoading: false);
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
+  /// Sign in with Google
+  Future<void> signInWithGoogle() async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final authState = ref.read(authStateProvider.notifier);
+      await authState.signInWithOAuth(sb.OAuthProvider.google);
+      final currentState = ref.read(authStateProvider);
+      if (currentState.error != null) {
+        state = state.copyWith(
+          isLoading: false,
+          error: currentState.error,
+        );
+      } else {
+        state = state.copyWith(isLoading: false);
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
+  /// Sign in with Discord
+  Future<void> signInWithDiscord() async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final authState = ref.read(authStateProvider.notifier);
+      await authState.signInWithOAuth(sb.OAuthProvider.discord);
+      final currentState = ref.read(authStateProvider);
+      if (currentState.error != null) {
+        state = state.copyWith(
+          isLoading: false,
+          error: currentState.error,
+        );
+      } else {
+        state = state.copyWith(isLoading: false);
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
+  /// Sign in with GitHub
+  Future<void> signInWithGitHub() async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final authState = ref.read(authStateProvider.notifier);
+      await authState.signInWithOAuth(sb.OAuthProvider.github);
       final currentState = ref.read(authStateProvider);
       if (currentState.error != null) {
         state = state.copyWith(
@@ -326,4 +422,4 @@ class LoginScreenState {
       showResetPasswordSuccess,
     );
   }
-} 
+}

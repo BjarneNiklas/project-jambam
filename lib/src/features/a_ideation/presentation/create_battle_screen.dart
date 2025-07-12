@@ -266,7 +266,8 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                Expanded(
+                Flexible(
+                  fit: FlexFit.loose,
                   child: DropdownButtonFormField<String>(
                     value: _selectedDifficulty,
                     decoration: const InputDecoration(
@@ -288,7 +289,8 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
                   ),
                 ),
                 const SizedBox(width: 16),
-                Expanded(
+                Flexible(
+                  fit: FlexFit.loose,
                   child: DropdownButtonFormField<String>(
                     value: _selectedTeamSize,
                     decoration: const InputDecoration(
@@ -314,7 +316,8 @@ class _CreateBattleScreenState extends ConsumerState<CreateBattleScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                Expanded(
+                Flexible(
+                  fit: FlexFit.loose,
                   child: DropdownButtonFormField<String>(
                     value: _selectedDuration,
                     decoration: const InputDecoration(

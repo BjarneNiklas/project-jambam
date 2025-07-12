@@ -29,18 +29,26 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0A0A0A),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blue[600]!, Colors.purple[600]!],
+              colors: [Colors.teal[400]!, Colors.teal[600]!],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.teal.withValues(alpha: 0.3),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -61,20 +69,27 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.blue),
-            onPressed: () {
-              // Placeholder: Show arena notifications
-              log("Navigate to Arena Notifications");
-            },
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.notifications, color: Colors.teal[300]),
+              onPressed: () {
+                log("Navigate to Arena Notifications");
+              },
+            ),
           ),
         ],
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.blue,
+          indicatorColor: Colors.teal,
           indicatorWeight: 3,
-          labelColor: Colors.blue,
-          unselectedLabelColor: Colors.grey,
+          labelColor: Colors.teal[300],
+          unselectedLabelColor: Colors.grey[400],
           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
           tabs: [
             Tab(icon: const Icon(Icons.games), text: ref.read(terminologyProvider.notifier).getTerminology('battles')),
@@ -106,8 +121,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.blue[50]!,
-            Colors.white,
+            Colors.teal[900]!.withValues(alpha: 0.1),
+            const Color(0xFF0A0A0A),
           ],
         ),
       ),
@@ -121,22 +136,22 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           ),
           const SizedBox(height: 16),
           _buildBattleCard(
-            'Unity Game Jam 2024',
-            'Create the next viral mobile game',
+            'Game Jam 2024: Open World',
+            'Create an immersive open-world game experience',
             '3 days left',
             Colors.green,
             Icons.games,
           ),
           _buildBattleCard(
-            'Flutter UI Challenge',
-            'Design the most beautiful app interface',
+            '3D Asset Creation Challenge',
+            'Design stunning 3D assets for game engines',
             '1 week left',
-            Colors.blue,
-            Icons.phone_android,
+            Colors.teal,
+            Icons.view_in_ar,
           ),
           _buildBattleCard(
-            'AI Art Competition',
-            'Generate stunning artwork with AI',
+            'AI Game Design Competition',
+            'Generate innovative game concepts with AI',
             '5 days left',
             Colors.purple,
             Icons.auto_awesome,
@@ -149,18 +164,18 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           ),
           const SizedBox(height: 16),
           _buildBattleCard(
-            'Web3 Hackathon',
-            'Build the future of decentralized apps',
+            'VR/AR Experience Contest',
+            'Build immersive virtual reality worlds',
             '2 days left',
             Colors.orange,
-            Icons.block,
+            Icons.view_in_ar,
           ),
           _buildBattleCard(
-            'VR Experience Contest',
-            'Create immersive virtual reality worlds',
+            'Real-time Rendering Challenge',
+            'Create stunning real-time graphics',
             '1 day left',
             Colors.indigo,
-            Icons.view_in_ar,
+            Icons.animation,
           ),
         ],
       ),
@@ -174,8 +189,8 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.purple[50]!,
-            Colors.white,
+            Colors.purple[900]!.withValues(alpha: 0.1),
+            const Color(0xFF0A0A0A),
           ],
         ),
       ),
@@ -189,13 +204,13 @@ class _ArenaScreenState extends ConsumerState<ArenaScreen>
           ),
           const SizedBox(height: 16),
           _buildTrendingCard(
-            'Flutter 3.0 Features',
-            'Exploring the latest Flutter capabilities',
+            'OpenUSD Integration Guide',
+            'Master 3D asset creation with OpenUSD',
             '🔥 2.5k views',
-            Colors.blue,
+            Colors.teal,
           ),
           _buildTrendingCard(
-            'Unity vs Unreal Engine',
+            'Unity vs Unreal Engine 2024',
             'Which game engine should you choose?',
             '🔥 1.8k views',
             Colors.green,

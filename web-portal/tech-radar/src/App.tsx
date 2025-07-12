@@ -7,6 +7,7 @@ import { DarkModeProvider } from './contexts/DarkModeContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import Sidebar from './components/layout/Sidebar';
 // import TechRadarPage from './pages/TechRadarPage';
 // import LoginPage from './pages/LoginPage';
 // import RegisterPage from './pages/RegisterPage';
@@ -71,50 +72,56 @@ const GlobalPageSkeleton = () => (
 );
 
 function App() {
+  const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
+  const handleSidebarOpen = () => setMobileSidebarOpen(true);
+  const handleSidebarClose = () => setMobileSidebarOpen(false);
+
   return (
     <DarkModeProvider>
       <ThemeProvider>
         <AuthProvider>
           <Router>
-            <div className="App">
-              <Header />
-              <ThemeBackground />
-              <main className="main-content">
-                <Suspense fallback={<GlobalPageSkeleton />}>
-                  <Routes>
-                    <Route element={<AuthWrapper />}>
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route path="/register" element={<RegisterPage />} />
-                      <Route path="/profile-setup" element={<ProfileSetupPage />} />
-                      <Route path="/about" element={<AboutPage />} />
-                      <Route path="/feed" element={<FeedPage />} />
-                      <Route path="/settings" element={<SettingsPage />} />
-                      <Route path="/auth/callback" element={<AuthCallback />} />
-                      <Route path="/roadmap" element={<RoadmapPage />} />
-                      <Route path="/team" element={<TeamPage />} />
-                      <Route path="/vision-mission" element={<VisionMissionPage />} />
-                      <Route path="/funding-worthiness" element={<FundingWorthinessPage />} />
-                      <Route path="/research-agent" element={<ResearchAgentPage />} />
-
-                      {/* Placeholder routes for footer links */}
-                      <Route path="/careers" element={<PlaceholderPage title="Careers" />} />
-                      <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
-                      <Route path="/impressum" element={<Impressum />} />
-                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                      <Route path="/terms-of-service" element={<TermsOfService />} />
-                      <Route element={<ProtectedRoute />}>
-                        <Route path="/tech-radar" element={<TechRadarPage />} />
-                        <Route path="/profile" element={<ProfilePage />} />
-                        <Route element={<AdminRoute />}>
-                          <Route path="/admin" element={<AdminPanel />} />
+            <div className="App" style={{ display: 'flex', minHeight: '100vh' }}>
+              <Sidebar mobileOpen={mobileSidebarOpen} onMobileClose={handleSidebarClose} />
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                {/* <Header /> entfernt */}
+                <ThemeBackground />
+                <main className="main-content">
+                  <Suspense fallback={<GlobalPageSkeleton />}>
+                    <Routes>
+                      <Route element={<AuthWrapper />}>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/profile-setup" element={<ProfileSetupPage />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/feed" element={<FeedPage />} />
+                        <Route path="/settings" element={<SettingsPage />} />
+                        <Route path="/auth/callback" element={<AuthCallback />} />
+                        <Route path="/roadmap" element={<RoadmapPage />} />
+                        <Route path="/team" element={<TeamPage />} />
+                        <Route path="/vision-mission" element={<VisionMissionPage />} />
+                        <Route path="/funding-worthiness" element={<FundingWorthinessPage />} />
+                        <Route path="/research-agent" element={<ResearchAgentPage />} />
+                        {/* Placeholder routes for footer links */}
+                        <Route path="/careers" element={<PlaceholderPage title="Careers" />} />
+                        <Route path="/contact" element={<PlaceholderPage title="Contact Us" />} />
+                        <Route path="/impressum" element={<Impressum />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route path="/terms-of-service" element={<TermsOfService />} />
+                        <Route element={<ProtectedRoute />}>
+                          <Route path="/tech-radar" element={<TechRadarPage />} />
+                          <Route path="/profile" element={<ProfilePage />} />
+                          <Route element={<AdminRoute />}>
+                            <Route path="/admin" element={<AdminPanel />} />
+                          </Route>
                         </Route>
+                        <Route path="/" element={<HomePage />} />
                       </Route>
-                      <Route path="/" element={<HomePage />} />
-                    </Route>
-                  </Routes>
-                </Suspense>
-              </main>
-              <Footer />
+                    </Routes>
+                  </Suspense>
+                </main>
+                <Footer />
+              </div>
             </div>
           </Router>
         </AuthProvider>

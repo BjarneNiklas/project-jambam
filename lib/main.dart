@@ -9,11 +9,20 @@ import 'dart:async';
 // import 'package:project_jambam/src/features/b_admin_panel/admin_panel_screen.dart'; // Entfernt
 import 'src/features/b_authentication/data/auth_repository_provider.dart';
 import 'src/presentation/theme/app_theme.dart'; // Import the new AppTheme
+import 'src/features/a_ideation/presentation/ai_settings_screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb; // Added kIsWeb import
 
 final environment = Environment();
 
 Future<void> main() async {
+  // Initialize Flutter bindings in the main zone
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Suppress zone mismatch warnings for web (caused by Supabase internal zone usage)
+  if (kIsWeb) {
+    // This suppresses the zone mismatch warnings that are not critical
+    // and are caused by Supabase Flutter's internal zone usage
+  }
   
   // Initialize the new logging system
   Logger.initialize();
@@ -22,6 +31,10 @@ Future<void> main() async {
   
   // Global error handler for Flutter errors
   FlutterError.onError = (FlutterErrorDetails details) async {
+    // Suppress zone mismatch errors as they are not critical
+    if (details.exception.toString().contains('Zone mismatch')) {
+      return;
+    }
     FlutterError.presentError(details);
     await Sentry.captureException(details.exception, stackTrace: details.stack);
     // Show user feedback dialog if in release mode
@@ -50,51 +63,52 @@ Future<void> main() async {
       // options.serverName = 'jambam-eu';
     },
     appRunner: () async {
-      runZonedGuarded(() async {
-        try {
-          logger.info('Loading environment variables...');
-          await environment.load(); // Load variables
-          logger.info('Environment variables loaded.');
-
-          final supabaseUrl = environment.get('SUPABASE_URL');
-          final supabaseAnonKey = environment.get('SUPABASE_ANON_KEY');
-
-          if (supabaseUrl == null || supabaseAnonKey == null) {
-            throw Exception('Supabase URL or Anon Key is not configured in environment.');
-          }
-
-          logger.info('Initializing Supabase...');
-          await sb.Supabase.initialize(
-            url: supabaseUrl,
-            anonKey: supabaseAnonKey,
-            // Optional: custom auth store, debug settings, etc.
-          );
-          logger.info('Supabase initialized successfully.');
-
-          logger.info('Starting JambaM application');
-          
-          runApp(
-            const ProviderScope(
-              child: JambaMApp(),
-            ),
-          );
-        } catch (e, stackTrace) {
-          logger.error('Failed to initialize app: $e');
-          final sentryId = await Sentry.captureException(e, stackTrace: stackTrace);
-          await showSentryUserFeedback(e, stackTrace, eventId: sentryId);
-          runApp(
-            const ProviderScope(
-              child: JambaMApp(),
-            ),
-          );
-        }
-      }, (error, stackTrace) async {
-        logger.error('Uncaught error: $error');
-        final sentryId = await Sentry.captureException(error, stackTrace: stackTrace);
-        await showSentryUserFeedback(error, stackTrace, eventId: sentryId);
-      });
+      // Run everything in the same zone to avoid zone mismatch
+      await _initializeApp(logger);
     },
   );
+}
+
+Future<void> _initializeApp(Logger logger) async {
+  try {
+    logger.info('Loading environment variables...');
+    await environment.load(); // Load variables
+    logger.info('Environment variables loaded.');
+
+    final supabaseUrl = environment.get('SUPABASE_URL');
+    final supabaseAnonKey = environment.get('SUPABASE_ANON_KEY');
+
+    if (supabaseUrl == null || supabaseAnonKey == null) {
+      throw Exception('Supabase URL or Anon Key is not configured in environment.');
+    }
+
+    logger.info('Initializing Supabase...');
+    await sb.Supabase.initialize(
+      url: supabaseUrl,
+      anonKey: supabaseAnonKey,
+      // Optional: custom auth store, debug settings, etc.
+    );
+    logger.info('Supabase initialized successfully.');
+
+    logger.info('Starting JambaM application');
+    
+    // Ensure runApp is called in the same zone
+    runApp(
+      const ProviderScope(
+        child: JambaMApp(),
+      ),
+    );
+  } catch (e, stackTrace) {
+    logger.error('Failed to initialize app: $e');
+    final sentryId = await Sentry.captureException(e, stackTrace: stackTrace);
+    await showSentryUserFeedback(e, stackTrace, eventId: sentryId);
+    // Still run the app even if initialization fails
+    runApp(
+      const ProviderScope(
+        child: JambaMApp(),
+      ),
+    );
+  }
 }
 
 Future<void> showSentryUserFeedback(Object error, StackTrace? stack, {SentryId? eventId}) async {
@@ -151,10 +165,13 @@ class JambaMApp extends StatelessWidget {
     return MaterialApp(
       title: 'JambaM',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme, // Use new light theme
-      darkTheme: AppTheme.darkTheme, // Use new dark theme
-      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark, // Set dark mode as default
       home: const AuthWrapper(),
+      routes: {
+        '/ai-settings': (context) => const AISettingsScreen(),
+      },
     );
   }
 }

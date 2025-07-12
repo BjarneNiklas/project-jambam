@@ -290,6 +290,90 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<AuthResult> signInAsGuest() async {
+    try {
+      _logger.info('Starting guest sign-in...');
+
+      final authResponse = await _supabaseClient.auth.signInAnonymously();
+      _logger.info('Guest auth response received: ${authResponse.user?.id}');
+
+      if (authResponse.user != null) {
+        try {
+          Map<String, dynamic>? profileData = await _fetchUserProfile(authResponse.user!.id);
+          _logger.info('Profile data fetched for guest: ${profileData != null}');
+
+          if (profileData == null) {
+            _logger.info('Creating new profile for guest user...');
+            try {
+              final guestProfile = {
+                'id': authResponse.user!.id,
+                'username': 'Guest User (${authResponse.user!.id.substring(0,6)})',
+                'email': 'guest@jambam.com', // Specific email for guest users
+                'role': 'guest', // Assign a 'guest' role if applicable in your schema
+                'is_verified': true,
+                'is_active': true,
+              };
+
+              final profileResponse = await _supabaseClient
+                  .from('profiles')
+                  .insert(guestProfile)
+                  .select()
+                  .single();
+
+              profileData = profileResponse;
+              _logger.info('Guest profile created successfully');
+            } catch (profileError) {
+              _logger.error("Error creating profile for guest user: $profileError");
+              // Continue without profile data - user can still be authenticated
+            }
+          }
+
+          final user = _mapSupabaseUser(authResponse.user, profileData);
+          _logger.info('Guest sign-in successful: ${user?.displayName}');
+          return AuthResult(success: true, user: user);
+        } catch (profileError) {
+          _logger.error("Error handling profile for guest user: $profileError");
+          // Return success even if profile creation fails
+          final user = _mapSupabaseUser(authResponse.user, null);
+          return AuthResult(success: true, user: user);
+        }
+      }
+
+      _logger.error('Guest sign-in failed: No user returned');
+      return AuthResult(success: false, error: 'Guest sign-in failed.');
+    } catch (e) {
+      _logger.error("Guest sign-in exception: $e");
+      return AuthResult(success: false, error: e.toString());
+    }
+  }
+
+  @override
+  Future<AuthResult> signInWithOAuth(sb.OAuthProvider provider) async {
+    try {
+      _logger.info('Starting OAuth sign-in with provider: ${provider.name}');
+      
+      final authResponse = await _supabaseClient.auth.signInWithOAuth(
+        provider,
+        redirectTo: 'io.supabase.flutter://login-callback/',
+      );
+      
+      _logger.info('OAuth auth response received: ${authResponse.toString()}');
+      
+      // OAuth sign-in returns a response that may contain a URL for web flow
+      // The actual user will be available after the OAuth callback
+      // For now, we'll return a pending result
+      return AuthResult(
+        success: true, 
+        error: 'OAuth flow initiated. Please complete the authentication in your browser.',
+        errorCode: 'oauth_pending'
+      );
+    } catch (e) {
+      _logger.error("OAuth sign-in exception: $e");
+      return AuthResult(success: false, error: e.toString());
+    }
+  }
+
+  @override
   Future<AuthResult> updateProfile({
     String? displayName,
     String? avatar,
@@ -583,5 +667,12 @@ class SupabaseAuthRepository implements AuthRepository {
       );
     }
     return const domain_user.UserStatistics(jamSeedsCreated: 0, jamKitsGenerated: 0, communityContributions: 0);
+  }
+
+  @override
+  void dispose() {
+    // Supabase client doesn't need explicit disposal
+    // Stream controllers are managed by Supabase
+    _logger.info('SupabaseAuthRepository disposed');
   }
 }

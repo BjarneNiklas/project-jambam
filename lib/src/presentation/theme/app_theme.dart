@@ -37,47 +37,48 @@ class AppTheme {
         foregroundColor: AppColors.onPrimary,
         titleTextStyle: TextStyle(
           fontFamily: _fontFamily,
-          fontSize: 20, // Title Large from Style Guide
-          fontWeight: FontWeight.w500, // Medium
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
           color: AppColors.onPrimary,
         ),
       ),
       cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0), // Style guide: 8-12px
+          borderRadius: BorderRadius.circular(16.0), // Increased for modern look
         ),
         color: AppColors.surface,
-        surfaceTintColor: Colors.transparent, // To prevent M3 tinting
+        surfaceTintColor: Colors.transparent,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.onPrimary,
-          elevation: 2,
+          elevation: 4,
+          shadowColor: AppColors.primary.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(16.0),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
           textStyle: const TextStyle(
             fontFamily: _fontFamily,
-            fontSize: 14, // Adjusted for better fit, Label Small is 12 but looks small on buttons
-            fontWeight: FontWeight.w500, // Medium weight for buttons
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.accent,
-          side: const BorderSide(color: AppColors.accent, width: 1.5),
+          side: const BorderSide(color: AppColors.accent, width: 2.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(16.0),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-           textStyle: const TextStyle(
+          textStyle: const TextStyle(
             fontFamily: _fontFamily,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -87,21 +88,21 @@ class AppTheme {
           textStyle: const TextStyle(
             fontFamily: _fontFamily,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(16.0),
           borderSide: const BorderSide(color: AppColors.textSecondary),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(16.0),
           borderSide: const BorderSide(color: AppColors.textSecondary),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(16.0),
           borderSide: const BorderSide(color: AppColors.primary, width: 2.0),
         ),
         filled: true,
@@ -131,120 +132,127 @@ class AppTheme {
       useMaterial3: true,
       fontFamily: _fontFamily,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme(
+      colorScheme: const ColorScheme(
         brightness: Brightness.dark,
-        primary: AppColors.primary, // Could be a lighter variant for dark theme like Colors.deepPurple.shade300
+        primary: AppColors.primary,
         onPrimary: AppColors.onPrimaryDark,
-        primaryContainer: AppColors.primaryLight.withValues(alpha: 0.1), // Darker container
+        primaryContainer: AppColors.glassPrimary,
         onPrimaryContainer: AppColors.textPrimaryDark,
-        secondary: AppColors.secondary, // Could be a lighter variant for dark theme like Colors.amber.shade300
+        secondary: AppColors.secondary,
         onSecondary: AppColors.onSecondaryDark,
-        secondaryContainer: AppColors.secondary.withValues(alpha: 0.2),
+        secondaryContainer: AppColors.glassSecondary,
         onSecondaryContainer: AppColors.textPrimaryDark,
-        tertiary: AppColors.accent, // Could be a lighter variant
+        tertiary: AppColors.accent,
         onTertiary: AppColors.onAccentDark,
-        tertiaryContainer: AppColors.accent.withValues(alpha: 0.2),
+        tertiaryContainer: AppColors.glassAccent,
         onTertiaryContainer: AppColors.textPrimaryDark,
-        error: AppColors.error, // Consider Colors.red.shade300 for dark theme
+        error: AppColors.error,
         onError: AppColors.onErrorDark,
         surface: AppColors.surfaceDark,
         onSurface: AppColors.textPrimaryDark,
-        outline: AppColors.textSecondaryDark.withValues(alpha: 0.5),
+        outline: AppColors.glassBorder,
       ),
       scaffoldBackgroundColor: AppColors.backgroundDark,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: AppColors.surfaceDark, // Darker app bar
+        backgroundColor: Colors.transparent,
         foregroundColor: AppColors.textPrimaryDark,
-         titleTextStyle: TextStyle(
+        titleTextStyle: TextStyle(
           fontFamily: _fontFamily,
           fontSize: 20,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           color: AppColors.textPrimaryDark,
         ),
       ),
       cardTheme: CardThemeData(
-        elevation: 2,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
-        color: AppColors.surfaceDark,
+        color: AppColors.surfaceDarkGlass,
         surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.onPrimaryDark,
-          elevation: 2,
+          elevation: 8,
+          shadowColor: AppColors.primary.withValues(alpha: 0.4),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(20.0),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           textStyle: const TextStyle(
             fontFamily: _fontFamily,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.accent, // Consider lighter accent for dark
-          side: BorderSide(color: AppColors.accent.withValues(alpha: 0.7), width: 1.5),
+          foregroundColor: AppColors.accent,
+          side: const BorderSide(color: AppColors.glassBorder, width: 2.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(20.0),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-           textStyle: const TextStyle(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          textStyle: const TextStyle(
             fontFamily: _fontFamily,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: AppColors.accent, // Consider lighter accent
+          foregroundColor: AppColors.accent,
           textStyle: const TextStyle(
             fontFamily: _fontFamily,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.textSecondaryDark.withValues(alpha: 0.5)),
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: AppColors.glassBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.textSecondaryDark.withValues(alpha: 0.5)),
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: AppColors.glassBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.primary.withValues(alpha: 0.78), width: 2.0), // Lighter primary focus
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2.0),
         ),
         filled: true,
-        fillColor: AppColors.surfaceDark,
-        hintStyle: TextStyle(color: AppColors.textSecondaryDark.withValues(alpha: 0.7)),
-        labelStyle: TextStyle(color: AppColors.textPrimaryDark),
+        fillColor: AppColors.surfaceDarkGlass,
+        hintStyle: const TextStyle(color: AppColors.textSecondaryDark),
+        labelStyle: const TextStyle(color: AppColors.textPrimaryDark),
       ),
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.w700, color: AppColors.textPrimaryDark, fontFamily: _fontFamily),
         headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: AppColors.textPrimaryDark, fontFamily: _fontFamily),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: AppColors.textPrimaryDark, fontFamily: _fontFamily),
+        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textPrimaryDark, fontFamily: _fontFamily),
         bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.textPrimaryDark, fontFamily: _fontFamily),
         bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.textSecondaryDark, fontFamily: _fontFamily),
         labelSmall: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: AppColors.textPrimaryDark, fontFamily: _fontFamily),
       ),
-      iconTheme: IconThemeData(
-        color: AppColors.accent, // Consider lighter accent
+      iconTheme: const IconThemeData(
+        color: AppColors.accent,
+        size: 24,
       ),
-      primaryIconTheme: IconThemeData(
-        color: AppColors.primary, // Consider lighter primary
+      primaryIconTheme: const IconThemeData(
+        color: AppColors.primary,
+        size: 24,
       ),
     );
   }
+
+  // Default theme (dark mode)
+  static ThemeData get defaultTheme => darkTheme;
 }

@@ -130,6 +130,62 @@ class AuthState extends _$AuthState {
     }
   }
 
+  /// Sign in as a guest
+  Future<void> signInAsGuest() async {
+    state = state.copyWith(isLoading: true, error: null);
+    
+    try {
+      final authRepository = ref.read(authRepositoryProvider);
+      final result = await authRepository.signInAsGuest();
+      
+      if (result.success) {
+        state = state.copyWith(
+          isLoading: false,
+          isAuthenticated: true,
+          user: result.user,
+        );
+      } else {
+        state = state.copyWith(
+          isLoading: false,
+          error: result.error,
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
+  /// Sign in with OAuth provider
+  Future<void> signInWithOAuth(sb.OAuthProvider provider) async {
+    state = state.copyWith(isLoading: true, error: null);
+    
+    try {
+      final authRepository = ref.read(authRepositoryProvider);
+      final result = await authRepository.signInWithOAuth(provider);
+      
+      if (result.success) {
+        state = state.copyWith(
+          isLoading: false,
+          isAuthenticated: true,
+          user: result.user,
+        );
+      } else {
+        state = state.copyWith(
+          isLoading: false,
+          error: result.error,
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
+  }
+
   /// Sign out
   Future<void> signOut() async {
     state = state.copyWith(isLoading: true, error: null);

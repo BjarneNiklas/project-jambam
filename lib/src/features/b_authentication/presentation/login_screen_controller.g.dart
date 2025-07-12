@@ -7,7 +7,7 @@ part of 'login_screen_controller.dart';
 // **************************************************************************
 
 String _$loginScreenControllerHash() =>
-    r'906c2117d80250e3c572cea458eb4c743049dbe6';
+    r'a40f5372c0be720ade1a763aae1d9c0776666abb';
 
 /// Controller for the login screen
 ///

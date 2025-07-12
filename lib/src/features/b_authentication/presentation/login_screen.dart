@@ -47,6 +47,10 @@ class LoginScreen extends ConsumerWidget {
 
                     // Anonymous Sign In
                     _buildAnonymousSignIn(context, controller, state), // Cannot be const
+                    const SizedBox(height: 24),
+
+                    // OAuth Sign In
+                    _buildOAuthSignIn(context, controller, state), // Cannot be const
                     const SizedBox(height: 32),
 
                     // Mode Toggle
@@ -304,9 +308,9 @@ class LoginScreen extends ConsumerWidget {
         const Divider(), // Can be const
         const SizedBox(height: 16),
         OutlinedButton.icon(
-          onPressed: !state.isLoading ? controller.signInAnonymously : null,
+          onPressed: !state.isLoading ? controller.signInAsGuest : null,
           icon: const Icon(Icons.person_outline), // Can be const
-          label: const Text('Continue as Guest'), // Can be const
+          label: const Text('Als Gast fortfahren'), // Can be const
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16), // Can be const
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -321,6 +325,66 @@ class LoginScreen extends ConsumerWidget {
           textAlign: TextAlign.center,
         ),
       ],
+    );
+  }
+
+  Widget _buildOAuthSignIn(BuildContext context, LoginScreenController controller, LoginScreenState state) {
+    return Column(
+      children: [
+        const Divider(),
+        const SizedBox(height: 16),
+        _buildSocialSignInButton(
+          context: context,
+          label: 'Mit Google anmelden',
+          icon: Icons.g_mobiledata, // Placeholder, consider using actual Google icon asset
+          onPressed: !state.isLoading ? controller.signInWithGoogle : null,
+          backgroundColor: Colors.blue, // Example color
+          foregroundColor: Colors.white,
+        ),
+        const SizedBox(height: 12),
+        _buildSocialSignInButton(
+          context: context,
+          label: 'Mit Discord anmelden',
+          icon: Icons.discord, // Placeholder, consider using actual Discord icon asset
+          onPressed: !state.isLoading ? controller.signInWithDiscord : null,
+          backgroundColor: const Color(0xFF5865F2), // Discord brand color
+          foregroundColor: Colors.white,
+        ),
+        const SizedBox(height: 12),
+        _buildSocialSignInButton(
+          context: context,
+          label: 'Mit GitHub anmelden',
+          icon: Icons.code, // Placeholder, consider using actual GitHub icon asset
+          onPressed: !state.isLoading ? controller.signInWithGitHub : null,
+          backgroundColor: Colors.black, // GitHub brand color
+          foregroundColor: Colors.white,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialSignInButton({
+    required BuildContext context,
+    required String label,
+    required IconData icon,
+    required VoidCallback? onPressed,
+    required Color backgroundColor,
+    required Color foregroundColor,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon, color: foregroundColor),
+      label: Text(
+        label,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: foregroundColor),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 4,
+      ),
     );
   }
 

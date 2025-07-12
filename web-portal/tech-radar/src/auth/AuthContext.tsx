@@ -47,11 +47,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
     
     try {
-      console.log('[AuthContext] fetchProfile: Attempting to select profile for user ID:', user.id);
+      console.log('[AuthContext] fetchProfile: Attempting to select profile for user ID:', currentUser.id);
       const { data, error } = await supabase
         .from('profiles')
         .select('*, has_validated_invite_code') // Ensure new field is selected
-        .eq('id', user.id)
+        .eq('id', currentUser.id)
         .single();
 
       if (data) {
@@ -60,12 +60,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setCurrentUserHasValidatedInvite(data.has_validated_invite_code || false);
         console.log('Profile fetched:', data);
       } else if (error && error.code === 'PGRST116') {
-        console.log('[AuthContext] fetchProfile: Profile not found (PGRST116), creating one for user ID:', user.id);
+        console.log('[AuthContext] fetchProfile: Profile not found (PGRST116), creating one for user ID:', currentUser.id);
         const { data: newProfile, error: insertError } = await supabase
           .from('profiles')
           .insert({
-            id: user.id,
-            email: user.email!,
+            id: currentUser.id,
+            email: currentUser.email!,
             has_validated_invite_code: false
           })
           .select('*, has_validated_invite_code')
@@ -91,7 +91,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setIsProfileComplete(false);
       setCurrentUserHasValidatedInvite(false);
     }
-    console.log('[AuthContext] fetchProfile: Finished for user ID:', user.id);
+    console.log('[AuthContext] fetchProfile: Finished for user ID:', currentUser.id);
   }, []); // fetchProfile depends on supabase, but supabase client instance is stable.
 
   useEffect(() => {

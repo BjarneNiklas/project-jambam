@@ -44,6 +44,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
+  fl_chart: ^0.69.0
   
   # Utilities
   intl: ^0.19.0
@@ -83,4 +84,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - docs/KNOWLEDGE_BASE.md 
+    - docs/KNOWLEDGE_BASE.md
+    - assets/icons/ 

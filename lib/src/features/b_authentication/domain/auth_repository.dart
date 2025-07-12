@@ -1,5 +1,6 @@
 import 'package:project_jambam/src/features/b_authentication/domain/user.dart';
 import 'package:project_jambam/src/features/a_ideation/domain/accessibility_system.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User; // Import for OAuthProvider, hide User to avoid conflict
 
 /// Repository interface for authentication and user management
 abstract class AuthRepository {
@@ -11,6 +12,12 @@ abstract class AuthRepository {
   
   /// Sign in anonymously
   Future<AuthResult> signInAnonymously();
+  
+  /// Sign in as a guest
+  Future<AuthResult> signInAsGuest();
+
+  /// Sign in with OAuth provider
+  Future<AuthResult> signInWithOAuth(OAuthProvider provider);
   
   /// Sign out current user
   Future<void> signOut();
@@ -85,6 +92,9 @@ abstract class AuthRepository {
   
   /// Get user statistics
   Future<UserStatistics> getUserStatistics(String userId);
+  
+  /// Dispose resources
+  void dispose();
 }
 
 /// Result of authentication operations
@@ -130,4 +140,4 @@ enum ActivityType {
   contentLiked,
   commentPosted,
   researchPublished,
-} 
+}

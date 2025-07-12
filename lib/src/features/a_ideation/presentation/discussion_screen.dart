@@ -321,7 +321,8 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
       ),
       child: Row(
         children: [
-          Expanded(
+          Flexible(
+            fit: FlexFit.loose,
             child: DropdownButtonFormField<String>(
               value: _selectedCategory,
               decoration: const InputDecoration(
@@ -343,7 +344,8 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen>
             ),
           ),
           const SizedBox(width: 12),
-          Expanded(
+          Flexible(
+            fit: FlexFit.loose,
             child: DropdownButtonFormField<String>(
               value: _sortBy,
               decoration: const InputDecoration(

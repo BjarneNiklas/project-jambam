@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_jambam/src/features/a_ideation/presentation/settings/edit_profile_screen.dart';
+import 'package:project_jambam/src/features/a_ideation/presentation/ai_settings_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -47,6 +48,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           _buildLanguageSection(),
           _buildNotificationSection(),
           _buildPrivacySection(),
+          _buildAISection(),
           _buildAccountSection(),
           _buildAboutSection(),
         ],
@@ -1221,6 +1223,58 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: const Text('Save'),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAISection() {
+    return Card(
+      margin: const EdgeInsets.all(16),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.psychology, color: Colors.teal[600], size: 24),
+                const SizedBox(width: 8),
+                const Text(
+                  'KI-Einstellungen',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Konfiguriere deine API Keys und KI-Modelle',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('AI Einstellungen'),
+              subtitle: const Text('API Keys und Modell-Auswahl'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AISettingsScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
